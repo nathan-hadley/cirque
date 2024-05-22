@@ -14,6 +14,9 @@ def csv_to_geojson(csv_file, color, subarea, output_file):
         print(f"No data found for color '{color}' and subarea '{subarea}'")
         return
 
+    # Sort the filtered dataframe by the 'order' column
+    filtered_df = filtered_df.sort_values(by='order')
+
     # Extract the coordinates
     coordinates = list(zip(filtered_df['lon'], filtered_df['lat']))
 
