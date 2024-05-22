@@ -1,0 +1,711 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D86792BB2BF8F0160006405C /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86792BA2BF8F0160006405C /* MapViewModel.swift */; };
+		D86792BD2BF8F0800006405C /* Problem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86792BC2BF8F0800006405C /* Problem.swift */; };
+		D86792BF2BF8F0A20006405C /* ProblemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86792BE2BF8F0A20006405C /* ProblemView.swift */; };
+		D890D0952BFB901900C94EA7 /* LocateMeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D890D0942BFB901900C94EA7 /* LocateMeButton.swift */; };
+		D897D6252BF30FA300027155 /* CirqueApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D897D6242BF30FA300027155 /* CirqueApp.swift */; };
+		D897D6272BF30FA300027155 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D897D6262BF30FA300027155 /* ContentView.swift */; };
+		D897D6292BF30FA500027155 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D897D6282BF30FA500027155 /* Assets.xcassets */; };
+		D897D62C2BF30FA500027155 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D897D62B2BF30FA500027155 /* Preview Assets.xcassets */; };
+		D897D62E2BF30FA500027155 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = D897D62D2BF30FA500027155 /* Persistence.swift */; };
+		D897D6312BF30FA500027155 /* Cirque.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D897D62F2BF30FA500027155 /* Cirque.xcdatamodeld */; };
+		D897D63B2BF30FA600027155 /* CirqueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D897D63A2BF30FA600027155 /* CirqueTests.swift */; };
+		D897D6452BF30FA600027155 /* CirqueUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D897D6442BF30FA600027155 /* CirqueUITests.swift */; };
+		D897D6472BF30FA600027155 /* CirqueUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D897D6462BF30FA600027155 /* CirqueUITestsLaunchTests.swift */; };
+		D8BD608C2BF313130011C7C2 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BD608B2BF313130011C7C2 /* MapView.swift */; };
+		D8BD608E2BF313B80011C7C2 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BD608D2BF313B80011C7C2 /* AboutView.swift */; };
+		D8EC31952BF48EDB00677384 /* MapboxMaps in Frameworks */ = {isa = PBXBuildFile; productRef = D8EC31942BF48EDB00677384 /* MapboxMaps */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D897D6372BF30FA600027155 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D897D6192BF30FA300027155 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D897D6202BF30FA300027155;
+			remoteInfo = Cirque;
+		};
+		D897D6412BF30FA600027155 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D897D6192BF30FA300027155 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D897D6202BF30FA300027155;
+			remoteInfo = Cirque;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		D86792BA2BF8F0160006405C /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
+		D86792BC2BF8F0800006405C /* Problem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem.swift; sourceTree = "<group>"; };
+		D86792BE2BF8F0A20006405C /* ProblemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemView.swift; sourceTree = "<group>"; };
+		D890D0942BFB901900C94EA7 /* LocateMeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocateMeButton.swift; sourceTree = "<group>"; };
+		D897D6212BF30FA300027155 /* Cirque.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cirque.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D897D6242BF30FA300027155 /* CirqueApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CirqueApp.swift; sourceTree = "<group>"; };
+		D897D6262BF30FA300027155 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		D897D6282BF30FA500027155 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D897D62B2BF30FA500027155 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		D897D62D2BF30FA500027155 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		D897D6302BF30FA500027155 /* Cirque.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Cirque.xcdatamodel; sourceTree = "<group>"; };
+		D897D6362BF30FA600027155 /* CirqueTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CirqueTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D897D63A2BF30FA600027155 /* CirqueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CirqueTests.swift; sourceTree = "<group>"; };
+		D897D6402BF30FA600027155 /* CirqueUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CirqueUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D897D6442BF30FA600027155 /* CirqueUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CirqueUITests.swift; sourceTree = "<group>"; };
+		D897D6462BF30FA600027155 /* CirqueUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CirqueUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		D898448A2BF461330049196B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		D8BD608B2BF313130011C7C2 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		D8BD608D2BF313B80011C7C2 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D897D61E2BF30FA300027155 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D8EC31952BF48EDB00677384 /* MapboxMaps in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D897D6332BF30FA600027155 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D897D63D2BF30FA600027155 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D86792C32BF9B9070006405C /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				D86792C42BF9B92F0006405C /* Problem */,
+				D8BD608B2BF313130011C7C2 /* MapView.swift */,
+				D86792BA2BF8F0160006405C /* MapViewModel.swift */,
+				D890D0942BFB901900C94EA7 /* LocateMeButton.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		D86792C42BF9B92F0006405C /* Problem */ = {
+			isa = PBXGroup;
+			children = (
+				D86792BC2BF8F0800006405C /* Problem.swift */,
+				D86792BE2BF8F0A20006405C /* ProblemView.swift */,
+			);
+			path = Problem;
+			sourceTree = "<group>";
+		};
+		D897D6182BF30FA300027155 = {
+			isa = PBXGroup;
+			children = (
+				D897D6232BF30FA300027155 /* Cirque */,
+				D897D6392BF30FA600027155 /* CirqueTests */,
+				D897D6432BF30FA600027155 /* CirqueUITests */,
+				D897D6222BF30FA300027155 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D897D6222BF30FA300027155 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D897D6212BF30FA300027155 /* Cirque.app */,
+				D897D6362BF30FA600027155 /* CirqueTests.xctest */,
+				D897D6402BF30FA600027155 /* CirqueUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D897D6232BF30FA300027155 /* Cirque */ = {
+			isa = PBXGroup;
+			children = (
+				D898448A2BF461330049196B /* Info.plist */,
+				D897D6242BF30FA300027155 /* CirqueApp.swift */,
+				D8BD608D2BF313B80011C7C2 /* AboutView.swift */,
+				D897D6262BF30FA300027155 /* ContentView.swift */,
+				D86792C32BF9B9070006405C /* Map */,
+				D897D6282BF30FA500027155 /* Assets.xcassets */,
+				D897D62D2BF30FA500027155 /* Persistence.swift */,
+				D897D62F2BF30FA500027155 /* Cirque.xcdatamodeld */,
+				D897D62A2BF30FA500027155 /* Preview Content */,
+			);
+			path = Cirque;
+			sourceTree = "<group>";
+		};
+		D897D62A2BF30FA500027155 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				D897D62B2BF30FA500027155 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		D897D6392BF30FA600027155 /* CirqueTests */ = {
+			isa = PBXGroup;
+			children = (
+				D897D63A2BF30FA600027155 /* CirqueTests.swift */,
+			);
+			path = CirqueTests;
+			sourceTree = "<group>";
+		};
+		D897D6432BF30FA600027155 /* CirqueUITests */ = {
+			isa = PBXGroup;
+			children = (
+				D897D6442BF30FA600027155 /* CirqueUITests.swift */,
+				D897D6462BF30FA600027155 /* CirqueUITestsLaunchTests.swift */,
+			);
+			path = CirqueUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D897D6202BF30FA300027155 /* Cirque */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D897D64A2BF30FA600027155 /* Build configuration list for PBXNativeTarget "Cirque" */;
+			buildPhases = (
+				D897D61D2BF30FA300027155 /* Sources */,
+				D897D61E2BF30FA300027155 /* Frameworks */,
+				D897D61F2BF30FA300027155 /* Resources */,
+				D898448B2BF462490049196B /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Cirque;
+			packageProductDependencies = (
+				D8EC31942BF48EDB00677384 /* MapboxMaps */,
+			);
+			productName = Cirque;
+			productReference = D897D6212BF30FA300027155 /* Cirque.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D897D6352BF30FA600027155 /* CirqueTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D897D64D2BF30FA600027155 /* Build configuration list for PBXNativeTarget "CirqueTests" */;
+			buildPhases = (
+				D897D6322BF30FA600027155 /* Sources */,
+				D897D6332BF30FA600027155 /* Frameworks */,
+				D897D6342BF30FA600027155 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D897D6382BF30FA600027155 /* PBXTargetDependency */,
+			);
+			name = CirqueTests;
+			productName = CirqueTests;
+			productReference = D897D6362BF30FA600027155 /* CirqueTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		D897D63F2BF30FA600027155 /* CirqueUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D897D6502BF30FA600027155 /* Build configuration list for PBXNativeTarget "CirqueUITests" */;
+			buildPhases = (
+				D897D63C2BF30FA600027155 /* Sources */,
+				D897D63D2BF30FA600027155 /* Frameworks */,
+				D897D63E2BF30FA600027155 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D897D6422BF30FA600027155 /* PBXTargetDependency */,
+			);
+			name = CirqueUITests;
+			productName = CirqueUITests;
+			productReference = D897D6402BF30FA600027155 /* CirqueUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D897D6192BF30FA300027155 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1530;
+				LastUpgradeCheck = 1530;
+				TargetAttributes = {
+					D897D6202BF30FA300027155 = {
+						CreatedOnToolsVersion = 15.3;
+					};
+					D897D6352BF30FA600027155 = {
+						CreatedOnToolsVersion = 15.3;
+						TestTargetID = D897D6202BF30FA300027155;
+					};
+					D897D63F2BF30FA600027155 = {
+						CreatedOnToolsVersion = 15.3;
+						TestTargetID = D897D6202BF30FA300027155;
+					};
+				};
+			};
+			buildConfigurationList = D897D61C2BF30FA300027155 /* Build configuration list for PBXProject "Cirque" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D897D6182BF30FA300027155;
+			packageReferences = (
+				D8EC31932BF48EDB00677384 /* XCRemoteSwiftPackageReference "mapbox-maps-ios" */,
+			);
+			productRefGroup = D897D6222BF30FA300027155 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D897D6202BF30FA300027155 /* Cirque */,
+				D897D6352BF30FA600027155 /* CirqueTests */,
+				D897D63F2BF30FA600027155 /* CirqueUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D897D61F2BF30FA300027155 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D897D62C2BF30FA500027155 /* Preview Assets.xcassets in Resources */,
+				D897D6292BF30FA500027155 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D897D6342BF30FA600027155 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D897D63E2BF30FA600027155 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D898448B2BF462490049196B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(TARGET_BUILD_DIR)/$(INFOPLIST_PATH)",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Look for a global file named 'mapbox'\ntoken_file2=~/.mapbox\ntoken=\"$(cat $token_file 2>/dev/null || cat $token_file2 2>/dev/null)\"\nif [ \"$token\" ]; then\n  plutil -replace MBXAccessToken -string $token \"$TARGET_BUILD_DIR/$INFOPLIST_PATH\"\nelse\n  echo 'warning: Missing Mapbox access token'\n  open 'https://account.mapbox.com/access-tokens/'\n  echo \"warning: Get an access token from <https://account.mapbox.com/access-tokens/>, then create a new file at $token_file or $token_file2 that contains the access token.\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D897D61D2BF30FA300027155 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D86792BB2BF8F0160006405C /* MapViewModel.swift in Sources */,
+				D86792BD2BF8F0800006405C /* Problem.swift in Sources */,
+				D897D6312BF30FA500027155 /* Cirque.xcdatamodeld in Sources */,
+				D897D62E2BF30FA500027155 /* Persistence.swift in Sources */,
+				D8BD608C2BF313130011C7C2 /* MapView.swift in Sources */,
+				D890D0952BFB901900C94EA7 /* LocateMeButton.swift in Sources */,
+				D897D6272BF30FA300027155 /* ContentView.swift in Sources */,
+				D86792BF2BF8F0A20006405C /* ProblemView.swift in Sources */,
+				D8BD608E2BF313B80011C7C2 /* AboutView.swift in Sources */,
+				D897D6252BF30FA300027155 /* CirqueApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D897D6322BF30FA600027155 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D897D63B2BF30FA600027155 /* CirqueTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D897D63C2BF30FA600027155 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D897D6452BF30FA600027155 /* CirqueUITests.swift in Sources */,
+				D897D6472BF30FA600027155 /* CirqueUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D897D6382BF30FA600027155 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D897D6202BF30FA300027155 /* Cirque */;
+			targetProxy = D897D6372BF30FA600027155 /* PBXContainerItemProxy */;
+		};
+		D897D6422BF30FA600027155 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D897D6202BF30FA300027155 /* Cirque */;
+			targetProxy = D897D6412BF30FA600027155 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		D897D6482BF30FA600027155 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		D897D6492BF30FA600027155 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D897D64B2BF30FA600027155 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1.0;
+				DEVELOPMENT_ASSET_PATHS = "\"Cirque/Preview Content\"";
+				DEVELOPMENT_TEAM = HVS3LU33L4;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Cirque/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Cirque;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = " Show user location on map.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nathanhadley.Cirque;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D897D64C2BF30FA600027155 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1.0;
+				DEVELOPMENT_ASSET_PATHS = "\"Cirque/Preview Content\"";
+				DEVELOPMENT_TEAM = HVS3LU33L4;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Cirque/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Cirque;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = " Show user location on map.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nathanhadley.Cirque;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D897D64E2BF30FA600027155 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HVS3LU33L4;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nathanhadley.CirqueTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Cirque.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Cirque";
+			};
+			name = Debug;
+		};
+		D897D64F2BF30FA600027155 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HVS3LU33L4;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nathanhadley.CirqueTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Cirque.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Cirque";
+			};
+			name = Release;
+		};
+		D897D6512BF30FA600027155 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HVS3LU33L4;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nathanhadley.CirqueUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Cirque;
+			};
+			name = Debug;
+		};
+		D897D6522BF30FA600027155 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HVS3LU33L4;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nathanhadley.CirqueUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Cirque;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D897D61C2BF30FA300027155 /* Build configuration list for PBXProject "Cirque" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D897D6482BF30FA600027155 /* Debug */,
+				D897D6492BF30FA600027155 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D897D64A2BF30FA600027155 /* Build configuration list for PBXNativeTarget "Cirque" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D897D64B2BF30FA600027155 /* Debug */,
+				D897D64C2BF30FA600027155 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D897D64D2BF30FA600027155 /* Build configuration list for PBXNativeTarget "CirqueTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D897D64E2BF30FA600027155 /* Debug */,
+				D897D64F2BF30FA600027155 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D897D6502BF30FA600027155 /* Build configuration list for PBXNativeTarget "CirqueUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D897D6512BF30FA600027155 /* Debug */,
+				D897D6522BF30FA600027155 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D8EC31932BF48EDB00677384 /* XCRemoteSwiftPackageReference "mapbox-maps-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mapbox/mapbox-maps-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D8EC31942BF48EDB00677384 /* MapboxMaps */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D8EC31932BF48EDB00677384 /* XCRemoteSwiftPackageReference "mapbox-maps-ios" */;
+			productName = MapboxMaps;
+		};
+/* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		D897D62F2BF30FA500027155 /* Cirque.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				D897D6302BF30FA500027155 /* Cirque.xcdatamodel */,
+			);
+			currentVersion = D897D6302BF30FA500027155 /* Cirque.xcdatamodel */;
+			path = Cirque.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = D897D6192BF30FA300027155 /* Project object */;
+}
