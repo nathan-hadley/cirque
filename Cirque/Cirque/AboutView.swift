@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct AboutView: View {
+    let gitHubText = "The code for this project can be found at on [GitHub](https://github.com/nathan-hadley/cirque-ios)."
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("About")
@@ -20,7 +21,7 @@ struct AboutView: View {
             Text("If you're a developer, please reach out about contributing. If you're not a developer but want to submit a circuit, please send me a list of the problems and photos of each boulder, one blank and one with route line(s). I will also need coordinates for each boulder (not each problem).")
                 .padding()
             
-            Text("The code for this project can be found at on [GitHub](github.com/nathan-hadley/cirque-ios).")
+            Text(.init(gitHubText))
                 .padding()
         }
     }
