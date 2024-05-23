@@ -5,7 +5,7 @@
 	<key>MBXAccessToken</key>
 	<string>pk.eyJ1IjoibmF0aGFuaGFkbGV5IiwiYSI6ImNsdzdmdXAxdDIycmoyanA3cXVvbHFxenQifQ.1wcBxvOkH8eU-6ev7SoO8Q</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string> Show user location on map.</string>
+	<string>Allowing access to your location helps us display your position on the map and guide you to your next boulder.</string>
 	<key>UILaunchScreen</key>
 	<dict>
 		<key>UIImageName</key>
