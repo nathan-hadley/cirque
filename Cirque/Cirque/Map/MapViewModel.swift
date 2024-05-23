@@ -16,8 +16,8 @@ class MapViewModel: ObservableObject {
     }
     @Published var problem: Problem? = nil
     @Published var viewport: Viewport = .camera(
-        center: CLLocationCoordinate2D(latitude: 47.65441, longitude: -120.72967),
-        zoom: 16,
+        center: CLLocationCoordinate2D(latitude: 47.585, longitude: -120.713),
+        zoom: 10.5,
         bearing: 0,
         pitch: 0
     )
