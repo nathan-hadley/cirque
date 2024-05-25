@@ -1,30 +1,17 @@
 import pandas as pd
 import geojson
 import os
-import sys
 
-def csv_to_geojson(color, subarea):
+def csv_to_geojson():
     # Read the CSV file
     df = pd.read_csv("../cirque-data/problems.csv")
     
-    # Filter the dataframe based on color and subarea
-    filtered_df = df[(df['color'] == color) & (df['subarea'] == subarea)]
+    # Get all unique pairs of color and subarea
+    unique_pairs = df[['color', 'subarea']].drop_duplicates()
     
-    if filtered_df.empty:
-        print(f"No data found for color '{color}' and subarea '{subarea}'")
+    if unique_pairs.empty:
+        print("No unique pairs of color and subarea found in the data.")
         return
-
-    # Sort the filtered dataframe by the 'order' column
-    filtered_df = filtered_df.sort_values(by='order')
-
-    # Extract the coordinates
-    coordinates = list(zip(filtered_df['lon'], filtered_df['lat']))
-
-    # Create a LineString feature with properties
-    line_feature = geojson.Feature(
-        geometry=geojson.LineString(coordinates),
-        properties={"color": color, "subarea": subarea}
-    )
 
     # Check if the output file already exists
     output_file = "../cirque-data/circuits.geojson"
@@ -34,20 +21,37 @@ def csv_to_geojson(color, subarea):
     else:
         existing_geojson = geojson.FeatureCollection([])
 
-    # Update or add the new feature
-    updated_features = []
-    feature_found = False
-    for feature in existing_geojson['features']:
-        if feature['properties'].get('color') == color and feature['properties'].get('subarea') == subarea:
-            updated_features.append(line_feature)
-            feature_found = True
-        else:
-            updated_features.append(feature)
+    # Create a dictionary to hold updated features
+    updated_features = {tuple(feature['properties'].values()): feature for feature in existing_geojson['features']}
+    
+    # Iterate over each unique pair
+    for _, row in unique_pairs.iterrows():
+        color = row['color']
+        subarea = row['subarea']
+        
+        # Filter the dataframe based on color and subarea
+        filtered_df = df[(df['color'] == color) & (df['subarea'] == subarea)]
+        
+        if filtered_df.empty:
+            print(f"No data found for color '{color}' and subarea '{subarea}'")
+            continue
 
-    if not feature_found:
-        updated_features.append(line_feature)
+        # Sort the filtered dataframe by the 'order' column
+        filtered_df = filtered_df.sort_values(by='order')
 
-    updated_feature_collection = geojson.FeatureCollection(updated_features)
+        # Extract the coordinates
+        coordinates = list(zip(filtered_df['lon'], filtered_df['lat']))
+
+        # Create a LineString feature with properties
+        line_feature = geojson.Feature(
+            geometry=geojson.LineString(coordinates),
+            properties={"color": color, "subarea": subarea}
+        )
+
+        # Update or add the new feature
+        updated_features[(color, subarea)] = line_feature
+
+    updated_feature_collection = geojson.FeatureCollection(list(updated_features.values()))
 
     # Write the updated GeoJSON to a file
     with open(output_file, 'w') as f:
@@ -56,9 +60,4 @@ def csv_to_geojson(color, subarea):
     print(f"GeoJSON file updated successfully: {output_file}")
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        print("Usage: python script.py <color> <subarea>")
-    else:
-        color = sys.argv[1]
-        subarea = sys.argv[2]
-        csv_to_geojson(color, subarea)
+    csv_to_geojson()
