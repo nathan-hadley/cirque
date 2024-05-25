@@ -3,9 +3,9 @@ import geojson
 import os
 import sys
 
-def csv_to_geojson(csv_file, color, subarea, output_file):
+def csv_to_geojson(color, subarea):
     # Read the CSV file
-    df = pd.read_csv(csv_file)
+    df = pd.read_csv("../cirque-data/problems.csv")
     
     # Filter the dataframe based on color and subarea
     filtered_df = df[(df['color'] == color) & (df['subarea'] == subarea)]
@@ -27,6 +27,7 @@ def csv_to_geojson(csv_file, color, subarea, output_file):
     )
 
     # Check if the output file already exists
+    output_file = "../cirque-data/circuits.geojson"
     if os.path.exists(output_file):
         with open(output_file, 'r') as f:
             existing_geojson = geojson.load(f)
@@ -55,11 +56,9 @@ def csv_to_geojson(csv_file, color, subarea, output_file):
     print(f"GeoJSON file updated successfully: {output_file}")
 
 if __name__ == "__main__":
-    if len(sys.argv) != 5:
-        print("Usage: python script.py <csv_file> <color> <subarea> <output_file>")
+    if len(sys.argv) != 3:
+        print("Usage: python script.py <color> <subarea>")
     else:
-        csv_file = sys.argv[1]
-        color = sys.argv[2]
-        subarea = sys.argv[3]
-        output_file = sys.argv[4]
-        csv_to_geojson(csv_file, color, subarea, output_file)
+        color = sys.argv[1]
+        subarea = sys.argv[2]
+        csv_to_geojson(color, subarea)
