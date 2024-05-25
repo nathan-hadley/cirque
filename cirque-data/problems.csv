@@ -1,58 +1,76 @@
-name,grade,subarea,topo,order,color,line,lon,lat,description
-2001,V4,Straightaways,straightaways-2001,1,white,,-120.74061,47.54365,
-Lonely Fish,V8,Straightaways,straightaways-lonely-fish,3,white,,-120.74076,47.54459,
-Bok Choy,V5,Straightaways,straightaways-bok-choy,7,white,,-120.74504,47.54454,
-The Freezer Right,V4,Straightaways,straightaways-freezer,8,white,,-120.74618,47.54515,
-The Icehouse,V4,Straightaways,straightaways-icehouse,9,white,,-120.74564,47.54539,
-Answer Man,V6,Straightaways,straightaways-answer-man,15,white,,-120.74618,47.54597,
-Mountain Man,V9,Straightaways,straightaways-mountain-man,18,white,,-120.74061,47.54365,
-WAS,V8,Straightaways,straightaways-was,21,white,,-120.74797,47.54590,
-Pony Ride,V4,Straightaways,straightaways-pony-ride,26,white,,-120.74925,47.5464,
-Miracle Whip,V7,Straightaways,straightaways-miracle-whip,28,white,,-120.74061,47.54365,
-Batman,V9,Straightaways,straightaways-batman,29,white,,-120.75207,47.54742,
-Schist Crack,V0,Swiftwater,swiftwater-schist-crack,1,blue,"[[256, 317], [299, 64]]",-120.72794023314,47.65307296093,
-Jump!,V2,Swiftwater,swiftwater-jump,2,blue,"[[332, 159], [304, 119]]",-120.72805300489,47.65313068032,Hop up to the sloper and mantle.
-Little Guy,V2,Swiftwater,swiftwater-little-guy,3,blue,"[[251, 284], [324, 68]]",-120.72884723065,47.65348218338,
-Whelmed,V2,Swiftwater,swiftwater-whelmed,4,blue,"[[346, 237], [321, 77]]",-120.72915002972,47.65355436999,Start with a left hand high on a decent sidepull and right hand on a crimp.
-The Devonian Traverse,V1,Swiftwater,swiftwater-devonian,5,blue,"[[141, 262], [342, 174], [361, 119]]",-120.72941489534,47.6538917811,
-The Transverse,V1,Swiftwater,swiftwater-transverse,6,blue,"[[460, 232], [242, 71]]",-120.72904944688,47.65425900468,
-14 Years Stand,V2,Swiftwater,swiftwater-14-years,7,blue,"[[473, 259], [421, 205], [411, 128]]",-120.72900317676,47.65421022123,
-Shock and Awe,V3,Swiftwater,swiftwater-hate-monger,8,blue,"[[427, 205], [506, 175], [497, 116]]",-120.72918087512,47.65410181777,
-Slap and Dangle,V3,Swiftwater,swiftwater-hate-monger,9,blue,"[[424, 204], [354, 178], [355, 133]]",-120.72921037942,47.65410543127,
-Hate Monger,V3,Swiftwater,swiftwater-hate-monger,10,blue,"[[236, 318], [243, 150]]",-120.72924524814,47.65413253249,
-Cramps,V2,Swiftwater,swiftwater-hate-monger,11,blue,"[[133, 252], [190, 193]]",-120.72925597697,47.65415240671,
-Mickey,V0,Swiftwater,swiftwater-mickey,12,blue,"[[232, 261], [318, 186], [313, 141]]",-120.72980102026,47.65453754177,
-Minnie,V1,Swiftwater,swiftwater-minnie,13,blue,"[[339, 248], [302, 71]]",-120.7297568775,47.65455214662,
-Heel Hook Left,V2,Swiftwater,swiftwater-heel-hook-rock,14,blue,"[[137, 274], [284, 171], [302, 77]]",-120.72974816032,47.65456976227,
-Heel Hook Right,V3,Swiftwater,swiftwater-heel-hook-rock,15,blue,"[[503, 277], [450, 159], [459, 116]]",-120.72976291247,47.65459234642,
-Schist Right,V0,Swiftwater,swiftwater-schisthead,16,blue,"[[519, 292], [489, 140]]",-120.7294591523,47.65471339732,
-Schisthead Traverse,V2,Swiftwater,swiftwater-schisthead,17,blue,"[[515, 284], [269, 226], [194, 119]]",-120.72951128282,47.65473419114,
-Bubbles No-Hands,V1,Swiftwater,,18,blue,,-120.72972619923,47.65481016974,Climb the boulder with no hands!
-No Pitons Here No-Hands,V3,Swiftwater,,19,blue,,-120.72975151258,47.65479978108,Climb the boulder with no hands!
-Ripple Effect Low,V3,Swiftwater,swiftwater-ripple-effect,20,blue,"[[429, 280], [349, 234], [348, 88]]",-120.72994060881,47.65469668509,
-Oceanfront Traverse Left,V1,Swiftwater,swiftwater-oceanfront,21,blue,"[[535, 231], [369, 171], [181, 166]]",-120.72994597323,47.65476127558,
-Flying Goat Boy,V2,Swiftwater,swiftwater-chicken-man,22,blue,"[[450,144], [431,114], [412,104]]",-120.73012568124,47.65500202127,Hop up to the sloper and mantle.
-Chicken Man Left,V1,Swiftwater,swiftwater-chicken-man,23,blue,"[[115,267], [149,197], [209,120], [262,89]]",-120.7302202291,47.65501331326,
-Bam,V2,Swiftwater,swiftwater-bam,24,blue,"[[527,214], [358,163], [252,62]]",-120.73000766404,47.65531684089,
-Schist Lip,V2,Swiftwater,swiftwater-schist-cave,25,blue,"[[145, 334], [223, 235], [371, 200], [438, 106], [639, 6]]",-120.73003046282,47.65574638367,"Start sitting, rock over at the tree and continue diagonaling up or drop off."
-The Barista,V1,Swiftwater,swiftwater-barista,26,blue,"[[476,299], [434,192], [413,89]]",-120.72931967743,47.65546679734,
-Unobvious,V3,Swiftwater,swiftwater-barista,27,blue,"[[375,291], [258,199], [290,63]]",-120.72930090196,47.65547763754,
-Squatter Variation,V1,Swiftwater,swiftwater-squatter,28,blue,"[[393, 205], [300, 48]]",-120.72913862832,47.65548170262,Start with a high right hand on the arête and hop a foot up to the pimple.
-Percolator,V1,Swiftwater,swiftwater-premium-coffee,29,blue,"[[561, 256], [512, 141]]",-120.72927676208,47.65555171224,
-Premium Coffee Right,V2,Swiftwater,swiftwater-premium-coffee,30,blue,"[[455, 235], [421, 159], [469, 128]]",-120.72930157252,47.6555345486,
-Red Traverse,V0,Swiftwater,swiftwater-red,31,blue,"[[88, 230], [350, 178], [515, 136]]",-120.7290588326,47.65587194861,"Traverse right, staying below the lip."
-The Pit,V2,Swiftwater,swiftwater-pit,32,blue,"[[186, 273], [218, 96]]",-120.72898909517,47.65586698021,
-Fin Traverse,V2,Swiftwater,swiftwater-pit,33,blue,"[[589, 264], [539, 257], [467, 287], [226, 98]]",-120.72901927002,47.65589362885,"Start on the right side of the fin, shuffle to the left and then pull up to the main boulder, exiting near the top of The Pit."
-Lowe Rider Stand,V2,Swiftwater,swiftwater-lowe-rider,34,blue,"[[199, 339], [363, 262], [483, 141]]",-120.72914063998,47.65589498387,"Traverse the detached flake, starting from a good left foot."
-Lowe Rider Ridge,V0,Swiftwater,swiftwater-lowe-rider-ridge,35,blue,"[[294, 253], [321, 28]]",-120.7290906835,47.65591417969,
-Joel’s Slab,V3,Swiftwater,swiftwater-joels-slab,36,blue,"[[335, 295], [319, 207], [258, 170], [349, 107]]",-120.72917014394,47.65598373706,Optional if you're up for it!
-Pod Racer,V1,Swiftwater,swiftwater-pod-racer,37,blue,"[[435, 236], [269, 184], [274, 61]]",-120.72921171851,47.65609191236,
-Tentacles,V0,Swiftwater,swiftwater-pod-racer,38,blue,"[[128, 277], [125, 164]]",-120.72922445901,47.65608152395,
-Lead Pants,V3,Swiftwater,swiftwater-lead-pants,39,blue,"[[260, 288], [420, 183], [428, 77]]",-120.72928011484,47.65605487541,Start sitting.
-Raging Cow,V1,Swiftwater,swiftwater-sitting-bull,40,blue,"[[449, 314], [498, 132]]",-120.72935186394,47.65606029545,
-Sitting Bull,V3,Swiftwater,swiftwater-sitting-bull,41,blue,"[[346, 316], [332, 100]]",-120.72937399216,47.65604810035,
-Royal Flush,V2,Swiftwater,swiftwater-royal-flush,42,blue,"[[370, 318], [382, 277], [363, 92]]",-120.72946585782,47.65606390881,Start deep in the cave.
-Sleeve Ace,V3,Swiftwater,swiftwater-royal-flush,43,blue,"[[175, 297], [185, 235], [217, 154]]",-120.72946585782,47.6561063658,
-Balance Step,V3,Swiftwater,swiftwater-balance-step,44,blue,"[[405, 228], [328, 67]]",-120.72959728606,47.65627619339,
-Dark Days,V2,Swiftwater,swiftwater-dark-days,45,blue,"[[449, 284], [251, 254], [105, 50]]",-120.72942495413,47.65631277852,
-Footless Traverse,V5,Swiftwater,swiftwater-footless-traverse,46,blue,"[[538, 266], [336, 184], [192, 203], [153, 177]]",-120.72945714064,47.65636426866,An option hard and grand ending. Climb in 1 or 2 parts!
+name,order,color,topo,grade,line,description,subarea,lon,lat
+2001,1,white,straightaways-2001,V4,,,Straightaways,-120.74051857129,47.5435656033
+Millennium Traverse,2,white,straightaways-millennium,V8,,,Straightaways,-120.74040860072,47.54369686946
+Lonely Fish,3,white,straightaways-lonely-fish,V8,,,Straightaways,-120.74056956316,47.54442162001
+Sorrow Bird,4,white,straightaways-lonely-fish,V9,,,Straightaways,-120.7406419529,47.5444219959
+Old School,5,white,straightaways-old-school,V5,,,Straightaways,-120.74062049523,47.54457046001
+More Fun Than Beer,6,white,straightaways-mftb,V6,,,Straightaways,-120.74385524064,47.54473884042
+Bok Choy,7,white,straightaways-bok-choy,V5,,,Straightaways,-120.74487906746,47.54452642098
+The Icehouse,8,white,straightaways-icehouse,V4,,,Straightaways,-120.74563798834,47.54541082083
+Tall Boy,9,white,straightaways-icehouse,V5,,,Straightaways,-120.74570797451,47.54541370957
+Ice Age Left,10,white,straightaways-ice-grip,V4,,Climb the left side of the arete - a lot easier than the original.,Straightaways,-120.74572876163,47.54543362514
+Ice Grip,11,white,straightaways-ice-grip,V5,,,Straightaways,-120.74570998617,47.54545851958
+Fat Lip,12,white,straightaways-fat-lip,V4,,,Straightaways,-120.74570328064,47.54553818172
+Bear Hug,13,white,straightaways-bear-hug,V5,,,Straightaways,-120.74554368921,47.54552460296
+The Freezer Right,14,white,straightaways-freezer,V4,,,Straightaways,-120.74618,47.54515
+Answer Man,15,white,straightaways-answer-man,V6,,,Straightaways,-120.74626448958,47.54590572767
+Taller,16,white,straightaways-taller,V6,,,Straightaways,-120.74635908142,47.54599714239
+Bush Craft,17,white,straightaways-bush-craft,V8,,,Straightaways,-120.74676811762,47.54608902402
+Nasty Boy,18,white,straightaways-mountain-man,V4,,Climb right side of Bush Craft arete,Straightaways,-120.74673190847,47.54610758192
+Mountain Man,19,white,straightaways-mountain-man,V9,,,Straightaways,-120.74672855504,47.54620353693
+Hatchet,20,white,straightaways-hatchet,V4,,,Straightaways,-120.74677281149,47.54623024149
+IS,21,white,straightaways-was,V7,,,Straightaways,-120.74795030124,47.54586407104
+WAS,22,white,straightaways-was,V8,,,Straightaways,-120.74800956258,47.54589366329
+A Dog Named Rehab,23,white,straightaways-dog-named-rehab,V4,,,Straightaways,-120.74844450027,47.54604964736
+Down the Barrel,24,white,straightaways-down-the-barrel,V7,,,Straightaways,-120.74868589908,47.54566582331
+Heads Will Roll,25,white,straightaways-heads-will-roll,V9,,,Straightaways,-120.74879586831,47.54569479035
+Pony Ride,26,white,straightaways-pony-ride,V4,,,Straightaways,-120.74924731779,47.54641041021
+Tampax Arête,27,white,straightaways-tampax-arete,V4,,,Straightaways,-120.74945971437,47.54642713059
+Miracle Whip,28,white,straightaways-miracle-whip,V7,,,Straightaways,-120.75207755104,47.54711872646
+Batman,29,white,straightaways-batman,V9,,,Straightaways,-120.75197209937,47.54743357827
+Schist Crack,1,blue,swiftwater-schist-crack,V0,"[[256, 317], [299, 64]]",,Swiftwater,-120.72794023314,47.65307296093
+Jump!,2,blue,swiftwater-jump,V2,"[[332, 159], [304, 119]]",Hop up to the sloper and mantle.,Swiftwater,-120.72805300489,47.65313068032
+Little Guy,3,blue,swiftwater-little-guy,V2,"[[251, 284], [324, 68]]",,Swiftwater,-120.72884723065,47.65348218338
+Whelmed,4,blue,swiftwater-whelmed,V2,"[[346, 237], [321, 77]]",Start with a left hand high on a decent sidepull and right hand on a crimp.,Swiftwater,-120.72915002972,47.65355436999
+The Devonian Traverse,5,blue,swiftwater-devonian,V1,"[[141, 262], [342, 174], [361, 119]]",,Swiftwater,-120.72941489534,47.6538917811
+The Transverse,6,blue,swiftwater-transverse,V1,"[[460, 232], [242, 71]]",,Swiftwater,-120.72904944688,47.65425900468
+14 Years Stand,7,blue,swiftwater-14-years,V2,"[[473, 259], [421, 205], [411, 128]]",,Swiftwater,-120.72900317676,47.65421022123
+Shock and Awe,8,blue,swiftwater-hate-monger,V3,"[[427, 205], [506, 175], [497, 116]]",,Swiftwater,-120.72918087512,47.65410181777
+Slap and Dangle,9,blue,swiftwater-hate-monger,V3,"[[424, 204], [354, 178], [355, 133]]",,Swiftwater,-120.72921037942,47.65410543127
+Hate Monger,10,blue,swiftwater-hate-monger,V3,"[[236, 318], [243, 150]]",,Swiftwater,-120.72924524814,47.65413253249
+Cramps,11,blue,swiftwater-hate-monger,V2,"[[133, 252], [190, 193]]",,Swiftwater,-120.72925597697,47.65415240671
+Mickey,12,blue,swiftwater-mickey,V0,"[[232, 261], [318, 186], [313, 141]]",,Swiftwater,-120.72980102026,47.65453754177
+Minnie,13,blue,swiftwater-minnie,V1,"[[339, 248], [302, 71]]",,Swiftwater,-120.7297568775,47.65455214662
+Heel Hook Left,14,blue,swiftwater-heel-hook-rock,V2,"[[137, 274], [284, 171], [302, 77]]",,Swiftwater,-120.72974816032,47.65456976227
+Heel Hook Right,15,blue,swiftwater-heel-hook-rock,V3,"[[503, 277], [450, 159], [459, 116]]",,Swiftwater,-120.72976291247,47.65459234642
+Schist Right,16,blue,swiftwater-schisthead,V0,"[[519, 292], [489, 140]]",,Swiftwater,-120.7294591523,47.65471339732
+Schisthead Traverse,17,blue,swiftwater-schisthead,V2,"[[515, 284], [269, 226], [194, 119]]",,Swiftwater,-120.72951128282,47.65473419114
+Bubbles No-Hands,18,blue,swiftwater-bubbles,V1,,Climb the boulder with no hands!,Swiftwater,-120.72972619923,47.65481016974
+No Pitons Here No-Hands,19,blue,swiftwater-bubbles,V3,,Climb the boulder with no hands!,Swiftwater,-120.72975151258,47.65479978108
+Ripple Effect Low,20,blue,swiftwater-ripple-effect,V3,"[[429, 280], [349, 234], [348, 88]]",,Swiftwater,-120.72994060881,47.65469668509
+Oceanfront Traverse Left,21,blue,swiftwater-oceanfront,V1,"[[535, 231], [369, 171], [181, 166]]",,Swiftwater,-120.72994597323,47.65476127558
+Flying Goat Boy,22,blue,swiftwater-chicken-man,V2,"[[450,144], [431,114], [412,104]]",Hop up to the sloper and mantle.,Swiftwater,-120.73012568124,47.65500202127
+Chicken Man Left,23,blue,swiftwater-chicken-man,V1,"[[115,267], [149,197], [209,120], [262,89]]",,Swiftwater,-120.7302202291,47.65501331326
+Bam,24,blue,swiftwater-bam,V2,"[[527,214], [358,163], [252,62]]",,Swiftwater,-120.73000766404,47.65531684089
+Schist Lip,25,blue,swiftwater-schist-cave,V2,"[[145, 334], [223, 235], [371, 200], [438, 106], [639, 6]]","Start sitting, rock over at the tree and continue diagonaling up or drop off.",Swiftwater,-120.73003046282,47.65574638367
+The Barista,26,blue,swiftwater-barista,V1,"[[476,299], [434,192], [413,89]]",,Swiftwater,-120.72931967743,47.65546679734
+Unobvious,27,blue,swiftwater-barista,V3,"[[375,291], [258,199], [290,63]]",,Swiftwater,-120.72930090196,47.65547763754
+Squatter Variation,28,blue,swiftwater-squatter,V1,"[[393, 205], [300, 48]]",Start with a high right hand on the arête and hop a foot up to the pimple.,Swiftwater,-120.72913862832,47.65548170262
+Percolator,29,blue,swiftwater-premium-coffee,V1,"[[561, 256], [512, 141]]",,Swiftwater,-120.72927676208,47.65555171224
+Premium Coffee Right,30,blue,swiftwater-premium-coffee,V2,"[[455, 235], [421, 159], [469, 128]]",,Swiftwater,-120.72930157252,47.6555345486
+Red Traverse,31,blue,swiftwater-red,V0,"[[88, 230], [350, 178], [515, 136]]","Traverse right, staying below the lip.",Swiftwater,-120.7290588326,47.65587194861
+The Pit,32,blue,swiftwater-pit,V2,"[[186, 273], [218, 96]]",,Swiftwater,-120.72898909517,47.65586698021
+Fin Traverse,33,blue,swiftwater-pit,V2,"[[589, 264], [539, 257], [467, 287], [226, 98]]","Start on the right side of the fin, shuffle to the left and then pull up to the main boulder, exiting near the top of The Pit.",Swiftwater,-120.72901927002,47.65589362885
+Lowe Rider Stand,34,blue,swiftwater-lowe-rider,V2,"[[199, 339], [363, 262], [483, 141]]","Traverse the detached flake, starting from a good left foot.",Swiftwater,-120.72914063998,47.65589498387
+Lowe Rider Ridge,35,blue,swiftwater-lowe-rider-ridge,V0,"[[294, 253], [321, 28]]",,Swiftwater,-120.7290906835,47.65591417969
+Joel’s Slab,36,blue,swiftwater-joels-slab,V3,"[[335, 295], [319, 207], [258, 170], [349, 107]]",Optional if you're up for it!,Swiftwater,-120.72917014394,47.65598373706
+Pod Racer,37,blue,swiftwater-pod-racer,V1,"[[435, 236], [269, 184], [274, 61]]",,Swiftwater,-120.72921171851,47.65609191236
+Tentacles,38,blue,swiftwater-pod-racer,V0,"[[128, 277], [125, 164]]",,Swiftwater,-120.72922445901,47.65608152395
+Lead Pants,39,blue,swiftwater-lead-pants,V3,"[[260, 288], [420, 183], [428, 77]]",Start sitting.,Swiftwater,-120.72928011484,47.65605487541
+Raging Cow,40,blue,swiftwater-sitting-bull,V1,"[[449, 314], [498, 132]]",,Swiftwater,-120.72935186394,47.65606029545
+Sitting Bull,41,blue,swiftwater-sitting-bull,V3,"[[346, 316], [332, 100]]",,Swiftwater,-120.72937399216,47.65604810035
+Royal Flush,42,blue,swiftwater-royal-flush,V2,"[[370, 318], [382, 277], [363, 92]]",Start deep in the cave.,Swiftwater,-120.72946585782,47.65606390881
+Sleeve Ace,43,blue,swiftwater-royal-flush,V3,"[[175, 297], [185, 235], [217, 154]]",,Swiftwater,-120.72946585782,47.6561063658
+Balance Step,44,blue,swiftwater-balance-step,V3,"[[405, 228], [328, 67]]",,Swiftwater,-120.72959728606,47.65627619339
+Dark Days,45,blue,swiftwater-dark-days,V2,"[[449, 284], [251, 254], [105, 50]]",,Swiftwater,-120.72942495413,47.65631277852
+Footless Traverse,46,blue,swiftwater-footless-traverse,V5,"[[538, 266], [336, 184], [192, 203], [153, 177]]",An option hard and grand ending. Climb in 1 or 2 parts!,Swiftwater,-120.72945714064,47.65636426866
