@@ -1,5 +1,5 @@
 //
-//  QueryResult.swift
+//  Problem.swift
 //  Cirque
 //
 //  Created by Nathan Hadley on 5/18/24.

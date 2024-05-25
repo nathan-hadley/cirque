@@ -5,7 +5,8 @@
 	<key>MBXAccessToken</key>
 	<string>pk.eyJ1IjoibmF0aGFuaGFkbGV5IiwiYSI6ImNsdzdmdXAxdDIycmoyanA3cXVvbHFxenQifQ.1wcBxvOkH8eU-6ev7SoO8Q</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Allowing access to your location helps us display your position on the map and guide you to your next boulder.</string>
+	<string>Cirque requires your location to enable GPS navigation between boulder problems.
+</string>
 	<key>UILaunchScreen</key>
 	<dict>
 		<key>UIImageName</key>
