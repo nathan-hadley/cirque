@@ -11,7 +11,7 @@ struct LineShape: Shape {
     var points: [[Int]]
     var originalImageSize: CGSize
     var displayedImageSize: CGSize
-    
+
     func path(in rect: CGRect) -> Path {
         var path = Path()
         
