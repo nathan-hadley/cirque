@@ -48,23 +48,12 @@ class MapViewModel: ObservableObject {
                 return false
             }
             
-            // Dismiss current sheet
-            problem = nil
-            
             guard let firstFeature = filteredFeatures.first else {
                 return
             }
-
-            // Delay setting the new feature to ensure the sheet is dismissed first
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                let newProblem = Problem(problem: firstFeature.queriedFeature.feature)
-                self.problem = newProblem
-            }
             
-            withViewportAnimation(.easeOut(duration: 0.5)) {
-                viewport = .camera(center: context.coordinate)
-                    .padding(.bottom, bottomInset)
-            }
+            let newProblem = Problem(problem: firstFeature.queriedFeature.feature)
+            self.setNewProblem(problem: newProblem)
         }
     }
 
@@ -102,33 +91,46 @@ class MapViewModel: ObservableObject {
         map.querySourceFeatures(for: "composite", options: options) { [self] result in
             guard let features = try? result.get() else { return }
             
-            let sortedFeatures = features.sorted { lhs, rhs in
-                let lhsOrderString = (lhs.queriedFeature.feature.properties?["order"] as? Turf.JSONValue)?.stringValue ?? "0"
-                let rhsOrderString = (rhs.queriedFeature.feature.properties?["order"] as? Turf.JSONValue)?.stringValue ?? "0"
-                let lhsOrder = Int(lhsOrderString) ?? 0
-                let rhsOrder = Int(rhsOrderString) ?? 0
-                return lhsOrder < rhsOrder
-            }
+            var seenOrders = Set<Int>()
+            let sortedFeatures = features
+                .compactMap { feature -> QueriedSourceFeature? in
+                    let orderString = (feature.queriedFeature.feature.properties?["order"] as? Turf.JSONValue)?.stringValue ?? "0"
+                    if let order = Int(orderString), !seenOrders.contains(order) {
+                        seenOrders.insert(order)
+                        return feature
+                    }
+                    return nil
+                }
+                .sorted { lhs, rhs in
+                    let lhsOrderString = (lhs.queriedFeature.feature.properties?["order"] as? Turf.JSONValue)?.stringValue ?? "0"
+                    let rhsOrderString = (rhs.queriedFeature.feature.properties?["order"] as? Turf.JSONValue)?.stringValue ?? "0"
+                    let lhsOrder = Int(lhsOrderString) ?? 0
+                    let rhsOrder = Int(rhsOrderString) ?? 0
+                    return lhsOrder < rhsOrder
+                }
             
-            guard let currentIndex = sortedFeatures.firstIndex(where: {
-                ($0.queriedFeature.feature.properties?["name"] as? Turf.JSONValue)?.stringValue ?? "" == currentProblem.name
-            }) else {
-                return
-            }
-            
+            let currentIndex = currentProblem.order - 1
             let newIndex = currentIndex + offset
             guard newIndex >= 0 && newIndex < sortedFeatures.count else { return }
             
             let newFeature = sortedFeatures[newIndex].queriedFeature.feature
             let newProblem = Problem(problem: newFeature)
             
-            self.problem = newProblem
-            
-            if let newCoordinates = newProblem.coordinates {
-                withViewportAnimation(.easeOut(duration: 0.5)) {
-                    viewport = .camera(center: newCoordinates)
-                }
-            }
+            self.setNewProblem(problem: newProblem)
+        }
+    }
+    
+    private func setNewProblem(problem: Problem) {
+        // Dismiss current sheet
+        self.problem = nil
+
+        // Delay setting the new feature to ensure the sheet is dismissed first
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.problem = problem
+        }
+        
+        withViewportAnimation(.easeOut(duration: 0.5)) {
+            self.viewport = .camera(center: problem.coordinates)
         }
     }
 }
