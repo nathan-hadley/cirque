@@ -74,5 +74,61 @@ class MapViewModel: ObservableObject {
             viewport = .camera() // Reset the inset
         }
     }
-}
+    
+    func showPreviousProblem(map: MapboxMap?) {
+        guard let currentProblem = problem else { return }
+        fetchAdjacentProblem(map: map, currentProblem: currentProblem, offset: -1)
+    }
+    
+    func showNextProblem(map: MapboxMap?) {
+        guard let currentProblem = problem else { return }
+        fetchAdjacentProblem(map: map, currentProblem: currentProblem, offset: 1)
+    }
+    
+    private func fetchAdjacentProblem(map: MapboxMap?, currentProblem: Problem, offset: Int) {
+        guard let map = map else { return }
+        
+        let filter: [String: Any] = [
+            "filter": [
+                "all",
+                ["==", ["get", "color"], "blue"],
+                ["==", ["get", "subarea"], "Swiftwater"]
+            ]
+        ]
 
+        let options = SourceQueryOptions(sourceLayerIds: ["swiftwater-problems-apl4s2"], filter: filter)
+        
+        // Query the map for all problems in the same area with the same color
+        map.querySourceFeatures(for: "composite", options: options) { [self] result in
+            guard let features = try? result.get() else { return }
+            
+            let sortedFeatures = features.sorted { lhs, rhs in
+                let lhsOrderString = (lhs.queriedFeature.feature.properties?["order"] as? Turf.JSONValue)?.stringValue ?? "0"
+                let rhsOrderString = (rhs.queriedFeature.feature.properties?["order"] as? Turf.JSONValue)?.stringValue ?? "0"
+                let lhsOrder = Int(lhsOrderString) ?? 0
+                let rhsOrder = Int(rhsOrderString) ?? 0
+                return lhsOrder < rhsOrder
+            }
+            
+            guard let currentIndex = sortedFeatures.firstIndex(where: {
+                ($0.queriedFeature.feature.properties?["name"] as? Turf.JSONValue)?.stringValue ?? "" == currentProblem.name
+            }) else {
+                return
+            }
+            
+            let newIndex = currentIndex + offset
+            guard newIndex >= 0 && newIndex < sortedFeatures.count else { return }
+            
+            let newFeature = sortedFeatures[newIndex].queriedFeature.feature
+            let newProblem = Problem(problem: newFeature)
+            
+            self.problem = newProblem
+            
+            if let newCoordinates = newProblem.coordinates {
+                withViewportAnimation(.easeOut(duration: 0.5)) {
+                    viewport = .camera(center: newCoordinates)
+                }
+            }
+        }
+    }
+}
