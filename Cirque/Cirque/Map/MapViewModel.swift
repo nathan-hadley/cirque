@@ -22,10 +22,17 @@ class MapViewModel: ObservableObject {
         pitch: 0
     )
     private var cancellable: Cancelable? = nil
+    private var bottomInset: CGFloat = 0
 
-    func mapTapped(_ context: MapContentGestureContext, map: MapboxMap?, bottomInset: CGFloat) {
+    func mapTapped(
+        _ context: MapContentGestureContext,
+        map: MapboxMap?,
+        bottomInset: CGFloat
+    ) {
         cancellable?.cancel()
         guard let map = map else { return }
+        
+        self.bottomInset = bottomInset
         
         // Increase the size of the area to query (tappable area)
         let querySize: CGFloat = 44
@@ -66,15 +73,27 @@ class MapViewModel: ObservableObject {
     
     func showPreviousProblem(map: MapboxMap?) {
         guard let currentProblem = problem else { return }
-        fetchAdjacentProblem(map: map, currentProblem: currentProblem, offset: -1)
+        fetchAdjacentProblem(
+            map: map,
+            currentProblem: currentProblem,
+            offset: -1
+        )
     }
     
     func showNextProblem(map: MapboxMap?) {
         guard let currentProblem = problem else { return }
-        fetchAdjacentProblem(map: map, currentProblem: currentProblem, offset: 1)
+        fetchAdjacentProblem(
+            map: map,
+            currentProblem: currentProblem,
+            offset: 1
+        )
     }
     
-    private func fetchAdjacentProblem(map: MapboxMap?, currentProblem: Problem, offset: Int) {
+    private func fetchAdjacentProblem(
+        map: MapboxMap?,
+        currentProblem: Problem,
+        offset: Int
+    ) {
         guard let map = map else { return }
         
         let filter: [String: Any] = [
@@ -85,7 +104,10 @@ class MapViewModel: ObservableObject {
             ]
         ]
 
-        let options = SourceQueryOptions(sourceLayerIds: ["swiftwater-problems-apl4s2"], filter: filter)
+        let options = SourceQueryOptions(
+            sourceLayerIds: ["swiftwater-problems-apl4s2"],
+            filter: filter
+        )
         
         // Query the map for all problems in the same area with the same color
         map.querySourceFeatures(for: "composite", options: options) { [self] result in
@@ -94,7 +116,10 @@ class MapViewModel: ObservableObject {
             var seenOrders = Set<Int>()
             let sortedFeatures = features
                 .compactMap { feature -> QueriedSourceFeature? in
-                    let orderString = (feature.queriedFeature.feature.properties?["order"] as? Turf.JSONValue)?.stringValue ?? "0"
+                    let orderString = (
+                        feature.queriedFeature.feature.properties?["order"] as? Turf.JSONValue
+                    )?.stringValue ?? "0"
+                    
                     if let order = Int(orderString), !seenOrders.contains(order) {
                         seenOrders.insert(order)
                         return feature
@@ -102,14 +127,29 @@ class MapViewModel: ObservableObject {
                     return nil
                 }
                 .sorted { lhs, rhs in
-                    let lhsOrderString = (lhs.queriedFeature.feature.properties?["order"] as? Turf.JSONValue)?.stringValue ?? "0"
-                    let rhsOrderString = (rhs.queriedFeature.feature.properties?["order"] as? Turf.JSONValue)?.stringValue ?? "0"
+                    let lhsOrderString = (
+                        lhs.queriedFeature.feature.properties?["order"] as? Turf.JSONValue
+                    )?.stringValue ?? "0"
+                    
+                    let rhsOrderString = (
+                        rhs.queriedFeature.feature.properties?["order"] as? Turf.JSONValue
+                    )?.stringValue ?? "0"
+                    
                     let lhsOrder = Int(lhsOrderString) ?? 0
                     let rhsOrder = Int(rhsOrderString) ?? 0
                     return lhsOrder < rhsOrder
                 }
             
-            let currentIndex = currentProblem.order - 1
+            // Tried just using problem.order - 1 to determine index
+            // but the map query does not return some problems further away.
+            // Maybe this would be solved by downloading maps?
+            guard let currentIndex = sortedFeatures.firstIndex(where: {(
+                $0.queriedFeature.feature.properties?["name"] as? Turf.JSONValue
+            )?.stringValue ?? "" == currentProblem.name
+            }) else {
+                return
+            }
+            
             let newIndex = currentIndex + offset
             guard newIndex >= 0 && newIndex < sortedFeatures.count else { return }
             
@@ -131,6 +171,7 @@ class MapViewModel: ObservableObject {
         
         withViewportAnimation(.easeOut(duration: 0.5)) {
             self.viewport = .camera(center: problem.coordinates)
+                .padding(.bottom, self.bottomInset)
         }
     }
 }

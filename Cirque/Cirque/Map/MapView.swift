@@ -55,43 +55,12 @@ struct MapView: View {
                 }
                 .zIndex(1) // Ensure the map is behind other elements
                 
-                if let map = map {
-                    NavigationButtons(mapViewModel: mapViewModel, map: map)
+                if let map = map, mapViewModel.problem != nil {
+                    CircuitNavButtons(mapViewModel: mapViewModel, map: map)
                         .padding(.horizontal)
-                        .padding(.bottom, 60)
+                        .padding(.bottom, 100)
                         .zIndex(2) // Ensure the navigation buttons are above the map and sheet
                 }
-            }
-        }
-    }
-}
-
-struct NavigationButtons: View {
-    let mapViewModel: MapViewModel
-    let map: MapboxMap?
-    
-    var body: some View {
-        HStack {
-            Button(action: {
-                mapViewModel.showPreviousProblem(map: map)
-            }) {
-                Image(systemName: "arrow.left")
-                    .padding()
-                    .background(Color.white)
-                    .clipShape(Circle())
-                    .shadow(radius: 2)
-            }
-            
-            Spacer()
-            
-            Button(action: {
-                mapViewModel.showNextProblem(map: map)
-            }) {
-                Image(systemName: "arrow.right")
-                    .padding()
-                    .background(Color.white)
-                    .clipShape(Circle())
-                    .shadow(radius: 2)
             }
         }
     }

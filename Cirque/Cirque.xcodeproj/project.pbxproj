@@ -27,6 +27,7 @@
 		D897D6472BF30FA600027155 /* CirqueUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D897D6462BF30FA600027155 /* CirqueUITestsLaunchTests.swift */; };
 		D8BD608C2BF313130011C7C2 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BD608B2BF313130011C7C2 /* MapView.swift */; };
 		D8BD608E2BF313B80011C7C2 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BD608D2BF313B80011C7C2 /* AboutView.swift */; };
+		D8C83DC42C04C76E00F6221F /* CircuitNavButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C83DC32C04C76E00F6221F /* CircuitNavButtons.swift */; };
 		D8EC31952BF48EDB00677384 /* MapboxMaps in Frameworks */ = {isa = PBXBuildFile; productRef = D8EC31942BF48EDB00677384 /* MapboxMaps */; };
 /* End PBXBuildFile section */
 
@@ -72,6 +73,7 @@
 		D898448A2BF461330049196B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		D8BD608B2BF313130011C7C2 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		D8BD608D2BF313B80011C7C2 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		D8C83DC32C04C76E00F6221F /* CircuitNavButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircuitNavButtons.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 				D8BD608B2BF313130011C7C2 /* MapView.swift */,
 				D86792BA2BF8F0160006405C /* MapViewModel.swift */,
 				D890D0942BFB901900C94EA7 /* LocateMeButton.swift */,
+				D8C83DC32C04C76E00F6221F /* CircuitNavButtons.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -361,6 +364,7 @@
 				D87FB06E2C0251E80072D028 /* InfoView.swift in Sources */,
 				D87FB0702C02520F0072D028 /* TopoView.swift in Sources */,
 				D87FB0772C0258B00072D028 /* LineCapShape.swift in Sources */,
+				D8C83DC42C04C76E00F6221F /* CircuitNavButtons.swift in Sources */,
 				D890D0952BFB901900C94EA7 /* LocateMeButton.swift in Sources */,
 				D897D6272BF30FA300027155 /* ContentView.swift in Sources */,
 				D86792BF2BF8F0A20006405C /* ProblemView.swift in Sources */,
