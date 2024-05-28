@@ -9,7 +9,7 @@ import SwiftUI
 
 @available(iOS 14.0, *)
 struct ProblemView: View {
-    let problem: Problem
+    @Binding var problem: Problem
     @State private var imageSize: CGSize = .zero
 
     var body: some View {
