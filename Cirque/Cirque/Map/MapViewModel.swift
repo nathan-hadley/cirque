@@ -53,7 +53,7 @@ class MapViewModel: ObservableObject {
             // Filter features based on the specific layer
             let filteredFeatures = features.filter { feature in
                 if let sourceLayer = feature.queriedFeature.sourceLayer {
-                    return sourceLayer == "swiftwater-problems-apl4s2"
+                    return sourceLayer == "Leavenworth_Problems"
                 }
                 return false
             }
@@ -101,7 +101,7 @@ class MapViewModel: ObservableObject {
         ]
 
         let options = SourceQueryOptions(
-            sourceLayerIds: ["swiftwater-problems-apl4s2"],
+            sourceLayerIds: ["Leavenworth_Problems"],
             filter: filter
         )
         
