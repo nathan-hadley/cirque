@@ -14,13 +14,16 @@ class MapViewModel: ObservableObject {
         var id = UUID()
         var coordinate: CLLocationCoordinate2D
     }
+    
     @Published var problem: Problem? = nil
+    @Published var viewProblem = false
     @Published var viewport: Viewport = .camera(
         center: CLLocationCoordinate2D(latitude: 47.585, longitude: -120.713),
         zoom: 10.5,
         bearing: 0,
         pitch: 0
     )
+    
     private var cancellable: Cancelable? = nil
     private var bottomInset: CGFloat = 0
 
@@ -61,13 +64,6 @@ class MapViewModel: ObservableObject {
             
             let newProblem = Problem(problem: firstFeature.queriedFeature.feature)
             self.setNewProblem(problem: newProblem)
-        }
-    }
-
-    func dismiss() {
-        if problem != nil { return }
-        withViewportAnimation(.easeOut(duration: 0.2)) {
-            viewport = .camera() // Reset the inset
         }
     }
     
@@ -161,13 +157,8 @@ class MapViewModel: ObservableObject {
     }
     
     private func setNewProblem(problem: Problem) {
-        // Dismiss current sheet
-        self.problem = nil
-
-        // Delay setting the new feature to ensure the sheet is dismissed first
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.problem = problem
-        }
+        self.problem = problem
+        self.viewProblem = true
         
         withViewportAnimation(.easeOut(duration: 0.5)) {
             self.viewport = .camera(center: problem.coordinates)

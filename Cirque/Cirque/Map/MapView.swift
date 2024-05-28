@@ -41,21 +41,23 @@ struct MapView: View {
                                     .padding(.trailing, 70)
                             }
                         }
-                        .sheet(item: $mapViewModel.problem, onDismiss: {
-                            mapViewModel.dismiss()
-                        }) {
-                            ProblemView(problem: $0)
-                                .presentationDetents([.medium])
-                                .presentationBackgroundInteraction(.enabled(upThrough: .medium))
-                                .environmentObject(mapViewModel)
-                        }
+                        .sheet(isPresented: $mapViewModel.viewProblem, content: {
+                            if let problem = $mapViewModel.problem.wrappedValue {
+                                ProblemView(problem: Binding(
+                                    get: { problem },
+                                    set: { mapViewModel.problem = $0 }
+                                ))
+                                    .presentationDetents([.medium])
+                                    .presentationBackgroundInteraction(.enabled(upThrough: .medium))
+                            }
+                        })
                         .onAppear {
                             self.map = proxy.map
                         }
                 }
                 .zIndex(1) // Ensure the map is behind other elements
                 
-                if let map = map, mapViewModel.problem != nil {
+                if let map = map, mapViewModel.viewProblem {
                     CircuitNavButtons(mapViewModel: mapViewModel, map: map)
                         .padding(.horizontal)
                         .padding(.bottom, 100)
