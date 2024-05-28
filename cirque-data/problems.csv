@@ -45,8 +45,8 @@ Heel Hook Left,14,blue,swiftwater-heel-hook-rock,V2,"[[137, 274], [284, 171], [3
 Heel Hook Right,15,blue,swiftwater-heel-hook-rock,V3,"[[503, 277], [450, 159], [459, 116]]",,Swiftwater,-120.72976291247,47.65459234642
 Schist Right,16,blue,swiftwater-schisthead,V0,"[[519, 292], [489, 140]]",,Swiftwater,-120.7294591523,47.65471339732
 Schisthead Traverse,17,blue,swiftwater-schisthead,V2,"[[515, 284], [269, 226], [194, 119]]",,Swiftwater,-120.72951128282,47.65473419114
-Bubbles No-Hands,18,blue,,V1,,Climb the boulder with no hands!,Swiftwater,-120.72972619923,47.65481016974
-No Pitons Here No-Hands,19,blue,,V3,,Climb the boulder with no hands!,Swiftwater,-120.72975151258,47.65479978108
+Bubbles No-Hands,18,blue,swiftwater-bubbles,V1,"[[391, 339], [360, 81]]",Climb the boulder with no hands!,Swiftwater,-120.72972619923,47.65481016974
+No Pitons Here No-Hands,19,blue,swiftwater-bubbles,V3,"[[169, 331], [223, 107]]",Climb the boulder with no hands!,Swiftwater,-120.72975151258,47.65479978108
 Ripple Effect Low,20,blue,swiftwater-ripple-effect,V3,"[[429, 280], [349, 234], [348, 88]]",,Swiftwater,-120.72994060881,47.65469668509
 Oceanfront Traverse Left,21,blue,swiftwater-oceanfront,V1,"[[535, 231], [369, 171], [181, 166]]",,Swiftwater,-120.72994597323,47.65476127558
 Flying Goat Boy,22,blue,swiftwater-chicken-man,V2,"[[450,144], [431,114], [412,104]]",Hop up to the sloper and mantle.,Swiftwater,-120.73012568124,47.65500202127
