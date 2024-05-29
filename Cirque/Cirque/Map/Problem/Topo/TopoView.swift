@@ -30,7 +30,11 @@ struct TopoView: View {
                         imageSize = newSize
                     }
                 
-                LineView(points: problem.line, originalImageSize: uiImage.size, displayedImageSize: imageSize)
+                LineView(
+                    problem: problem,
+                    originalImageSize: uiImage.size,
+                    displayedImageSize: imageSize
+                )
             }
         } else {
             VStack {

@@ -18,6 +18,7 @@ struct CircuitNavButtons: View {
                 mapViewModel.showPreviousProblem(map: map)
             }) {
                 Image(systemName: "arrow.left")
+                    .foregroundColor(self.color)
                     .padding()
                     .background(Color.white)
                     .clipShape(Circle())
@@ -30,6 +31,7 @@ struct CircuitNavButtons: View {
                 mapViewModel.showNextProblem(map: map)
             }) {
                 Image(systemName: "arrow.right")
+                    .foregroundColor(self.color)
                     .padding()
                     .background(Color.white)
                     .clipShape(Circle())
@@ -37,4 +39,12 @@ struct CircuitNavButtons: View {
             }
         }
     }
+        
+    private var color: Color {
+        if mapViewModel.problem?.color == Color.white {
+            return Color.black
+        }
+        return mapViewModel.problem?.color ?? Color.black
+    }
 }
+

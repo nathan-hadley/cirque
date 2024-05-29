@@ -20,14 +20,22 @@ struct LineShape: Shape {
         let scaleX = displayedImageSize.width / originalImageSize.width
         let scaleY = displayedImageSize.height / originalImageSize.height
 
-        let startPoint = CGPoint(x: CGFloat(firstPoint[0]) * scaleX, y: CGFloat(firstPoint[1]) * scaleY)
+        var startPoint = CGPoint(x: CGFloat(firstPoint[0]) * scaleX, y: CGFloat(firstPoint[1]) * scaleY)
         path.move(to: startPoint)
         
-        for point in points.dropFirst() {
-            let nextPoint = CGPoint(x: CGFloat(point[0]) * scaleX, y: CGFloat(point[1]) * scaleY)
-            path.addLine(to: nextPoint)
+        // For quadratic Bezier curves
+        for i in 1..<points.count {
+            let nextPoint = CGPoint(x: CGFloat(points[i][0]) * scaleX, y: CGFloat(points[i][1]) * scaleY)
+            let midPoint = CGPoint(
+                x: (startPoint.x + nextPoint.x) / 2,
+                y: (startPoint.y + nextPoint.y) / 2
+            )
+            path.addQuadCurve(to: midPoint, control: startPoint)
+            startPoint = nextPoint
         }
-        
+        path.addLine(to: startPoint)
+
         return path
     }
 }
+
