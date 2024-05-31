@@ -1,0 +1,32 @@
+{
+    "type": "FeatureCollection",
+    "generator": "JOSM",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Straightaways"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.74633323379,
+                    47.54614689686
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Swiftwater"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72892998547,
+                    47.65451318915
+                ]
+            }
+        }
+    ]
+}
