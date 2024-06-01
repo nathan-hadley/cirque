@@ -11,12 +11,30 @@ import SwiftUI
 struct MapView: View {
     @StateObject private var mapViewModel = MapViewModel()
     @State private var map: MapboxMap?
+    let offlineMapDownloader = OfflineMapDownloader()
     
+    private var styleURI = StyleURI(rawValue: "mapbox://styles/nathanhadley/clw9fowlu01kw01obbpsp3wiq")!
     private var gestureOptions: GestureOptions {
         var options = GestureOptions()
         options.pitchEnabled = false
         options.rotateEnabled = false
         return options
+    }
+    
+    init() {
+        offlineMapDownloader.downloadMapData(
+            styleURI: styleURI,
+            // TODO: Make this DRY (also used in MapViewModel)
+            coordinate: CLLocationCoordinate2D(latitude: 47.585, longitude: -120.713),
+            zoomRange: 10...20
+        ) { result in
+            switch result {
+            case .success:
+                print("Map data downloaded successfully.")
+            case .failure(let error):
+                print("Failed to download map data: \(error)")
+            }
+        }
     }
     
     var body: some View {
@@ -27,7 +45,7 @@ struct MapView: View {
                         Puck2D(bearing: .heading)
                             .showsAccuracyRing(true)
                     }
-                        .mapStyle(MapStyle(uri: StyleURI(rawValue: "mapbox://styles/nathanhadley/clw9fowlu01kw01obbpsp3wiq")!))
+                        .mapStyle(MapStyle(uri: styleURI))
                         .gestureOptions(gestureOptions)
                         .onMapTapGesture { context in
                             mapViewModel.mapTapped(context, map: proxy.map, bottomInset: geometry.size.height * 0.33)

@@ -19,12 +19,11 @@
 		D897D6252BF30FA300027155 /* CirqueApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D897D6242BF30FA300027155 /* CirqueApp.swift */; };
 		D897D6272BF30FA300027155 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D897D6262BF30FA300027155 /* ContentView.swift */; };
 		D897D6292BF30FA500027155 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D897D6282BF30FA500027155 /* Assets.xcassets */; };
-		D897D62C2BF30FA500027155 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D897D62B2BF30FA500027155 /* Preview Assets.xcassets */; };
-		D897D62E2BF30FA500027155 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = D897D62D2BF30FA500027155 /* Persistence.swift */; };
 		D897D6312BF30FA500027155 /* Cirque.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D897D62F2BF30FA500027155 /* Cirque.xcdatamodeld */; };
 		D897D63B2BF30FA600027155 /* CirqueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D897D63A2BF30FA600027155 /* CirqueTests.swift */; };
 		D897D6452BF30FA600027155 /* CirqueUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D897D6442BF30FA600027155 /* CirqueUITests.swift */; };
 		D897D6472BF30FA600027155 /* CirqueUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D897D6462BF30FA600027155 /* CirqueUITestsLaunchTests.swift */; };
+		D89ABD0B2C0987B10029C444 /* OfflineMapDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89ABD0A2C0987B10029C444 /* OfflineMapDownloader.swift */; };
 		D8BD608C2BF313130011C7C2 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BD608B2BF313130011C7C2 /* MapView.swift */; };
 		D8BD608E2BF313B80011C7C2 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BD608D2BF313B80011C7C2 /* AboutView.swift */; };
 		D8C83DC42C04C76E00F6221F /* CircuitNavButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C83DC32C04C76E00F6221F /* CircuitNavButtons.swift */; };
@@ -62,8 +61,6 @@
 		D897D6242BF30FA300027155 /* CirqueApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CirqueApp.swift; sourceTree = "<group>"; };
 		D897D6262BF30FA300027155 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		D897D6282BF30FA500027155 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		D897D62B2BF30FA500027155 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		D897D62D2BF30FA500027155 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		D897D6302BF30FA500027155 /* Cirque.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Cirque.xcdatamodel; sourceTree = "<group>"; };
 		D897D6362BF30FA600027155 /* CirqueTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CirqueTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D897D63A2BF30FA600027155 /* CirqueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CirqueTests.swift; sourceTree = "<group>"; };
@@ -71,6 +68,7 @@
 		D897D6442BF30FA600027155 /* CirqueUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CirqueUITests.swift; sourceTree = "<group>"; };
 		D897D6462BF30FA600027155 /* CirqueUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CirqueUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		D898448A2BF461330049196B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		D89ABD0A2C0987B10029C444 /* OfflineMapDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineMapDownloader.swift; sourceTree = "<group>"; };
 		D8BD608B2BF313130011C7C2 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		D8BD608D2BF313B80011C7C2 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		D8C83DC32C04C76E00F6221F /* CircuitNavButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircuitNavButtons.swift; sourceTree = "<group>"; };
@@ -110,6 +108,7 @@
 				D86792BA2BF8F0160006405C /* MapViewModel.swift */,
 				D890D0942BFB901900C94EA7 /* LocateMeButton.swift */,
 				D8C83DC32C04C76E00F6221F /* CircuitNavButtons.swift */,
+				D89ABD0A2C0987B10029C444 /* OfflineMapDownloader.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -165,19 +164,9 @@
 				D897D6262BF30FA300027155 /* ContentView.swift */,
 				D86792C32BF9B9070006405C /* Map */,
 				D897D6282BF30FA500027155 /* Assets.xcassets */,
-				D897D62D2BF30FA500027155 /* Persistence.swift */,
 				D897D62F2BF30FA500027155 /* Cirque.xcdatamodeld */,
-				D897D62A2BF30FA500027155 /* Preview Content */,
 			);
 			path = Cirque;
-			sourceTree = "<group>";
-		};
-		D897D62A2BF30FA500027155 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				D897D62B2BF30FA500027155 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 		D897D6392BF30FA600027155 /* CirqueTests */ = {
@@ -308,7 +297,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D897D62C2BF30FA500027155 /* Preview Assets.xcassets in Resources */,
 				D897D6292BF30FA500027155 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -359,12 +347,12 @@
 				D86792BB2BF8F0160006405C /* MapViewModel.swift in Sources */,
 				D86792BD2BF8F0800006405C /* Problem.swift in Sources */,
 				D897D6312BF30FA500027155 /* Cirque.xcdatamodeld in Sources */,
-				D897D62E2BF30FA500027155 /* Persistence.swift in Sources */,
 				D8BD608C2BF313130011C7C2 /* MapView.swift in Sources */,
 				D87FB06E2C0251E80072D028 /* InfoView.swift in Sources */,
 				D87FB0702C02520F0072D028 /* TopoView.swift in Sources */,
 				D87FB0772C0258B00072D028 /* LineCapShape.swift in Sources */,
 				D8C83DC42C04C76E00F6221F /* CircuitNavButtons.swift in Sources */,
+				D89ABD0B2C0987B10029C444 /* OfflineMapDownloader.swift in Sources */,
 				D890D0952BFB901900C94EA7 /* LocateMeButton.swift in Sources */,
 				D897D6272BF30FA300027155 /* ContentView.swift in Sources */,
 				D86792BF2BF8F0A20006405C /* ProblemView.swift in Sources */,

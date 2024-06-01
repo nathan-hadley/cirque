@@ -6,15 +6,14 @@
 //
 
 import SwiftUI
+@_spi(Experimental) import MapboxMaps
 
 @main
 struct CirqueApp: App {
-    let persistenceController = PersistenceController.shared
-
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
 }
+
