@@ -5,6 +5,9 @@ import os
 def csv_to_geojson():
     # Read the CSV file
     df = pd.read_csv("../cirque-data/problems.csv")
+
+    # Filter out rows where 'order' is null
+    df = df[df['order'].notnull()]
     
     # Get all unique pairs of color and subarea
     unique_pairs = df[['color', 'subarea']].drop_duplicates()
