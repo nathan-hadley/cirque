@@ -15,7 +15,7 @@ struct Problem: Identifiable {
     var id = UUID()
     var name: String
     var grade: String
-    var order: Int
+    var order: Int?
     var color: Color
     var description: String?
     var line: [[Int]]
@@ -27,7 +27,10 @@ struct Problem: Identifiable {
         let properties = problem.properties ?? [:]
         name = (properties["name"] as? Turf.JSONValue)?.stringValue ?? "N/A"
         grade = (properties["grade"] as? Turf.JSONValue)?.stringValue ?? "N/A"
-        order = Int((properties["order"] as? Turf.JSONValue)?.stringValue ?? "0") ?? 0
+        
+        if case let .number(orderValue) = properties["order"] {
+            order = Int(orderValue)
+        }
         
         let colorStr = (properties["color"] as? Turf.JSONValue)?.stringValue
         color = Problem.color(from: colorStr)
@@ -57,7 +60,7 @@ struct Problem: Identifiable {
                 return jsonArray
             }
         } catch {
-            print("Failed to parse coordinates: \(error.localizedDescription)")
+            print("Failed to parse topo line coordinates: \(error.localizedDescription)")
         }
         
         return []

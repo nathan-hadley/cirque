@@ -112,27 +112,28 @@ class MapViewModel: ObservableObject {
             var seenOrders = Set<Int>()
             let sortedFeatures = features
                 .compactMap { feature -> QueriedSourceFeature? in
-                    let orderString = (
-                        feature.queriedFeature.feature.properties?["order"] as? Turf.JSONValue
-                    )?.stringValue ?? "0"
                     
-                    if let order = Int(orderString), !seenOrders.contains(order) {
-                        seenOrders.insert(order)
-                        return feature
+                    if case let .number(orderValue) = feature.queriedFeature.feature.properties?["order"] {
+                        let order = Int(orderValue)
+                        if !seenOrders.contains(order) {
+                            seenOrders.insert(order)
+                            return feature
+                        }
                     }
                     return nil
                 }
                 .sorted { lhs, rhs in
-                    let lhsOrderString = (
-                        lhs.queriedFeature.feature.properties?["order"] as? Turf.JSONValue
-                    )?.stringValue ?? "0"
+                    var lhsOrder = 0
+                    var rhsOrder = 0
                     
-                    let rhsOrderString = (
-                        rhs.queriedFeature.feature.properties?["order"] as? Turf.JSONValue
-                    )?.stringValue ?? "0"
+                    if case let .number(order) = lhs.queriedFeature.feature.properties?["order"] {
+                        lhsOrder = Int(order)
+                    }
                     
-                    let lhsOrder = Int(lhsOrderString) ?? 0
-                    let rhsOrder = Int(rhsOrderString) ?? 0
+                    if case let .number(order) = rhs.queriedFeature.feature.properties?["order"] {
+                        rhsOrder = Int(order)
+                    }
+
                     return lhsOrder < rhsOrder
                 }
             

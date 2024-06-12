@@ -22,12 +22,7 @@ struct MapView: View {
     }
     
     init() {
-        offlineMapDownloader.downloadMapData(
-            styleURI: styleURI,
-            // TODO: Make this DRY (also used in MapViewModel)
-            coordinate: CLLocationCoordinate2D(latitude: 47.585, longitude: -120.713),
-            zoomRange: 10...20
-        ) { result in
+        offlineMapDownloader.downloadMapData() { result in
             switch result {
             case .success:
                 print("Map data downloaded successfully.")
