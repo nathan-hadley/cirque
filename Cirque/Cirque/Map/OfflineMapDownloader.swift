@@ -11,15 +11,14 @@ class OfflineMapDownloader {
     private var offlineManager: OfflineManager
     private var tileStore: TileStore
     
-    // TODO: Make this DRY (also used in MapViewModel)
     private var styleURI = StyleURI(rawValue: "mapbox://styles/nathanhadley/clw9fowlu01kw01obbpsp3wiq")!
     
-//    private var boundingBoxCoordinates = [[
-//        CLLocationCoordinate2D(latitude: 47.54, longitude: -120.8),
-//        CLLocationCoordinate2D(latitude: 47.67, longitude: -120.8),
-//        CLLocationCoordinate2D(latitude: 47.67, longitude: -120.64),
-//        CLLocationCoordinate2D(latitude: 47.54, longitude: -120.64)
-//    ]]
+    private var boundingBoxCoordinates = [[
+        CLLocationCoordinate2D(latitude: 47.51, longitude: -120.94),
+        CLLocationCoordinate2D(latitude: 47.75, longitude: -120.94),
+        CLLocationCoordinate2D(latitude: 47.75, longitude: -120.58),
+        CLLocationCoordinate2D(latitude: 47.51, longitude: -120.58)
+    ]]
     
     private var coordinate = CLLocationCoordinate2D(latitude: 47.585, longitude: -120.713)
     

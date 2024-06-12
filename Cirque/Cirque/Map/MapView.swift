@@ -11,7 +11,7 @@ import SwiftUI
 struct MapView: View {
     @StateObject private var mapViewModel = MapViewModel()
     @State private var map: MapboxMap?
-    let offlineMapDownloader = OfflineMapDownloader()
+    //let offlineMapDownloader = OfflineMapDownloader()
     
     private var styleURI = StyleURI(rawValue: "mapbox://styles/nathanhadley/clw9fowlu01kw01obbpsp3wiq")!
     private var gestureOptions: GestureOptions {
@@ -21,16 +21,16 @@ struct MapView: View {
         return options
     }
     
-    init() {
-        offlineMapDownloader.downloadMapData() { result in
-            switch result {
-            case .success:
-                print("Map data downloaded successfully.")
-            case .failure(let error):
-                print("Failed to download map data: \(error)")
-            }
-        }
-    }
+//    init() {
+//        offlineMapDownloader.downloadMapData() { result in
+//            switch result {
+//            case .success:
+//                print("Map data downloaded successfully.")
+//            case .failure(let error):
+//                print("Failed to download map data: \(error)")
+//            }
+//        }
+//    }
     
     var body: some View {
         GeometryReader { geometry in
