@@ -2,6 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSLocationTemporaryUsageDescriptionDictionary</key>
+	<dict>
+		<key>LocationAccuracyAuthorizationDescription</key>
+		<string>Please enable precise location. The map works best only when precise location data is available.</string>
+	</dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Your location will be displayed on the map to help you find your way around.</string>
 	<key>MBXAccessToken</key>
 	<string>pk.eyJ1IjoibmF0aGFuaGFkbGV5IiwiYSI6ImNsdzdmdXAxdDIycmoyanA3cXVvbHFxenQifQ.1wcBxvOkH8eU-6ev7SoO8Q</string>
 	<key>UILaunchScreen</key>

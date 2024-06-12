@@ -529,7 +529,7 @@
 				INFOPLIST_FILE = Cirque/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Cirque;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Cirque requires your location to enable GPS navigation between boulder problems.\n";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please enable precise location. The map works best only when precise location data is available.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -562,7 +562,7 @@
 				INFOPLIST_FILE = Cirque/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Cirque;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Cirque requires your location to enable GPS navigation between boulder problems.\n";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please enable precise location. The map works best only when precise location data is available.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
