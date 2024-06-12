@@ -1,11 +1,11 @@
 grade,name,line,subarea,topo,color,order,description,lon,lat
-V4,2001,"[[217, 241], [213, 156], [257, 62]]",Straightaways,straightaways-2001,white,1,,-120.74071916568,47.54355051544
+V4,Year 2001 ,"[[217, 241], [213, 156], [257, 62]]",Straightaways,straightaways-2001,white,1,,-120.74071916568,47.54355051544
 V8,Millennium Traverse,"[[480, 271], [409, 214], [286, 169], [246, 90]]",Straightaways,straightaways-millennium,white,2,,-120.74060246015,47.54367065208
 V8,Lonely Fish,"[[268, 239], [376, 200], [388, 141], [322, 43]]",Straightaways,straightaways-lonely-fish,white,3,Use any means necessary to establish on the rail.,-120.740569,47.544421
 V9,Sorrow Bird,"[[267, 238], [266, 150], [228, 114], [208, 29]]",Straightaways,straightaways-lonely-fish,white,4,Same start as Lonely Fish.,-120.740641,47.544421
 V5,Old School,"[[343, 278], [318, 210], [404, 120]]",Straightaways,straightaways-old-school,white,5,This one is tall but the hardest moves are low.,-120.74062,47.54457
 V6,More Fun Than Beer,"[[217, 294], [379, 123], [365, 78]]",Straightaways,straightaways-mftb,white,6,,-120.743855,47.544738
-V4,Bok Choy,"[[233, 249], [311, 69]]",Straightaways,Straightaways-bok-choy,white,7,Start with one had on the undercling.,-120.744879,47.544526
+V4,Bok Choy,"[[233, 249], [311, 69]]",Straightaways,straightaways-bok-choy,white,7,Start with one had on the undercling.,-120.744879,47.544526
 V4,The Icehouse,"[[420, 302], [342, 168], [373, 51]]",Straightaways,straightaways-icehouse,white,8,,-120.745637,47.54541
 V5,Tall Boy,"[[241, 270], [221, 139], [263, 50]]",Straightaways,straightaways-icehouse,white,9,,-120.745707,47.545413
 V4,Ice Age Left,"[[439, 252], [401, 34]]",Straightaways,straightaways-ice-grip,white,10,Climb the left side of the arete - a lot easier than the original.,-120.745728,47.545433
@@ -15,8 +15,8 @@ V5,Bear Hug,"[[251, 264], [233, 61]]",Straightaways,straightaways-bear-hug,white
 V4,The Freezer Right,"[[321, 310], [291, 50]]",Straightaways,straightaways-freezer,white,14,,-120.74618,47.54515
 V6,Answer Man,"[[377, 387], [353, 237], [293, 71]]",Straightaways,straightaways-answer-man,white,15,Sit start.,-120.74665560252,47.54573300325
 V6,Taller,"[[294, 320], [269, 171], [304, 51]]",Straightaways,straightaways-taller,white,16,,-120.74679351786,47.54583043502
-V8,Bush Craft,"[[354, 318], [398, 228], [384, 125], [325, 68]]",Straightaways,straightaways-bush-craft,white,17,,-120.74711132275,47.54601114918
-V4,Nasty Boy,"[[467, 275], [424, 176], [382, 48]]",Straightaways,straightaways-bush-craft,white,18,Climb right side of Bush Craft arete,-120.74706627613,47.54602190727
+V8,Bush Craft,"[[289, 358], [332, 293], [310, 155], [223, 75]]",Straightaways,straightaways-bush-craft,white,17,,-120.74711132275,47.54601114918
+V4,Nasty Boy,"[[368, 303], [375, 247], [300, 45]]",Straightaways,straightaways-bush-craft,white,18,Climb right side of Bush Craft arete,-120.74706627613,47.54602190727
 V9,Mountain Man,"[[197, 290], [201, 258], [264, 223], [324, 64]]",Straightaways,straightaways-mountain-man,white,19,,-120.74706059392,47.54612877031
 V4,Hatchet,"[[423, 297], [429, 197], [335, 64]]",Straightaways,straightaways-mountain-man,white,20,,-120.74710727613,47.54615214939
 V7,IS,"[[311, 195], [452, 174], [444, 143]]",Straightaways,straightaways-was,white,21,,-120.74795,47.545864
@@ -24,7 +24,7 @@ V8,WAS,"[[308, 192], [248, 88], [301, 31]]",Straightaways,straightaways-was,whit
 V4,A Dog Named Rehab,"[[367, 278], [317, 104], [237, 142], [222, 104]]",Straightaways,straightaways-dog-named-rehab,white,23,,-120.748444,47.546049
 V7,Down the Barrel,,Straightaways,,white,,Optional if the water is low enough - could be a part of the official “Fall” version of the circuit,-120.748685,47.545665
 V9,Heads Will Roll,,Straightaways,,white,,Optional if the water is low enough.,-120.748795,47.545694
-V4,Pony Ride,"[[475, 325], [430, 258], [415, 135], [337, 105]]""",Straightaways,straightaways-pony-ride,white,24,,-120.749247,47.54641
+V4,Pony Ride,"[[475, 325], [430, 258], [415, 135], [337, 105]]",Straightaways,straightaways-pony-ride,white,24,,-120.749247,47.54641
 V4,Tampax Arête,"[[291, 310], [343, 254], [351, 135], [316, 81]]",Straightaways,straightaways-tampax-arete,white,25,,-120.749459,47.546427
 V7,Miracle Whip,"[[467, 334], [434, 274], [387, 241], [392, 85]]",Straightaways,straightaways-miracle-whip,white,27,,-120.75180609689,47.54709808508
 V9,Batman,"[[438, 266], [410, 182], [307, 155], [237, 99]]",Straightaways,straightaways-batman,white,28,The midday sun can make topping out this one feel a lot harder.,-120.751972,47.547433
