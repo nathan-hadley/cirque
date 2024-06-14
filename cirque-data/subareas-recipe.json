@@ -1,8 +1,8 @@
 {
   "version": 1,
   "layers": {
-    "leavenworth-areas": {
-      "source": "mapbox://tileset-source/nathanhadley/leavenworth-areas",
+    "leavenworth-subareas": {
+      "source": "mapbox://tileset-source/nathanhadley/leavenworth-subareas",
       "minzoom": 10,
       "maxzoom": 16
     }

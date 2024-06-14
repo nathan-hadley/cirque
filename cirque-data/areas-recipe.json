@@ -1,8 +1,8 @@
 {
   "version": 1,
   "layers": {
-    "leavenworth-problems": {
-      "source": "mapbox://tileset-source/nathanhadley/leavenworth-circuits",
+    "leavenworth-areas": {
+      "source": "mapbox://tileset-source/nathanhadley/leavenworth-areas",
       "minzoom": 10,
       "maxzoom": 16
     }

@@ -20,8 +20,6 @@ class OfflineMapDownloader {
         CLLocationCoordinate2D(latitude: 47.51, longitude: -120.58)
     ]]
     
-    private var coordinate = CLLocationCoordinate2D(latitude: 47.585, longitude: -120.713)
-    
     private var stylePackOptions = StylePackLoadOptions(
         glyphsRasterizationMode: .ideographsRasterizedLocally,
         metadata: ["id": "Leavenworth"],
@@ -43,8 +41,7 @@ class OfflineMapDownloader {
         )
         tilesetDescriptor = offlineManager.createTilesetDescriptor(for: tilesetDescriptorOptions)
 
-        //let geometry = Geometry(Polygon(boundingBoxCoordinates))
-        let geometry = Geometry(Point(coordinate))
+        let geometry = Geometry(Polygon(boundingBoxCoordinates))
         tileRegionLoadOptions = TileRegionLoadOptions(
             geometry: geometry,
             descriptors: [tilesetDescriptor],

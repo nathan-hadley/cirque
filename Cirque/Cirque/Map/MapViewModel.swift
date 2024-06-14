@@ -26,6 +26,8 @@ class MapViewModel: ObservableObject {
     
     private var cancellable: Cancelable? = nil
     private var bottomInset: CGFloat = 0
+    
+    private var PROBLEM_LAYER = "leavenworth-problems"
 
     func mapTapped(
         _ context: MapContentGestureContext,
@@ -53,7 +55,7 @@ class MapViewModel: ObservableObject {
             // Filter features based on the specific layer
             let filteredFeatures = features.filter { feature in
                 if let sourceLayer = feature.queriedFeature.sourceLayer {
-                    return sourceLayer == "Leavenworth_Problems"
+                    return sourceLayer == PROBLEM_LAYER
                 }
                 return false
             }
@@ -101,7 +103,7 @@ class MapViewModel: ObservableObject {
         ]
 
         let options = SourceQueryOptions(
-            sourceLayerIds: ["Leavenworth_Problems"],
+            sourceLayerIds: [PROBLEM_LAYER],
             filter: filter
         )
         
@@ -113,26 +115,20 @@ class MapViewModel: ObservableObject {
             let sortedFeatures = features
                 .compactMap { feature -> QueriedSourceFeature? in
                     
-                    if case let .number(orderValue) = feature.queriedFeature.feature.properties?["order"] {
-                        let order = Int(orderValue)
-                        if !seenOrders.contains(order) {
-                            seenOrders.insert(order)
-                            return feature
-                        }
+                    let properties = feature.queriedFeature.feature.properties
+                    let order = getIntFromFeatureProperty(from: properties, forKey: "order")
+                    if !seenOrders.contains(order) {
+                        seenOrders.insert(order)
+                        return feature
                     }
                     return nil
                 }
                 .sorted { lhs, rhs in
-                    var lhsOrder = 0
-                    var rhsOrder = 0
+                    let lhsProperties = lhs.queriedFeature.feature.properties
+                    let lhsOrder = getIntFromFeatureProperty(from: lhsProperties, forKey: "order")
                     
-                    if case let .number(order) = lhs.queriedFeature.feature.properties?["order"] {
-                        lhsOrder = Int(order)
-                    }
-                    
-                    if case let .number(order) = rhs.queriedFeature.feature.properties?["order"] {
-                        rhsOrder = Int(order)
-                    }
+                    let rhsProperties = rhs.queriedFeature.feature.properties
+                    let rhsOrder = getIntFromFeatureProperty(from: rhsProperties, forKey: "order")
 
                     return lhsOrder < rhsOrder
                 }

@@ -1,0 +1,10 @@
+{
+    "version": 1,
+    "layers": {
+      "leavenworth-problems": {
+        "source": "mapbox://tileset-source/nathanhadley/leavenworth-problems",
+        "minzoom": 10,
+        "maxzoom": 16
+      }
+    }
+}

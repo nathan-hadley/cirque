@@ -27,10 +27,7 @@ struct Problem: Identifiable {
         let properties = problem.properties ?? [:]
         name = (properties["name"] as? Turf.JSONValue)?.stringValue ?? "N/A"
         grade = (properties["grade"] as? Turf.JSONValue)?.stringValue ?? "N/A"
-        
-        if case let .number(orderValue) = properties["order"] {
-            order = Int(orderValue)
-        }
+        order = getIntFromFeatureProperty(from: properties, forKey: "order")
         
         let colorStr = (properties["color"] as? Turf.JSONValue)?.stringValue
         color = Problem.color(from: colorStr)
@@ -51,7 +48,6 @@ struct Problem: Identifiable {
     }
     
     static func parseCoordinates(from string: String) -> [[Int]] {
-        // Convert the string to Data
         let data = Data(string.utf8)
         
         do {

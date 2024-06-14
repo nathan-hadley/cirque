@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "layers": {
+    "leavenworth-circuits": {
+      "source": "mapbox://tileset-source/nathanhadley/leavenworth-circuits",
+      "minzoom": 14,
+      "maxzoom": 16
+    }
+  }
+}
