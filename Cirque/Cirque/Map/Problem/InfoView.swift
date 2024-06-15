@@ -12,28 +12,26 @@ struct InfoView: View {
     let problem: Problem
 
     var body: some View {
-      // Name & grade
-      HStack {
-         Text(problem.name)
-            .font(.title)
-            .fontWeight(.bold)
-            .foregroundColor(.primary)
-            .lineLimit(1)
-            .truncationMode(.middle)
-            .minimumScaleFactor(0.5)
+        HStack {
+            Text(problem.name ?? "Unknown")
+                .font(.title)
+                .fontWeight(.bold)
+                .foregroundColor(.primary)
+                .lineLimit(1)
+                .truncationMode(.middle)
+                .minimumScaleFactor(0.5)
          
-         Spacer()
+            Spacer()
          
-         Text(problem.grade)
-            .font(.title)
-            .fontWeight(.bold)
-      }
-      .padding(.top, 4)
-      .padding(.horizontal)
+            Text(problem.grade ?? "")
+                .font(.title)
+                .fontWeight(.bold)
+        }
+        .padding(.top, 4)
+        .padding(.horizontal)
       
-      // Description
-      Text(problem.description ?? "")
-         .font(.body)
-         .padding(.horizontal)
-   }
+        Text(problem.description ?? "")
+            .font(.body)
+            .padding(.horizontal)
+    }
 }

@@ -13,8 +13,8 @@ import SwiftUI
 
 struct Problem: Identifiable {
     var id = UUID()
-    var name: String
-    var grade: String
+    var name: String?
+    var grade: String?
     var order: Int?
     var color: Color
     var description: String?
@@ -25,19 +25,19 @@ struct Problem: Identifiable {
 
     init(problem: Feature) {
         let properties = problem.properties ?? [:]
-        name = (properties["name"] as? Turf.JSONValue)?.stringValue ?? "N/A"
-        grade = (properties["grade"] as? Turf.JSONValue)?.stringValue ?? "N/A"
-        order = getIntFromFeatureProperty(from: properties, forKey: "order")
         
-        let colorStr = (properties["color"] as? Turf.JSONValue)?.stringValue
+        name = getString(from: properties, forKey: "name")
+        grade = getString(from: properties, forKey: "grade")
+        order = getInt(from: properties, forKey: "order")
+        description = getString(from: properties, forKey: "description")
+        topo = getString(from: properties, forKey: "topo")
+        subarea = getString(from: properties, forKey: "subarea")
+        
+        let colorStr = getString(from: properties, forKey: "color")
         color = Problem.color(from: colorStr)
-        description = (properties["description"] as? Turf.JSONValue)?.stringValue
         
-        let lineString = (properties["line"] as? Turf.JSONValue)?.stringValue ?? "[]"
-        line = Problem.parseCoordinates(from: lineString)
-        
-        topo = (properties["topo"] as? Turf.JSONValue)?.stringValue
-        subarea = (properties["subarea"] as? Turf.JSONValue)?.stringValue
+        let lineString = getString(from: properties, forKey: "line")
+        line = Problem.parseTopoLine(from: lineString)
         
         if let geometry = problem.geometry,
            case let .point(point) = geometry {
@@ -47,12 +47,12 @@ struct Problem: Identifiable {
         }
     }
     
-    static func parseCoordinates(from string: String) -> [[Int]] {
-        let data = Data(string.utf8)
+    static func parseTopoLine(from stringCoords: String?) -> [[Int]] {
+        guard let string = stringCoords else { return [] }
+        let jsonData = Data(string.utf8)
         
         do {
-            // Parse the JSON data
-            if let jsonArray = try JSONSerialization.jsonObject(with: data, options: []) as? [[Int]] {
+            if let jsonArray = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [[Int]] {
                 return jsonArray
             }
         } catch {
@@ -81,16 +81,3 @@ struct Problem: Identifiable {
         }
     }
 }
-
-
-extension Turf.JSONValue {
-    var stringValue: String? {
-        switch self {
-        case .string(let value):
-            return value
-        default:
-            return nil
-        }
-    }
-}
-

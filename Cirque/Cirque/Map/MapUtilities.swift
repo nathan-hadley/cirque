@@ -7,8 +7,8 @@
 
 import MapboxMaps
 
-func getIntFromFeatureProperty(from properties: JSONObject?, forKey key: String) -> Int {
-    if let propertyValue = properties?[key] {
+func getInt(from featureProperties: JSONObject?, forKey key: String) -> Int {
+    if let propertyValue = featureProperties?[key] {
         switch propertyValue {
         case .number(let numberValue):
             return Int(numberValue)
@@ -19,4 +19,18 @@ func getIntFromFeatureProperty(from properties: JSONObject?, forKey key: String)
         }
     }
     return -1
+}
+
+func getString(from featureProperties: JSONObject?, forKey key: String) -> String? {
+    if let propertyValue = featureProperties?[key] {
+        switch propertyValue {
+        case .string(let stringValue):
+            return String(stringValue)
+        case .number(let numberValue):
+            return String(numberValue)
+        default:
+            return nil
+        }
+    }
+    return nil
 }

@@ -116,7 +116,7 @@ class MapViewModel: ObservableObject {
                 .compactMap { feature -> QueriedSourceFeature? in
                     
                     let properties = feature.queriedFeature.feature.properties
-                    let order = getIntFromFeatureProperty(from: properties, forKey: "order")
+                    let order = getInt(from: properties, forKey: "order")
                     if !seenOrders.contains(order) {
                         seenOrders.insert(order)
                         return feature
@@ -125,10 +125,10 @@ class MapViewModel: ObservableObject {
                 }
                 .sorted { lhs, rhs in
                     let lhsProperties = lhs.queriedFeature.feature.properties
-                    let lhsOrder = getIntFromFeatureProperty(from: lhsProperties, forKey: "order")
+                    let lhsOrder = getInt(from: lhsProperties, forKey: "order")
                     
                     let rhsProperties = rhs.queriedFeature.feature.properties
-                    let rhsOrder = getIntFromFeatureProperty(from: rhsProperties, forKey: "order")
+                    let rhsOrder = getInt(from: rhsProperties, forKey: "order")
 
                     return lhsOrder < rhsOrder
                 }
@@ -137,9 +137,11 @@ class MapViewModel: ObservableObject {
             // but the map query does not return some problems further away.
             // Maybe this would be solved by downloading maps?
             guard let currentIndex = sortedFeatures.firstIndex(where: {(
-                $0.queriedFeature.feature.properties?["name"] as? Turf.JSONValue
-            )?.stringValue ?? "" == currentProblem.name
-            }) else {
+                getString(
+                    from: $0.queriedFeature.feature.properties,
+                    forKey: "name"
+                ) == currentProblem.name
+            )}) else {
                 return
             }
             
