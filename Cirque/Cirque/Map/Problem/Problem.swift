@@ -48,7 +48,7 @@ struct Problem: Identifiable {
     }
     
     static func parseTopoLine(from stringCoords: String?) -> [[Int]] {
-        guard let string = stringCoords else { return [] }
+        guard let string = stringCoords, !string.isEmpty else { return [] }
         let jsonData = Data(string.utf8)
         
         do {
