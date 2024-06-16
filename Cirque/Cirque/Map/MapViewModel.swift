@@ -10,24 +10,17 @@ import SwiftUI
 
 @available(iOS 14.0, *)
 class MapViewModel: ObservableObject {
-    struct Location: Identifiable {
-        var id = UUID()
-        var coordinate: CLLocationCoordinate2D
-    }
-    
     @Published var problem: Problem? = nil
     @Published var viewProblem = false
     @Published var viewport: Viewport = .camera(
-        center: CLLocationCoordinate2D(latitude: 47.585, longitude: -120.713),
-        zoom: 10.5,
+        center: INITIAL_CENTER,
+        zoom: INITIAL_ZOOM,
         bearing: 0,
         pitch: 0
     )
     
     private var cancellable: Cancelable? = nil
     private var bottomInset: CGFloat = 0
-    
-    private var PROBLEM_LAYER = "leavenworth-problems"
 
     func mapTapped(
         _ context: MapContentGestureContext,
@@ -55,7 +48,7 @@ class MapViewModel: ObservableObject {
             // Filter features based on the specific layer
             let filteredFeatures = features.filter { feature in
                 if let sourceLayer = feature.queriedFeature.sourceLayer {
-                    return sourceLayer == PROBLEM_LAYER
+                    return sourceLayer == PROBLEMS_LAYER
                 }
                 return false
             }
@@ -64,7 +57,7 @@ class MapViewModel: ObservableObject {
                 return
             }
             
-            let newProblem = Problem(problem: firstFeature.queriedFeature.feature)
+            let newProblem = Problem(feature: firstFeature.queriedFeature.feature)
             self.setNewProblem(problem: newProblem)
         }
     }
@@ -93,18 +86,23 @@ class MapViewModel: ObservableObject {
         offset: Int
     ) {
         guard let map = map else { return }
+        if (currentProblem.order == nil) {
+            // TODO: Dismiss sheet here
+            return
+        }
         
-        let filter: [String: Any] = [
-            "filter": [
-                "all",
-                ["==", ["get", "color"], "blue"],
-                ["==", ["get", "subarea"], "Swiftwater"]
-            ]
-        ]
+        // TODO: This filter does not work
+//        let filter: [String: Any] = [
+//            "filter": [
+//                "all",
+//                ["==", ["get", "color"], "blue"],
+//                ["==", ["get", "subarea"], "Swiftwater"]
+//            ]
+//        ]
 
         let options = SourceQueryOptions(
-            sourceLayerIds: [PROBLEM_LAYER],
-            filter: filter
+            sourceLayerIds: [PROBLEMS_LAYER],
+            filter: []
         )
         
         // Query the map for all problems in the same area with the same color
@@ -117,6 +115,7 @@ class MapViewModel: ObservableObject {
                     
                     let properties = feature.queriedFeature.feature.properties
                     let order = getInt(from: properties, forKey: "order")
+                    guard let order = order else { return nil }
                     if !seenOrders.contains(order) {
                         seenOrders.insert(order)
                         return feature
@@ -125,10 +124,10 @@ class MapViewModel: ObservableObject {
                 }
                 .sorted { lhs, rhs in
                     let lhsProperties = lhs.queriedFeature.feature.properties
-                    let lhsOrder = getInt(from: lhsProperties, forKey: "order")
+                    let lhsOrder = getInt(from: lhsProperties, forKey: "order") ?? -1
                     
                     let rhsProperties = rhs.queriedFeature.feature.properties
-                    let rhsOrder = getInt(from: rhsProperties, forKey: "order")
+                    let rhsOrder = getInt(from: rhsProperties, forKey: "order") ?? -1
 
                     return lhsOrder < rhsOrder
                 }
@@ -149,7 +148,7 @@ class MapViewModel: ObservableObject {
             guard newIndex >= 0 && newIndex < sortedFeatures.count else { return }
             
             let newFeature = sortedFeatures[newIndex].queriedFeature.feature
-            let newProblem = Problem(problem: newFeature)
+            let newProblem = Problem(feature: newFeature)
             
             self.setNewProblem(problem: newProblem)
         }

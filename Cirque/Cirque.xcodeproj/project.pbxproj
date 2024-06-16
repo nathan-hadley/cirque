@@ -28,6 +28,7 @@
 		D8BD608E2BF313B80011C7C2 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BD608D2BF313B80011C7C2 /* AboutView.swift */; };
 		D8C83DC42C04C76E00F6221F /* CircuitNavButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C83DC32C04C76E00F6221F /* CircuitNavButtons.swift */; };
 		D8D8C01E2C1C67C60072357F /* MapUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D8C01D2C1C67C60072357F /* MapUtilities.swift */; };
+		D8D8C0202C1E21A00072357F /* MapEnv.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D8C01F2C1E21A00072357F /* MapEnv.swift */; };
 		D8EC31952BF48EDB00677384 /* MapboxMaps in Frameworks */ = {isa = PBXBuildFile; productRef = D8EC31942BF48EDB00677384 /* MapboxMaps */; };
 /* End PBXBuildFile section */
 
@@ -74,6 +75,7 @@
 		D8BD608D2BF313B80011C7C2 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		D8C83DC32C04C76E00F6221F /* CircuitNavButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircuitNavButtons.swift; sourceTree = "<group>"; };
 		D8D8C01D2C1C67C60072357F /* MapUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapUtilities.swift; sourceTree = "<group>"; };
+		D8D8C01F2C1E21A00072357F /* MapEnv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapEnv.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 				D8C83DC32C04C76E00F6221F /* CircuitNavButtons.swift */,
 				D89ABD0A2C0987B10029C444 /* OfflineMapDownloader.swift */,
 				D8D8C01D2C1C67C60072357F /* MapUtilities.swift */,
+				D8D8C01F2C1E21A00072357F /* MapEnv.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -356,6 +359,7 @@
 				D87FB0702C02520F0072D028 /* TopoView.swift in Sources */,
 				D87FB0772C0258B00072D028 /* LineCapShape.swift in Sources */,
 				D8C83DC42C04C76E00F6221F /* CircuitNavButtons.swift in Sources */,
+				D8D8C0202C1E21A00072357F /* MapEnv.swift in Sources */,
 				D89ABD0B2C0987B10029C444 /* OfflineMapDownloader.swift in Sources */,
 				D890D0952BFB901900C94EA7 /* LocateMeButton.swift in Sources */,
 				D897D6272BF30FA300027155 /* ContentView.swift in Sources */,

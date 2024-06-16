@@ -13,7 +13,6 @@ struct MapView: View {
     @State private var map: MapboxMap?
     let offlineMapDownloader = OfflineMapDownloader()
     
-    let STYLE_URI = StyleURI(rawValue: "mapbox://styles/nathanhadley/clw9fowlu01kw01obbpsp3wiq")!
     private var gestureOptions: GestureOptions {
         var options = GestureOptions()
         options.pitchEnabled = false
@@ -22,14 +21,7 @@ struct MapView: View {
     }
     
     init() {
-        offlineMapDownloader.downloadMapData() { result in
-            switch result {
-            case .success:
-                print("Map data downloaded successfully.")
-            case .failure(let error):
-                print("Failed to download map data: \(error)")
-            }
-        }
+        offlineMapDownloader.updateMapData()
     }
     
     var body: some View {
@@ -70,11 +62,12 @@ struct MapView: View {
                 }
                 .zIndex(1) // Ensure the map is behind other elements
                 
+                // TODO: also only show if problem has an order
                 if let map = map, mapViewModel.viewProblem {
                     CircuitNavButtons(mapViewModel: mapViewModel, map: map)
                         .padding(.horizontal)
                         .padding(.bottom, 100)
-                        .zIndex(2) // Ensure the navigation buttons are above the map and sheet
+                        .zIndex(2) // Ensure the circuit buttons are above the map and sheet
                 }
             }
         }

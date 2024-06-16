@@ -23,8 +23,8 @@ struct Problem: Identifiable {
     var subarea: String?
     var coordinates: CLLocationCoordinate2D?
 
-    init(problem: Feature) {
-        let properties = problem.properties ?? [:]
+    init(feature: Feature) {
+        let properties = feature.properties ?? [:]
         
         name = getString(from: properties, forKey: "name")
         grade = getString(from: properties, forKey: "grade")
@@ -39,7 +39,7 @@ struct Problem: Identifiable {
         let lineString = getString(from: properties, forKey: "line")
         line = Problem.parseTopoLine(from: lineString)
         
-        if let geometry = problem.geometry,
+        if let geometry = feature.geometry,
            case let .point(point) = geometry {
             coordinates = point.coordinates
         } else {
@@ -52,7 +52,10 @@ struct Problem: Identifiable {
         let jsonData = Data(string.utf8)
         
         do {
-            if let jsonArray = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [[Int]] {
+            if let jsonArray = try JSONSerialization.jsonObject(
+                with: jsonData,
+                options: []
+            ) as? [[Int]] {
                 return jsonArray
             }
         } catch {
