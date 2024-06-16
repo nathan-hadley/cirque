@@ -16,6 +16,7 @@ struct Problem: Identifiable {
     var name: String?
     var grade: String?
     var order: Int?
+    var colorStr: String
     var color: Color
     var description: String?
     var line: [[Int]]
@@ -33,7 +34,7 @@ struct Problem: Identifiable {
         topo = getString(from: properties, forKey: "topo")
         subarea = getString(from: properties, forKey: "subarea")
         
-        let colorStr = getString(from: properties, forKey: "color")
+        colorStr = getString(from: properties, forKey: "color") ?? ""
         color = Problem.color(from: colorStr)
         
         let lineString = getString(from: properties, forKey: "line")

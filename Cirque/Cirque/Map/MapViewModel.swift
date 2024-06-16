@@ -86,71 +86,37 @@ class MapViewModel: ObservableObject {
         offset: Int
     ) {
         guard let map = map else { return }
-        if (currentProblem.order == nil) {
-            // TODO: Dismiss sheet here
+        guard let currentProblemOrder = currentProblem.order else {
             return
         }
         
-        // TODO: This filter does not work
-//        let filter: [String: Any] = [
-//            "filter": [
-//                "all",
-//                ["==", ["get", "color"], "blue"],
-//                ["==", ["get", "subarea"], "Swiftwater"]
-//            ]
-//        ]
+        let newProblemOrder = currentProblemOrder + offset
+        
+        let filter: [Any] = [
+            "all",
+            ["==", ["get", "color"], currentProblem.colorStr],
+            ["==", ["get", "subarea"], currentProblem.subarea ?? ""],
+            ["any",
+                ["==", ["get", "order"], "\(newProblemOrder)"],
+                ["==", ["get", "order"], newProblemOrder]
+            ]
+        ]
 
         let options = SourceQueryOptions(
             sourceLayerIds: [PROBLEMS_LAYER],
-            filter: []
+            filter: filter
         )
         
         // Query the map for all problems in the same area with the same color
         map.querySourceFeatures(for: "composite", options: options) { [self] result in
             guard let features = try? result.get() else { return }
             
-            var seenOrders = Set<Int>()
-            let sortedFeatures = features
-                .compactMap { feature -> QueriedSourceFeature? in
-                    
-                    let properties = feature.queriedFeature.feature.properties
-                    let order = getInt(from: properties, forKey: "order")
-                    guard let order = order else { return nil }
-                    if !seenOrders.contains(order) {
-                        seenOrders.insert(order)
-                        return feature
-                    }
-                    return nil
-                }
-                .sorted { lhs, rhs in
-                    let lhsProperties = lhs.queriedFeature.feature.properties
-                    let lhsOrder = getInt(from: lhsProperties, forKey: "order") ?? -1
-                    
-                    let rhsProperties = rhs.queriedFeature.feature.properties
-                    let rhsOrder = getInt(from: rhsProperties, forKey: "order") ?? -1
-
-                    return lhsOrder < rhsOrder
-                }
-            
-            // Tried just using problem.order - 1 to determine index
-            // but the map query does not return some problems further away.
-            // Maybe this would be solved by downloading maps?
-            guard let currentIndex = sortedFeatures.firstIndex(where: {(
-                getString(
-                    from: $0.queriedFeature.feature.properties,
-                    forKey: "name"
-                ) == currentProblem.name
-            )}) else {
-                return
+            if let newFeature = features.first?.queriedFeature.feature {
+                let newProblem = Problem(feature: newFeature)
+                self.setNewProblem(problem: newProblem)
+            } else {
+                print("No feature found with order \(newProblemOrder)")
             }
-            
-            let newIndex = currentIndex + offset
-            guard newIndex >= 0 && newIndex < sortedFeatures.count else { return }
-            
-            let newFeature = sortedFeatures[newIndex].queriedFeature.feature
-            let newProblem = Problem(feature: newFeature)
-            
-            self.setNewProblem(problem: newProblem)
         }
     }
     
