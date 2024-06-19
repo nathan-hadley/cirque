@@ -1,1601 +1,2272 @@
 {
-  "features": [
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V0",
-        "name": "Mickey",
-        "line": "[[232, 261], [318, 186], [313, 141]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-mickey",
-        "color": "blue",
-        "order": "12",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.729812,
-          47.654565
-        ],
-        "type": "Point"
-      },
-      "id": "01d28dcd7a940aec5458c012041cf087"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V0",
-        "name": "Tentacles",
-        "line": "[[128, 277], [125, 164]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-pod-racer",
-        "color": "blue",
-        "order": "38",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.729224,
-          47.656081
-        ],
-        "type": "Point"
-      },
-      "id": "062f4e2655132264a75717e9683911cb"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V2",
-        "name": "Cramps",
-        "line": "[[133, 252], [190, 193]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-hate-monger",
-        "color": "blue",
-        "order": "11",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.729288,
-          47.65418
-        ],
-        "type": "Point"
-      },
-      "id": "0ab43deda912e5461374540563cef615"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V9",
-        "name": "Mountain Man",
-        "line": "[[197, 290], [201, 258], [264, 223], [324, 64]]",
-        "subarea": "Straightaways",
-        "topo": "straightaways-mountain-man",
-        "color": "white",
-        "order": "19",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.74706,
-          47.546128
-        ],
-        "type": "Point"
-      },
-      "id": "0c97413775b172d4f1d1cf28fafd341b"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V3",
-        "name": "Hate Monger",
-        "line": "[[236, 318], [243, 150]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-hate-monger",
-        "color": "blue",
-        "order": "10",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.729283,
-          47.654164
-        ],
-        "type": "Point"
-      },
-      "id": "0dab44e4518153969bfb7d0d7f4ed4a7"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V3",
-        "name": "No Pitons Here No-Hands",
-        "line": "[[169, 331], [223, 107]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-bubbles",
-        "color": "blue",
-        "order": "19",
-        "description": "Climb the boulder with no hands!"
-      },
-      "geometry": {
-        "coordinates": [
-          -120.729751,
-          47.654799
-        ],
-        "type": "Point"
-      },
-      "id": "12323290767cd97683d80de47d84e31c"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V9",
-        "name": "Heads Will Roll",
-        "line": "",
-        "subarea": "Straightaways",
-        "topo": "",
-        "color": "white",
-        "order": "",
-        "description": "Optional if the water is low enough."
-      },
-      "geometry": {
-        "coordinates": [
-          -120.748795,
-          47.545694
-        ],
-        "type": "Point"
-      },
-      "id": "14f19a0d5582cdbb9ef28934277f20cd"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V4",
-        "name": "Tampax Arête",
-        "line": "[[291, 310], [343, 254], [351, 135], [316, 81]]",
-        "subarea": "Straightaways",
-        "topo": "straightaways-tampax-arete",
-        "color": "white",
-        "order": "25",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.749459,
-          47.546427
-        ],
-        "type": "Point"
-      },
-      "id": "16167a9457062737e348193bb6817d19"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V1",
-        "name": "The Transverse",
-        "line": "[[460, 232], [242, 71]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-transverse",
-        "color": "blue",
-        "order": "6",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.729077,
-          47.654286
-        ],
-        "type": "Point"
-      },
-      "id": "1ad65b78dc956b1ef7df8db507bbb2da"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V3",
-        "name": "Sleeve Ace",
-        "line": "[[175, 297], [185, 235], [217, 154]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-royal-flush",
-        "color": "blue",
-        "order": "43",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.729465,
-          47.656106
-        ],
-        "type": "Point"
-      },
-      "id": "1b56bae66aa7fbd7121ffd727cf33998"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V9",
-        "name": "Mothermilker",
-        "line": "[[250, 330], [326, 176], [391, 159]]",
-        "subarea": "Straightaways",
-        "topo": "straightaways-mothermilker",
-        "color": "white",
-        "order": "26",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.749967,
-          47.546638
-        ],
-        "type": "Point"
-      },
-      "id": "1bfe4ab3adee6d08cffdf54c8ef0c032"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V2",
-        "name": "Bam",
-        "line": "[[527,214], [358,163], [252,62]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-bam",
-        "color": "blue",
-        "order": "24",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.730007,
-          47.655316
-        ],
-        "type": "Point"
-      },
-      "id": "1ecb48935a1818415150698ac9c86e3d"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V5",
-        "name": "Bear Hug",
-        "line": "[[251, 264], [233, 61]]",
-        "subarea": "Straightaways",
-        "topo": "straightaways-bear-hug",
-        "color": "white",
-        "order": "13",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.745543,
-          47.545524
-        ],
-        "type": "Point"
-      },
-      "id": "1ed646e55e18e696fcb875feec32310c"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V3",
-        "name": "Lead Pants",
-        "line": "[[260, 288], [420, 183], [428, 77]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-lead-pants",
-        "color": "blue",
-        "order": "39",
-        "description": "Start sitting."
-      },
-      "geometry": {
-        "coordinates": [
-          -120.72928,
-          47.656054
-        ],
-        "type": "Point"
-      },
-      "id": "2253d250e5a21c7adf77fc287cecd21b"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V6",
-        "name": "More Fun Than Beer",
-        "line": "[[217, 294], [379, 123], [365, 78]]",
-        "subarea": "Straightaways",
-        "topo": "straightaways-mftb",
-        "color": "white",
-        "order": "6",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.743855,
-          47.544738
-        ],
-        "type": "Point"
-      },
-      "id": "233c4adedfda4e849198fd5f5d9e48f4"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V3",
-        "name": "Joel’s Slab",
-        "line": "[[335, 295], [319, 207], [258, 170], [349, 107]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-joels-slab",
-        "color": "blue",
-        "order": "36",
-        "description": "Optional if you're up for it!"
-      },
-      "geometry": {
-        "coordinates": [
-          -120.72917,
-          47.655983
-        ],
-        "type": "Point"
-      },
-      "id": "2850ad50617f27145f4356b0c4352c39"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V2",
-        "name": "Whelmed",
-        "line": "[[346, 237], [321, 77]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-whelmed",
-        "color": "blue",
-        "order": "4",
-        "description": "Start with a left hand high on a decent sidepull and right hand on a crimp."
-      },
-      "geometry": {
-        "coordinates": [
-          -120.729203,
-          47.653591
-        ],
-        "type": "Point"
-      },
-      "id": "28595e44850bc63740f8924ffb75ad3b"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V5",
-        "name": "Footless Traverse",
-        "line": "[[538, 266], [336, 184], [192, 203], [153, 177]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-footless-traverse",
-        "color": "blue",
-        "order": "46",
-        "description": "An option hard and grand ending. Climb in 1 or 2 parts!"
-      },
-      "geometry": {
-        "coordinates": [
-          -120.729457,
-          47.656364
-        ],
-        "type": "Point"
-      },
-      "id": "2dae50b4dcba5964ad017e84ba5fa47c"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V6",
-        "name": "Answer Man",
-        "line": "[[377, 387], [353, 237], [293, 71]]",
-        "subarea": "Straightaways",
-        "topo": "straightaways-answer-man",
-        "color": "white",
-        "order": "15",
-        "description": "Sit start."
-      },
-      "geometry": {
-        "coordinates": [
-          -120.746655,
-          47.545733
-        ],
-        "type": "Point"
-      },
-      "id": "360d839a7919048d7e119fc5c19e2db0"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V1",
-        "name": "Raging Cow",
-        "line": "[[449, 314], [498, 132]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-sitting-bull",
-        "color": "blue",
-        "order": "40",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.729351,
-          47.65606
-        ],
-        "type": "Point"
-      },
-      "id": "36ed46f6581bd6768ff47589f021d0a1"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V2",
-        "name": "Jump!",
-        "line": "[[332, 159], [304, 119]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-jump",
-        "color": "blue",
-        "order": "2",
-        "description": "Hop up to the sloper and mantle."
-      },
-      "geometry": {
-        "coordinates": [
-          -120.728019,
-          47.653158
-        ],
-        "type": "Point"
-      },
-      "id": "3ad4f5eaa82e4e225898423b6a335ee0"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V2",
-        "name": "Flying Goat Boy",
-        "line": "[[450,144], [431,114], [412,104]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-chicken-man",
-        "color": "blue",
-        "order": "22",
-        "description": "Hop up to the sloper and mantle."
-      },
-      "geometry": {
-        "coordinates": [
-          -120.730125,
-          47.655002
-        ],
-        "type": "Point"
-      },
-      "id": "3b0bd8bf476002b2edea8b28e7855337"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V4",
-        "name": "Pony Ride",
-        "line": "[[475, 325], [430, 258], [415, 135], [337, 105]]",
-        "subarea": "Straightaways",
-        "topo": "straightaways-pony-ride",
-        "color": "white",
-        "order": "24",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.749247,
-          47.54641
-        ],
-        "type": "Point"
-      },
-      "id": "3d1cbf37da350dbced3beb2350a0b1b9"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V1",
-        "name": "Minnie",
-        "line": "[[339, 248], [302, 71]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-minnie",
-        "color": "blue",
-        "order": "13",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.72977,
-          47.65458
-        ],
-        "type": "Point"
-      },
-      "id": "3d365cd75dafadbdad6defd3cecc112e"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V7",
-        "name": "Miracle Whip",
-        "line": "[[467, 334], [434, 274], [387, 241], [392, 85]]",
-        "subarea": "Straightaways",
-        "topo": "straightaways-miracle-whip",
-        "color": "white",
-        "order": "27",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.751806,
-          47.547098
-        ],
-        "type": "Point"
-      },
-      "id": "408c068b99cb2967cec801647f343acf"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V1",
-        "name": "Squatter Variation",
-        "line": "[[393, 205], [300, 48]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-squatter",
-        "color": "blue",
-        "order": "28",
-        "description": "Start with a high right hand on the arête and hop a foot up to the pimple."
-      },
-      "geometry": {
-        "coordinates": [
-          -120.729138,
-          47.655481
-        ],
-        "type": "Point"
-      },
-      "id": "433f1e5888d129cb76dca2133e0ae14a"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V4",
-        "name": "The Icehouse",
-        "line": "[[420, 302], [342, 168], [373, 51]]",
-        "subarea": "Straightaways",
-        "topo": "straightaways-icehouse",
-        "color": "white",
-        "order": "8",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.745637,
-          47.54541
-        ],
-        "type": "Point"
-      },
-      "id": "50caee29e9b4aa6cb578c9cee4fb0515"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V6",
-        "name": "Taller",
-        "line": "[[294, 320], [269, 171], [304, 51]]",
-        "subarea": "Straightaways",
-        "topo": "straightaways-taller",
-        "color": "white",
-        "order": "16",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.746793,
-          47.54583
-        ],
-        "type": "Point"
-      },
-      "id": "50f2bf9e8b2315c959a60aebac3f2f1b"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V4",
-        "name": "A Dog Named Rehab",
-        "line": "[[367, 278], [317, 104], [237, 142], [222, 104]]",
-        "subarea": "Straightaways",
-        "topo": "straightaways-dog-named-rehab",
-        "color": "white",
-        "order": "23",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.748444,
-          47.546049
-        ],
-        "type": "Point"
-      },
-      "id": "51c7c38bd76582bde478a2362b0b379a"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V4",
-        "name": "Nasty Boy",
-        "line": "[[368, 303], [375, 247], [300, 45]]",
-        "subarea": "Straightaways",
-        "topo": "straightaways-bush-craft",
-        "color": "white",
-        "order": "18",
-        "description": "Climb right side of Bush Craft arete"
-      },
-      "geometry": {
-        "coordinates": [
-          -120.747066,
-          47.546021
-        ],
-        "type": "Point"
-      },
-      "id": "5257ec93dfbea68e0a0f111460f81dae"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V0",
-        "name": "Schist Crack",
-        "line": "[[256, 317], [299, 64]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-schist-crack",
-        "color": "blue",
-        "order": "1",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.727891,
-          47.653105
-        ],
-        "type": "Point"
-      },
-      "id": "57a5d5454bc0d193841dfb91ce10ce0f"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V1",
-        "name": "Oceanfront Traverse Left",
-        "line": "[[535, 231], [369, 171], [181, 166]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-oceanfront",
-        "color": "blue",
-        "order": "21",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.729915,
-          47.654787
-        ],
-        "type": "Point"
-      },
-      "id": "57e60638bff2b640eeaa2e884d6d2240"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V1",
-        "name": "The Barista",
-        "line": "[[476,299], [434,192], [413,89]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-barista",
-        "color": "blue",
-        "order": "26",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.729319,
-          47.655466
-        ],
-        "type": "Point"
-      },
-      "id": "5fe48bef935f4d3812ccd023413168f5"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V3",
-        "name": "Shock and Awe",
-        "line": "[[427, 205], [506, 175], [497, 116]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-hate-monger",
-        "color": "blue",
-        "order": "8",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.729209,
-          47.65413
-        ],
-        "type": "Point"
-      },
-      "id": "63a03743fc2a25f19ff705c59ea1fda6"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V5",
-        "name": "Ice Grip",
-        "line": "[[285, 194], [273, 110], [321, 51]]",
-        "subarea": "Straightaways",
-        "topo": "straightaways-ice-grip",
-        "color": "white",
-        "order": "11",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.745709,
-          47.545458
-        ],
-        "type": "Point"
-      },
-      "id": "6735f78c24678a8a55281f9c2bed57e5"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V3",
-        "name": "Heel Hook Right",
-        "line": "[[503, 277], [450, 159], [459, 116]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-heel-hook-rock",
-        "color": "blue",
-        "order": "15",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.729782,
-          47.654622
-        ],
-        "type": "Point"
-      },
-      "id": "6ca965434b9d78cd32d01368b2848566"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V1",
-        "name": "Percolator",
-        "line": "[[561, 256], [512, 141]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-premium-coffee",
-        "color": "blue",
-        "order": "29",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.729276,
-          47.655551
-        ],
-        "type": "Point"
-      },
-      "id": "6cda9e84a3a6b0e2de3eea60f46547fc"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V9",
-        "name": "Batman",
-        "line": "[[438, 266], [410, 182], [307, 155], [237, 99]]",
-        "subarea": "Straightaways",
-        "topo": "straightaways-batman",
-        "color": "white",
-        "order": "28",
-        "description": "The midday sun can make topping out this one feel a lot harder."
-      },
-      "geometry": {
-        "coordinates": [
-          -120.751972,
-          47.547433
-        ],
-        "type": "Point"
-      },
-      "id": "72aca6d3dd09d6f9bde7682834cb1b49"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V3",
-        "name": "Unobvious",
-        "line": "[[375,291], [258,199], [290,63]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-barista",
-        "color": "blue",
-        "order": "27",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.7293,
-          47.655477
-        ],
-        "type": "Point"
-      },
-      "id": "75cb55adf48f50ffec16a15d2a8b9a1c"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V4",
-        "name": "Fat Lip",
-        "line": "[[156, 296], [178, 237], [395, 200], [445, 144], [431, 91]]",
-        "subarea": "Straightaways",
-        "topo": "straightaways-fat-lip",
-        "color": "white",
-        "order": "12",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.745703,
-          47.545538
-        ],
-        "type": "Point"
-      },
-      "id": "75fe80eb2803b4ddfe059daf7ee67063"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V8",
-        "name": "Bush Craft",
-        "line": "[[289, 358], [332, 293], [310, 155], [223, 75]]",
-        "subarea": "Straightaways",
-        "topo": "straightaways-bush-craft",
-        "color": "white",
-        "order": "17",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.747111,
-          47.546011
-        ],
-        "type": "Point"
-      },
-      "id": "784d319368d37e3eacbaf744ce067668"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V1",
-        "name": "Pod Racer",
-        "line": "[[435, 236], [269, 184], [274, 61]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-pod-racer",
-        "color": "blue",
-        "order": "37",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.729211,
-          47.656091
-        ],
-        "type": "Point"
-      },
-      "id": "7b3d51fe47fc69c47f268eb8d7b294ac"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V8",
-        "name": "Lonely Fish",
-        "line": "[[268, 239], [376, 200], [388, 141], [322, 43]]",
-        "subarea": "Straightaways",
-        "topo": "straightaways-lonely-fish",
-        "color": "white",
-        "order": "3",
-        "description": "Use any means necessary to establish on the rail."
-      },
-      "geometry": {
-        "coordinates": [
-          -120.740569,
-          47.544421
-        ],
-        "type": "Point"
-      },
-      "id": "884459b5505fb8d96501b75948911ca7"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V4",
-        "name": "Ice Age Left",
-        "line": "[[439, 252], [401, 34]]",
-        "subarea": "Straightaways",
-        "topo": "straightaways-ice-grip",
-        "color": "white",
-        "order": "10",
-        "description": "Climb the left side of the arete - a lot easier than the original."
-      },
-      "geometry": {
-        "coordinates": [
-          -120.745728,
-          47.545433
-        ],
-        "type": "Point"
-      },
-      "id": "8861d6e4ab1d4285189a8c862df4a41d"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V2",
-        "name": "Heel Hook Left",
-        "line": "[[137, 274], [284, 171], [302, 77]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-heel-hook-rock",
-        "color": "blue",
-        "order": "14",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.729761,
-          47.654598
-        ],
-        "type": "Point"
-      },
-      "id": "8c15fa8629af2d375dd9a4f95777ed3e"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V8",
-        "name": "WAS",
-        "line": "[[308, 192], [248, 88], [301, 31]]",
-        "subarea": "Straightaways",
-        "topo": "straightaways-was",
-        "color": "white",
-        "order": "22",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.748009,
-          47.545893
-        ],
-        "type": "Point"
-      },
-      "id": "9463cde96387688e5470700239bdab38"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V3",
-        "name": "Slap and Dangle",
-        "line": "[[424, 204], [354, 178], [355, 133]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-hate-monger",
-        "color": "blue",
-        "order": "9",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.72925,
-          47.654137
-        ],
-        "type": "Point"
-      },
-      "id": "9704568fb72e02b9e390db37b162903b"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V3",
-        "name": "Ripple Effect Low",
-        "line": "[[429, 280], [349, 234], [348, 88]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-ripple-effect",
-        "color": "blue",
-        "order": "20",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.729919,
-          47.65473
-        ],
-        "type": "Point"
-      },
-      "id": "98dc733b6696061b786502763df4065a"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V4",
-        "name": "Hatchet",
-        "line": "[[423, 297], [429, 197], [335, 64]]",
-        "subarea": "Straightaways",
-        "topo": "straightaways-mountain-man",
-        "color": "white",
-        "order": "20",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.747107,
-          47.546152
-        ],
-        "type": "Point"
-      },
-      "id": "991349cd655b85d73658b98bebb5d722"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V1",
-        "name": "Chicken Man Left",
-        "line": "[[115,267], [149,197], [209,120], [262,89]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-chicken-man",
-        "color": "blue",
-        "order": "23",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.73022,
-          47.655013
-        ],
-        "type": "Point"
-      },
-      "id": "99a8d4c0717482f5ad5f863a962d34a9"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V3",
-        "name": "Balance Step",
-        "line": "[[405, 228], [328, 67]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-balance-step",
-        "color": "blue",
-        "order": "44",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.729597,
-          47.656276
-        ],
-        "type": "Point"
-      },
-      "id": "a1bd43efb51641de5b732ea9d7ce8e57"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V2",
-        "name": "Premium Coffee Right",
-        "line": "[[455, 235], [421, 159], [469, 128]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-premium-coffee",
-        "color": "blue",
-        "order": "30",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.729301,
-          47.655534
-        ],
-        "type": "Point"
-      },
-      "id": "a2978d6191088fda13b26b89a376fc18"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V1",
-        "name": "Bubbles No-Hands",
-        "line": "[[391, 339], [360, 81]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-bubbles",
-        "color": "blue",
-        "order": "18",
-        "description": "Climb the boulder with no hands!"
-      },
-      "geometry": {
-        "coordinates": [
-          -120.729726,
-          47.65481
-        ],
-        "type": "Point"
-      },
-      "id": "a804deca74f8617e3e13572d40817d78"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V4",
-        "name": "Bok Choy",
-        "line": "[[233, 249], [311, 69]]",
-        "subarea": "Straightaways",
-        "topo": "straightaways-bok-choy",
-        "color": "white",
-        "order": "7",
-        "description": "Start with one had on the undercling."
-      },
-      "geometry": {
-        "coordinates": [
-          -120.744879,
-          47.544526
-        ],
-        "type": "Point"
-      },
-      "id": "a843bf52be331e7d2ebb09b717923df8"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V9",
-        "name": "Sorrow Bird",
-        "line": "[[267, 238], [266, 150], [228, 114], [208, 29]]",
-        "subarea": "Straightaways",
-        "topo": "straightaways-lonely-fish",
-        "color": "white",
-        "order": "4",
-        "description": "Same start as Lonely Fish."
-      },
-      "geometry": {
-        "coordinates": [
-          -120.740641,
-          47.544421
-        ],
-        "type": "Point"
-      },
-      "id": "a9199cbbb45973f81f971215c00d55c1"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V4",
-        "name": "The Freezer Right",
-        "line": "[[321, 310], [291, 50]]",
-        "subarea": "Straightaways",
-        "topo": "straightaways-freezer",
-        "color": "white",
-        "order": "14",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.74618,
-          47.54515
-        ],
-        "type": "Point"
-      },
-      "id": "aecdcafdd002a72b0d4487080f101bc9"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V0",
-        "name": "Lowe Rider Ridge",
-        "line": "[[294, 253], [321, 28]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-lowe-rider-ridge",
-        "color": "blue",
-        "order": "35",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.72909,
-          47.655914
-        ],
-        "type": "Point"
-      },
-      "id": "af52fcf89f5a4aa43f3b52424677894c"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V2",
-        "name": "Lowe Rider Stand",
-        "line": "[[199, 339], [363, 262], [483, 141]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-lowe-rider",
-        "color": "blue",
-        "order": "34",
-        "description": "Traverse the detached flake, starting from a good left foot."
-      },
-      "geometry": {
-        "coordinates": [
-          -120.72914,
-          47.655894
-        ],
-        "type": "Point"
-      },
-      "id": "b3dd7a9ed59762c49fe2c304be9b42dc"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V2",
-        "name": "Royal Flush",
-        "line": "[[370, 318], [382, 277], [363, 92]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-royal-flush",
-        "color": "blue",
-        "order": "42",
-        "description": "Start deep in the cave."
-      },
-      "geometry": {
-        "coordinates": [
-          -120.729465,
-          47.656063
-        ],
-        "type": "Point"
-      },
-      "id": "bb8079f05612227adbb3576e1932cf9a"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V0",
-        "name": "Schist Right",
-        "line": "[[519, 292], [489, 140]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-schisthead",
-        "color": "blue",
-        "order": "16",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.72954,
-          47.654716
-        ],
-        "type": "Point"
-      },
-      "id": "c22d78c51ac2594d793713feafefa01c"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V2",
-        "name": "Fin Traverse",
-        "line": "[[589, 264], [539, 257], [467, 287], [226, 98]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-pit",
-        "color": "blue",
-        "order": "33",
-        "description": "Start on the right side of the fin, shuffle to the left and then pull up to the main boulder, exiting near the top of The Pit."
-      },
-      "geometry": {
-        "coordinates": [
-          -120.729019,
-          47.655893
-        ],
-        "type": "Point"
-      },
-      "id": "c69ec952a538b2b98cffdeb5907db998"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V2",
-        "name": "Little Guy",
-        "line": "[[251, 284], [324, 68]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-little-guy",
-        "color": "blue",
-        "order": "3",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.728974,
-          47.653507
-        ],
-        "type": "Point"
-      },
-      "id": "d0f583cab1bc0fa6b11b3cca8c66b475"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V1",
-        "name": "The Devonian Traverse",
-        "line": "[[141, 262], [342, 174], [361, 119]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-devonian",
-        "color": "blue",
-        "order": "5",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.729414,
-          47.653891
-        ],
-        "type": "Point"
-      },
-      "id": "d624b3f4d49d218ce9c84e9d725ec712"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V2",
-        "name": "Schisthead Traverse",
-        "line": "[[515, 284], [269, 226], [194, 119]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-schisthead",
-        "color": "blue",
-        "order": "17",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.729599,
-          47.654748
-        ],
-        "type": "Point"
-      },
-      "id": "d656b6481a505b3d6691278709bb5a3d"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V0",
-        "name": "Red Traverse",
-        "line": "[[88, 230], [350, 178], [515, 136]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-red",
-        "color": "blue",
-        "order": "31",
-        "description": "Traverse right, staying below the lip."
-      },
-      "geometry": {
-        "coordinates": [
-          -120.729058,
-          47.655871
-        ],
-        "type": "Point"
-      },
-      "id": "ddb7d2d65ef7313ce457614f75692e37"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V5",
-        "name": "Tall Boy",
-        "line": "[[241, 270], [221, 139], [263, 50]]",
-        "subarea": "Straightaways",
-        "topo": "straightaways-icehouse",
-        "color": "white",
-        "order": "9",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.745707,
-          47.545413
-        ],
-        "type": "Point"
-      },
-      "id": "e15d7c0d74e68e6724271a49f6ba5977"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V7",
-        "name": "IS",
-        "line": "[[311, 195], [452, 174], [444, 143]]",
-        "subarea": "Straightaways",
-        "topo": "straightaways-was",
-        "color": "white",
-        "order": "21",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.74795,
-          47.545864
-        ],
-        "type": "Point"
-      },
-      "id": "e7165f60cced8105c69ffd8a6ce1ff63"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V2",
-        "name": "14 Years Stand",
-        "line": "[[473, 259], [421, 205], [411, 128]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-14-years",
-        "color": "blue",
-        "order": "7",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.729035,
-          47.654251
-        ],
-        "type": "Point"
-      },
-      "id": "eaafdb7f49efc27e5f377dd24ea15d05"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V2",
-        "name": "Dark Days",
-        "line": "[[449, 284], [251, 254], [105, 50]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-dark-days",
-        "color": "blue",
-        "order": "45",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.729424,
-          47.656312
-        ],
-        "type": "Point"
-      },
-      "id": "ef329e27636f888ce461ef65ae8c5311"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V7",
-        "name": "Down the Barrel",
-        "line": "",
-        "subarea": "Straightaways",
-        "topo": "",
-        "color": "white",
-        "order": "",
-        "description": "Optional if the water is low enough - could be a part of the official “Fall” version of the circuit"
-      },
-      "geometry": {
-        "coordinates": [
-          -120.748685,
-          47.545665
-        ],
-        "type": "Point"
-      },
-      "id": "efd0e8a5cb0f3db154c045a12af1c17e"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V2",
-        "name": "Schist Lip",
-        "line": "[[145, 334], [223, 235], [371, 200], [438, 106], [639, 6]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-schist-cave",
-        "color": "blue",
-        "order": "25",
-        "description": "Start sitting, rock over at the tree and continue diagonaling up or drop off."
-      },
-      "geometry": {
-        "coordinates": [
-          -120.73003,
-          47.655746
-        ],
-        "type": "Point"
-      },
-      "id": "f8ac29d9e1d421cae4956da6e4405bdc"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V3",
-        "name": "Sitting Bull",
-        "line": "[[346, 316], [332, 100]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-sitting-bull",
-        "color": "blue",
-        "order": "41",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.729373,
-          47.656048
-        ],
-        "type": "Point"
-      },
-      "id": "fa7a11267a7c771a86e993a351d9f0f8"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V4",
-        "name": "Year 2001 ",
-        "line": "[[217, 241], [213, 156], [257, 62]]",
-        "subarea": "Straightaways",
-        "topo": "straightaways-2001",
-        "color": "white",
-        "order": "1",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.740719,
-          47.54355
-        ],
-        "type": "Point"
-      },
-      "id": "fbbb6b99dbf6410f0bb025c46a37c4b9"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V5",
-        "name": "Old School",
-        "line": "[[343, 278], [318, 210], [404, 120]]",
-        "subarea": "Straightaways",
-        "topo": "straightaways-old-school",
-        "color": "white",
-        "order": "5",
-        "description": "This one is tall but the hardest moves are low."
-      },
-      "geometry": {
-        "coordinates": [
-          -120.74062,
-          47.54457
-        ],
-        "type": "Point"
-      },
-      "id": "fe673de561a13a41818df12eb459d221"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V2",
-        "name": "The Pit",
-        "line": "[[186, 273], [218, 96]]",
-        "subarea": "Swiftwater",
-        "topo": "swiftwater-pit",
-        "color": "blue",
-        "order": "32",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.728989,
-          47.655866
-        ],
-        "type": "Point"
-      },
-      "id": "fe7cc74feb693645fca82446f32aa483"
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "grade": "V8",
-        "name": "Millennium Traverse",
-        "line": "[[480, 271], [409, 214], [286, 169], [246, 90]]",
-        "subarea": "Straightaways",
-        "topo": "straightaways-millennium",
-        "color": "white",
-        "order": "2",
-        "description": ""
-      },
-      "geometry": {
-        "coordinates": [
-          -120.740602,
-          47.54367
-        ],
-        "type": "Point"
-      },
-      "id": "ffdce61244a00d3ab07b1403f941c657"
-    }
-  ],
-  "type": "FeatureCollection"
+    "type": "FeatureCollection",
+    "generator": "JOSM",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Cramps",
+                "grade": "V2",
+                "subarea": "Swiftwater",
+                "lon": "-120.7292885",
+                "topo": "swiftwater-hate-monger",
+                "lat": "47.65418091",
+                "line": "[[133,252],[190,193]]",
+                "order": "11",
+                "description": "",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72928800000,
+                    47.65418000000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "lat": "47.545733",
+                "line": "[[377,387],[353,237],[293,71]]",
+                "order": "15",
+                "lon": "-120.7466556",
+                "description": "Sit start.",
+                "name": "Answer Man",
+                "color": "white",
+                "grade": "V6",
+                "topo": "straightaways-answer-man",
+                "subarea": "Straightaways"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.74665500000,
+                    47.54573300000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "grade": "V3",
+                "description": "Climb the boulder with no hands!",
+                "subarea": "Swiftwater",
+                "order": "19",
+                "topo": "swiftwater-bubbles",
+                "lon": "-120.729751",
+                "name": "No Pitons Here No-Hands",
+                "line": "[[169,331],[223,107]]",
+                "lat": "47.654799",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72975100000,
+                    47.65479900000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "lat": "47.65350729",
+                "grade": "V2",
+                "line": "[[251,284],[324,68]]",
+                "subarea": "Swiftwater",
+                "name": "Little Guy",
+                "topo": "swiftwater-little-guy",
+                "order": "3",
+                "lon": "-120.7289744",
+                "description": "",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72897400000,
+                    47.65350700000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "lat": "47.54541",
+                "order": "8",
+                "line": "[[420,302],[342,168],[373,51]]",
+                "name": "The Icehouse",
+                "color": "white",
+                "lon": "-120.745637",
+                "topo": "straightaways-icehouse",
+                "description": "",
+                "grade": "V4",
+                "subarea": "Straightaways"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.74563700000,
+                    47.54541000000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "grade": "V1",
+                "line": "[[339,248],[302,71]]",
+                "subarea": "Swiftwater",
+                "name": "Minnie",
+                "topo": "swiftwater-minnie",
+                "lon": "-120.7297701",
+                "lat": "47.65458",
+                "order": "13",
+                "description": "",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72977000000,
+                    47.65458000000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "lat": "47.545458",
+                "topo": "straightaways-ice-grip",
+                "lon": "-120.745709",
+                "name": "Ice Grip",
+                "line": "[[285,194],[273,110],[321,51]]",
+                "color": "white",
+                "order": "11",
+                "grade": "V5",
+                "description": "",
+                "subarea": "Straightaways"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.74570900000,
+                    47.54545800000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "subarea": "Swiftwater",
+                "grade": "V0",
+                "name": "Schist Crack",
+                "topo": "swiftwater-schist-crack",
+                "lat": "47.65310543",
+                "order": "1",
+                "line": "[[256,317],[299,64]]",
+                "lon": "-120.7278917",
+                "description": "",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72789100000,
+                    47.65310500000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "lon": "-120.7292036",
+                "lat": "47.65359194",
+                "grade": "V2",
+                "subarea": "Swiftwater",
+                "topo": "swiftwater-whelmed",
+                "line": "[[346,237],[321,77]]",
+                "order": "4",
+                "description": "Start with a left hand high on a decent sidepull and right hand on a crimp.",
+                "name": "Whelmed",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72920300000,
+                    47.65359100000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Rainbow",
+                "grade": "V1",
+                "line": "[[283,220],[369,55]]",
+                "lat": "47.543264",
+                "color": "blue",
+                "order": "5",
+                "subarea": "Forestland",
+                "description": "Climb up and right on the steep side of the fin. Downclimb on the slabby side.",
+                "topo": "forestland-rainbow",
+                "lon": "-120.7352"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.73521909325,
+                    47.54327938993
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "lat": "47.65459881",
+                "grade": "V2",
+                "subarea": "Swiftwater",
+                "line": "[[137,274],[284,171],[302,77]]",
+                "topo": "swiftwater-heel-hook-rock",
+                "lon": "-120.7297614",
+                "order": "14",
+                "name": "Heel Hook Left",
+                "description": "",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72976100000,
+                    47.65459800000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "topo": "straightaways-was",
+                "lat": "47.545864",
+                "lon": "-120.74795",
+                "line": "[[311,195],[452,174],[444,143]]",
+                "name": "IS",
+                "color": "white",
+                "grade": "V7",
+                "order": "21",
+                "description": "",
+                "subarea": "Straightaways"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.74795000000,
+                    47.54586400000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "grade": "V3",
+                "line": "[[429,280],[349,234],[348,88]]",
+                "lat": "47.65473033",
+                "subarea": "Swiftwater",
+                "name": "Ripple Effect Low",
+                "lon": "-120.7299199",
+                "order": "20",
+                "description": "",
+                "topo": "swiftwater-ripple-effect",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72991900000,
+                    47.65473000000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "line": "[[88,230],[350,178],[515,136]]",
+                "description": "Traverse right, staying below the lip.",
+                "topo": "swiftwater-red",
+                "subarea": "Swiftwater",
+                "grade": "V0",
+                "lat": "47.655871",
+                "lon": "-120.729058",
+                "order": "31",
+                "name": "Red Traverse",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72905800000,
+                    47.65587100000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Bok Choy",
+                "line": "[[233,249],[311,69]]",
+                "order": "7",
+                "color": "white",
+                "description": "Start with one had on the undercling.",
+                "lon": "-120.744879",
+                "topo": "straightaways-bok-choy",
+                "lat": "47.544526",
+                "grade": "V4",
+                "subarea": "Straightaways"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.74487900000,
+                    47.54452600000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "lat": "47.656063",
+                "grade": "V2",
+                "subarea": "Swiftwater",
+                "line": "[[370,318],[382,277],[363,92]]",
+                "lon": "-120.729465",
+                "name": "Royal Flush",
+                "description": "Start deep in the cave.",
+                "topo": "swiftwater-royal-flush",
+                "order": "42",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72946500000,
+                    47.65606300000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "subarea": "Swiftwater",
+                "grade": "V0",
+                "order": "38",
+                "lon": "-120.729224",
+                "name": "Tentacles",
+                "line": "[[128,277],[125,164]]",
+                "lat": "47.656081",
+                "description": "",
+                "topo": "swiftwater-pod-racer",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72922400000,
+                    47.65608100000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "topo": "straightaways-was",
+                "name": "WAS",
+                "lat": "47.545893",
+                "grade": "V8",
+                "lon": "-120.748009",
+                "color": "white",
+                "order": "22",
+                "line": "[[308,192],[248,88],[301,31]]",
+                "description": "",
+                "subarea": "Straightaways"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.74800900000,
+                    47.54589300000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "lat": "47.546427",
+                "line": "[[291,310],[343,254],[351,135],[316,81]]",
+                "name": "Tampax Arête",
+                "lon": "-120.749459",
+                "topo": "straightaways-tampax-arete",
+                "order": "25",
+                "color": "white",
+                "description": "",
+                "grade": "V4",
+                "subarea": "Straightaways"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.74945900000,
+                    47.54642700000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "lon": "-120.7470663",
+                "lat": "47.54602191",
+                "topo": "straightaways-bush-craft",
+                "order": "18",
+                "line": "[[368,303],[375,247],[300,45]]",
+                "name": "Nasty Boy",
+                "description": "Climb right side of Bush Craft arete",
+                "color": "white",
+                "grade": "V4",
+                "subarea": "Straightaways"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.74706600000,
+                    47.54602100000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "grade": "V2",
+                "line": "[[332,159],[304,119]]",
+                "subarea": "Swiftwater",
+                "lat": "47.65315891",
+                "topo": "swiftwater-jump",
+                "order": "2",
+                "name": "Jump!",
+                "description": "Hop up to the sloper and mantle.",
+                "lon": "-120.7280195",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72801900000,
+                    47.65315800000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "grade": "V1",
+                "order": "8",
+                "lon": "-120.732662",
+                "color": "blue",
+                "description": "Climb straight up or go out to the sloper and top out left.",
+                "topo": "forestland-real-thing",
+                "line": "[[212,275],[226,184],[380,64]]",
+                "name": "Breadline",
+                "subarea": "Forestland",
+                "lat": "47.544637"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.73262981349,
+                    47.54467321065
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "grade": "V2",
+                "topo": "swiftwater-chicken-man",
+                "subarea": "Swiftwater",
+                "line": "[[450,144],[431,114],[412,104]]",
+                "lat": "47.655002",
+                "lon": "-120.730125",
+                "name": "Flying Goat Boy",
+                "order": "22",
+                "description": "Hop up to the sloper and mantle.",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.73012500000,
+                    47.65500200000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "line": "[[115,267],[149,197],[209,120],[262,89]]",
+                "topo": "swiftwater-chicken-man",
+                "grade": "V1",
+                "subarea": "Swiftwater",
+                "lon": "-120.73022",
+                "name": "Chicken Man Left",
+                "lat": "47.655013",
+                "order": "23",
+                "description": "",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.73022000000,
+                    47.65501300000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "line": "[[391,339],[360,81]]",
+                "lon": "-120.729726",
+                "lat": "47.65481",
+                "description": "Climb the boulder with no hands!",
+                "grade": "V1",
+                "subarea": "Swiftwater",
+                "name": "Bubbles No-Hands",
+                "order": "18",
+                "topo": "swiftwater-bubbles",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72972600000,
+                    47.65481000000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "lon": "-120.74618",
+                "topo": "straightaways-freezer",
+                "lat": "47.54515",
+                "order": "14",
+                "line": "[[321,310],[291,50]]",
+                "color": "white",
+                "name": "The Freezer Right",
+                "description": "",
+                "grade": "V4",
+                "subarea": "Straightaways"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.74618000000,
+                    47.54515000000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "lon": "-120.745707",
+                "lat": "47.545413",
+                "order": "9",
+                "name": "Tall Boy",
+                "color": "white",
+                "line": "[[241,270],[221,139],[263,50]]",
+                "topo": "straightaways-icehouse",
+                "grade": "V5",
+                "description": "",
+                "subarea": "Straightaways"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.74570700000,
+                    47.54541300000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Dirty and Deep",
+                "grade": "V0",
+                "color": "blue",
+                "description": "Climb the low angle right arete.",
+                "lat": "47.545164",
+                "lon": "-120.732666",
+                "topo": "forestland-dirty-and-deep",
+                "subarea": "Forestland",
+                "order": "23",
+                "line": ""
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.73266600000,
+                    47.54516400000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "topo": "",
+                "lon": "-120.748685",
+                "lat": "47.545665",
+                "name": "Down the Barrel",
+                "color": "white",
+                "grade": "V7",
+                "order": "",
+                "description": "Optional if the water is low enough - could be a part of the official “Fall” version of the circuit",
+                "line": "",
+                "subarea": "Straightaways"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.74868500000,
+                    47.54566500000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "lon": "-120.749247",
+                "lat": "47.54641",
+                "name": "Pony Ride",
+                "order": "24",
+                "line": "[[475,325],[430,258],[415,135],[337,105]]",
+                "color": "white",
+                "topo": "straightaways-pony-ride",
+                "description": "",
+                "grade": "V4",
+                "subarea": "Straightaways"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.74924700000,
+                    47.54641000000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "grade": "V3",
+                "subarea": "Swiftwater",
+                "name": "Joel’s Slab",
+                "lon": "-120.72917",
+                "description": "Optional if you're up for it!",
+                "order": "36",
+                "lat": "47.655983",
+                "line": "[[335,295],[319,207],[258,170],[349,107]]",
+                "topo": "swiftwater-joels-slab",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72917000000,
+                    47.65598300000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "line": "[[325,277],[273,53]]",
+                "grade": "V0",
+                "order": "9",
+                "color": "blue",
+                "topo": "forestland-concavity",
+                "name": "Concavity Stand",
+                "description": "Start in the crack and climb up and left. Or start on the sidepull left of the crack and climb straight up, eliminating the crack.",
+                "subarea": "Forestland",
+                "lon": "-120.732587",
+                "lat": "47.544701"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.73255213128,
+                    47.54473042112
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Pod Racer",
+                "grade": "V1",
+                "line": "[[435,236],[269,184],[274,61]]",
+                "subarea": "Swiftwater",
+                "order": "37",
+                "lon": "-120.729211",
+                "lat": "47.656091",
+                "description": "",
+                "topo": "swiftwater-pod-racer",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72921100000,
+                    47.65609100000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "description": "Same start as Lonely Fish.",
+                "lat": "47.544421",
+                "lon": "-120.740641",
+                "order": "4",
+                "grade": "V9",
+                "line": "[[267,238],[266,150],[228,114],[208,29]]",
+                "name": "Sorrow Bird",
+                "color": "white",
+                "topo": "straightaways-lonely-fish",
+                "subarea": "Straightaways"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.74064100000,
+                    47.54442100000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "lat": "47.543268",
+                "lon": "-120.735255",
+                "grade": "V2",
+                "line": "[[344,311],[370,232]]",
+                "color": "blue",
+                "subarea": "Forestland",
+                "topo": "forestland-rainbow",
+                "order": "",
+                "name": "Slice of Pie",
+                "description": "Optional. Bad landing."
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.73529322148,
+                    47.54326075768
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "grade": "V2",
+                "color": "blue",
+                "name": "Sunny and Steep",
+                "description": "Climb the left side of the face on rounded jugs. Sit start.",
+                "topo": "forestland-sunny-and-steep",
+                "order": "25",
+                "subarea": "Forestland",
+                "lon": "-120.732626",
+                "lat": "47.545271",
+                "line": ""
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.73262600000,
+                    47.54527100000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "lon": "-120.7471113",
+                "topo": "straightaways-bush-craft",
+                "order": "17",
+                "lat": "47.54601115",
+                "grade": "V8",
+                "color": "white",
+                "description": "",
+                "line": "[[289,358],[332,293],[310,155],[223,75]]",
+                "subarea": "Straightaways",
+                "name": "Bush Craft"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.74711100000,
+                    47.54601100000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "grade": "V2",
+                "lon": "-120.732371",
+                "color": "blue",
+                "line": "[[421,263],[352,76]]",
+                "topo": "forestland-fedge",
+                "order": "15",
+                "subarea": "Forestland",
+                "lat": "47.545209",
+                "name": "Fedge",
+                "description": ""
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.73237100000,
+                    47.54520900000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "grade": "V2",
+                "color": "blue",
+                "name": "Peep",
+                "lat": "47.545164",
+                "line": "[[291,277],[369,27]]",
+                "lon": "-120.732666",
+                "order": "24",
+                "subarea": "Forestland",
+                "topo": "forestland-peep",
+                "description": ""
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.73267300000,
+                    47.54515700000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "grade": "V3",
+                "lat": "47.65462226",
+                "subarea": "Swiftwater",
+                "line": "[[503,277],[450,159],[459,116]]",
+                "lon": "-120.7297821",
+                "topo": "swiftwater-heel-hook-rock",
+                "order": "15",
+                "name": "Heel Hook Right",
+                "description": "",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72978200000,
+                    47.65462200000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "grade": "V3",
+                "subarea": "Swiftwater",
+                "lat": "47.65413036",
+                "topo": "swiftwater-hate-monger",
+                "order": "8",
+                "line": "[[427,205],[506,175],[497,116]]",
+                "name": "Shock and Awe",
+                "lon": "-120.7292095",
+                "description": "",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72920900000,
+                    47.65413000000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "grade": "V3",
+                "line": "[[236,318],[243,150]]",
+                "subarea": "Swiftwater",
+                "topo": "swiftwater-hate-monger",
+                "name": "Hate Monger",
+                "lon": "-120.7292832",
+                "order": "10",
+                "lat": "47.65416452",
+                "description": "",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72928300000,
+                    47.65416400000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "description": "Optional if the water is low enough.",
+                "topo": "",
+                "lon": "-120.748795",
+                "lat": "47.545694",
+                "grade": "V9",
+                "color": "white",
+                "order": "",
+                "line": "",
+                "name": "Heads Will Roll",
+                "subarea": "Straightaways"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.74879500000,
+                    47.54569400000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "line": "[[438,266],[410,182],[307,155],[237,99]]",
+                "name": "Batman",
+                "lon": "-120.751972",
+                "lat": "47.547433",
+                "description": "The midday sun can make topping out this one feel a lot harder.",
+                "order": "28",
+                "topo": "straightaways-batman",
+                "grade": "V9",
+                "color": "white",
+                "subarea": "Straightaways"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.75197200000,
+                    47.54743300000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "lat": "47.544631",
+                "grade": "V0",
+                "color": "blue",
+                "line": "[[245,276],[234,70]]",
+                "order": "6",
+                "topo": "forestland-runner",
+                "subarea": "Forestland",
+                "lon": "-120.732797",
+                "name": "Runner",
+                "description": ""
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.73287000860,
+                    47.54465930539
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "grade": "V2",
+                "subarea": "Swiftwater",
+                "topo": "swiftwater-schisthead",
+                "lon": "-120.7295995",
+                "order": "17",
+                "name": "Schisthead Traverse",
+                "lat": "47.65474845",
+                "line": "[[515,284],[269,226],[194,119]]",
+                "description": "",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72959900000,
+                    47.65474800000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "line": "[[294,320],[269,171],[304,51]]",
+                "lat": "47.54583044",
+                "order": "16",
+                "color": "white",
+                "lon": "-120.7467935",
+                "name": "Taller",
+                "grade": "V6",
+                "topo": "straightaways-taller",
+                "description": "",
+                "subarea": "Straightaways"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.74679300000,
+                    47.54583000000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "grade": "V1",
+                "color": "blue",
+                "name": "The Scarecrow",
+                "line": "[[187,256],[245,43]]",
+                "lon": "-120.732249",
+                "order": "13",
+                "subarea": "Forestland",
+                "lat": "47.544725",
+                "topo": "forestland-scarecrow",
+                "description": ""
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.73219734416,
+                    47.54467185250
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "lat": "47.543325",
+                "grade": "V1",
+                "color": "blue",
+                "line": "[[168,251],[204,178],[234,124]]",
+                "description": "Climb up and right on the left arete.",
+                "lon": "-120.73484",
+                "order": "4",
+                "subarea": "Forestland",
+                "topo": "forestland-rail",
+                "name": "Frosting"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.73485810491,
+                    47.54334355842
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "order": "40",
+                "grade": "V1",
+                "subarea": "Swiftwater",
+                "lat": "47.65606",
+                "topo": "swiftwater-sitting-bull",
+                "line": "[[449,314],[498,132]]",
+                "lon": "-120.729351",
+                "name": "Raging Cow",
+                "description": "",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72935100000,
+                    47.65606000000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "lat": "47.54367065",
+                "name": "Millennium Traverse",
+                "line": "[[480,271],[409,214],[286,169],[246,90]]",
+                "order": "2",
+                "grade": "V8",
+                "color": "white",
+                "topo": "straightaways-millennium",
+                "lon": "-120.7406025",
+                "description": "",
+                "subarea": "Straightaways"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.74060200000,
+                    47.54367000000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "lat": "47.65413752",
+                "grade": "V3",
+                "subarea": "Swiftwater",
+                "topo": "swiftwater-hate-monger",
+                "order": "9",
+                "lon": "-120.7292502",
+                "name": "Slap and Dangle",
+                "line": "[[424,204],[354,178],[355,133]]",
+                "description": "",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72925000000,
+                    47.65413700000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "lon": "-120.729319",
+                "grade": "V1",
+                "subarea": "Swiftwater",
+                "line": "[[476,299],[434,192],[413,89]]",
+                "order": "26",
+                "lat": "47.655466",
+                "name": "The Barista",
+                "topo": "swiftwater-barista",
+                "description": "",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72931900000,
+                    47.65546600000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "grade": "V0",
+                "color": "blue",
+                "line": "[[403,279],[392,82]]",
+                "order": "14",
+                "lon": "-120.732249",
+                "subarea": "Forestland",
+                "lat": "47.544725",
+                "name": "Cowardly Lion",
+                "topo": "forestland-scarecrow",
+                "description": ""
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.73215646379,
+                    47.54468652622
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "topo": "forestland-bad-moon-rising",
+                "line": "[[289,259],[333,72]]",
+                "grade": "V2",
+                "description": "Excellent technical slab with a committing move up high.",
+                "lon": "-120.732937",
+                "color": "blue",
+                "lat": "47.545121",
+                "subarea": "Forestland",
+                "name": "Bad Moon Rising",
+                "order": "21"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.73298600000,
+                    47.54512600000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "subarea": "Swiftwater",
+                "grade": "V0",
+                "name": "Mickey",
+                "order": "12",
+                "lat": "47.654565",
+                "line": "[[232,261],[318,186],[313,141]]",
+                "description": "",
+                "topo": "swiftwater-mickey",
+                "lon": "-120.7298124",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72981200000,
+                    47.65456500000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "line": "[[217,294],[379,123],[365,78]]",
+                "name": "More Fun Than Beer",
+                "order": "6",
+                "lat": "47.544738",
+                "color": "white",
+                "lon": "-120.743855",
+                "topo": "straightaways-mftb",
+                "grade": "V6",
+                "description": "",
+                "subarea": "Straightaways"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.74385500000,
+                    47.54473800000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "lon": "-120.728989",
+                "grade": "V2",
+                "subarea": "Swiftwater",
+                "topo": "swiftwater-pit",
+                "line": "[[186,273],[218,96]]",
+                "name": "The Pit",
+                "order": "32",
+                "lat": "47.655866",
+                "description": "",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72898900000,
+                    47.65586600000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "topo": "swiftwater-lowe-rider",
+                "name": "Lowe Rider Stand",
+                "grade": "V2",
+                "line": "[[199,339],[363,262],[483,141]]",
+                "subarea": "Swiftwater",
+                "lon": "-120.72914",
+                "lat": "47.655894",
+                "description": "Traverse the detached flake, starting from a good left foot.",
+                "order": "34",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72914000000,
+                    47.65589400000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "grade": "V0",
+                "color": "blue",
+                "line": "[[364,224],[366,71]]",
+                "lon": "-120.732253",
+                "name": "Hearthstone",
+                "lat": "47.544609",
+                "subarea": "Forestland",
+                "order": "11",
+                "topo": "forestland-hearthstone",
+                "description": ""
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.73221370275,
+                    47.54469954204
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "description": "Climb the left side of the arete - a lot easier than the original.",
+                "topo": "straightaways-ice-grip",
+                "lat": "47.545433",
+                "name": "Ice Age Left",
+                "color": "white",
+                "order": "10",
+                "line": "[[439,252],[401,34]]",
+                "lon": "-120.745728",
+                "grade": "V4",
+                "subarea": "Straightaways"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.74572800000,
+                    47.54543300000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "topo": "straightaways-fat-lip",
+                "line": "[[156,296],[178,237],[395,200],[445,144],[431,91]]",
+                "name": "Fat Lip",
+                "order": "12",
+                "color": "white",
+                "lon": "-120.745703",
+                "lat": "47.545538",
+                "description": "",
+                "grade": "V4",
+                "subarea": "Straightaways"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.74570300000,
+                    47.54553800000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "grade": "V1",
+                "subarea": "Swiftwater",
+                "topo": "swiftwater-devonian",
+                "name": "The Devonian Traverse",
+                "lon": "-120.729414",
+                "line": "[[141,262],[342,174],[361,119]]",
+                "order": "5",
+                "lat": "47.653891",
+                "description": "",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72941400000,
+                    47.65389100000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "grade": "V2",
+                "name": "Slickfoot holiday",
+                "lon": "-120.732371",
+                "color": "blue",
+                "order": "16",
+                "topo": "forestland-fedge",
+                "line": "[[205,253],[235,204],[340,129],[340,72]]",
+                "subarea": "Forestland",
+                "lat": "47.545209",
+                "description": ""
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.73238000000,
+                    47.54521600000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "lon": "-120.740569",
+                "name": "Lonely Fish",
+                "line": "[[268,239],[376,200],[388,141],[322,43]]",
+                "description": "Use any means necessary to establish on the rail.",
+                "lat": "47.544421",
+                "order": "3",
+                "grade": "V8",
+                "color": "white",
+                "topo": "straightaways-lonely-fish",
+                "subarea": "Straightaways"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.74056900000,
+                    47.54442100000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "line": "[[423,297],[429,197],[335,64]]",
+                "lat": "47.54615215",
+                "name": "Hatchet",
+                "topo": "straightaways-mountain-man",
+                "lon": "-120.7471073",
+                "color": "white",
+                "order": "20",
+                "description": "",
+                "grade": "V4",
+                "subarea": "Straightaways"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.74710700000,
+                    47.54615200000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "grade": "V2",
+                "line": "[[417,373],[404,93]]",
+                "color": "blue",
+                "lon": "-120.732253",
+                "topo": "forestland-power-steering",
+                "lat": "47.544609",
+                "description": "Sit start.",
+                "subarea": "Forestland",
+                "order": "10",
+                "name": "Power Steering"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.73241147487,
+                    47.54459789466
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "lat": "47.54355052",
+                "lon": "-120.7407192",
+                "topo": "straightaways-2001",
+                "line": "[[217,241],[213,156],[257,62]]",
+                "name": "Year 2001 ",
+                "order": "1",
+                "color": "white",
+                "description": "",
+                "grade": "V4",
+                "subarea": "Straightaways"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.74071900000,
+                    47.54355000000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "line": "[[519,292],[489,140]]",
+                "lat": "47.65471661",
+                "subarea": "Swiftwater",
+                "name": "Schist Right",
+                "topo": "swiftwater-schisthead",
+                "grade": "V0",
+                "lon": "-120.7295408",
+                "order": "16",
+                "description": "",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72954000000,
+                    47.65471600000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "lat": "47.655746",
+                "grade": "V2",
+                "name": "Schist Lip",
+                "subarea": "Swiftwater",
+                "line": "[[145,334],[223,235],[371,200],[438,106],[639,6]]",
+                "topo": "swiftwater-schist-cave",
+                "order": "25",
+                "lon": "-120.73003",
+                "description": "Start sitting, rock over at the tree and continue diagonaling up or drop off.",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.73003000000,
+                    47.65574600000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "grade": "V2",
+                "subarea": "Swiftwater",
+                "lon": "-120.729424",
+                "topo": "swiftwater-dark-days",
+                "lat": "47.656312",
+                "line": "[[449,284],[251,254],[105,50]]",
+                "order": "45",
+                "name": "Dark Days",
+                "description": "",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72942400000,
+                    47.65631200000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "lon": "-120.74062",
+                "description": "This one is tall but the hardest moves are low.",
+                "topo": "straightaways-old-school",
+                "name": "Old School",
+                "lat": "47.54457",
+                "order": "5",
+                "color": "white",
+                "line": "[[343,278],[318,210],[404,120]]",
+                "grade": "V5",
+                "subarea": "Straightaways"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.74062000000,
+                    47.54457000000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "grade": "V3",
+                "subarea": "Swiftwater",
+                "topo": "swiftwater-balance-step",
+                "lat": "47.656276",
+                "lon": "-120.729597",
+                "order": "44",
+                "line": "[[405,228],[328,67]]",
+                "name": "Balance Step",
+                "description": "",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72959700000,
+                    47.65627600000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "topo": "forestland-moondog",
+                "grade": "V0",
+                "name": "Moondog",
+                "color": "blue",
+                "line": "[[369,295],[325,51]]",
+                "lon": "-120.733046",
+                "lat": "47.545131",
+                "subarea": "Forestland",
+                "order": "20",
+                "description": ""
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.73304300000,
+                    47.54513100000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "lat": "47.6542861",
+                "topo": "swiftwater-transverse",
+                "grade": "V1",
+                "line": "[[460,232],[242,71]]",
+                "subarea": "Swiftwater",
+                "lon": "-120.7290772",
+                "name": "The Transverse",
+                "order": "6",
+                "description": "",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72907700000,
+                    47.65428600000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "order": "27",
+                "name": "Miracle Whip",
+                "lon": "-120.7518061",
+                "lat": "47.54709809",
+                "color": "white",
+                "grade": "V7",
+                "line": "[[467,334],[434,274],[387,241],[392,85]]",
+                "topo": "straightaways-miracle-whip",
+                "description": "",
+                "subarea": "Straightaways"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.75180600000,
+                    47.54709800000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "grade": "V2",
+                "topo": "swiftwater-bam",
+                "subarea": "Swiftwater",
+                "line": "[[527,214],[358,163],[252,62]]",
+                "name": "Bam",
+                "order": "24",
+                "lon": "-120.730007",
+                "lat": "47.655316",
+                "description": "",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.73000700000,
+                    47.65531600000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "lat": "47.545524",
+                "line": "[[251,264],[233,61]]",
+                "topo": "straightaways-bear-hug",
+                "lon": "-120.745543",
+                "order": "13",
+                "color": "white",
+                "grade": "V5",
+                "description": "",
+                "subarea": "Straightaways",
+                "name": "Bear Hug"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.74554300000,
+                    47.54552400000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "lat": "47.655914",
+                "subarea": "Swiftwater",
+                "grade": "V0",
+                "name": "Lowe Rider Ridge",
+                "lon": "-120.72909",
+                "order": "35",
+                "topo": "swiftwater-lowe-rider-ridge",
+                "line": "[[294,253],[321,28]]",
+                "description": "",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72909000000,
+                    47.65591400000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "grade": "V2",
+                "subarea": "Swiftwater",
+                "lon": "-120.729019",
+                "line": "[[589,264],[539,257],[467,287],[226,98]]",
+                "topo": "swiftwater-pit",
+                "lat": "47.655893",
+                "name": "Fin Traverse",
+                "description": "Start on the right side of the fin, shuffle to the left and then pull up to the main boulder, exiting near the top of The Pit.",
+                "order": "33",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72901900000,
+                    47.65589300000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "grade": "V2",
+                "line": "[[413,349],[380,234],[435,131]]",
+                "lat": "47.543258",
+                "name": "Fun House Stairway",
+                "color": "blue",
+                "order": "2",
+                "subarea": "Forestland",
+                "topo": "forestland-rail",
+                "description": "",
+                "lon": "-120.734846"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.73490903191,
+                    47.54326750555
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "lat": "47.543258",
+                "grade": "V0",
+                "color": "blue",
+                "description": "Sit start. Continue traversing left before topping out for some extra climbing.",
+                "subarea": "Forestland",
+                "line": "[[548,332],[443,167],[410,156],[414,131]]",
+                "order": "1",
+                "topo": "forestland-rail",
+                "name": "The Rail",
+                "lon": "-120.734846"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.73488219816,
+                    47.54325456826
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "topo": "swiftwater-squatter",
+                "grade": "V1",
+                "subarea": "Swiftwater",
+                "description": "Start with a high right hand on the arête and hop a foot up to the pimple.",
+                "lat": "47.655481",
+                "lon": "-120.729138",
+                "order": "28",
+                "line": "[[393,205],[300,48]]",
+                "name": "Squatter Variation",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72913800000,
+                    47.65548100000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "grade": "V3",
+                "name": "Sleeve Ace",
+                "subarea": "Swiftwater",
+                "line": "[[175,297],[185,235],[217,154]]",
+                "lon": "-120.729465",
+                "order": "43",
+                "topo": "swiftwater-royal-flush",
+                "lat": "47.656106",
+                "description": "",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72946500000,
+                    47.65610600000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "line": "[[538,266],[336,184],[192,203],[153,177]]",
+                "subarea": "Swiftwater",
+                "name": "Footless Traverse",
+                "lat": "47.656364",
+                "lon": "-120.729457",
+                "description": "An option hard and grand ending. Climb in 1 or 2 parts!",
+                "order": "46",
+                "topo": "swiftwater-footless-traverse",
+                "grade": "V5",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72945700000,
+                    47.65636400000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "lat": "47.543264",
+                "color": "blue",
+                "grade": "5-",
+                "subarea": "Forestland",
+                "topo": "forestland-rainbow",
+                "order": "",
+                "name": "Rainbow Crack",
+                "lon": "-120.7352",
+                "line": "[[482,314],[640,112]]",
+                "description": "Optional. Climb the easy crack and walk down to Forestland parking."
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.73523451596,
+                    47.54329777986
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "grade": "V0",
+                "lon": "-120.732684",
+                "color": "blue",
+                "lat": "47.545266",
+                "subarea": "Forestland",
+                "order": "22",
+                "line": "[[136,278],[482,63]]",
+                "description": "",
+                "topo": "forestland-tahitian-moon",
+                "name": "Tahitian Moon"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.73268400000,
+                    47.54526600000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "topo": "swiftwater-premium-coffee",
+                "grade": "V1",
+                "subarea": "Swiftwater",
+                "line": "[[561,256],[512,141]]",
+                "order": "29",
+                "name": "Percolator",
+                "lat": "47.655551",
+                "lon": "-120.729276",
+                "description": "",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72927600000,
+                    47.65555100000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "lat": "47.54612877",
+                "order": "19",
+                "lon": "-120.7470606",
+                "name": "Mountain Man",
+                "topo": "straightaways-mountain-man",
+                "grade": "V9",
+                "color": "white",
+                "description": "",
+                "line": "[[197,290],[201,258],[264,223],[324,64]]",
+                "subarea": "Straightaways"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.74706000000,
+                    47.54612800000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "lon": "-120.748444",
+                "name": "A Dog Named Rehab",
+                "lat": "47.546049",
+                "order": "23",
+                "color": "white",
+                "topo": "straightaways-dog-named-rehab",
+                "line": "[[367,278],[317,104],[237,142],[222,104]]",
+                "description": "",
+                "grade": "V4",
+                "subarea": "Straightaways"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.74844400000,
+                    47.54604900000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "grade": "V3",
+                "line": "[[346,316],[332,100]]",
+                "subarea": "Swiftwater",
+                "topo": "swiftwater-sitting-bull",
+                "name": "Sitting Bull",
+                "lat": "47.656048",
+                "lon": "-120.729373",
+                "description": "",
+                "order": "41",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72937300000,
+                    47.65604800000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "grade": "V2",
+                "lon": "-120.732481",
+                "color": "blue",
+                "line": "[[384,291],[326,107]]",
+                "order": "17",
+                "subarea": "Forestland",
+                "name": "Two Scoops",
+                "topo": "forestland-two-scoops",
+                "lat": "47.545192",
+                "description": ""
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.73248100000,
+                    47.54519200000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "lon": "-120.7290352",
+                "grade": "V2",
+                "line": "[[473,259],[421,205],[411,128]]",
+                "subarea": "Swiftwater",
+                "order": "7",
+                "name": "14 Years Stand",
+                "topo": "swiftwater-14-years",
+                "lat": "47.65425156",
+                "description": "",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72903500000,
+                    47.65425100000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "grade": "V1",
+                "topo": "forestland-dredge",
+                "color": "blue",
+                "lon": "-120.732253",
+                "lat": "47.544609",
+                "subarea": "Forestland",
+                "name": "Dredge",
+                "order": "12",
+                "line": "[[385,264],[366,41]]",
+                "description": ""
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.73222944325,
+                    47.54467275777
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "grade": "V2",
+                "topo": "forestland-redneck",
+                "order": "19",
+                "color": "blue",
+                "subarea": "Forestland",
+                "lat": "47.545141",
+                "description": "Short slab.",
+                "lon": "-120.733006",
+                "line": "[[253,242],[323,57]]",
+                "name": "Redneck"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.73300600000,
+                    47.54514100000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "grade": "V3",
+                "line": "[[260,288],[420,183],[428,77]]",
+                "subarea": "Swiftwater",
+                "name": "Lead Pants",
+                "order": "39",
+                "lon": "-120.72928",
+                "lat": "47.656054",
+                "topo": "swiftwater-lead-pants",
+                "description": "Start sitting.",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72928000000,
+                    47.65605400000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Mothermilker",
+                "lat": "47.54663805",
+                "line": "[[250,330],[326,176],[391,159]]",
+                "order": "26",
+                "grade": "V9",
+                "lon": "-120.749968",
+                "color": "white",
+                "topo": "straightaways-mothermilker",
+                "description": "",
+                "subarea": "Straightaways"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.74996800000,
+                    47.54663800000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "grade": "V1",
+                "subarea": "Swiftwater",
+                "topo": "swiftwater-oceanfront",
+                "lat": "47.6547872",
+                "line": "[[535,231],[369,171],[181,166]]",
+                "lon": "-120.7299155",
+                "order": "21",
+                "description": "",
+                "name": "Oceanfront Traverse Left",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72991500000,
+                    47.65478700000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "grade": "V3",
+                "name": "Unobvious",
+                "lon": "-120.7293",
+                "subarea": "Swiftwater",
+                "order": "27",
+                "lat": "47.655477",
+                "topo": "swiftwater-barista",
+                "description": "",
+                "line": "[[375,291],[258,199],[290,63]]",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72930000000,
+                    47.65547700000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "topo": "forestland-hesitator",
+                "lat": "47.543325",
+                "grade": "V1",
+                "color": "blue",
+                "name": "Tree Crack",
+                "lon": "-120.73484",
+                "line": "[[521,271],[503,210]]",
+                "order": "3",
+                "subarea": "Forestland",
+                "description": ""
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.73489126811,
+                    47.54333786347
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "lat": "47.544985",
+                "grade": "V0",
+                "line": "[[309,331],[336,153],[266,110]]",
+                "color": "blue",
+                "topo": "forestland-portal-crack",
+                "order": "18",
+                "lon": "-120.732997",
+                "subarea": "Forestland",
+                "description": "Leads to the top of Moondog and Bad Moon Rising.",
+                "name": "Portal Crack"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.73299700000,
+                    47.54498500000
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "lat": "47.544631",
+                "grade": "V0",
+                "color": "blue",
+                "order": "7",
+                "topo": "forestland-runner",
+                "subarea": "Forestland",
+                "name": "Marathon Man",
+                "lon": "-120.732797",
+                "line": "[[418,239],[352,47]]",
+                "description": ""
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.73283589203,
+                    47.54467037908
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "topo": "swiftwater-premium-coffee",
+                "grade": "V2",
+                "name": "Premium Coffee Right",
+                "subarea": "Swiftwater",
+                "lon": "-120.729301",
+                "lat": "47.655534",
+                "line": "[[455,235],[421,159],[469,128]]",
+                "description": "",
+                "order": "30",
+                "color": "red"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72930100000,
+                    47.65553400000
+                ]
+            }
+        }
+    ]
 }
