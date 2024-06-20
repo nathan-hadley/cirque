@@ -2,9 +2,12 @@ import pandas as pd
 import geojson
 import os
 
+csv_path = r'/Users/nathan/Dev/cirque/cirque-data/problems.csv'
+geojson_path = r'/Users/nathan/Dev/cirque/cirque-data/circuits.geojson'
+
 def csv_to_geojson():
     # Read the CSV file
-    df = pd.read_csv("../cirque-data/problems.csv")
+    df = pd.read_csv(csv_path)
 
     # Filter out rows where 'order' is null
     df = df[df['order'].notnull()]
@@ -17,9 +20,8 @@ def csv_to_geojson():
         return
 
     # Check if the output file already exists
-    output_file = "../cirque-data/circuits.geojson"
-    if os.path.exists(output_file):
-        with open(output_file, 'r') as f:
+    if os.path.exists(geojson_path):
+        with open(geojson_path, 'r') as f:
             existing_geojson = geojson.load(f)
     else:
         existing_geojson = geojson.FeatureCollection([])
@@ -57,10 +59,10 @@ def csv_to_geojson():
     updated_feature_collection = geojson.FeatureCollection(list(updated_features.values()))
 
     # Write the updated GeoJSON to a file
-    with open(output_file, 'w') as f:
+    with open(geojson_path, 'w') as f:
         geojson.dump(updated_feature_collection, f)
     
-    print(f"GeoJSON file updated successfully: {output_file}")
+    print(f"GeoJSON file updated successfully: {geojson_path}")
 
 if __name__ == "__main__":
     csv_to_geojson()
