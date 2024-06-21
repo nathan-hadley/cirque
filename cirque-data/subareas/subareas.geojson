@@ -107,7 +107,7 @@
         },
         {
             "type": "Feature",
-            "properties": null,
+            "properties": {},
             "geometry": {
                 "type": "LineString",
                 "coordinates": [
@@ -184,7 +184,7 @@
         },
         {
             "type": "Feature",
-            "properties": null,
+            "properties": {},
             "geometry": {
                 "type": "LineString",
                 "coordinates": [
@@ -364,7 +364,7 @@
         },
         {
             "type": "Feature",
-            "properties": null,
+            "properties": {},
             "geometry": {
                 "type": "LineString",
                 "coordinates": [

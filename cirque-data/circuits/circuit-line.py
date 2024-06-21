@@ -2,8 +2,8 @@ import pandas as pd
 import geojson
 import os
 
-csv_path = r'/Users/nathan/Dev/cirque/cirque-data/problems.csv'
-geojson_path = r'/Users/nathan/Dev/cirque/cirque-data/circuits.geojson'
+csv_path = r'/Users/nathan/Dev/cirque/cirque-data/problems/problems.csv'
+geojson_path = r'/Users/nathan/Dev/cirque/cirque-data/circuits/circuits.geojson'
 
 def csv_to_geojson():
     # Read the CSV file
