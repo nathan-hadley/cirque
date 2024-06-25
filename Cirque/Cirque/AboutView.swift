@@ -7,23 +7,65 @@
 
 import SwiftUI
 
-struct AboutView: View {
-    let gitHubText = "The code for this project can be found at [GitHub](https://github.com/nathan-hadley/cirque-ios)."
+struct BulletText: View {
+    let text: String
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("About")
-                .font(.largeTitle)
-                .padding()
-            
-            Text("After a trip to Fontainebleau, France, I was inspired to bring their concept of bouldering circuits to Leavenworth. This app will allow the creation and sharing of circuits. We are starting with one V0-V3 Swiftwater circuit and a V4-V9 Straightaways circuit but more will be added soon. Forestland is next!")
-                .padding()
-                
-            Text("If you're a developer, please reach out about contributing. If you're not a developer but want to help, please also reach out. Collecting all the information to add a new circuit takes time!")
-                .padding()
-            
-            Text(.init(gitHubText))
-                .padding()
+        HStack(alignment: .top) {
+            Text("•")
+                .font(.body)
+                .foregroundColor(.primary)
+            Text(text)
+                .font(.body)
+                .foregroundColor(.primary)
         }
+        .padding(.vertical, 2)
+    }
+}
+
+struct AboutView: View {
+    let gitHubText = "The code for this project can be found at [GitHub](https://github.com/nathan-hadley/cirque-ios)."
+    let circuits = [
+        "Forestland Blue Circuit (V0-2)",
+        "Swiftwater Red Circuit (V0-3)",
+        "Straightaways White Circuit (V4-9)",
+        "Forestland Black Circuit (V3-5) coming soon"
+    ]
+    
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 10) {
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("About")
+                        .font(.largeTitle)
+                        .padding(.top, 20)
+                    
+                    Text("After a trip to Fontainebleau, France, we were inspired to bring their concept of bouldering circuits to Leavenworth. These circuits have been developed so far:")
+                    
+                    ForEach(circuits, id: \.self) { circuit in
+                        BulletText(text: circuit)
+                    }
+                    
+                    Text("If you're a developer, please reach out about contributing. If you're not a developer but want to help, please also reach out. Collecting all the information to add a new circuit takes time!")
+                    
+                    Text(.init(gitHubText))
+                    
+                    Text("How to Use")
+                        .font(.title)
+                        .padding(.top, 20)
+                    
+                    Text("The app caches map data after viewing for an undetermined amount of time. To ensure circuits show up without network connection, zoom in to the circuit you want to climb before going into the canyon. Stable offline access will be added soon.")
+                        .padding(.bottom, 20)
+                }
+                .padding(.horizontal)
+            }
+        }
+        .navigationBarTitle("About", displayMode: .inline)
+    }
+}
+
+struct AboutView_Previews: PreviewProvider {
+    static var previews: some View {
+        AboutView()
     }
 }

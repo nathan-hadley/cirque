@@ -1,18 +1,12 @@
 #!/bin/bash
 
-PATH="$HOME/Dev/cirque/cirque-data/circuits"
-TILESET_ID="leavenworth-circuits"
-GEOJSON="$PATH/circuits.geojson"
-RECIPE="$PATH/circuits-recipe.json"
+PATH="$HOME/Dev/cirque/cirque-data/problems"
+TILESET_ID="leavenworth-problems"
+GEOJSON="$PATH/problems.geojson"
+RECIPE="$PATH/problems-recipe.json"
 
 PYTHON="/usr/local/bin/python3"
 TILESETS="/Library/Frameworks/Python.framework/Versions/3.11/bin/tilesets"
-
-$PYTHON $PATH/circuit-line.py
-if [ $? -ne 0 ]; then
-  echo "Failed to update circuits.geojson."
-  exit 1
-fi
 
 $TILESETS upload-source nathanhadley $TILESET_ID $GEOJSON --replace
 if [ $? -ne 0 ]; then
