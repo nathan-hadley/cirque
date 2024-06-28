@@ -1,116 +1,141 @@
 topo,lon,lat,name,color,grade,order,description,line,subarea
-,"-120.748685","47.545665",Down the Barrel,white,V7,,Optional if the water is low enough - could be a part of the official “Fall” version of the circuit,,Straightaways
-swiftwater-chicken-man,"-120.730125","47.655002",Flying Goat Boy,red,V2,"22",Hop up to the sloper and mantle.,"[[450,144],[431,114],[412,104]]",Swiftwater
-swiftwater-little-guy,"-120.7289744","47.65350729",Little Guy,red,V2,"3",,"[[251,284],[324,68]]",Swiftwater
-straightaways-ice-grip,"-120.745709","47.545458",Ice Grip,white,V5,"11",,"[[285,194],[273,110],[321,51]]",Straightaways
-forestland-rainbow,"-120.735255","47.543268",Slice of Pie,blue,V2,,Optional. Bad landing.,"[[344,311],[370,232]]",Forestland
-swiftwater-minnie,"-120.7297701","47.65458",Minnie,red,V1,"13",,"[[339,248],[302,71]]",Swiftwater
-straightaways-millennium,"-120.7406025","47.54367065",Millennium Traverse,white,V8,"2",,"[[480,271],[409,214],[286,169],[246,90]]",Straightaways
-straightaways-answer-man,"-120.7466556","47.545733",Answer Man,white,V6,"15",Sit start.,"[[377,387],[353,237],[293,71]]",Straightaways
-swiftwater-schist-crack,"-120.7278917","47.65310543",Schist Crack,red,V0,"1",,"[[256,317],[299,64]]",Swiftwater
-straightaways-mftb,"-120.743855","47.544738",More Fun Than Beer,white,V6,"6",,"[[217,294],[379,123],[365,78]]",Straightaways
-swiftwater-premium-coffee,"-120.729301","47.655534",Premium Coffee Right,red,V2,"30",,"[[455,235],[421,159],[469,128]]",Swiftwater
-swiftwater-devonian,"-120.729414","47.653891",The Devonian Traverse,red,V1,"5",,"[[141,262],[342,174],[361,119]]",Swiftwater
-forestland-dirty-and-deep,"-120.732666","47.545164",Dirty and Deep,blue,V0,"23",Climb the low angle right arete.,"[[405,231],[309,46]]",Forestland
-swiftwater-bubbles,"-120.729726","47.65481",Bubbles No-Hands,red,V1,"18",Climb the boulder with no hands!,"[[391,339],[360,81]]",Swiftwater
-forestland-rainbow,"-120.7352","47.543264",Rainbow,blue,V1,"5",Climb up and right on the steep side of the fin. Downclimb on the slabby side.,"[[283,220],[369,55]]",Forestland
-swiftwater-pod-racer,"-120.729224","47.656081",Tentacles,red,V0,"38",,"[[128,277],[125,164]]",Swiftwater
-swiftwater-royal-flush,"-120.729465","47.656063",Royal Flush,red,V2,"42",Start deep in the cave.,"[[370,318],[382,277],[363,92]]",Swiftwater
-forestland-two-scoops,"-120.732481","47.545192",Two Scoops,blue,V2,"17",,"[[384,291],[326,107]]",Forestland
-forestland-tron,"-120.728982","47.545035",The Segment,blue,V2,"36",,"[[174,223],[155,124]]",Forestland
-straightaways-mothermilker,"-120.749968","47.54663805",Mothermilker,white,V9,"26",,"[[250,330],[326,176],[391,159]]",Straightaways
-straightaways-freezer,"-120.74618","47.54515",The Freezer Right,white,V4,"14",,"[[321,310],[291,50]]",Straightaways
-forestland-scarecrow,"-120.732248","47.544724",The Scarecrow,blue,V1,"13",,"[[187,256],[245,43]]",Forestland
-forestland-cube-crack,"-120.728983","47.544926",Cube Crack,black,V0,,,"[[130,307],[187,86]]",Forestland
-swiftwater-whelmed,"-120.7292036","47.65359194",Whelmed,red,V2,"4",Start with a left hand high on a decent sidepull and right hand on a crimp.,"[[346,237],[321,77]]",Swiftwater
-swiftwater-footless-traverse,"-120.729457","47.656364",Footless Traverse,red,V5,"46",An option hard and grand ending. Climb in 1 or 2 parts!,"[[538,266],[336,184],[192,203],[153,177]]",Swiftwater
-swiftwater-royal-flush,"-120.729465","47.656106",Sleeve Ace,red,V3,"43",,"[[175,297],[185,235],[217,154]]",Swiftwater
-forestland-hobbit,"-120.730069","47.544825",The Hobbit,blue,V2,"27",Sit start.,"[[291,313],[308,140],[287,27]]",Forestland
-straightaways-bok-choy,"-120.744879","47.544526",Bok Choy,white,V4,"7",Start with one had on the undercling.,"[[233,249],[311,69]]",Straightaways
-swiftwater-pit,"-120.729019","47.655893",Fin Traverse,red,V2,"33","Start on the right side of the fin, shuffle to the left and then pull up to the main boulder, exiting near the top of The Pit.","[[589,264],[539,257],[467,287],[226,98]]",Swiftwater
-swiftwater-bam,"-120.730007","47.655316",Bam,red,V2,"24",,"[[527,214],[358,163],[252,62]]",Swiftwater
-forestland-moondog,"-120.733046","47.545131",Moondog,blue,V0,"20",,"[[369,295],[325,51]]",Forestland
-swiftwater-bubbles,"-120.729751","47.654799",No Pitons Here No-Hands,red,V3,"19",Climb the boulder with no hands!,"[[169,331],[223,107]]",Swiftwater
-swiftwater-squatter,"-120.729138","47.655481",Squatter Variation,red,V1,"28",Start with a high right hand on the arête and hop a foot up to the pimple.,"[[393,205],[300,48]]",Swiftwater
-forestland-peep,"-120.732667","47.545165",Peep,blue,V2,"24",,"[[291,277],[369,27]]",Forestland
-swiftwater-chicken-man,"-120.73022","47.655013",Chicken Man Left,red,V1,"23",,"[[115,267],[149,197],[209,120],[262,89]]",Swiftwater
-forestland-tron,"-120.729007","47.544979",Rubick’s Arete,blue,V0,"37",,"[[547,292],[540,54]]",Forestland
-straightaways-tampax-arete,"-120.749459","47.546427",Tampax Arête,white,V4,"25",,"[[291,310],[343,254],[351,135],[316,81]]",Straightaways
-straightaways-2001,"-120.7407192","47.54355052",Year 2001,white,V4,"1",,"[[217,241],[213,156],[257,62]]",Straightaways
-forestland-power-steering,"-120.732254","47.544608",Power Steering,blue,V2,"10",Sit start.,"[[417,373],[404,93]]",Forestland
-straightaways-mountain-man,"-120.7471073","47.54615215",Hatchet,white,V4,"20",,"[[423,297],[429,197],[335,64]]",Straightaways
-forestland-fedge,"-120.732371","47.545209",Slickfoot holiday,blue,V2,"16",,"[[205,253],[235,204],[340,129],[340,72]]",Forestland
-straightaways-lonely-fish,"-120.740569","47.544421",Lonely Fish,white,V8,"3",Use any means necessary to establish on the rail.,"[[268,239],[376,200],[388,141],[322,43]]",Straightaways
-forestland-hesitator,"-120.73484","47.543325",Frosting,blue,V1,"3",Climb up and right on the left arete.,"[[168,251],[204,178],[234,124]]",Forestland
-swiftwater-sitting-bull,"-120.729351","47.65606",Raging Cow,red,V1,"40",,"[[449,314],[498,132]]",Swiftwater
-swiftwater-red,"-120.729058","47.655871",Red Traverse,red,V0,"31","Traverse right, staying below the lip.","[[88,230],[350,178],[515,136]]",Swiftwater
-swiftwater-balance-step,"-120.729597","47.656276",Balance Step,red,V3,"44",,"[[405,228],[328,67]]",Swiftwater
-forestland-portal-crack,"-120.732997","47.544985",Portal Crack,blue,V0,"18",Leads to the top of Moondog and Bad Moon Rising.,"[[309,331],[336,153],[266,110]]",Forestland
-straightaways-pony-ride,"-120.749247","47.54641",Pony Ride,white,V4,"24",,"[[475,325],[430,258],[415,135],[337,105]]",Straightaways
-swiftwater-hate-monger,"-120.7292502","47.65413752",Slap and Dangle,red,V3,"9",,"[[424,204],[354,178],[355,133]]",Swiftwater
-swiftwater-hate-monger,"-120.7292832","47.65416452",Hate Monger,red,V3,"10",,"[[236,318],[243,150]]",Swiftwater
-straightaways-miracle-whip,"-120.7518061","47.54709809",Miracle Whip,white,V7,"27",,"[[467,334],[434,274],[387,241],[392,85]]",Straightaways
-swiftwater-ripple-effect,"-120.7299199","47.65473033",Ripple Effect Low,red,V3,"20",,"[[429,280],[349,234],[348,88]]",Swiftwater
-swiftwater-schisthead,"-120.7295995","47.65474845",Schisthead Traverse,red,V2,"17",,"[[515,284],[269,226],[194,119]]",Swiftwater
-forestland-rail,"-120.734847","47.543259",The Rail,blue,V0,"1",Sit start. Continue traversing left before topping out for some extra climbing.,"[[548,332],[443,167],[410,156],[414,131]]",Forestland
-forestland-runner,"-120.732798","47.544632",Runner,blue,V0,"6",,"[[245,276],[234,70]]",Forestland
-forestland-elfen-magic,"-120.730038","47.544835",Elfen Magic,blue,V1,"28",Start in the middle of the slab with a good foothold and climb straight up.,"[[216,267],[288,202],[324,43]]",Forestland
-forestland-scarecrow,"-120.732249","47.544725",Cowardly Lion,blue,V0,"14",,"[[403,279],[392,82]]",Forestland
-straightaways-was,"-120.74795","47.545864",IS,white,V7,"21",,"[[311,195],[452,174],[444,143]]",Straightaways
-forestland-playback,"-120.729206","47.54504",Playback,blue,V1,"34",Reach high to start with right in the crack and left on the face. Pad stacking to start helps.,"[[193,172],[194,74]]",Forestland
-swiftwater-pod-racer,"-120.729211","47.656091",Pod Racer,red,V1,"37",,"[[435,236],[269,184],[274,61]]",Swiftwater
-forestland-runner,"-120.732797","47.544631",Marathon Man,blue,V0,"7",,"[[418,239],[352,47]]",Forestland
-swiftwater-heel-hook-rock,"-120.7297614","47.65459881",Heel Hook Left,red,V2,"14",,"[[137,274],[284,171],[302,77]]",Swiftwater
-straightaways-dog-named-rehab,"-120.748444","47.546049",A Dog Named Rehab,white,V4,"23",,"[[367,278],[317,104],[237,142],[222,104]]",Straightaways
-swiftwater-transverse,"-120.7290772","47.6542861",The Transverse,red,V1,"6",,"[[460,232],[242,71]]",Swiftwater
-swiftwater-dark-days,"-120.729424","47.656312",Dark Days,red,V2,"45",,"[[449,284],[251,254],[105,50]]",Swiftwater
-swiftwater-schisthead,"-120.7295408","47.65471661",Schist Right,red,V0,"16",,"[[519,292],[489,140]]",Swiftwater
-straightaways-bush-craft,"-120.7470663","47.54602191",Nasty Boy,white,V4,"18",Climb right side of Bush Craft arete,"[[368,303],[375,247],[300,45]]",Straightaways
-swiftwater-hate-monger,"-120.7292885","47.65418091",Cramps,red,V2,"11",,"[[133,252],[190,193]]",Swiftwater
-forestland-hearthstone,"-120.732255","47.544607",Hearthstone,blue,V0,"11",,"[[364,224],[366,71]]",Forestland
-swiftwater-heel-hook-rock,"-120.7297821","47.65462226",Heel Hook Right,red,V3,"15",,"[[503,277],[450,159],[459,116]]",Swiftwater
-straightaways-lonely-fish,"-120.740641","47.544421",Sorrow Bird,white,V9,"4",Same start as Lonely Fish.,"[[267,238],[266,150],[228,114],[208,29]]",Straightaways
-forestland-cube-crack,"-120.728941","47.544946",The Shallow,black,V0,,,"[[315,278],[287,217],[345,154],[319,81]]",Forestland
-forestland-rail,"-120.73485","47.543326",Tree Crack,blue,V1,"4",,"[[521,271],[503,210]]",Forestland
-forestland-dredge,"-120.732253","47.544609",Dredge,blue,V1,"12",,"[[385,264],[366,41]]",Forestland
-straightaways-icehouse,"-120.745637","47.54541",The Icehouse,white,V4,"8",,"[[420,302],[342,168],[373,51]]",Straightaways
-swiftwater-sitting-bull,"-120.729373","47.656048",Sitting Bull,red,V3,"41",,"[[346,316],[332,100]]",Swiftwater
-forestland-tron,"-120.728968","47.545026",Tron,blue,V0,"35",Downclimb on the the other side of the tree.,"[[382,267],[348,87]]",Forestland
-forestland-cleaver-crack,"-120.730203","47.544903",Cleaver Crack,blue,V2,"26",Start standing and climb the crack.,"[[250,261],[280,133]]",Forestland
-swiftwater-lead-pants,"-120.72928","47.656054",Lead Pants,red,V3,"39",Start sitting.,"[[260,288],[420,183],[428,77]]",Swiftwater
-forestland-redneck,"-120.733006","47.545141",Redneck,blue,V2,"19",Short slab.,"[[253,242],[323,57]]",Forestland
-straightaways-fat-lip,"-120.745703","47.545538",Fat Lip,white,V4,"12",,"[[156,296],[178,237],[395,200],[445,144],[431,91]]",Straightaways
-swiftwater-barista,"-120.7293","47.655477",Unobvious,red,V3,"27",,"[[375,291],[258,199],[290,63]]",Swiftwater
-swiftwater-lowe-rider,"-120.72914","47.655894",Lowe Rider Stand,red,V2,"34","Traverse the detached flake, starting from a good left foot.","[[199,339],[363,262],[483,141]]",Swiftwater
-straightaways-taller,"-120.7467935","47.54583044",Taller,white,V6,"16",,"[[294,320],[269,171],[304,51]]",Straightaways
-straightaways-mountain-man,"-120.7470606","47.54612877",Mountain Man,white,V9,"19",,"[[197,290],[201,258],[264,223],[324,64]]",Straightaways
-forestland-rainbow,"-120.7353","47.543265",Rainbow Crack,blue,Low 5th,,Optional. Climb the easy crack and walk down to Forestland parking.,"[[482,314],[640,112]]",Forestland
-swiftwater-jump,"-120.7280195","47.65315891",Jump!,red,V2,"2",Hop up to the sloper and mantle.,"[[332,159],[304,119]]",Swiftwater
-swiftwater-oceanfront,"-120.7299155","47.6547872",Oceanfront Traverse Left,red,V1,"21",,"[[535,231],[369,171],[181,166]]",Swiftwater
-swiftwater-joels-slab,"-120.72917","47.655983",Joel’s Slab,red,V3,"36",Optional if you're up for it!,"[[335,295],[319,207],[258,170],[349,107]]",Swiftwater
-swiftwater-mickey,"-120.7298124","47.654565",Mickey,red,V0,"12",,"[[232,261],[318,186],[313,141]]",Swiftwater
-forestland-scram,"-120.729398","47.545",Scram,blue,V1,"31",,"[[463,273],[238,147],[220,117]]",Forestland
-swiftwater-lowe-rider-ridge,"-120.72909","47.655914",Lowe Rider Ridge,red,V0,"35",,"[[294,253],[321,28]]",Swiftwater
-straightaways-icehouse,"-120.745707","47.545413",Tall Boy,white,V5,"9",,"[[241,270],[221,139],[263,50]]",Straightaways
-swiftwater-barista,"-120.729319","47.655466",The Barista,red,V1,"26",,"[[476,299],[434,192],[413,89]]",Swiftwater
-forestland-bad-moon-rising,"-120.732937","47.545121",Bad Moon Rising,blue,V2,"21",Excellent technical slab with a committing move up high.,"[[289,259],[333,72]]",Forestland
-forestland-tahitian-moon,"-120.732684","47.545266",Tahitian Moon,blue,V0,"22",,"[[136,278],[482,63]]",Forestland
-swiftwater-premium-coffee,"-120.729276","47.655551",Percolator,red,V1,"29",,"[[561,256],[512,141]]",Swiftwater
-forestland-concavity,"-120.732587","47.544701",Concavity Stand,blue,V0,"9","Start in the crack and climb up and left. Or start on the sidepull left of the crack and climb straight up, eliminating the crack.","[[325,277],[273,53]]",Forestland
-forestland-playback,"-120.729189","47.545034",Terminal Traverse,blue,V2,"33","Start where the lip is incut and traverse, mantling as for Playback.","[[502,265],[335,131],[187,73]]",Forestland
-straightaways-was,"-120.748009","47.545893",WAS,white,V8,"22",,"[[308,192],[248,88],[301,31]]",Straightaways
-swiftwater-hate-monger,"-120.7292095","47.65413036",Shock and Awe,red,V3,"8",,"[[427,205],[506,175],[497,116]]",Swiftwater
-straightaways-bush-craft,"-120.7471113","47.54601115",Bush Craft,white,V8,"17",,"[[289,358],[332,293],[310,155],[223,75]]",Straightaways
-straightaways-ice-grip,"-120.745728","47.545433",Ice Age Left,white,V4,"10",Climb the left side of the arete - a lot easier than the original.,"[[439,252],[401,34]]",Straightaways
-forestland-real-thing,"-120.732662","47.544637",Breadline,blue,V1,"8",Climb straight up or go out to the sloper and top out left.,"[[212,275],[226,184],[380,64]]",Forestland
-straightaways-old-school,"-120.74062","47.54457",Old School,white,V5,"5",This one is tall but the hardest moves are low.,"[[343,278],[318,210],[404,120]]",Straightaways
-swiftwater-14-years,"-120.7290352","47.65425156",14 Years Stand,red,V2,"7",,"[[473,259],[421,205],[411,128]]",Swiftwater
-forestland-rail,"-120.734846","47.543258",Fun House Stairway,blue,V2,"2",,"[[413,349],[380,234],[435,131]]",Forestland
-straightaways-batman,"-120.751972","47.547433",Batman,white,V9,"28",The midday sun can make topping out this one feel a lot harder.,"[[438,266],[410,182],[307,155],[237,99]]",Straightaways
-swiftwater-schist-cave,"-120.73003","47.655746",Schist Lip,red,V2,"25","Start sitting, rock over at the tree and continue diagonaling up or drop off.","[[145,334],[223,235],[371,200],[438,106],[639,6]]",Swiftwater
-forestland-fedge,"-120.732372","47.545208",Fedge,blue,V2,"15",,"[[421,263],[352,76]]",Forestland
-swiftwater-pit,"-120.728989","47.655866",The Pit,red,V2,"32",,"[[186,273],[218,96]]",Swiftwater
-forestland-pentaphobia,"-120.729083","47.544972",Cornucopia,blue,V2,"32",Start on head high jug and climb the arete up and left.,"[[479,187],[336,67]]",Forestland
-,"-120.748795","47.545694",Heads Will Roll,white,V9,,Optional if the water is low enough.,,Straightaways
-forestland-sunny-and-steep,"-120.732626","47.545271",Sunny and Steep,blue,V2,"25",Climb the left side of the face on rounded jugs. Sit start.,"[[307,353],[283,284],[318,140],[271,85]]",Forestland
-straightaways-bear-hug,"-120.745543","47.545524",Bear Hug,white,V5,"13",,"[[251,264],[233,61]]",Straightaways
+swiftwater-schist-crack,-120.7278917,47.65310543,Schist Crack,red,V0,1,,"[[256,317],[299,64]]",Swiftwater
+swiftwater-jump,-120.7280195,47.65315891,Jump!,red,V2,2,Hop up to the sloper and mantle.,"[[332,159],[304,119]]",Swiftwater
+swiftwater-little-guy,-120.7289744,47.65350729,Little Guy,red,V2,3,,"[[251,284],[324,68]]",Swiftwater
+swiftwater-whelmed,-120.7292036,47.65359194,Whelmed,red,V2,4,Start with a left hand high on a decent sidepull and right hand on a crimp.,"[[346,237],[321,77]]",Swiftwater
+swiftwater-devonian,-120.729414,47.653891,The Devonian Traverse,red,V1,5,,"[[141,262],[342,174],[361,119]]",Swiftwater
+swiftwater-transverse,-120.7290772,47.6542861,The Transverse,red,V1,6,,"[[460,232],[242,71]]",Swiftwater
+swiftwater-14-years,-120.7290352,47.65425156,14 Years Stand,red,V2,7,,"[[473,259],[421,205],[411,128]]",Swiftwater
+swiftwater-hate-monger,-120.7292095,47.65413036,Shock and Awe,red,V3,8,,"[[427,205],[506,175],[497,116]]",Swiftwater
+swiftwater-hate-monger,-120.7292502,47.65413752,Slap and Dangle,red,V3,9,,"[[424,204],[354,178],[355,133]]",Swiftwater
+swiftwater-hate-monger,-120.7292832,47.65416452,Hate Monger,red,V3,10,,"[[236,318],[243,150]]",Swiftwater
+swiftwater-hate-monger,-120.7292885,47.65418091,Cramps,red,V2,11,,"[[133,252],[190,193]]",Swiftwater
+swiftwater-mickey,-120.7298124,47.654565,Mickey,red,V0,12,,"[[232,261],[318,186],[313,141]]",Swiftwater
+swiftwater-minnie,-120.7297701,47.65458,Minnie,red,V1,13,,"[[339,248],[302,71]]",Swiftwater
+swiftwater-heel-hook-rock,-120.7297614,47.65459881,Heel Hook Left,red,V2,14,,"[[137,274],[284,171],[302,77]]",Swiftwater
+swiftwater-heel-hook-rock,-120.7297821,47.65462226,Heel Hook Right,red,V3,15,,"[[503,277],[450,159],[459,116]]",Swiftwater
+swiftwater-schisthead,-120.7295408,47.65471661,Schist Right,red,V0,16,,"[[519,292],[489,140]]",Swiftwater
+swiftwater-schisthead,-120.7295995,47.65474845,Schisthead Traverse,red,V2,17,,"[[515,284],[269,226],[194,119]]",Swiftwater
+swiftwater-bubbles,-120.729726,47.65481,Bubbles No-Hands,red,V1,18,Climb the boulder with no hands!,"[[391,339],[360,81]]",Swiftwater
+swiftwater-bubbles,-120.729751,47.654799,No Pitons Here No-Hands,red,V3,19,Climb the boulder with no hands!,"[[169,331],[223,107]]",Swiftwater
+swiftwater-ripple-effect,-120.7299199,47.65473033,Ripple Effect Low,red,V3,20,,"[[429,280],[349,234],[348,88]]",Swiftwater
+swiftwater-oceanfront,-120.7299155,47.6547872,Oceanfront Traverse Left,red,V1,21,,"[[535,231],[369,171],[181,166]]",Swiftwater
+swiftwater-chicken-man,-120.730125,47.655002,Flying Goat Boy,red,V2,22,Hop up to the sloper and mantle.,"[[450,144],[431,114],[412,104]]",Swiftwater
+swiftwater-chicken-man,-120.73022,47.655013,Chicken Man Left,red,V1,23,,"[[115,267],[149,197],[209,120],[262,89]]",Swiftwater
+swiftwater-bam,-120.730007,47.655316,Bam,red,V2,24,,"[[527,214],[358,163],[252,62]]",Swiftwater
+swiftwater-schist-cave,-120.73003,47.655746,Schist Lip,red,V2,25,"Start sitting, rock over at the tree and continue diagonaling up or drop off.","[[145,334],[223,235],[371,200],[438,106],[639,6]]",Swiftwater
+swiftwater-barista,-120.729319,47.655466,The Barista,red,V1,26,,"[[476,299],[434,192],[413,89]]",Swiftwater
+swiftwater-barista,-120.7293,47.655477,Unobvious,red,V3,27,,"[[375,291],[258,199],[290,63]]",Swiftwater
+swiftwater-squatter,-120.729138,47.655481,Squatter Variation,red,V1,28,Start with a high right hand on the arête and hop a foot up to the pimple.,"[[393,205],[300,48]]",Swiftwater
+swiftwater-premium-coffee,-120.729276,47.655551,Percolator,red,V1,29,,"[[561,256],[512,141]]",Swiftwater
+swiftwater-premium-coffee,-120.729301,47.655534,Premium Coffee Right,red,V2,30,,"[[455,235],[421,159],[469,128]]",Swiftwater
+swiftwater-red,-120.729058,47.655871,Red Traverse,red,V0,31,"Traverse right, staying below the lip.","[[88,230],[350,178],[515,136]]",Swiftwater
+swiftwater-pit,-120.728989,47.655866,The Pit,red,V2,32,,"[[186,273],[218,96]]",Swiftwater
+swiftwater-pit,-120.729019,47.655893,Fin Traverse,red,V2,33,"Start on the right side of the fin, shuffle to the left and then pull up to the main boulder, exiting near the top of The Pit.","[[589,264],[539,257],[467,287],[226,98]]",Swiftwater
+swiftwater-lowe-rider,-120.72914,47.655894,Lowe Rider Stand,red,V2,34,"Traverse the detached flake, starting from a good left foot.","[[199,339],[363,262],[483,141]]",Swiftwater
+swiftwater-lowe-rider-ridge,-120.72909,47.655914,Lowe Rider Ridge,red,V0,35,,"[[294,253],[321,28]]",Swiftwater
+swiftwater-joels-slab,-120.72917,47.655983,Joel’s Slab,red,V3,36,Optional if you're up for it!,"[[335,295],[319,207],[258,170],[349,107]]",Swiftwater
+swiftwater-pod-racer,-120.729211,47.656091,Pod Racer,red,V1,37,,"[[435,236],[269,184],[274,61]]",Swiftwater
+swiftwater-pod-racer,-120.729224,47.656081,Tentacles,red,V0,38,,"[[128,277],[125,164]]",Swiftwater
+swiftwater-lead-pants,-120.72928,47.656054,Lead Pants,red,V3,39,Start sitting.,"[[260,288],[420,183],[428,77]]",Swiftwater
+swiftwater-sitting-bull,-120.729351,47.65606,Raging Cow,red,V1,40,,"[[449,314],[498,132]]",Swiftwater
+swiftwater-sitting-bull,-120.729373,47.656048,Sitting Bull,red,V3,41,,"[[346,316],[332,100]]",Swiftwater
+swiftwater-royal-flush,-120.729465,47.656063,Royal Flush,red,V2,42,Start deep in the cave.,"[[370,318],[382,277],[363,92]]",Swiftwater
+swiftwater-royal-flush,-120.729465,47.656106,Sleeve Ace,red,V3,43,,"[[175,297],[185,235],[217,154]]",Swiftwater
+swiftwater-balance-step,-120.729597,47.656276,Balance Step,red,V3,44,,"[[405,228],[328,67]]",Swiftwater
+swiftwater-dark-days,-120.729424,47.656312,Dark Days,red,V2,45,,"[[449,284],[251,254],[105,50]]",Swiftwater
+swiftwater-footless-traverse,-120.729457,47.656364,Footless Traverse,red,V5,46,An option hard and grand ending. Climb in 1 or 2 parts!,"[[538,266],[336,184],[192,203],[153,177]]",Swiftwater
+straightaways-2001,-120.7407192,47.54355052,Year 2001,white,V4,1,,"[[217,241],[213,156],[257,62]]",Straightaways
+straightaways-millennium,-120.7406025,47.54367065,Millennium Traverse,white,V8,2,,"[[480,271],[409,214],[286,169],[246,90]]",Straightaways
+straightaways-lonely-fish,-120.740569,47.544421,Lonely Fish,white,V8,3,Use any means necessary to establish on the rail.,"[[268,239],[376,200],[388,141],[322,43]]",Straightaways
+straightaways-lonely-fish,-120.740641,47.544421,Sorrow Bird,white,V9,4,Same start as Lonely Fish.,"[[267,238],[266,150],[228,114],[208,29]]",Straightaways
+straightaways-old-school,-120.74062,47.54457,Old School,white,V5,5,This one is tall but the hardest moves are low.,"[[343,278],[318,210],[404,120]]",Straightaways
+straightaways-mftb,-120.743855,47.544738,More Fun Than Beer,white,V6,6,,"[[217,294],[379,123],[365,78]]",Straightaways
+straightaways-bok-choy,-120.744879,47.544526,Bok Choy,white,V4,7,Start with one had on the undercling.,"[[233,249],[311,69]]",Straightaways
+straightaways-icehouse,-120.745637,47.54541,The Icehouse,white,V4,8,,"[[420,302],[342,168],[373,51]]",Straightaways
+straightaways-icehouse,-120.745707,47.545413,Tall Boy,white,V5,9,,"[[241,270],[221,139],[263,50]]",Straightaways
+straightaways-ice-grip,-120.745728,47.545433,Ice Age Left,white,V4,10,Climb the left side of the arete - a lot easier than the original.,"[[439,252],[401,34]]",Straightaways
+straightaways-ice-grip,-120.745709,47.545458,Ice Grip,white,V5,11,,"[[285,194],[273,110],[321,51]]",Straightaways
+straightaways-fat-lip,-120.745703,47.545538,Fat Lip,white,V4,12,,"[[156,296],[178,237],[395,200],[445,144],[431,91]]",Straightaways
+straightaways-bear-hug,-120.745543,47.545524,Bear Hug,white,V5,13,,"[[251,264],[233,61]]",Straightaways
+straightaways-freezer,-120.74618,47.54515,The Freezer Right,white,V4,14,,"[[321,310],[291,50]]",Straightaways
+straightaways-answer-man,-120.7466556,47.545733,Answer Man,white,V6,15,Sit start.,"[[377,387],[353,237],[293,71]]",Straightaways
+straightaways-taller,-120.7467935,47.54583044,Taller,white,V6,16,,"[[294,320],[269,171],[304,51]]",Straightaways
+straightaways-bush-craft,-120.7471113,47.54601115,Bush Craft,white,V8,17,,"[[289,358],[332,293],[310,155],[223,75]]",Straightaways
+straightaways-bush-craft,-120.7470663,47.54602191,Nasty Boy,white,V4,18,Climb right side of Bush Craft arete,"[[368,303],[375,247],[300,45]]",Straightaways
+straightaways-mountain-man,-120.7470606,47.54612877,Mountain Man,white,V9,19,,"[[197,290],[201,258],[264,223],[324,64]]",Straightaways
+straightaways-mountain-man,-120.7471073,47.54615215,Hatchet,white,V4,20,,"[[423,297],[429,197],[335,64]]",Straightaways
+straightaways-was,-120.74795,47.545864,IS,white,V7,21,,"[[311,195],[452,174],[444,143]]",Straightaways
+straightaways-was,-120.748009,47.545893,WAS,white,V8,22,,"[[308,192],[248,88],[301,31]]",Straightaways
+straightaways-dog-named-rehab,-120.748444,47.546049,A Dog Named Rehab,white,V4,23,,"[[367,278],[317,104],[237,142],[222,104]]",Straightaways
+straightaways-pony-ride,-120.749247,47.54641,Pony Ride,white,V4,24,,"[[475,325],[430,258],[415,135],[337,105]]",Straightaways
+straightaways-tampax-arete,-120.749459,47.546427,Tampax Arête,white,V4,25,,"[[291,310],[343,254],[351,135],[316,81]]",Straightaways
+straightaways-mothermilker,-120.749968,47.54663805,Mothermilker,white,V9,26,,"[[250,330],[326,176],[391,159]]",Straightaways
+straightaways-miracle-whip,-120.7518061,47.54709809,Miracle Whip,white,V7,27,,"[[467,334],[434,274],[387,241],[392,85]]",Straightaways
+straightaways-batman,-120.751972,47.547433,Batman,white,V9,28,The midday sun can make topping out this one feel a lot harder.,"[[438,266],[410,182],[307,155],[237,99]]",Straightaways
+,-120.748685,47.545665,Down the Barrel,white,V7,,Optional if the water is low enough - could be a part of the official “Fall” version of the circuit,,Straightaways
+,-120.748795,47.545694,Heads Will Roll,white,V9,,Optional if the water is low enough.,,Straightaways
+forestland-rail,-120.73488119816,47.54325311561,The Rail,blue,V0,1,Sit start. Continue traversing left before topping out for some extra climbing.,"[[548,332],[443,167],[410,156],[414,131]]",Forestland
+forestland-rail,-120.7349063497,47.54326433703,Fun House Stairway,blue,V2,2,,"[[413,349],[380,234],[435,131]]",Forestland
+forestland-rail,-120.73485609325,47.54334717958,Frosting,blue,V1,3,Climb up and right on the left arete.,"[[168,251],[204,178],[234,124]]",Forestland
+forestland-hesitator,-120.73488956258,47.54333867405,Tree Crack,blue,V1,4,,"[[521,271],[503,210]]",Forestland
+forestland-rainbow,-120.7352,47.54328391638,Rainbow,blue,V1,5,Climb up and right on the steep side of the fin. Downclimb on the slabby side.,"[[283,220],[369,55]]",Forestland
+forestland-runner,-120.73287980737,47.54465825272,Runner,blue,V0,6,,"[[245,276],[234,70]]",Forestland
+forestland-runner,-120.73283991534,47.54466992645,Marathon Man,blue,V0,7,,"[[418,239],[352,47]]",Forestland
+forestland-real-thing,-120.7326606589,47.54466958958,Breadline,blue,V1,8,Climb straight up or go out to the sloper and top out left.,"[[199, 285], [211, 212], [369, 66]]",Forestland
+forestland-concavity,-120.732587,47.544701,Concavity Stand,blue,V0,9,"Start in the crack and climb up and left. Or start on the sidepull left of the crack and climb straight up, eliminating the crack.","[[325,277],[273,53]]",Forestland
+forestland-power-steering,-120.73241359144,47.54460166313,Power Steering,blue,V2,10,Sit start.,"[[417,373],[404,93]]",Forestland
+forestland-hearthstone,-120.73222147239,47.54469662136,Hearthstone,blue,V0,11,,"[[364,224],[366,71]]",Forestland
+forestland-dredge,-120.7322234957,47.54467055812,Dredge,blue,V1,12,,"[[385,264],[366,41]]",Forestland
+forestland-scarecrow,-120.73217960367,47.5446769262,The Scarecrow,blue,V1,13,,"[[187,256],[245,43]]",Forestland
+forestland-scarecrow,-120.73214908771,47.54468969465,Cowardly Lion,blue,V0,14,,"[[403,279],[392,82]]",Forestland
+forestland-fedge,-120.73235188343,47.54514553726,Fedge,blue,V2,15,,"[[421,263],[352,76]]",Forestland
+forestland-fedge,-120.7323401546,47.54515921086,Slickfoot holiday,blue,V2,16,,"[[205,253],[235,204],[340,129],[340,72]]",Forestland
+forestland-two-scoops,-120.73251452761,47.5451259162,Two Scoops,blue,V2,17,,"[[384,291],[326,107]]",Forestland
+forestland-portal-crack,-120.73296883681,47.5449940526,Portal Crack,blue,V0,18,Leads to the top of Moondog and Bad Moon Rising.,"[[309,331],[336,153],[266,110]]",Forestland
+forestland-redneck,-120.733006,47.545141,Redneck,blue,V2,19,Short slab.,"[[253,242],[323,57]]",Forestland
+forestland-moondog,-120.73306879878,47.54508392657,Moondog,blue,V0,20,,"[[369,295],[325,51]]",Forestland
+forestland-bad-moon-rising,-120.73297052761,47.54509112647,Bad Moon Rising,blue,V2,21,Excellent technical slab with a committing move up high.,"[[289,259],[333,72]]",Forestland
+forestland-tahitian-moon,-120.73279262947,47.5451555587,Tahitian Moon,blue,V0,22,,"[[136,278],[482,63]]",Forestland
+forestland-dirty-and-deep,-120.73267941105,47.54516762103,Dirty and Deep,blue,V0,23,Climb the low angle right arete.,"[[405,231],[309,46]]",Forestland
+forestland-peep,-120.73264822454,47.54516862103,Peep,blue,V2,24,,"[[291,277],[369,27]]",Forestland
+forestland-sunny-and-steep,-120.73262868221,47.54528005255,Sunny and Steep,blue,V2,25,Climb the left side of the face on rounded jugs. Sit start.,"[[307,353],[283,284],[318,140],[271,85]]",Forestland
+forestland-cleaver-crack,-120.73021775215,47.54490662105,Cleaver Crack,blue,V2,26,Start standing and climb the crack.,"[[250,261],[280,133]]",Forestland
+forestland-hobbit,-120.730069,47.544825,The Hobbit,blue,V2,27,Sit start.,"[[291,313],[308,140],[287,27]]",Forestland
+forestland-elfen-magic,-120.73002324785,47.5447779684,Elfen Magic,blue,V1,28,Start in the middle of the slab with a good foothold and climb straight up.,"[[216,267],[288,202],[324,43]]",Forestland
+forestland-bowl-weevil,-120.729932,47.545172,Bowl Weevil,blue,V2,29,Start on the two edges in the overhang pull to the lip and top out.,"[[416, 192], [369, 129], [354, 82]]",Forestland
+forestland-scram,-120.729398,47.545,Scram,blue,V1,30,,"[[463,273],[238,147],[220,117]]",Forestland
+forestland-pentaphobia,-120.72909506994,47.54496928422,Cornucopia,blue,V2,31,Start on head high jug and climb the arete up and left.,"[[479,187],[336,67]]",Forestland
+forestland-playback,-120.7290696417,47.54504395785,Terminal Traverse,blue,V2,32,"Start where the lip is incut and traverse, mantling as for Playback.","[[502,265],[335,131],[187,73]]",Forestland
+forestland-playback,-120.72907591286,47.54507258933,Playback,blue,V1,33,Reach high to start with right in the crack and left on the face. Pad stacking to start helps.,"[[193,172],[194,74]]",Forestland
+forestland-tron,-120.72893908466,47.54501327376,The Segment,blue,V2,34,,"[[174,223],[155,124]]",Forestland
+forestland-tron,-120.72897738773,47.54501332636,Tron,blue,V0,35,Downclimb on the the other side of the tree.,"[[382,267],[348,87]]",Forestland
+forestland-tron,-120.72901236442,47.54501068411,Rubick’s Arete,blue,V0,36,,"[[547,292],[540,54]]",Forestland
+forestland-rainbow,-120.73522892146,47.54329894837,Rainbow Crack,blue,Low 5th,,Optional. Climb the easy crack and walk down to Forestland parking.,"[[482,314],[640,112]]",Forestland
+forestland-cube-crack,-120.7289396589,47.54492789477,The Shallow,black,V0,1,Climb the tall face. Highball.,"[[130,307],[187,86]]",Forestland
+forestland-cube-crack,-120.7289843411,47.54492871578,Cube Crack,black,V0,2,Climb the tall crack. Highball.,"[[315,278],[287,217],[345,154],[319,81]]",Forestland
+forestland-cube,-120.72906,47.54493,The Cube,black,V3,3,Work up crimps to a committing move to a jug. Highball.,"[[291, 328], [354, 202], [383, 132], [377, 88]]",Forestland
+forestland-calcite,-120.728456,47.545087,Calcite,black,V4,4,Start on the low edge and climb through crimps to calcite jug then up to top out right.,"[[338, 292], [374, 182], [350, 54]]",Forestland
+forestland-pentaphobia,-120.729114,47.544967,Pentaphobia,black,V5,5,Start on any of the crimps and climb the sequential face. ,"[[218, 306], [179, 145]]",Forestland
+forestland-slice-of-tea,-120.729118,47.544945,Slice of Tea,black,V3,6,Start between the boulders behind Pentaphobia and climb jugs out of the hole.,"[[417, 306], [283, 208], [144, 67]]",Forestland
+forestland-gandalf,-120.73,47.544747,Gandalf,black,V4,7,Start by laying back the central arete and then pull into the dihedral and work your way left to top out.,"[[327, 254], [322, 188], [248, 123]]",Forestland
+forestland-cleaver-crack,-120.730267,47.544921,The Goods,black,V3,8,"Start from high edges on the right and traverse to the top of Crimp, Crimp.","[[455, 209], [395, 198], [223, 112], [140, 52]]",Forestland
+forestland-cleaver-crack,-120.730243,47.544915,"Crimp, Crimp, Slab, Throw",black,V4,9,Start on the two flat edges.,"[[133, 256], [144, 51]]",Forestland
+forestland-sunny-and-steep,-120.732565,47.545323,Funny and Cheap,black,V4,10,Start as for Sunny and Steep but climb right through underclings then up.,"[[320, 362], [410, 330], [399, 187], [297, 87]]",Forestland
+forestland-physical,-120.732518,47.545169,The Physical,black,V4,11,Reach high off the slab and pull into compression.,"[[400, 249], [335, 48]]",Forestland
+forestland-lovage,-120.732349,47.545213,Lovage,black,V3,12,,"[[220, 314], [285, 58]]",Forestland
+forestland-toto,-120.732237,47.544649,Toto,black,V4,13,Sit start.,"[[405, 271], [305, 213], [242, 110], [318, 50]]",Forestland
+forestland-power-steering,-120.732408,47.544505,Fiend it Like Crack,black,V4,14,,"[[284, 317], [296, 230], [481, 116], [450, 54]]",Forestland
+forestland-feel-the-pinch,-120.732509,47.544548,Feel the Pinch,black,V4,15,,"[[286, 321], [197, 216], [139, 167]]",Forestland
+forestland-sword,-120.73252,47.544718,Arrested Development,black,V4,16,Stand start and compress your way up and right. Trickier than it looks.,"[[184, 276], [174, 226], [265, 65]]",Forestland
+forestland-real-thing,-120.732643,47.544655,The Real Thing,black,V4,17,,"[[494, 274], [497, 166], [522, 102]]",Forestland
+forestland-real-thing,-120.7325,47.544599,One Summer,black,V5,18,Start standing on crimps and lunge to the good Breadline ledge. The crouch start adds a grade.,"[[364, 251], [383, 224], [331, 112], [349, 75]]",Forestland
+forestland-lock-and-pop,-120.732872,47.544629,Lock and Pop,black,V3,19,,"[[360, 305], [439, 203], [363, 43]]",Forestland
+forestland-squeezer,-120.733013,47.54471,Squeezer,black,V3,20,Stand start from the sidepull crimp.,"[[270, 239], [297, 123], [288, 25]]",Forestland
+forestland-alcove,-120.734784,47.54333,Fat Lip,black,V3,21,,"[[485, 228], [252, 156]]",Forestland
+forestland-alcove,-120.734825,47.543341,Alcove Center,black,V4,22,Start crouched on the big ledge and climb up to the jug and then top out up and left.,"[[145, 247], [193, 199], [149, 128]]",Forestland
+forestland-hesitator,-120.734933,47.54331,The Hesitator,black,V2,23,Climb the tall slab with a probable moment of hesitation near the top.,"[[295, 315], [289, 89]]",Forestland
+forestland-chunky,-120.734959,47.543264,Chunky,black,V4,24,Traverse from a low undercling to the right with a final hard move down to the finish edge/jug.,"[[54, 311], [77, 255], [257, 258], [296, 231], [380, 257]]",Forestland
+forestland-slice-of-pie,-120.73530059755,47.54325939974,Slice of Pie,black,V2,25,Amazing boulder with a scary landing. Committing move up high.,"[[156, 252], [348, 242], [383, 217], [399, 92]]",Forestland
+forestland-toprope-slab,-120.735524,47.543209,Toprope Slab,black,V3,26,Start just left of central blunt arete and work up and left to the left edge of the boulder.,"[[326, 264], [165, 148], [221, 84]]",Forestland
+forestland-alfalfa-or-spanky,-120.73498,47.542617,Alfalfa or Spanky,black,V5,27,Start on the head high edge and climb the dihedral.,"[[353, 244], [324, 207], [335, 175], [330, 64]]",Forestland
