@@ -17,77 +17,19 @@ class OfflineMapDownloader {
     }
     
     func updateMapData() {
-        stylePackExists() { exists in
-            if exists {
-                self.updateSylePack()
-            } else {
-                self.downloadStylePack()
-            }
-        }
-        
-        tileRegionExists() { exists in
-            if exists {
-                self.updateTileRegion()
-            } else {
-                self.downloadTileRegion()
-            }
-        }
-    }
-    
-    private func stylePackExists(completion: @escaping (Bool) -> Void) {
-        offlineManager.allStylePacks { result in
-            switch result {
-            case let .success(stylePacks):
-                for stylePack in stylePacks {
-                    if stylePack.styleURI == STYLE_URI_STRING {
-                        completion(true)
-                        return
-                    }
-                }
-                completion(false)
-            case .failure:
-                completion(false)
-            }
-        }
-    }
-
-    
-    private func tileRegionExists(completion: @escaping (Bool) -> Void) {
-        tileStore.allTileRegions { result in
-            switch result {
-            case let .success(tileRegions):
-                for region in tileRegions {
-                    if region.id == TILEPACK_ID {
-                        completion(true)
-                        return
-                    }
-                }
-                completion(false)
-            case .failure:
-                completion(false)
-            }
-        }
-    }
-    
-    private func updateSylePack() {
-        let emptyStylePackOptions = StylePackLoadOptions(
-            glyphsRasterizationMode: .ideographsRasterizedLocally
-        )!
-        
-        offlineManager.loadStylePack(
-            for: STYLE_URI,
-            loadOptions: emptyStylePackOptions
-        ) { result in
+        downloadStylePack { result in
             switch result {
             case .success:
-                print("StylePack updated successfully.")
+                print("Download completed successfully.")
+                self.downloadTileRegion()
             case .failure(let error):
-                print("Failed to upate StylePack: \(error)")
+                print("Download failed with error: \(error)")
             }
         }
+
     }
-        
-    private func downloadStylePack() {
+    
+    private func downloadStylePack(completion: @escaping (Result<Void, Error>) -> Void) {
         let stylePackOptions = StylePackLoadOptions(
             glyphsRasterizationMode: .ideographsRasterizedLocally,
             metadata: ["id": TILEPACK_ID],
@@ -101,30 +43,14 @@ class OfflineMapDownloader {
             switch result {
             case .success:
                 print("StylePack downloaded successfully.")
+                completion(.success(()))
             case .failure(let error):
                 print("Failed to download StylePack: \(error)")
+                completion(.failure(error))
             }
         }
     }
     
-    private func updateTileRegion() {
-        let emptyTileRegionLoadOptions = TileRegionLoadOptions(
-            geometry: BBOX_GEOMETRY
-        )!
-        
-        tileStore.loadTileRegion(
-            forId: TILEPACK_ID,
-            loadOptions: emptyTileRegionLoadOptions
-        ) { result in
-            switch result {
-            case .success:
-                print("TileRegion updated successfully.")
-            case .failure(let error):
-                print("Failed to upate TileRegion: \(error)")
-            }
-        }
-    }
-        
     private func downloadTileRegion() {
         let tilesetDescriptorOptions = TilesetDescriptorOptions(
             styleURI: STYLE_URI,
@@ -152,3 +78,93 @@ class OfflineMapDownloader {
         }
     }
 }
+
+    
+//    func updateMapData() {
+//        stylePackExists() { exists in
+//            if exists {
+//                self.updateSylePack()
+//            } else {
+//                self.downloadStylePack()
+//            }
+//        }
+//
+//        tileRegionExists() { exists in
+//            if exists {
+//                self.updateTileRegion()
+//            } else {
+//                self.downloadTileRegion()
+//            }
+//        }
+//    }
+    
+//    private func stylePackExists(completion: @escaping (Bool) -> Void) {
+//        offlineManager.allStylePacks { result in
+//            switch result {
+//            case let .success(stylePacks):
+//                for stylePack in stylePacks {
+//                    if stylePack.styleURI == STYLE_URI_STRING {
+//                        completion(true)
+//                        return
+//                    }
+//                }
+//                completion(false)
+//            case .failure:
+//                completion(false)
+//            }
+//        }
+//    }
+
+    
+//    private func tileRegionExists(completion: @escaping (Bool) -> Void) {
+//        tileStore.allTileRegions { result in
+//            switch result {
+//            case let .success(tileRegions):
+//                for region in tileRegions {
+//                    if region.id == TILEPACK_ID {
+//                        completion(true)
+//                        return
+//                    }
+//                }
+//                completion(false)
+//            case .failure:
+//                completion(false)
+//            }
+//        }
+//    }
+    
+//    private func updateSylePack() {
+//        let emptyStylePackOptions = StylePackLoadOptions(
+//            glyphsRasterizationMode: .ideographsRasterizedLocally
+//        )!
+//        
+//        offlineManager.loadStylePack(
+//            for: STYLE_URI,
+//            loadOptions: emptyStylePackOptions
+//        ) { result in
+//            switch result {
+//            case .success:
+//                print("StylePack updated successfully.")
+//            case .failure(let error):
+//                print("Failed to upate StylePack: \(error)")
+//            }
+//        }
+//    }
+    
+//    private func updateTileRegion() {
+//        let emptyTileRegionLoadOptions = TileRegionLoadOptions(
+//            geometry: BBOX_GEOMETRY
+//        )!
+//        
+//        tileStore.loadTileRegion(
+//            forId: TILEPACK_ID,
+//            loadOptions: emptyTileRegionLoadOptions
+//        ) { result in
+//            switch result {
+//            case .success:
+//                print("TileRegion updated successfully.")
+//            case .failure(let error):
+//                print("Failed to upate TileRegion: \(error)")
+//            }
+//        }
+//    }

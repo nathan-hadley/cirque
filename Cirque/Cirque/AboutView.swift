@@ -28,8 +28,8 @@ struct AboutView: View {
     let circuits = [
         "Forestland Blue Circuit (V0-2)",
         "Swiftwater Red Circuit (V0-3)",
-        "Straightaways White Circuit (V4-9)",
-        "Forestland Black Circuit (V3-5) coming soon"
+        "Forestland Black Circuit (V3-5)",
+        "Straightaways White Circuit (V4-9)"
     ]
     
     var body: some View {

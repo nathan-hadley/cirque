@@ -431,7 +431,7 @@
                 "subarea": "Forestland",
                 "order": "1",
                 "color": "black",
-                "line": "[[130,307],[187,86]]",
+                "line": "[[315,278],[287,217],[345,154],[319,81]]",
                 "topo": "forestland-cube-crack"
             },
             "geometry": {
@@ -1445,7 +1445,7 @@
         {
             "type": "Feature",
             "properties": {
-                "topo": "forestland-power-steering",
+                "topo": "forestland-feel-the-pinch",
                 "order": "14",
                 "subarea": "Forestland",
                 "name": "Fiend it Like Crack",
@@ -2651,7 +2651,7 @@
                 "subarea": "Forestland",
                 "order": "2",
                 "color": "black",
-                "line": "[[315,278],[287,217],[345,154],[319,81]]",
+                "line": "[[130,307],[187,86]]",
                 "topo": "forestland-cube-crack"
             },
             "geometry": {
