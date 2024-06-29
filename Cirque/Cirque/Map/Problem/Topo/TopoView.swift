@@ -40,10 +40,10 @@ struct TopoView: View {
             VStack {
                 Image(systemName: "photo")
                     .font(.system(size: 64))
-                    .foregroundColor(.black)
+                    .foregroundColor(Color.black)
                 Text("No Topo")
                     .font(.title2)
-                    .foregroundColor(.black)
+                    .foregroundColor(Color.black)
                     .padding(.top, 6)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
