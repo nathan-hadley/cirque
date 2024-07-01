@@ -6,27 +6,133 @@
 //
 
 import MapboxMaps
+import SwiftUI
 
-class OfflineMapDownloader {
+class OfflineMapDownloader: ObservableObject {
+    @Published var mapDownloaded: Bool = false
+    @Published var successMessage: String? = nil
+    @Published var errorMessage: String? = nil
+    
     private var offlineManager: OfflineManager
     private var tileStore: TileStore
     
     init() {
         offlineManager = OfflineManager()
         tileStore = TileStore.default
+        
+        stylePackExists() { exists in
+            DispatchQueue.main.async {
+                self.mapDownloaded = exists
+            }
+        }
     }
     
     func updateMapData() {
-        downloadStylePack { result in
-            switch result {
-            case .success:
-                print("Download completed successfully.")
-                self.downloadTileRegion()
-            case .failure(let error):
-                print("Download failed with error: \(error)")
+        if mapDownloaded {
+            updateSylePack { result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success:
+                        self.successMessage = "Style pack updated successfully."
+                        
+                        self.updateTileRegion() { result in
+                            switch result {
+                            case .success:
+                                self.successMessage = "Map updated successfully."
+                            case .failure(let error):
+                                self.errorMessage = "Update failed with error: \(error)"
+                                self.successMessage = nil
+                            }
+                        }
+                    case .failure(let error):
+                        self.errorMessage = "Update failed with error: \(error)"
+                    }
+                }
+            }
+            
+        } else {
+            downloadStylePack { result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success:
+                        self.successMessage = "Style pack downloaded successfully."
+                        
+                        self.downloadTileRegion() { result in
+                            switch result {
+                            case .success:
+                                self.successMessage = "Map downloaded successfully."
+                            case .failure(let error):
+                                self.errorMessage = "Update failed with error: \(error)"
+                                self.successMessage = nil
+                            }
+                        }
+                    case .failure(let error):
+                        self.errorMessage = "Download failed with error: \(error)"
+                    }
+                }
             }
         }
-
+    }
+    
+    private func stylePackExists(completion: @escaping (Bool) -> Void) {
+        offlineManager.allStylePacks { result in
+            switch result {
+            case let .success(stylePacks):
+                for stylePack in stylePacks {
+                    if stylePack.styleURI == STYLE_URI_STRING {
+                        completion(true)
+                        return
+                    }
+                }
+                completion(false)
+            case .failure:
+                completion(false)
+            }
+        }
+    }
+    
+    private func updateSylePack(completion: @escaping (Result<Void, Error>) -> Void) {
+        let emptyStylePackOptions = StylePackLoadOptions(
+            glyphsRasterizationMode: .ideographsRasterizedLocally
+        )!
+        
+        offlineManager.loadStylePack(
+            for: STYLE_URI,
+            loadOptions: emptyStylePackOptions
+        ) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    print("StylePack updated successfully.")
+                    completion(.success(()))
+                case .failure(let error):
+                    print("Failed to upate StylePack: \(error)")
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
+    
+    private func updateTileRegion(completion: @escaping (Result<Void, Error>) -> Void) {
+        let emptyTileRegionLoadOptions = TileRegionLoadOptions(
+            geometry: BBOX_GEOMETRY
+        )!
+        
+        tileStore.loadTileRegion(
+            forId: TILEPACK_ID,
+            loadOptions: emptyTileRegionLoadOptions
+        ) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    print("TileRegion updated successfully.")
+                    completion(.success(()))
+                case .failure(let error):
+                    print("Failed to upate TileRegion: \(error)")
+                    completion(.failure(error))
+                }
+            }
+        }
     }
     
     private func downloadStylePack(completion: @escaping (Result<Void, Error>) -> Void) {
@@ -40,18 +146,20 @@ class OfflineMapDownloader {
             for: STYLE_URI,
             loadOptions: stylePackOptions
         ) { result in
-            switch result {
-            case .success:
-                print("StylePack downloaded successfully.")
-                completion(.success(()))
-            case .failure(let error):
-                print("Failed to download StylePack: \(error)")
-                completion(.failure(error))
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    print("StylePack downloaded successfully.")
+                    completion(.success(()))
+                case .failure(let error):
+                    print("Failed to download StylePack: \(error)")
+                    completion(.failure(error))
+                }
             }
         }
     }
     
-    private func downloadTileRegion() {
+    private func downloadTileRegion(completion: @escaping (Result<Void, Error>) -> Void) {
         let tilesetDescriptorOptions = TilesetDescriptorOptions(
             styleURI: STYLE_URI,
             zoomRange: 10...20,
@@ -69,102 +177,16 @@ class OfflineMapDownloader {
             forId: TILEPACK_ID,
             loadOptions: tileRegionLoadOptions
         ) { result in
-            switch result {
-            case .success:
-                print("TileRegion downloaded successfully.")
-            case .failure(let error):
-                print("Failed to download TileRegion: \(error)")
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    print("TileRegion downloaded successfully.")
+                    completion(.success(()))
+                case .failure(let error):
+                    print("Failed to download TileRegion: \(error)")
+                    completion(.failure(error))
+                }
             }
         }
     }
 }
-
-    
-//    func updateMapData() {
-//        stylePackExists() { exists in
-//            if exists {
-//                self.updateSylePack()
-//            } else {
-//                self.downloadStylePack()
-//            }
-//        }
-//
-//        tileRegionExists() { exists in
-//            if exists {
-//                self.updateTileRegion()
-//            } else {
-//                self.downloadTileRegion()
-//            }
-//        }
-//    }
-    
-//    private func stylePackExists(completion: @escaping (Bool) -> Void) {
-//        offlineManager.allStylePacks { result in
-//            switch result {
-//            case let .success(stylePacks):
-//                for stylePack in stylePacks {
-//                    if stylePack.styleURI == STYLE_URI_STRING {
-//                        completion(true)
-//                        return
-//                    }
-//                }
-//                completion(false)
-//            case .failure:
-//                completion(false)
-//            }
-//        }
-//    }
-
-    
-//    private func tileRegionExists(completion: @escaping (Bool) -> Void) {
-//        tileStore.allTileRegions { result in
-//            switch result {
-//            case let .success(tileRegions):
-//                for region in tileRegions {
-//                    if region.id == TILEPACK_ID {
-//                        completion(true)
-//                        return
-//                    }
-//                }
-//                completion(false)
-//            case .failure:
-//                completion(false)
-//            }
-//        }
-//    }
-    
-//    private func updateSylePack() {
-//        let emptyStylePackOptions = StylePackLoadOptions(
-//            glyphsRasterizationMode: .ideographsRasterizedLocally
-//        )!
-//        
-//        offlineManager.loadStylePack(
-//            for: STYLE_URI,
-//            loadOptions: emptyStylePackOptions
-//        ) { result in
-//            switch result {
-//            case .success:
-//                print("StylePack updated successfully.")
-//            case .failure(let error):
-//                print("Failed to upate StylePack: \(error)")
-//            }
-//        }
-//    }
-    
-//    private func updateTileRegion() {
-//        let emptyTileRegionLoadOptions = TileRegionLoadOptions(
-//            geometry: BBOX_GEOMETRY
-//        )!
-//        
-//        tileStore.loadTileRegion(
-//            forId: TILEPACK_ID,
-//            loadOptions: emptyTileRegionLoadOptions
-//        ) { result in
-//            switch result {
-//            case .success:
-//                print("TileRegion updated successfully.")
-//            case .failure(let error):
-//                print("Failed to upate TileRegion: \(error)")
-//            }
-//        }
-//    }

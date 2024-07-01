@@ -24,6 +24,8 @@ struct BulletText: View {
 }
 
 struct AboutView: View {
+    @StateObject private var offlineMapDownloader = OfflineMapDownloader()
+    
     let gitHubText = "The code for this project can be found at [GitHub](https://github.com/nathan-hadley/cirque-ios)."
     let circuits = [
         "Forestland Blue Circuit (V0-2)",
@@ -56,8 +58,37 @@ struct AboutView: View {
                     
                     Text("The app caches map data after viewing for an undetermined amount of time. To ensure circuits show up without network connection, zoom in to the circuit you want to climb before going into the canyon. Stable offline access will be added soon.")
                         .padding(.bottom, 20)
+                    
+                    Text("Download Maps for Offline Use")
+                        .font(.title)
+                        .padding(.top, 20)
+                    
+                    if let successMessage = offlineMapDownloader.successMessage {
+                        Text(successMessage)
+                            .padding()
+                            .background(Color.green)
+                            .foregroundColor(Color.white)
+                            .cornerRadius(4)
+                    }
+                    
+                    if let errorMessage = offlineMapDownloader.errorMessage {
+                        Text(errorMessage)
+                            .padding()
+                            .background(Color.red)
+                            .foregroundColor(Color.white)
+                            .cornerRadius(4)
+                    }
+                    
+                    Button(action: offlineMapDownloader.updateMapData) {
+                        Text(offlineMapDownloader.mapDownloaded ? "Update Map" : "Download Map")
+                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(Color.white)
+                            .cornerRadius(8)
+                    }
                 }
                 .padding(.horizontal)
+                .padding(.bottom)
             }
         }
         .navigationBarTitle("About", displayMode: .inline)
