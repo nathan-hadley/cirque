@@ -11,7 +11,7 @@ import SwiftUI
 struct MapView: View {
     @StateObject private var mapViewModel = MapViewModel()
     @State private var map: MapboxMap?
-    let offlineMapDownloader = OfflineMapDownloader()
+    let offlineMapDownloader = OfflineMaps()
     
     private var gestureOptions: GestureOptions {
         var options = GestureOptions()
