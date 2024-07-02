@@ -24,13 +24,13 @@ struct BulletText: View {
 }
 
 struct AboutView: View {
-    @StateObject private var offlineMapDownloader = OfflineMapDownloader()
+    @StateObject private var offlineMaps = OfflineMaps()
     
     let gitHubText = "The code for this project can be found at [GitHub](https://github.com/nathan-hadley/cirque-ios)."
     let circuits = [
         "Forestland Blue Circuit (V0-2)",
         "Swiftwater Red Circuit (V0-3)",
-        "Forestland Black Circuit (V3-5)",
+        "Forestland Black Circuit (V2-5)",
         "Straightaways White Circuit (V4-9)"
     ]
     
@@ -48,43 +48,48 @@ struct AboutView: View {
                         BulletText(text: circuit)
                     }
                     
-                    Text("If you're a developer, please reach out about contributing. If you're not a developer but want to help, please also reach out. Collecting all the information to add a new circuit takes time!")
+                    Text("If you're a developer, please reach out about contributing. If you're not a developer but want to help, please also reach out me at @nathanhadley_ on Instagram or Threads. Collecting all the information to add a new circuit takes time and I could use help!")
                     
                     Text(.init(gitHubText))
                     
-                    Text("How to Use")
+                    Text("Download Maps")
                         .font(.title)
                         .padding(.top, 20)
                     
-                    Text("The app caches map data after viewing for an undetermined amount of time. To ensure circuits show up without network connection, zoom in to the circuit you want to climb before going into the canyon. Stable offline access will be added soon.")
+                    Text("The app caches map data after viewing for an undetermined amount of time. To ensure circuits show up without network connection, download for offline use. If one of the circuits listed above is missing, try updating the map.")
                         .padding(.bottom, 20)
                     
-                    Text("Download Maps for Offline Use")
-                        .font(.title)
-                        .padding(.top, 20)
-                    
-                    if let successMessage = offlineMapDownloader.successMessage {
-                        Text(successMessage)
+                    if !offlineMaps.successMessage.isEmpty {
+                        Text(offlineMaps.successMessage)
                             .padding()
                             .background(Color.green)
                             .foregroundColor(Color.white)
                             .cornerRadius(4)
                     }
                     
-                    if let errorMessage = offlineMapDownloader.errorMessage {
-                        Text(errorMessage)
+                    if !offlineMaps.errorMessage.isEmpty {
+                        Text(offlineMaps.errorMessage)
                             .padding()
                             .background(Color.red)
                             .foregroundColor(Color.white)
                             .cornerRadius(4)
                     }
                     
-                    Button(action: offlineMapDownloader.updateMapData) {
-                        Text(offlineMapDownloader.mapDownloaded ? "Update Map" : "Download Map")
-                            .padding()
-                            .background(Color.blue)
-                            .foregroundColor(Color.white)
-                            .cornerRadius(8)
+                    if offlineMaps.loading {
+                        VStack {
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle(tint: .blue))
+                                .scaleEffect(2)
+                                .padding()
+                        }
+                    } else {
+                        Button(action: offlineMaps.updateMapData) {
+                            Text(offlineMaps.mapDownloaded ? "Update Map" : "Download Map")
+                                .padding()
+                                .background(Color.blue)
+                                .foregroundColor(Color.white)
+                                .cornerRadius(8)
+                        }
                     }
                 }
                 .padding(.horizontal)

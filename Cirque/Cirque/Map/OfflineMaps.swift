@@ -8,10 +8,11 @@
 import MapboxMaps
 import SwiftUI
 
-class OfflineMapDownloader: ObservableObject {
+class OfflineMaps: ObservableObject {
     @Published var mapDownloaded: Bool = false
-    @Published var successMessage: String? = nil
-    @Published var errorMessage: String? = nil
+    @Published var successMessage: String = ""
+    @Published var errorMessage: String = ""
+    @Published var loading: Bool = false
     
     private var offlineManager: OfflineManager
     private var tileStore: TileStore
@@ -28,24 +29,31 @@ class OfflineMapDownloader: ObservableObject {
     }
     
     func updateMapData() {
+        successMessage = ""
+        errorMessage = ""
+        loading = true
+        
         if mapDownloaded {
             updateSylePack { result in
                 DispatchQueue.main.async {
                     switch result {
                     case .success:
-                        self.successMessage = "Style pack updated successfully."
+                        self.successMessage = "Style pack updated."
                         
                         self.updateTileRegion() { result in
-                            switch result {
-                            case .success:
-                                self.successMessage = "Map updated successfully."
-                            case .failure(let error):
-                                self.errorMessage = "Update failed with error: \(error)"
-                                self.successMessage = nil
+                            DispatchQueue.main.async {
+                                self.loading = false
+                                switch result {
+                                case .success:
+                                    self.successMessage += "\nTile regions updated.\nMap updated successfully."
+                                case .failure(let error):
+                                    self.errorMessage = "Tile regions update failed with error: \(error)"
+                                }
                             }
                         }
                     case .failure(let error):
-                        self.errorMessage = "Update failed with error: \(error)"
+                        self.loading = false
+                        self.errorMessage = "Style pack update failed with error: \(error)"
                     }
                 }
             }
@@ -55,19 +63,23 @@ class OfflineMapDownloader: ObservableObject {
                 DispatchQueue.main.async {
                     switch result {
                     case .success:
-                        self.successMessage = "Style pack downloaded successfully."
+                        self.successMessage = "Style pack downloaded."
                         
                         self.downloadTileRegion() { result in
-                            switch result {
-                            case .success:
-                                self.successMessage = "Map downloaded successfully."
-                            case .failure(let error):
-                                self.errorMessage = "Update failed with error: \(error)"
-                                self.successMessage = nil
+                            DispatchQueue.main.async {
+                                self.loading = false
+                                switch result {
+                                case .success:
+                                    self.mapDownloaded = true
+                                    self.successMessage += "\nTile regions downloaded.\nMap downloaded successfully."
+                                case .failure(let error):
+                                    self.errorMessage = "Tile region download failed with error: \(error)"
+                                }
                             }
                         }
                     case .failure(let error):
-                        self.errorMessage = "Download failed with error: \(error)"
+                        self.loading = false
+                        self.errorMessage = "Style pack download failed with error: \(error)"
                     }
                 }
             }
