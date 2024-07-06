@@ -4,8 +4,4 @@ After a trip to Fontainebleau, France, I was inspired to bring their concept of 
 
 ## Contact
 
-You can message me on Instagram or Threads at @nathanhadley_. 
-
-## Privacy Policy
-
-This app uses your location for displaying your position on the map, but location is not collected, stored or shared. No other data is collected, stored, or shared.
+You can message me on Instagram or Threads at @nathanhadley_.
