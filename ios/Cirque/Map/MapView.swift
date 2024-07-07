@@ -20,10 +20,6 @@ struct MapView: View {
         return options
     }
     
-//    init() {
-//        offlineMapDownloader.updateMapData()
-//    }
-    
     var body: some View {
         GeometryReader { geometry in
             ZStack {
