@@ -2,7 +2,6 @@ package com.example.cirque.views.map
 
 import com.mapbox.geojson.Point
 import com.mapbox.geojson.Polygon
-import com.mapbox.maps.extension.compose.style.MapStyle
 
 object MapEnv {
     const val INITIAL_ZOOM = 10.5
