@@ -1,37 +1,33 @@
 package com.example.cirque.views
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.cirque.ui.theme.CirqueTheme
+import com.mapbox.geojson.Point
+import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.extension.compose.MapboxMap
+import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
+import com.mapbox.maps.extension.compose.style.MapStyle
 
 @Composable
+@OptIn(MapboxExperimental::class)
 fun MapView(navController: NavController) {
     CirqueTheme {
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
-        ) {
-            Column(
-                modifier = Modifier.fillMaxSize().padding(15.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    "Map View",
-                    style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier.padding(vertical = 20.dp)
-                )
+        MapboxMap(
+            Modifier.fillMaxSize(),
+            mapViewportState = MapViewportState().apply {
+                setCameraOptions {
+                    zoom(10.5)
+                    center(Point.fromLngLat(-120.713, 47.585))
+                    pitch(0.0)
+                    bearing(0.0)
+                }
+            },
+            style = {
+                MapStyle(style = "mapbox://styles/nathanhadley/clw9fowlu01kw01obbpsp3wiq")
             }
-        }
+        )
     }
 }
