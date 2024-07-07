@@ -1,8 +1,7 @@
-package com.example.cirque
+package com.example.cirque.tabs
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -11,7 +10,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -20,11 +18,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.cirque.views.AboutView
-import com.example.cirque.views.MapView
+import com.example.cirque.views.map.MapView
+import com.example.cirque.views.Views
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BottomNavigationBar() {
+fun TabBar() {
     var navigationSelectedItem by remember {
         mutableIntStateOf(0)
     }
@@ -34,7 +32,7 @@ fun BottomNavigationBar() {
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
             NavigationBar {
-                BottomNavigationItem().bottomNavigationItems().forEachIndexed {index,navigationItem ->
+                Tab().bottomNavigationItems().forEachIndexed { index, navigationItem ->
 
                     NavigationBarItem(
                         selected = index == navigationSelectedItem,

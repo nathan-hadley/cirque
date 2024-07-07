@@ -58,7 +58,6 @@ struct MapView: View {
                 }
                 .zIndex(1) // Ensure the map is behind other elements
                 
-                // TODO: also only show if problem has an order
                 if let map = map, mapViewModel.viewProblem, ((mapViewModel.problem?.order) != nil) {
                     CircuitNavButtons(mapViewModel: mapViewModel, map: map)
                         .padding(.horizontal)

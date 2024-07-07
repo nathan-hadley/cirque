@@ -1,4 +1,4 @@
-package com.example.cirque
+package com.example.cirque.views
 
 sealed class Views(val route : String) {
     object Map : Views("map_route")
