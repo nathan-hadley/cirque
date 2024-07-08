@@ -50,8 +50,8 @@ android {
 }
 
 dependencies {
-    implementation("com.mapbox.maps:android:11.4.1")
-    implementation("com.mapbox.extension:maps-compose:11.4.1")
+    implementation(libs.android)
+    implementation(libs.maps.compose)
     implementation(libs.coil.compose)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -62,6 +62,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.runtime.livedata)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

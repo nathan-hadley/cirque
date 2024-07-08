@@ -31,27 +31,27 @@ fun TopoView(problem: Problem) {
                 .fillMaxWidth()
                 .background(Color.Transparent)
         ) {
-            Image(
-                painter = imagePainter,
-                contentDescription = null,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(imagePainter.intrinsicSize.width / imagePainter.intrinsicSize.height)
-                    .background(Color.Transparent)
-                    .onGloballyPositioned { coordinates ->
-                        imageSize = coordinates.size.toSize()
-                    },
-                contentScale = ContentScale.Fit
-            )
+//            Image(
+//                painter = imagePainter,
+//                contentDescription = null,
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .aspectRatio(imagePainter.intrinsicSize.width / imagePainter.intrinsicSize.height)
+//                    .background(Color.Transparent)
+//                    .onGloballyPositioned { coordinates ->
+//                        imageSize = coordinates.size.toSize()
+//                    },
+//                contentScale = ContentScale.Fit
+//            )
 
-            LineView(
-                problem = problem,
-                originalImageSize = Size(
-                    imagePainter.intrinsicSize.width,
-                    imagePainter.intrinsicSize.height
-                ),
-                displayedImageSize = imageSize
-            )
+//            LineView(
+//                problem = problem,
+//                originalImageSize = Size(
+//                    imagePainter.intrinsicSize.width,
+//                    imagePainter.intrinsicSize.height
+//                ),
+//                displayedImageSize = imageSize
+//            )
         }
     } else {
         Column(

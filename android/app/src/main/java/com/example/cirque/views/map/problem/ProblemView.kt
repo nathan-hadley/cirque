@@ -8,11 +8,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.LiveData
 import com.example.cirque.views.InfoView
 import com.example.cirque.views.TopoView
 
 @Composable
-fun ProblemView(problem: MutableState<Problem>) {
+fun ProblemView(problem: LiveData<Problem?>) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -25,8 +26,10 @@ fun ProblemView(problem: MutableState<Problem>) {
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            TopoView(problem = problem.value)
-            InfoView(problem = problem.value)
+            problem.value?.let {
+                TopoView(problem = it)
+                InfoView(problem = it)
+            }
         }
     }
 }

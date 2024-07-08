@@ -17,12 +17,14 @@ import com.mapbox.maps.RenderedQueryOptions
 import com.mapbox.maps.ScreenBox
 import com.mapbox.maps.ScreenCoordinate
 import com.mapbox.maps.SourceQueryOptions
-import com.mapbox.maps.extension.style.expressions.dsl.generated.literal
 
 class MapViewModel : ViewModel() {
 
     private val _problem = MutableLiveData<Problem?>(null)
     val problem: LiveData<Problem?> get() = _problem
+    fun setProblem(problem: Problem?) {
+        _problem.value = problem
+    }
 
     private val _viewProblem = MutableLiveData(false)
     val viewProblem: LiveData<Boolean> get() = _viewProblem
@@ -35,6 +37,9 @@ class MapViewModel : ViewModel() {
         0.0
     ))
     val viewport: LiveData<CameraState> get() = _viewport
+    fun setViewport(viewport: CameraState) {
+        _viewport.value = viewport
+    }
 
     private var bottomInset: Double = 0.0
 
