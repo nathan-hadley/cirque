@@ -9,6 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.cirque.ui.theme.CirqueTheme
 import com.example.cirque.views.map.MapEnv.INITIAL_CENTER
@@ -25,18 +26,28 @@ import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 @Composable
 @OptIn(MapboxExperimental::class, ExperimentalMaterial3Api::class)
 fun MapView(navController: NavController) {
-    val mapViewModel = remember { MapViewModel() }
+    val mapViewModel: MapViewModel = viewModel()
     val problem by mapViewModel.problem.observeAsState()
+    val cameraState by mapViewModel.cameraState.observeAsState()
 
     CirqueTheme {
         MapboxMap(
             Modifier.fillMaxSize(),
-            mapViewportState = MapViewportState().apply {
-                setCameraOptions {
-                    zoom(INITIAL_ZOOM)
-                    center(INITIAL_CENTER)
-                    pitch(0.0)
-                    bearing(0.0)
+            mapViewportState = remember { MapViewportState() }.apply {
+                cameraState?.let {
+                    setCameraOptions {
+                        center(it.center)
+                        zoom(it.zoom)
+                        pitch(it.pitch)
+                        bearing(it.bearing)
+                    }
+                } ?: run {
+                    setCameraOptions {
+                        zoom(INITIAL_ZOOM)
+                        center(INITIAL_CENTER)
+                        pitch(0.0)
+                        bearing(0.0)
+                    }
                 }
             },
             style = {

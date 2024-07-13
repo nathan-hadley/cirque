@@ -29,16 +29,10 @@ class MapViewModel : ViewModel() {
     private val _viewProblem = MutableLiveData(false)
     val viewProblem: LiveData<Boolean> get() = _viewProblem
 
-    private val _viewport = MutableLiveData(CameraState(
-        INITIAL_CENTER,
-        EdgeInsets(0.0, 0.0, 0.0, 0.0),
-        INITIAL_ZOOM,
-        0.0,
-        0.0
-    ))
-    val viewport: LiveData<CameraState> get() = _viewport
-    fun setViewport(viewport: CameraState) {
-        _viewport.value = viewport
+    private val _cameraState = MutableLiveData<CameraState?>()
+    val cameraState: LiveData<CameraState?> = _cameraState
+    fun setViewport(cameraState: CameraState) {
+        _cameraState.value = cameraState
     }
 
     private var bottomInset: Double = 0.0
@@ -121,12 +115,12 @@ class MapViewModel : ViewModel() {
     private fun setNewProblem(problem: Problem) {
         _problem.value = problem
         _viewProblem.value = true
-        _viewport.value = CameraState(
+        setViewport(CameraState(
             problem.coordinates ?: INITIAL_CENTER,
             EdgeInsets(0.0, 0.0, bottomInset, 0.0),
-            _viewport.value?.zoom ?: INITIAL_ZOOM,
-            _viewport.value?.bearing ?: 0.0,
-            _viewport.value?.pitch ?: 0.0
-        )
+            cameraState.value?.zoom ?: INITIAL_ZOOM,
+            cameraState.value?.bearing ?: 0.0,
+            cameraState.value?.pitch ?: 0.0
+        ))
     }
 }
