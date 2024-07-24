@@ -16,6 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import coil.compose.rememberAsyncImagePainter
+import com.example.cirque.R
 import com.example.cirque.views.map.problem.topo.LineView
 
 @Composable
@@ -24,26 +25,18 @@ fun TopoView(problem: Problem) {
 
     if (problem.topo != null) {
         val imageName = "${problem.topo}.jpeg"
-        val imagePainter = rememberAsyncImagePainter(model = "file:///android_asset/$imageName")
 
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(Color.Transparent)
         ) {
-//            Image(
-//                painter = imagePainter,
-//                contentDescription = null,
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .aspectRatio(imagePainter.intrinsicSize.width / imagePainter.intrinsicSize.height)
-//                    .background(Color.Transparent)
-//                    .onGloballyPositioned { coordinates ->
-//                        imageSize = coordinates.size.toSize()
-//                    },
-//                contentScale = ContentScale.Fit
-//            )
-
+            Image(
+                painter = painterResource(id = R.drawable.forestland_alcove),
+                contentDescription = null
+                // TODO: replace with topo image
+                // Set imageSize
+            )
 //            LineView(
 //                problem = problem,
 //                originalImageSize = Size(
