@@ -1,50 +1,41 @@
-package com.example.cirque.views
+package com.example.cirque.views.map.problem.topo
 
 import Problem
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.toSize
-import coil.compose.rememberAsyncImagePainter
-import com.example.cirque.R
-import com.example.cirque.views.map.problem.topo.LineView
 
 @Composable
 fun TopoView(problem: Problem) {
-    var imageSize by remember { mutableStateOf(Size.Zero) }
-
     if (problem.topo != null) {
-        val imageName = "${problem.topo}.jpeg"
+        val imageName = problem.topo.replace("-", "_")
+        val context = LocalContext.current
+        val imageResource = context.resources.getIdentifier(imageName, "drawable", context.packageName)
 
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.Transparent)
+                .aspectRatio(4f / 3f)
+                .clip(shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
+                .background(Color.Transparent),
+            contentAlignment = Alignment.Center
         ) {
             Image(
-                painter = painterResource(id = R.drawable.forestland_alcove),
-                contentDescription = null
-                // TODO: replace with topo image
-                // Set imageSize
+                painter = painterResource(id = imageResource),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize()
             )
-//            LineView(
-//                problem = problem,
-//                originalImageSize = Size(
-//                    imagePainter.intrinsicSize.width,
-//                    imagePainter.intrinsicSize.height
-//                ),
-//                displayedImageSize = imageSize
-//            )
+            LineView(problem = problem)
         }
     } else {
         Column(

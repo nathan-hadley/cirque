@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LiveData
 import com.example.cirque.views.InfoView
-import com.example.cirque.views.TopoView
+import com.example.cirque.views.map.problem.topo.TopoView
 
 @Composable
 fun ProblemView(problem: LiveData<Problem?>) {
