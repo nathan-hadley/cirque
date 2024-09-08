@@ -10,3 +10,4 @@
 
 ## Run App
 Open Android Studio, sync, and you should be good to go!
+
