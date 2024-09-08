@@ -1,6 +1,6 @@
 [versions]
 accompanistNavigationMaterial = "0.28.0"
-agp = "8.5.0"
+agp = "8.6.0"
 android = "11.4.1"
 coilCompose = "2.0.0"
 kotlin = "1.9.0"
