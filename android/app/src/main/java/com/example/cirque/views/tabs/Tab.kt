@@ -1,4 +1,4 @@
-package com.example.cirque.tabs
+package com.example.cirque.views.tabs
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info

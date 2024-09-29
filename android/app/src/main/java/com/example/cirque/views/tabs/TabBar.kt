@@ -1,4 +1,4 @@
-package com.example.cirque.tabs
+package com.example.cirque.views.tabs
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding

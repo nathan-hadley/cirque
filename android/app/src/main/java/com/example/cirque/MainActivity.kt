@@ -9,7 +9,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.cirque.tabs.TabBar
+import com.example.cirque.views.tabs.TabBar
 import com.example.cirque.ui.theme.CirqueTheme
 
 class MainActivity : ComponentActivity() {

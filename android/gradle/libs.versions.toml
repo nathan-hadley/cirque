@@ -1,6 +1,6 @@
 [versions]
 accompanistNavigationMaterial = "0.28.0"
-agp = "8.6.0"
+agp = "8.6.1"
 android = "11.4.1"
 coilCompose = "2.0.0"
 kotlin = "1.9.0"
@@ -14,6 +14,7 @@ composeBom = "2024.04.01"
 mapsCompose = "11.4.1"
 navigationCompose = "2.7.7"
 runtimeLivedata = "1.6.8"
+composeMaterial = "1.4.0"
 
 [libraries]
 accompanist-insets = { module = "com.google.accompanist:accompanist-insets", version.ref = "accompanistNavigationMaterial" }
@@ -37,6 +38,7 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 maps-compose = { module = "com.mapbox.extension:maps-compose", version.ref = "mapsCompose" }
 androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtimeLivedata" }
+androidx-compose-material = { group = "androidx.wear.compose", name = "compose-material", version.ref = "composeMaterial" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
