@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Cirque",
-    "slug": "Cirque",
+    "slug": "cirque",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -19,7 +19,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.hadley.cirque"
     },
     "web": {
       "bundler": "metro",
@@ -35,6 +36,13 @@
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
+        }
+      ],
+      [
+        "@rnmapbox/maps",
+        {
+          "RNMapboxMapsImpl": "mapbox",
+          "RNMapboxMapsDownloadToken": "pk.eyJ1IjoibmF0aGFuaGFkbGV5IiwiYSI6ImNsdzdhdzd0ZTF3dXoya3Bld2E2NGlqenoifQ.J1OFj66gEQPKKy3aVCXxOw"
         }
       ]
     ],
