@@ -10,4 +10,4 @@ export type ColorSchemeName = 'light' | 'dark';
 export type Theme = {
   dark: boolean;
   colors: typeof Colors.light;
-}; 
+};

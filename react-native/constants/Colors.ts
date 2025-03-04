@@ -24,4 +24,4 @@ export const Colors = {
     border: '#38383A', // iOS dark mode border
     notification: '#FF453A', // iOS dark mode red
   },
-}; 
+};

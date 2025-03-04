@@ -22,7 +22,7 @@ export function useLocation() {
           timeInterval: 1000,
           distanceInterval: 10,
         },
-        (newLocation) => {
+        newLocation => {
           setLocation(newLocation);
         }
       );

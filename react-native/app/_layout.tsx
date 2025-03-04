@@ -1,7 +1,7 @@
 import { Stack } from 'expo-router';
 import { useEffect } from 'react';
 import Mapbox from '@rnmapbox/maps';
-import { Config } from '../src/constants/Config';
+import { Config } from '../constants/Config';
 
 function RootLayout() {
   useEffect(() => {

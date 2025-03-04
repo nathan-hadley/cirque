@@ -15,12 +15,10 @@ export function MapControls({ onLocateMe, isFollowingUser }: MapControlsProps) {
   return (
     <View style={[styles.container, { backgroundColor }]}>
       <TouchableOpacity
-        style={[
-          styles.button,
-          { backgroundColor, borderColor: tintColor },
-        ]}
+        style={[styles.button, { backgroundColor, borderColor: tintColor }]}
         onPress={onLocateMe}
-        activeOpacity={0.7}>
+        activeOpacity={0.7}
+      >
         <Ionicons
           name={isFollowingUser ? 'location' : 'location-outline'}
           size={24}

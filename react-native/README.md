@@ -25,15 +25,17 @@ In the output, you'll find options to open the app in a
 
 You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
-## Get a fresh project
+## Common commands
 
-When you're ready, run:
+- `npx expo start` Starts the development server (whether you are using a development build or Expo Go).
+- `npx expo prebuild` Generates native Android and iOS directories using Prebuild.
+- `npx expo run:android` 
+- `npx expo run:ios`
+- `npx expo install package-name`
+- `npx expo lint`
+- `npx expo-doctor`
 
-```bash
-npm run reset-project
-```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
 
 ## Learn more
 

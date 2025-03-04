@@ -13,12 +13,8 @@ export default function AboutScreen() {
         </ThemedText>
         <ThemedText style={styles.listItem}>• Fun and engaging</ThemedText>
         <ThemedText style={styles.listItem}>• Walking distance apart</ThemedText>
-        <ThemedText style={styles.listItem}>
-          • Within a reasonable grade range
-        </ThemedText>
-        <ThemedText style={styles.listItem}>
-          • Accessible with minimal equipment
-        </ThemedText>
+        <ThemedText style={styles.listItem}>• Within a reasonable grade range</ThemedText>
+        <ThemedText style={styles.listItem}>• Accessible with minimal equipment</ThemedText>
         <ThemedText>
           The app helps you navigate between problems and track your progress as you work through
           each circuit.

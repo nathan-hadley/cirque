@@ -3,7 +3,7 @@ import Mapbox from '@rnmapbox/maps';
 import { useEffect, useState, useRef } from 'react';
 import { useLocation } from '../../services/LocationService';
 import { MapControls } from '../../components/MapControls';
-import { View } from '../../components/Themed';
+import { ThemedView } from '../../components/ThemedView';
 import { Config } from '../../constants/Config';
 
 function MapScreen() {
@@ -34,11 +34,12 @@ function MapScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <ThemedView style={styles.container}>
       <Mapbox.MapView
         style={styles.map}
         styleURL={Config.MAP_STYLE_URL}
-        onDidFinishLoadingMap={() => setIsMapReady(true)}>
+        onDidFinishLoadingMap={() => setIsMapReady(true)}
+      >
         <Mapbox.Camera
           ref={cameraRef}
           zoomLevel={Config.DEFAULT_ZOOM_LEVEL}
@@ -46,7 +47,7 @@ function MapScreen() {
         />
       </Mapbox.MapView>
       {isMapReady && <MapControls onLocateMe={handleLocateMe} isFollowingUser={isFollowingUser} />}
-    </View>
+    </ThemedView>
   );
 }
 
