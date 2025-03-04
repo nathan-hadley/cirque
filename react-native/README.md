@@ -28,7 +28,7 @@ You can start developing by editing the files inside the **app** directory. This
 ## Common commands
 
 - `npx expo start` Starts the development server (whether you are using a development build or Expo Go).
-- `npx expo prebuild` Generates native Android and iOS directories using Prebuild.
+- `npx expo prebuild --clean` Generates native Android and iOS directories using Prebuild.
 - `npx expo run:android` 
 - `npx expo run:ios`
 - `npx expo install package-name`
