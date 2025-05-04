@@ -6,9 +6,6 @@ on:
       command:
         required: true
         type: string
-      path:
-        required: false
-        type: string
 
 jobs:
   run-command:

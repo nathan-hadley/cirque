@@ -1,7 +1,7 @@
 name: Test
 
 on:
-  push:
+  pull_request:
     paths:
       - "react-native/**"
 
@@ -10,16 +10,13 @@ jobs:
     uses: ./.github/workflows/node-template.yml
     with:
       command: lint
-      path: react-native
 
   format:
     uses: ./.github/workflows/node-template.yml
     with:
       command: format:check
-      path: react-native
 
   typecheck:
     uses: ./.github/workflows/node-template.yml
     with:
       command: typecheck
-      path: react-native
