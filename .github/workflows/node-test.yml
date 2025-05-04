@@ -1,0 +1,22 @@
+name: Test
+
+on:
+  push:
+    paths:
+      - 'react-native/**'
+
+jobs:
+  lint:
+    uses: ./.github/workflows/node-template.yml
+    with:
+      command: lint
+
+  format:
+    uses: ./.github/workflows/node-template.yml
+    with:
+      command: format:check
+
+  typecheck:
+    uses: ./.github/workflows/node-template.yml
+    with:
+      command: typecheck
