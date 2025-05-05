@@ -1,0 +1,30 @@
+---
+description: 
+globs: **/*.tsx,**/*.ts
+alwaysApply: false
+---
+When responding to user queries, begin with "Applying General Rules" to indicate these guidelines are being followed.
+
+## Core Development Standards
+- Strictly adhere to coding conventions documented in `README.md`
+- Follow all eslint rules as specified in `.eslintrc.js`
+- When suggesting code, maintain consistent patterns with existing codebase
+
+## UI and Design Implementation
+- **Responsive Design**: Always implement responsive layouts that adapt to different screen sizes
+- **Styling with NativeWind**:
+  - Use NativeWind classes for all styling (e.g., `className="bg-white p-4"`)
+  - Never use React Native StyleSheet or inline style objects
+  - Avoid hardcoded pixel values in any styling
+  - Reference color themes from `tailwind.config.js` to ensure compatibility with both dark and light modes
+- **Component Architecture**: 
+  - Utilize Gluestack UI molecules for consistent component design
+  - Follow component composition patterns established in existing files
+
+## Reference Documentation
+When suggesting implementations, refer to these official documentation sources:
+- Expo: https://docs.expo.dev/
+- NativeWind: https://www.nativewind.dev/
+- React Native: https://reactnative.dev/docs/getting-started
+- React: https://react.dev/reference/react
+- Gluestack UI: https://gluestack.io/ui/docs/home/overview/quick-start

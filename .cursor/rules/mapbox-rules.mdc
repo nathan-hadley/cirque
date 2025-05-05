@@ -1,0 +1,105 @@
+---
+description: 
+globs: **/*.swift,**/*.ts,**/*.tsx
+alwaysApply: false
+---
+---
+description: Mapbox iOS to React Native (@rnmapbox/maps) migration notes
+globs: ["**/*.swift", "**/*.ts", "**/*.tsx"]
+---
+
+# Mapbox Migration: Swift → React Native (Expo, TypeScript)
+
+This rule helps when migrating functionality from the Mapbox iOS SDK (Swift) to a React Native app using [`@rnmapbox/maps`](mdc:https:/github.com/rnmapbox/maps). It's tailored to apps using Expo and written in TypeScript.  
+
+Key areas include camera control, offline maps, feature querying, and dynamic layers.
+
+---
+
+## 1. Camera and Viewport Transitions
+
+- In Swift, `viewport = .camera(...)` sets the view. In React Native, use the `<Camera>` component inside `<MapView>`.
+- Use `cameraRef.current.flyTo()` or `moveTo()` for animated transitions.
+- Use the `<Viewport>` component and its ref (`viewportRef.current.transitionTo(...)`) for high-level stateful control, like following the user or fitting bounds.
+- React Native uses `[longitude, latitude]` arrays—make sure these are correct.
+- Animations are handled with promises or props instead of UIKit callbacks.
+
+**Docs:**  
+- https://github.com/rnmapbox/maps/blob/main/docs/Camera.md  
+- https://github.com/rnmapbox/maps/blob/main/docs/Viewport.md  
+
+---
+
+## 2. Offline Maps
+
+- Use `Mapbox.offlineManager` to create and manage packs.
+- Equivalent to Swift's tile store or offline packs.
+- Example: `offlineManager.createPack({...})`, `invalidatePack`, `deletePack`.
+- Works with custom styles and zoom ranges.
+- Requires native support—Expo users must use a custom dev client.
+
+**Docs:**  
+- https://github.com/rnmapbox/maps/blob/main/docs/OfflineManager.md  
+- https://github.com/rnmapbox/maps/blob/main/docs/Installation.md (Expo notes)
+
+---
+
+## 3. Feature Queries
+
+- Swift’s `queryRenderedFeatures(at:)` → `mapRef.current.queryRenderedFeaturesAtPoint(...)`.
+- Swift’s `querySourceFeatures(...)` → `mapRef.current.querySourceFeatures(...)`.
+- Queries accept Mapbox expression filters and layer/source IDs.
+- Use `[x, y]` pixel coordinates, not lat/lng.
+- Returns GeoJSON-like feature objects.
+
+**Docs:**  
+- https://github.com/rnmapbox/maps/blob/main/docs/MapView.md#queryrenderedfeaturesatpoint  
+- https://github.com/rnmapbox/maps/blob/main/docs/MapView.md#querysourcefeatures  
+
+---
+
+## 4. Custom Layers & Feature Filtering
+
+- In Swift, you may filter a style layer with a predicate. In RN, use the `filter` prop on `<SymbolLayer>`, `<FillLayer>`, etc.
+- Use Mapbox expression syntax: `['==', ['get', 'subarea'], 'Main']`.
+- Update data via `<ShapeSource shape={geojson}>`.
+- Changing the shape or filter triggers re-render.
+
+**Docs:**  
+- https://github.com/rnmapbox/maps/blob/main/docs/Sources.md  
+- https://github.com/rnmapbox/maps/blob/main/docs/Layers.md  
+
+---
+
+## 5. Tips for Expo and Differences from Swift
+
+- `@rnmapbox/maps` requires native code—use a custom dev client or prebuild.
+- Set up `.netrc` (iOS) and `MAPBOX_DOWNLOADS_TOKEN` (Android) to enable asset access.
+- Some gesture behaviors differ (e.g. tap zones, zoom).
+- Testing on device is essential—some features behave differently than iOS.
+
+**Docs:**  
+- https://github.com/rnmapbox/maps/blob/main/docs/Installation.md  
+- https://github.com/rnmapbox/maps  
+
+---
+
+## Example Migration Context
+
+In Swift, your `MapViewModel.swift` uses:
+
+```swift
+map.queryRenderedFeatures(with: CGRect(...)) { result in ... }
+self.viewport = .camera(center: ...)
+```swift
+
+In React Native, equivalent logic would be split between:
+
+`mapRef.current.queryRenderedFeaturesAtPoint(...)`
+
+Updating `<Camera>` or using `viewportRef.current.transitionTo(...)`
+
+`<ShapeSource>` + `<SymbolLayer>` with updated filter/data
+
+
+
