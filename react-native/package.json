@@ -18,11 +18,13 @@
   "dependencies": {
     "@expo/html-elements": "^0.4.2",
     "@expo/vector-icons": "^14.0.2",
+    "@gluestack-ui/actionsheet": "^0.2.53",
     "@gluestack-ui/button": "^1.0.14",
     "@gluestack-ui/icon": "^0.1.27",
     "@gluestack-ui/nativewind-utils": "^1.0.26",
     "@gluestack-ui/overlay": "^0.1.22",
     "@gluestack-ui/toast": "^1.0.9",
+    "@legendapp/motion": "^2.4.0",
     "@react-navigation/bottom-tabs": "^7.2.0",
     "@react-navigation/native": "^7.0.14",
     "@rnmapbox/maps": "^10.1.38",
@@ -58,6 +60,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
+    "@types/geojson": "^7946.0.16",
     "@types/jest": "^29.5.12",
     "@types/react": "~18.3.12",
     "@types/react-test-renderer": "^18.3.0",
