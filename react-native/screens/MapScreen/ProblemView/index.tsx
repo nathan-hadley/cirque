@@ -5,7 +5,7 @@ import { Heading } from '@/components/ui/heading';
 import { Icon } from '@/components/ui/icon';
 import { MapPinIcon, XIcon } from 'lucide-react-native';
 import { Problem } from '@/screens/MapScreen/ProblemView/problems';
-import { InfoView } from './InfoView';
+import { Topo } from './Topo';
 
 interface ProblemViewProps {
   problem: Problem;
@@ -40,7 +40,7 @@ export function ProblemView({ problem, onClose }: ProblemViewProps) {
         )}
       </View>
 
-      <InfoView problem={problem} />
+      <Topo problem={problem} />
     </View>
   );
 }

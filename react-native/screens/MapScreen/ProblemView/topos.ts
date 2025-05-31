@@ -1,5 +1,7 @@
+import { ImageSourcePropType } from "react-native";
+
 // Map of problem names to their corresponding topo images
-export const topoImages = {
+const topoImages = {
   // Forestland problems
   'forestland-alfalfa-or-spanky': require('@/assets/topos/forestland_alfalfa_or_spanky.jpeg'),
   'forestland-bad-moon-rising': require('@/assets/topos/forestland_bad_moon_rising.jpeg'),
@@ -99,11 +101,9 @@ export const topoImages = {
   'swiftwater-whelmed': require('@/assets/topos/swiftwater_whelmed.jpeg'),
 } as const;
 
-// Type for the topo image keys
-export type TopoImageKey = keyof typeof topoImages;
+type TopoImageKey = keyof typeof topoImages;
 
-// Helper function to get a topo image
-export const getTopoImage = (key: string) => {
-  console.log(key);
+export function getTopoImage(key: string | undefined): ImageSourcePropType | undefined {
+  if (!key) return undefined;
   return topoImages[key as TopoImageKey];
-}; 
+} 
