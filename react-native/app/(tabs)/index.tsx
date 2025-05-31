@@ -1,10 +1,3 @@
-import { View } from 'react-native';
-import { CircuitMapView } from '@/components/Map/MapView';
+import { MapScreen } from '@/screens/MapScreen';
 
-export default function MapScreen() {
-  return (
-    <View className="flex-1">
-      <CircuitMapView />
-    </View>
-  );
-}
+export default MapScreen;

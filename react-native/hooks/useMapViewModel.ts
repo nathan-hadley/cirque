@@ -3,7 +3,7 @@ import { MapView, Camera } from '@rnmapbox/maps';
 import { Feature, GeoJsonProperties, Point, Geometry } from 'geojson';
 import * as Location from 'expo-location';
 import { PROBLEMS_LAYER } from '@/constants/map';
-import { Problem } from '@/components/Map/Problem/problems';
+import { Problem } from '@/components/ProblemView/problems';
 
 export function useMapViewModel() {
   const [problem, setProblem] = useState<Problem | null>(null);

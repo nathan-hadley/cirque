@@ -10,13 +10,13 @@ import {
 } from '@/components/ui/actionsheet';
 import { useMapViewModel } from '@/hooks/useMapViewModel';
 import { INITIAL_CENTER, INITIAL_ZOOM, STYLE_URI, MAPBOX_ACCESS_TOKEN } from '@/constants/map';
-import { ProblemView } from './Problem/ProblemView';
-import { LocateMeButton } from './LocateMeButton';
-import { CircuitNavButtons } from './CircuitNavButtons';
+import { ProblemView } from '../../components/ProblemView';
+import { LocateMeButton } from '../../components/buttons/LocateMeButton';
+import { CircuitNavButtons } from '../../components/buttons/CircuitNavButtons';
 
 Mapbox.setAccessToken(MAPBOX_ACCESS_TOKEN);
 
-export function CircuitMapView() {
+export function MapScreen() {
   const {
     problem,
     viewProblem,

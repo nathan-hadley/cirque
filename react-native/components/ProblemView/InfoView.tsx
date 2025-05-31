@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Image } from 'react-native';
 import { Text } from '@/components/ui/text';
-import { Problem } from '@/components/Map/Problem/problems';
+import { Problem } from '@/components/ProblemView/problems';
 
 interface InfoViewProps {
   problem: Problem;
