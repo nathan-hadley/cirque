@@ -1,7 +1,12 @@
 import React from 'react';
 import { View } from 'react-native';
 import Mapbox, { MapView as RNMapboxMapView, UserLocation, Camera } from '@rnmapbox/maps';
-import { Actionsheet, ActionsheetBackdrop, ActionsheetContent } from '@/components/ui/actionsheet';
+import {
+  Actionsheet,
+  ActionsheetBackdrop,
+  ActionsheetContent,
+  ActionsheetDragIndicatorWrapper,
+} from '@/components/ui/actionsheet';
 import { useMapViewModel } from '@/hooks/useMapViewModel';
 import { INITIAL_CENTER, INITIAL_ZOOM, STYLE_URI, MAPBOX_ACCESS_TOKEN } from '@/constants/map';
 import { ProblemView } from './ProblemView';
@@ -61,8 +66,10 @@ export function MapScreen() {
       {/* Problem ActionSheet */}
       <Actionsheet isOpen={viewProblem} onClose={() => setViewProblem(false)}>
         <ActionsheetBackdrop />
-        <ActionsheetContent className="p-0 pb-8 bg-white rounded-t-3xl">
-          {problem && <ProblemView problem={problem} />}
+        <ActionsheetContent className="p-0 bg-typography-0 rounded-t-3xl">
+          <ActionsheetDragIndicatorWrapper className="pt-0">
+            {problem && <ProblemView problem={problem} />}
+          </ActionsheetDragIndicatorWrapper>
         </ActionsheetContent>
       </Actionsheet>
 
