@@ -1,13 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import Mapbox, { MapView as RNMapboxMapView, UserLocation, Camera } from '@rnmapbox/maps';
-import {
-  Actionsheet,
-  ActionsheetBackdrop,
-  ActionsheetContent,
-  ActionsheetDragIndicator,
-  ActionsheetDragIndicatorWrapper,
-} from '@/components/ui/actionsheet';
+import { Actionsheet, ActionsheetBackdrop, ActionsheetContent } from '@/components/ui/actionsheet';
 import { useMapViewModel } from '@/hooks/useMapViewModel';
 import { INITIAL_CENTER, INITIAL_ZOOM, STYLE_URI, MAPBOX_ACCESS_TOKEN } from '@/constants/map';
 import { ProblemView } from './ProblemView';
@@ -42,12 +36,12 @@ export function MapScreen() {
         scaleBarEnabled={true}
         compassEnabled={true}
         gestureSettings={gestureOptions}
-        onPress={(e) => {
+        onPress={e => {
           const { screenPointX, screenPointY } = e.properties || {};
           if (screenPointX && screenPointY) {
-            handleMapTap({ 
-              x: screenPointX, 
-              y: screenPointY 
+            handleMapTap({
+              x: screenPointX,
+              y: screenPointY,
             });
           }
         }}
@@ -59,29 +53,16 @@ export function MapScreen() {
           zoomLevel={INITIAL_ZOOM}
           animationDuration={0}
         />
-        <UserLocation
-          showsUserHeadingIndicator={true}
-        />
+        <UserLocation showsUserHeadingIndicator={true} />
       </RNMapboxMapView>
 
       <LocateMeButton onPress={centerToUserLocation} />
 
       {/* Problem ActionSheet */}
-      <Actionsheet 
-        isOpen={viewProblem} 
-        onClose={() => setViewProblem(false)} 
-      >
+      <Actionsheet isOpen={viewProblem} onClose={() => setViewProblem(false)}>
         <ActionsheetBackdrop />
-        <ActionsheetContent className="px-4 pb-8 pt-0 bg-white dark:bg-gray-900 rounded-t-3xl">
-          <ActionsheetDragIndicatorWrapper>
-            <ActionsheetDragIndicator />
-          </ActionsheetDragIndicatorWrapper>
-          {problem && (
-            <ProblemView
-              problem={problem}
-              onClose={() => setViewProblem(false)}
-            />
-          )}
+        <ActionsheetContent className="p-0 pb-8 bg-white rounded-t-3xl">
+          {problem && <ProblemView problem={problem} />}
         </ActionsheetContent>
       </Actionsheet>
 
@@ -95,4 +76,4 @@ export function MapScreen() {
       )}
     </View>
   );
-} 
+}

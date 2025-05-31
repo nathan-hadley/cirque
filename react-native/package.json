@@ -5,7 +5,9 @@
   "scripts": {
     "start": "expo start",
     "android": "expo run:android",
+    "android:device": "expo run:android --device",
     "ios": "expo run:ios",
+    "ios:device": "expo run:ios --device",
     "test": "jest",
     "lint": "expo lint",
     "typecheck": "tsc --noEmit",
@@ -20,6 +22,7 @@
     "@expo/vector-icons": "^14.0.2",
     "@gluestack-ui/actionsheet": "^0.2.53",
     "@gluestack-ui/button": "^1.0.14",
+    "@gluestack-ui/divider": "^0.1.10",
     "@gluestack-ui/icon": "^0.1.27",
     "@gluestack-ui/nativewind-utils": "^1.0.26",
     "@gluestack-ui/overlay": "^0.1.22",

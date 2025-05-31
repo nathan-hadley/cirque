@@ -59,8 +59,10 @@ export function useMapViewModel() {
       if (query && query.features && query.features.length > 0) {
         // Get the first feature from the result
         const feature = query.features[0] as Feature<Point, GeoJsonProperties>;
-        const newProblem = createProblemFromFeature(feature);
-        setNewProblem(newProblem);
+        const problem = createProblemFromFeature(feature);
+    
+        if (!problem) setProblem(null);
+        else setNewProblem(problem);
       }
     } catch (error) {
       console.error('Error querying features:', error);
@@ -103,7 +105,9 @@ export function useMapViewModel() {
       if (query && query.features && query.features.length > 0) {
         const feature = query.features[0] as Feature<Point, GeoJsonProperties>;
         const newProblem = createProblemFromFeature(feature);
-        setNewProblem(newProblem);
+        
+        if (!newProblem) setProblem(null);
+        else setNewProblem(newProblem);
       } else {
         console.log(`No feature found with order ${newProblemOrder}`);
       }
@@ -126,9 +130,20 @@ export function useMapViewModel() {
   };
 
   // Helper function to create a Problem object from a GeoJSON feature
-  const createProblemFromFeature = (feature: Feature<Point, GeoJsonProperties>): Problem => {
+  const createProblemFromFeature = (feature: Feature<Point, GeoJsonProperties>): Problem | null => {
     const properties = feature.properties || {};
+    const name = properties.name?.toString();
+    const topo = properties.topo?.toString();
+
+    if (!name || !topo) return null;
+
     const coordinates = feature.geometry?.coordinates?.slice(0, 2) as [number, number];
+    
+    const order = typeof properties.order === 'number' 
+        ? properties.order 
+        : properties.order 
+          ? parseInt(properties.order.toString(), 10) 
+          : undefined;
 
     let line: number[][] = [];
     try {
@@ -141,18 +156,14 @@ export function useMapViewModel() {
 
     return {
       id: properties.id?.toString() || Date.now().toString(),
-      name: properties.name?.toString(),
+      name,
       grade: properties.grade?.toString(),
-      order: typeof properties.order === 'number' 
-        ? properties.order 
-        : properties.order 
-          ? parseInt(properties.order.toString(), 10) 
-          : undefined,
+      order,
       colorStr: properties.color?.toString() || '',
       color: getColorFromString(properties.color?.toString()),
       description: properties.description?.toString(),
       line,
-      topo: properties.topo?.toString(),
+      topo,
       subarea: properties.subarea?.toString(),
       coordinates,
     };
