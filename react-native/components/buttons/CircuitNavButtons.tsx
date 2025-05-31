@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Pressable } from 'react-native';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react-native';
 import { Text } from '@/components/ui/text';
-import { Problem } from '@/components/ProblemView/problems';
+import { Problem } from '@/screens/MapScreen/ProblemView/problems';
 import { Icon } from '@/components/ui/icon';
 
 interface CircuitNavButtonsProps {

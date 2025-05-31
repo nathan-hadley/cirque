@@ -4,7 +4,7 @@ import { Text } from '@/components/ui/text';
 import { Heading } from '@/components/ui/heading';
 import { Icon } from '@/components/ui/icon';
 import { MapPinIcon, XIcon } from 'lucide-react-native';
-import { Problem } from '@/components/ProblemView/problems';
+import { Problem } from '@/screens/MapScreen/ProblemView/problems';
 import { InfoView } from './InfoView';
 
 interface ProblemViewProps {

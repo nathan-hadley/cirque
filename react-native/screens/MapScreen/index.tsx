@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/actionsheet';
 import { useMapViewModel } from '@/hooks/useMapViewModel';
 import { INITIAL_CENTER, INITIAL_ZOOM, STYLE_URI, MAPBOX_ACCESS_TOKEN } from '@/constants/map';
-import { ProblemView } from '../../components/ProblemView';
+import { ProblemView } from './ProblemView';
 import { LocateMeButton } from '../../components/buttons/LocateMeButton';
 import { CircuitNavButtons } from '../../components/buttons/CircuitNavButtons';
 
