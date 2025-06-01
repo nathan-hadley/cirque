@@ -15,22 +15,23 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     bundleIdentifier: "com.nathan-hadley.Cirque"
   },
   android: {
+    package: "com.nathanhadley.Cirque",
     adaptiveIcon: {
-      foregroundImage: "./assets/images/adaptive-icon.png",
+      foregroundImage: "./assets/images/icon.png",
       backgroundColor: "#ffffff"
     }
   },
   web: {
     bundler: "metro",
     output: "static",
-    favicon: "./assets/images/favicon.png"
+    favicon: "./assets/images/icon.png"
   },
   plugins: [
     "expo-router",
     [
       "expo-splash-screen",
       {
-        image: "./assets/images/splash-icon.png",
+        image: "./assets/images/icon.png",
         imageWidth: 200,
         resizeMode: "contain",
         backgroundColor: "#ffffff"

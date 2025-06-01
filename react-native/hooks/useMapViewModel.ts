@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import { MapView, Camera } from '@rnmapbox/maps';
 import { Feature, GeoJsonProperties, Point, Geometry } from 'geojson';
 import * as Location from 'expo-location';
+import { Alert } from 'react-native';
 import { PROBLEMS_LAYER } from '@/constants/map';
 import { Problem } from '@/screens/MapScreen/ProblemView/problems';
 
@@ -18,7 +19,16 @@ export function useMapViewModel() {
       const { status } = await Location.requestForegroundPermissionsAsync();
 
       if (status !== 'granted') {
-        console.log('Location permission denied');
+        Alert.alert(
+          'Location Permission Required',
+          'Cirque needs access to your location to show your position on the map. Please enable location permissions in your device settings.',
+          [
+            {
+              text: 'OK',
+              style: 'default',
+            },
+          ]
+        );
         return;
       }
 
@@ -37,6 +47,16 @@ export function useMapViewModel() {
       }
     } catch (error) {
       console.error('Error getting location:', error);
+      Alert.alert(
+        'Location Error',
+        'Unable to get your current location. Please make sure location services are enabled on your device.',
+        [
+          {
+            text: 'OK',
+            style: 'default',
+          },
+        ]
+      );
     }
   };
 

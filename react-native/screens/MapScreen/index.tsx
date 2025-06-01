@@ -1,16 +1,13 @@
 import React from 'react';
-import { View } from 'react-native';
+import { Platform, View } from 'react-native';
 import Mapbox, { MapView as RNMapboxMapView, UserLocation, Camera } from '@rnmapbox/maps';
-import {
-  Actionsheet,
-  ActionsheetContent,
-  ActionsheetDragIndicatorWrapper,
-} from '@/components/ui/actionsheet';
+import { Actionsheet } from '@/components/ui/actionsheet';
 import { useMapViewModel } from '@/hooks/useMapViewModel';
 import { INITIAL_CENTER, INITIAL_ZOOM, STYLE_URI, MAPBOX_ACCESS_TOKEN } from '@/constants/map';
 import { ProblemView } from './ProblemView';
 import { LocateMeButton } from '../../components/buttons/LocateMeButton';
 import { CircuitNavButtons } from '../../components/buttons/CircuitNavButtons';
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 
 Mapbox.setAccessToken(MAPBOX_ACCESS_TOKEN);
 
@@ -27,6 +24,9 @@ export function MapScreen() {
     centerToUserLocation,
   } = useMapViewModel();
 
+  const tabBarHeight = useBottomTabBarHeight();
+  const bottomOffset = Platform.OS === 'ios' ? tabBarHeight : 0;
+
   const gestureOptions = {
     pitchEnabled: false,
     rotateEnabled: false,
@@ -37,8 +37,8 @@ export function MapScreen() {
       <RNMapboxMapView
         ref={mapRef}
         styleURL={STYLE_URI}
-        scaleBarEnabled={true}
-        compassEnabled={true}
+        scaleBarEnabled={false}
+        compassEnabled={false}
         gestureSettings={gestureOptions}
         onPress={e => {
           const { screenPointX, screenPointY } = e.properties || {};
@@ -60,7 +60,11 @@ export function MapScreen() {
         <UserLocation showsUserHeadingIndicator={true} />
       </RNMapboxMapView>
 
-      <LocateMeButton onPress={centerToUserLocation} className="absolute bottom-28 right-4" />
+      <LocateMeButton
+        onPress={centerToUserLocation}
+        className="absolute right-4"
+        style={{ bottom: bottomOffset + 16 }}
+      />
 
       {viewProblem && problem && problem.order !== undefined && (
         <CircuitNavButtons
