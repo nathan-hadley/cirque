@@ -66,7 +66,7 @@ export function MapScreen() {
         <CircuitNavButtons
           onPrevious={showPreviousProblem}
           onNext={showNextProblem}
-          className="absolute bottom-[50%] -translate-y-4"
+          className="absolute bottom-[55%] -translate-y-4"
         />
       )}
 
@@ -75,13 +75,9 @@ export function MapScreen() {
         isOpen={viewProblem && problem !== null}
         onClose={() => setViewProblem(false)}
         closeOnOverlayClick={false}
-        snapPoints={[50]}
+        snapPoints={[55]}
       >
-        <ActionsheetContent className="p-0 border-transparent">
-          <ActionsheetDragIndicatorWrapper className="pt-0">
-            {problem && <ProblemView problem={problem} />}
-          </ActionsheetDragIndicatorWrapper>
-        </ActionsheetContent>
+        {problem && <ProblemView problem={problem} />}
       </Actionsheet>
     </View>
   );

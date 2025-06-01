@@ -16,17 +16,17 @@ export function useMapViewModel() {
     try {
       // Request location permissions
       const { status } = await Location.requestForegroundPermissionsAsync();
-      
+
       if (status !== 'granted') {
         console.log('Location permission denied');
         return;
       }
-      
+
       // Get the current position
       const location = await Location.getCurrentPositionAsync({
         accuracy: Location.Accuracy.Balanced,
       });
-      
+
       // Use the camera to fly to the user's location
       if (cameraRef.current) {
         cameraRef.current.setCamera({
@@ -46,13 +46,10 @@ export function useMapViewModel() {
 
     try {
       // Increase the size of the area to query (tappable area)
-      const query = await mapRef.current.queryRenderedFeaturesAtPoint(
-        [point.x, point.y],
-        {
-          layerIds: [PROBLEMS_LAYER],
-          filter: ['!=', ['get', 'color'], ''],
-        }
-      );
+      const query = await mapRef.current.queryRenderedFeaturesAtPoint([point.x, point.y], {
+        layerIds: [PROBLEMS_LAYER],
+        filter: ['!=', ['get', 'color'], ''],
+      });
 
       // The queryRenderedFeaturesAtPoint returns a feature collection
       // We need to check if there are any features in the result
@@ -60,7 +57,7 @@ export function useMapViewModel() {
         // Get the first feature from the result
         const feature = query.features[0] as Feature<Point, GeoJsonProperties>;
         const problem = createProblemFromFeature(feature);
-    
+
         if (!problem) setProblem(null);
         else setNewProblem(problem);
       }
@@ -88,9 +85,9 @@ export function useMapViewModel() {
     const newProblemOrder = (currentProblem.order || 0) + offset;
 
     try {
-      const query = await mapRef.current.querySourceFeatures('composite', {
-        sourceLayerId: PROBLEMS_LAYER,
-        filter: [
+      const query = await mapRef.current.querySourceFeatures(
+        'composite',
+        [
           'all',
           ['==', ['get', 'color'], currentProblem.colorStr],
           ['==', ['get', 'subarea'], currentProblem.subarea || ''],
@@ -100,12 +97,13 @@ export function useMapViewModel() {
             ['==', ['get', 'order'], newProblemOrder],
           ],
         ],
-      });
+        [PROBLEMS_LAYER]
+      );
 
       if (query && query.features && query.features.length > 0) {
         const feature = query.features[0] as Feature<Point, GeoJsonProperties>;
         const newProblem = createProblemFromFeature(feature);
-        
+
         if (!newProblem) setProblem(null);
         else setNewProblem(newProblem);
       } else {
@@ -138,11 +136,12 @@ export function useMapViewModel() {
     if (!name || !topo) return null;
 
     const coordinates = feature.geometry?.coordinates?.slice(0, 2) as [number, number];
-    
-    const order = typeof properties.order === 'number' 
-        ? properties.order 
-        : properties.order 
-          ? parseInt(properties.order.toString(), 10) 
+
+    const order =
+      typeof properties.order === 'number'
+        ? properties.order
+        : properties.order
+          ? parseInt(properties.order.toString(), 10)
           : undefined;
 
     let line: number[][] = [];
@@ -201,4 +200,4 @@ export function useMapViewModel() {
     showNextProblem,
     centerToUserLocation,
   };
-} 
+}
