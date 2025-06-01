@@ -16,7 +16,7 @@ export function Topo({ problem }: TopoProps) {
   }
 
   return (
-    <View className="relative w-full aspect-[4/3] overflow-hidden rounded-t-3xl">
+    <View className="relative w-full aspect-[4/3] rounded-t-3xl overflow-hidden">
       <Image source={topoImage} className="w-full h-full" resizeMode="cover" />
 
       {/* If we have line data and wanted to overlay it on the topo image,

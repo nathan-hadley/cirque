@@ -3,7 +3,6 @@ import { View } from 'react-native';
 import Mapbox, { MapView as RNMapboxMapView, UserLocation, Camera } from '@rnmapbox/maps';
 import {
   Actionsheet,
-  ActionsheetBackdrop,
   ActionsheetContent,
   ActionsheetDragIndicatorWrapper,
 } from '@/components/ui/actionsheet';
@@ -61,26 +60,29 @@ export function MapScreen() {
         <UserLocation showsUserHeadingIndicator={true} />
       </RNMapboxMapView>
 
-      <LocateMeButton onPress={centerToUserLocation} />
+      <LocateMeButton onPress={centerToUserLocation} className="absolute bottom-28 right-4" />
+
+      {viewProblem && problem && problem.order !== undefined && (
+        <CircuitNavButtons
+          onPrevious={showPreviousProblem}
+          onNext={showNextProblem}
+          className="absolute bottom-[50%] -translate-y-4"
+        />
+      )}
 
       {/* Problem ActionSheet */}
-      <Actionsheet isOpen={viewProblem} onClose={() => setViewProblem(false)}>
-        <ActionsheetBackdrop />
-        <ActionsheetContent className="p-0 bg-typography-0 rounded-t-3xl">
+      <Actionsheet
+        isOpen={viewProblem && problem !== null}
+        onClose={() => setViewProblem(false)}
+        closeOnOverlayClick={false}
+        snapPoints={[50]}
+      >
+        <ActionsheetContent className="p-0 border-transparent">
           <ActionsheetDragIndicatorWrapper className="pt-0">
             {problem && <ProblemView problem={problem} />}
           </ActionsheetDragIndicatorWrapper>
         </ActionsheetContent>
       </Actionsheet>
-
-      {/* Circuit Navigation Buttons - only shown when a problem is displayed */}
-      {viewProblem && problem && problem.order !== undefined && (
-        <CircuitNavButtons
-          onPrevious={showPreviousProblem}
-          onNext={showNextProblem}
-          problem={problem}
-        />
-      )}
     </View>
   );
 }

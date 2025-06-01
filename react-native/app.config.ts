@@ -45,7 +45,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     [
       "expo-location",
       {
-        locationAlwaysAndWhenInUsePermission: "$(PRODUCT_NAME) requires your location to enable GPS navigation between boulder problems. For example, you will be able to see your location on the map and how close you are to a boulder."
+        locationAlwaysAndWhenInUsePermission: "Cirque requires your location to enable GPS navigation between boulder problems. For example, you will be able to see your location on the map and how close you are to a boulder."
       }
     ]
   ],

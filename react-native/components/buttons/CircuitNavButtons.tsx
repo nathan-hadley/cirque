@@ -1,50 +1,24 @@
 import React from 'react';
-import { View, Pressable } from 'react-native';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react-native';
-import { Text } from '@/components/ui/text';
-import { Problem } from '@/screens/MapScreen/ProblemView/problems';
-import { Icon } from '@/components/ui/icon';
+import { Button, ButtonIcon } from '../ui/button';
+import { HStack } from '../ui/hstack';
 
-interface CircuitNavButtonsProps {
+type CircuitNavButtonsProps = {
   onPrevious: () => void;
   onNext: () => void;
-  problem: Problem;
-}
+  className?: string;
+};
 
-export function CircuitNavButtons({ onPrevious, onNext, problem }: CircuitNavButtonsProps) {
-  const getCircuitName = () => {
-    const { colorStr, subarea } = problem;
-    if (!subarea) return `${capitalize(colorStr)} Circuit`;
-    return `${subarea} ${capitalize(colorStr)} Circuit`;
-  };
-
-  const capitalize = (str: string) => {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  };
-
+export function CircuitNavButtons({ onPrevious, onNext, className }: CircuitNavButtonsProps) {
   return (
-    <View className="absolute bottom-6 left-0 right-0 flex-row justify-between items-center px-4">
-      <Pressable
-        onPress={onPrevious}
-        className="bg-white dark:bg-gray-800 rounded-full w-12 h-12 items-center justify-center shadow-md"
-      >
-        <Icon as={ChevronLeftIcon} size="lg" className="text-blue-500" />
-      </Pressable>
+    <HStack className={`justify-between w-full px-4 ${className}`}>
+      <Button onPress={onPrevious} className="bg-typography-0 rounded-full w-12 h-12">
+        <ButtonIcon as={ChevronLeftIcon} size="lg" className="text-blue-500" />
+      </Button>
 
-      <View style={{ backgroundColor: problem.color }} className="px-4 py-2 rounded-full shadow-md">
-        <Text
-          className={`text-center font-medium ${problem.colorStr === 'black' || problem.colorStr === 'blue' ? 'text-white' : 'text-black'}`}
-        >
-          {getCircuitName()}
-        </Text>
-      </View>
-
-      <Pressable
-        onPress={onNext}
-        className="bg-white dark:bg-gray-800 rounded-full w-12 h-12 items-center justify-center shadow-md"
-      >
-        <Icon as={ChevronRightIcon} size="lg" className="text-blue-500" />
-      </Pressable>
-    </View>
+      <Button onPress={onNext} className="bg-typography-0 rounded-full w-12 h-12">
+        <ButtonIcon as={ChevronRightIcon} size="lg" className="text-blue-500" />
+      </Button>
+    </HStack>
   );
 }
