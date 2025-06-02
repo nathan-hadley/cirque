@@ -1,7 +1,7 @@
 import React from 'react';
 import { Platform, View } from 'react-native';
 import Mapbox, { MapView as RNMapboxMapView, UserLocation, Camera } from '@rnmapbox/maps';
-import { Actionsheet } from '@/components/ui/actionsheet';
+import { Actionsheet, ActionsheetContent } from '@/components/ui/actionsheet';
 import { useMapContext } from '@/contexts/MapContext';
 import { INITIAL_CENTER, INITIAL_ZOOM, STYLE_URI, MAPBOX_ACCESS_TOKEN } from '@/constants/map';
 import { ProblemView } from './ProblemView';
@@ -70,7 +70,9 @@ export function MapScreen() {
         closeOnOverlayClick={false}
         snapPoints={[55]}
       >
-        {problem && <ProblemView problem={problem} />}
+        <ActionsheetContent className="p-0">
+          {problem && <ProblemView problem={problem} />}
+        </ActionsheetContent>
       </Actionsheet>
     </View>
   );

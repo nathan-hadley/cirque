@@ -2,22 +2,29 @@ import React from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react-native';
 import { Button, ButtonIcon } from '../ui/button';
 import { HStack } from '../ui/hstack';
+import { useMapContext } from '@/contexts/MapContext';
 
-type CircuitNavButtonsProps = {
-  onPrevious: () => void;
-  onNext: () => void;
-  className?: string;
-};
+export function CircuitNavButtons() {
+  const { problem, showPreviousProblem, showNextProblem } = useMapContext();
 
-export function CircuitNavButtons({ onPrevious, onNext, className }: CircuitNavButtonsProps) {
+  const color = problem?.color ?? 'black';
+
   return (
-    <HStack className={`justify-between w-full px-4 ${className}`}>
-      <Button onPress={onPrevious} className="bg-typography-0 rounded-full w-12 h-12">
-        <ButtonIcon as={ChevronLeftIcon} size="lg" className="text-blue-500" />
+    <HStack className={`justify-between w-full px-2`}>
+      <Button
+        onPress={showPreviousProblem}
+        action="secondary"
+        className="bg-typography-0/50 rounded-full w-12 h-12"
+      >
+        <ButtonIcon as={ChevronLeftIcon} size="lg" color={color} />
       </Button>
 
-      <Button onPress={onNext} className="bg-typography-0 rounded-full w-12 h-12">
-        <ButtonIcon as={ChevronRightIcon} size="lg" className="text-blue-500" />
+      <Button
+        onPress={showNextProblem}
+        action="secondary"
+        className="bg-typography-0/50 rounded-full w-12 h-12"
+      >
+        <ButtonIcon as={ChevronRightIcon} size="lg" color={color} />
       </Button>
     </HStack>
   );
