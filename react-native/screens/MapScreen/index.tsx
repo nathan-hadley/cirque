@@ -2,11 +2,10 @@ import React from 'react';
 import { Platform, View } from 'react-native';
 import Mapbox, { MapView as RNMapboxMapView, UserLocation, Camera } from '@rnmapbox/maps';
 import { Actionsheet } from '@/components/ui/actionsheet';
-import { useMapViewModel } from '@/hooks/useMapViewModel';
+import { useMapContext } from '@/contexts/MapContext';
 import { INITIAL_CENTER, INITIAL_ZOOM, STYLE_URI, MAPBOX_ACCESS_TOKEN } from '@/constants/map';
 import { ProblemView } from './ProblemView';
 import { LocateMeButton } from '../../components/buttons/LocateMeButton';
-import { CircuitNavButtons } from '../../components/buttons/CircuitNavButtons';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 
 Mapbox.setAccessToken(MAPBOX_ACCESS_TOKEN);
@@ -19,10 +18,8 @@ export function MapScreen() {
     mapRef,
     cameraRef,
     handleMapTap,
-    showPreviousProblem,
-    showNextProblem,
     centerToUserLocation,
-  } = useMapViewModel();
+  } = useMapContext();
 
   const tabBarHeight = useBottomTabBarHeight();
   const bottomOffset = Platform.OS === 'ios' ? tabBarHeight : 0;
@@ -65,14 +62,6 @@ export function MapScreen() {
         className="absolute right-4"
         style={{ bottom: bottomOffset + 16 }}
       />
-
-      {viewProblem && problem && problem.order !== undefined && (
-        <CircuitNavButtons
-          onPrevious={showPreviousProblem}
-          onNext={showNextProblem}
-          className="absolute bottom-[55%] -translate-y-4"
-        />
-      )}
 
       {/* Problem ActionSheet */}
       <Actionsheet

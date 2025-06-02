@@ -1,12 +1,27 @@
-import { useState, useRef } from 'react';
+import React, { createContext, useContext, useState, useRef, ReactNode } from 'react';
 import { MapView, Camera } from '@rnmapbox/maps';
-import { Feature, GeoJsonProperties, Point, Geometry } from 'geojson';
+import { Feature, GeoJsonProperties, Point } from 'geojson';
 import * as Location from 'expo-location';
 import { Alert } from 'react-native';
 import { PROBLEMS_LAYER } from '@/constants/map';
 import { Problem } from '@/screens/MapScreen/ProblemView/problems';
 
-export function useMapViewModel() {
+interface MapContextType {
+  problem: Problem | null;
+  setProblem: (problem: Problem | null) => void;
+  viewProblem: boolean;
+  setViewProblem: (view: boolean) => void;
+  mapRef: React.RefObject<MapView>;
+  cameraRef: React.RefObject<Camera>;
+  handleMapTap: (point: { x: number; y: number }) => Promise<void>;
+  showPreviousProblem: () => Promise<void>;
+  showNextProblem: () => Promise<void>;
+  centerToUserLocation: () => Promise<void>;
+}
+
+const MapContext = createContext<MapContextType | undefined>(undefined);
+
+export function MapProvider({ children }: { children: ReactNode }) {
   const [problem, setProblem] = useState<Problem | null>(null);
   const [viewProblem, setViewProblem] = useState(false);
   const mapRef = useRef<MapView>(null);
@@ -208,7 +223,7 @@ export function useMapViewModel() {
     }
   };
 
-  return {
+  const value: MapContextType = {
     problem,
     setProblem,
     viewProblem,
@@ -220,4 +235,14 @@ export function useMapViewModel() {
     showNextProblem,
     centerToUserLocation,
   };
+
+  return <MapContext.Provider value={value}>{children}</MapContext.Provider>;
 }
+
+export function useMapContext() {
+  const context = useContext(MapContext);
+  if (!context) {
+    throw new Error('useMapContext must be used within a MapProvider');
+  }
+  return context;
+} 
