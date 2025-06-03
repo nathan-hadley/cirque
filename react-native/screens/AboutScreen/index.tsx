@@ -1,5 +1,4 @@
-import React from 'react';
-import { View, ScrollView, ActivityIndicator, Linking, SafeAreaView } from 'react-native';
+import { View, ScrollView, ActivityIndicator, SafeAreaView } from 'react-native';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { Text } from '@/components/ui/text';
 import { Heading } from '@/components/ui/heading';

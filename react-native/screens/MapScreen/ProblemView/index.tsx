@@ -1,5 +1,5 @@
 import React from 'react';
-import { Problem } from '@/screens/MapScreen/ProblemView/problems';
+import { Problem } from '@/models/problems';
 import { Topo } from './Topo/index';
 import { VStack } from '@/components/ui/vstack';
 import { ActionsheetDragIndicatorWrapper } from '@/components/ui/actionsheet';

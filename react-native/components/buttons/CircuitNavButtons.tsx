@@ -2,7 +2,7 @@ import React from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react-native';
 import { Button, ButtonIcon } from '../ui/button';
 import { HStack } from '../ui/hstack';
-import { useMapContext } from '@/contexts/MapContext';
+import { useMapContext } from '@/hooks/useMapContext';
 
 export function CircuitNavButtons() {
   const { problem, showPreviousProblem, showNextProblem } = useMapContext();

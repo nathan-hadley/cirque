@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Image } from 'react-native';
-import { Problem } from '@/screens/MapScreen/ProblemView/problems';
+import { Problem } from '@/models/problems';
 import { getTopoImage } from './topos';
 import { CameraOff } from 'lucide-react-native';
 import { Center } from '@/components/ui/center';

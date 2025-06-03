@@ -2,7 +2,7 @@ import React from 'react';
 import { Platform, View } from 'react-native';
 import Mapbox, { MapView as RNMapboxMapView, UserLocation, Camera } from '@rnmapbox/maps';
 import { Actionsheet, ActionsheetContent } from '@/components/ui/actionsheet';
-import { useMapContext } from '@/contexts/MapContext';
+import { useMapContext } from '@/hooks/useMapContext';
 import { INITIAL_CENTER, INITIAL_ZOOM, STYLE_URI, MAPBOX_ACCESS_TOKEN } from '@/constants/map';
 import { ProblemView } from './ProblemView';
 import { LocateMeButton } from '../../components/buttons/LocateMeButton';
