@@ -1,4 +1,5 @@
 import React, { createContext, useState, useRef, ReactNode } from 'react';
+import { Dimensions } from 'react-native';
 import { MapView, Camera } from '@rnmapbox/maps';
 import { Feature, FeatureCollection, GeoJsonProperties, Geometry, Point } from 'geojson';
 import * as Location from 'expo-location';
@@ -57,7 +58,7 @@ export function MapProvider({ children }: { children: ReactNode }) {
           'Unable to get your current location. Please make sure location services are enabled on your device.',
       });
     }
-  };
+  }
 
   async function handleMapTap(point: { x: number; y: number }) {
     if (!mapRef.current) return;
@@ -72,17 +73,17 @@ export function MapProvider({ children }: { children: ReactNode }) {
     } catch (error) {
       console.error('Error querying features:', error);
     }
-  };
+  }
 
   async function showPreviousProblem() {
     if (!mapRef.current || !problem || problem.order === undefined) return;
     await fetchAdjacentProblem(problem, -1);
-  };
+  }
 
   async function showNextProblem() {
     if (!mapRef.current || !problem || problem.order === undefined) return;
     await fetchAdjacentProblem(problem, 1);
-  };
+  }
 
   async function fetchAdjacentProblem(currentProblem: Problem, offset: number) {
     if (!mapRef.current) return;
@@ -109,25 +110,35 @@ export function MapProvider({ children }: { children: ReactNode }) {
     } catch (error) {
       console.error('Error fetching adjacent problem:', error);
     }
-  };
+  }
 
   function getProblemFromQuery(query: FeatureCollection<Geometry, GeoJsonProperties>) {
     if (query && query.features && query.features.length > 0) {
       const feature = query.features[0] as Feature<Point, GeoJsonProperties>;
       const newProblem = createProblemFromFeature(feature);
-      
+
       if (newProblem) {
         setProblem(newProblem);
         setViewProblem(true);
-    
+
         if (newProblem.coordinates && cameraRef.current) {
+          // Get screen dimensions to calculate offset for actionsheet
+          const screenHeight = Dimensions.get('window').height;
+          const centerOffset = screenHeight * 0.4;
+
           cameraRef.current.setCamera({
             centerCoordinate: newProblem.coordinates,
             animationDuration: 500,
+            padding: {
+              paddingBottom: centerOffset,
+              paddingTop: 0,
+              paddingLeft: 0,
+              paddingRight: 0,
+            },
           });
         }
       }
-    } 
+    }
   }
 
   const value: MapContextType = {
