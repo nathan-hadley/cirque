@@ -12,7 +12,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   newArchEnabled: true,
   ios: {
     supportsTablet: true,
-    bundleIdentifier: "com.nathan-hadley.Cirque"
+    bundleIdentifier: "com.nathanhadley.Cirque"
   },
   android: {
     package: "com.nathanhadley.Cirque",
