@@ -1,13 +1,11 @@
-import { useState } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import Mapbox from '@rnmapbox/maps';
 import { TILEPACK_ID, STYLE_URI, BBOX_COORDS } from '@/constants/map';
 
 interface OfflineMapsState {
   loading: boolean;
   mapDownloaded: boolean;
-  successMessage: string;
-  errorMessage: string;
-  updateMapData: () => Promise<void>;
+  updateMapData: () => Promise<{ success: boolean; message: string }>;
 }
 
 interface OfflinePack {
@@ -18,10 +16,7 @@ interface OfflinePack {
 export function useOfflineMaps(): OfflineMapsState {
   const [loading, setLoading] = useState(false);
   const [mapDownloaded, setMapDownloaded] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
 
-  // Function to check if the map pack already exists
   const checkIfMapExists = async (): Promise<boolean> => {
     try {
       const packs = await Mapbox.offlineManager.getPacks();
@@ -32,22 +27,31 @@ export function useOfflineMaps(): OfflineMapsState {
     }
   };
 
-  // Function to download or update the map data
-  const updateMapData = async (): Promise<void> => {
+  useEffect(() => {
+    // Initialize the mapDownloaded state on mount
+    const initializeMapState = async () => {
+      try {
+        const exists = await checkIfMapExists();
+        setMapDownloaded(exists);
+      } catch (error) {
+        console.error('Error initializing map state:', error);
+        setMapDownloaded(false);
+      }
+    };
+
+    initializeMapState();
+  }, []);
+
+  const updateMapData = async (): Promise<{ success: boolean; message: string }> => {
     setLoading(true);
-    setSuccessMessage('');
-    setErrorMessage('');
 
     try {
-      // Check if the pack already exists
       const packExists = await checkIfMapExists();
 
-      // If the pack exists, delete it first to update with fresh data
       if (packExists) {
         await Mapbox.offlineManager.deletePack(TILEPACK_ID);
       }
 
-      // Create a new offline pack
       await Mapbox.offlineManager.createPack(
         {
           name: TILEPACK_ID,
@@ -59,22 +63,21 @@ export function useOfflineMaps(): OfflineMapsState {
           minZoom: 10,
           maxZoom: 16,
         },
-        // Progress listener callback
         (progressObj) => {
-          // Log progress information without accessing specific properties
           console.log('Download progress:', progressObj);
         },
-        // Error listener callback
         (error) => {
           console.error('Offline pack error:', error);
+          return { success: false, message: 'Failed to download map data. Error: ' + error };
         }
       );
 
       setMapDownloaded(true);
-      setSuccessMessage(packExists ? 'Map updated successfully' : 'Map downloaded successfully');
+      const message = packExists ? 'Map updated successfully' : 'Map downloaded successfully';
+      return { success: true, message };
     } catch (error) {
       console.error('Error updating map data:', error);
-      setErrorMessage('Failed to download map data. Please try again.');
+      return { success: false, message: 'Failed to download map data. Error: ' + error };
     } finally {
       setLoading(false);
     }
@@ -83,8 +86,6 @@ export function useOfflineMaps(): OfflineMapsState {
   return {
     loading,
     mapDownloaded,
-    successMessage,
-    errorMessage,
     updateMapData,
   };
 } 

@@ -1,98 +1,137 @@
-import { View, ScrollView, ActivityIndicator, SafeAreaView } from 'react-native';
+import { View, ScrollView, SafeAreaView } from 'react-native';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { Text } from '@/components/ui/text';
 import { Heading } from '@/components/ui/heading';
 import { useOfflineMaps } from '@/hooks/useOfflineMaps';
-import { Button, ButtonText } from '@/components/ui/button';
-import { Link } from 'expo-router';
-
-const BulletText = ({ text }: { text: string }) => (
-  <View className="flex-row items-start my-1">
-    <Text className="mr-2">•</Text>
-    <Text>{text}</Text>
-  </View>
-);
+import { useToast, Toast, ToastTitle } from '@/components/ui/toast';
+import { VStack } from '@/components/ui/vstack';
+import { Divider } from '@/components/ui/divider';
+import { HStack } from '@/components/ui/hstack';
+import { CircuitCard, DownloadStatusCard, ContributingSection } from './components';
+import { Icon } from '@/components/ui/icon';
+import { CircleIcon } from 'lucide-react-native';
 
 export default function AboutScreen() {
-  const { loading, mapDownloaded, successMessage, errorMessage, updateMapData } = useOfflineMaps();
+  const { loading, mapDownloaded, updateMapData } = useOfflineMaps();
+  const toast = useToast();
   const tabBarHeight = useBottomTabBarHeight();
 
   const circuits = [
-    'Forestland Blue Circuit (V0-2)',
-    'Swiftwater Red Circuit (V0-3)',
-    'Forestland Black Circuit (V2-5)',
-    'Straightaways White Circuit (V4-9)',
+    {
+      title: 'Forestland Blue Circuit',
+      difficulty: 'V0-2 • Intermediate',
+      color: 'border-blue-200 bg-blue-50',
+    },
+    {
+      title: 'Swiftwater Red Circuit',
+      difficulty: 'V0-3 • Intermediate',
+      color: 'border-red-200 bg-red-50',
+    },
+    {
+      title: 'Forestland Black Circuit',
+      difficulty: 'V2-5 • Advanced',
+      color: 'border-gray-300 bg-gray-200',
+    },
+    {
+      title: 'Straightaways White Circuit',
+      difficulty: 'V4-9 • Expert',
+      color: 'border-gray-200',
+    },
   ];
 
+  const handleMapUpdate = async () => {
+    try {
+      const result = await updateMapData();
+      
+      toast.show({
+        placement: 'top',
+        render: ({ id }) => (
+          <Toast nativeID={`toast-${id}`} action={result.success ? "success" : "error"} variant="solid">
+            <ToastTitle>{result.message}</ToastTitle>
+          </Toast>
+        ),
+      });
+    } catch (error) {
+      // Fallback error handling
+      toast.show({
+        placement: 'top',
+        render: ({ id }) => (
+          <Toast nativeID={`toast-${id}`} action="error" variant="solid">
+            <ToastTitle>An unexpected error occurred</ToastTitle>
+          </Toast>
+        ),
+      });
+    }
+  };
+
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaView className="flex-1 bg-background-0">
       <ScrollView
-        className="flex-1 bg-white dark:bg-gray-900"
-        contentContainerStyle={{
-          paddingBottom: tabBarHeight,
-        }}
+        className="flex-1"
+        contentContainerStyle={{ paddingBottom: tabBarHeight }}
+        showsVerticalScrollIndicator={false}
       >
-        <View className="px-4 py-6">
-          <Heading size="xl" className="mb-4">
-            About
-          </Heading>
+        <View className="px-6 py-8">
+          {/* Header Section */}
+          <VStack space="md" className="mb-8 items-center gap-2">
+            <Icon as={CircleIcon} size="xl" className="text-blue-600" />
+            <Heading size="2xl" className="text-center text-typography-900">
+              Cirque Leavy
+            </Heading>
+            <Text className="text-center text-typography-600 text-lg">
+              Fontainebleau-style circuits in Leavenworth
+            </Text>
+          </VStack>
 
-          <Text className="mb-4">
-            After a trip to Fontainebleau, France, we were inspired to bring their concept of
-            bouldering circuits to Leavenworth. These circuits have been developed so far:
-          </Text>
+          {/* Circuits Section */}
+          <VStack space="lg" className="mb-6">
+            <VStack space="sm">
+              <Heading size="xl" className="text-typography-900">
+                Available Circuits
+              </Heading>
+              <Text className="text-typography-600">
+                Inspired by our trip to Fontainebleau, France, these circuits bring structured
+                bouldering progression to Leavenworth's granite.
+              </Text>
+            </VStack>
 
-          {circuits.map((circuit, index) => (
-            <BulletText key={index} text={circuit} />
-          ))}
+            <VStack space="md">
+              {circuits.map((circuit, index) => (
+                <CircuitCard
+                  key={index}
+                  title={circuit.title}
+                  difficulty={circuit.difficulty}
+                  color={circuit.color}
+                />
+              ))}
+            </VStack>
+          </VStack>
 
-          <Text className="my-4">
-            If you're a developer, please reach out about contributing. If you're not a developer
-            but want to help, please also reach out me at @nathanhadley_ on Instagram or Threads.
-            Collecting all the information to add a new circuit takes time and I could use help!
-          </Text>
+          <Divider className="my-6" />
 
-          <Text className="mb-4">
-            The code for this project can be found at{' '}
-            <Link href="https://github.com/nathan-hadley/cirque-ios" className="text-blue-500">
-              GitHub
-            </Link>
-            .
-          </Text>
+          {/* Download Section */}
+          <VStack space="lg" className="mb-6">
+            <VStack space="sm">
+              <Heading size="xl" className="text-typography-900">
+                Offline Access
+              </Heading>
+              <Text className="text-typography-600">
+                The app caches map data after viewing, but for guaranteed offline access to all
+                circuits, download the complete map package below.
+              </Text>
+            </VStack>
 
-          <Heading size="lg" className="mt-6 mb-4">
-            Download Maps
-          </Heading>
+            <DownloadStatusCard
+              loading={loading}
+              mapDownloaded={mapDownloaded}
+              onUpdate={handleMapUpdate}
+            />
+          </VStack>
 
-          <Text className="mb-6">
-            The app caches map data after viewing for an undetermined amount of time. To ensure
-            circuits show up without network connection, download for offline use. If one of the
-            circuits listed above is missing, try updating the map.
-          </Text>
+          <Divider className="my-6" />
 
-          {successMessage ? (
-            <View className="bg-green-500 p-4 rounded-md mb-4">
-              <Text className="text-white">{successMessage}</Text>
-            </View>
-          ) : null}
-
-          {errorMessage ? (
-            <View className="bg-red-500 p-4 rounded-md mb-4">
-              <Text className="text-white">{errorMessage}</Text>
-            </View>
-          ) : null}
-
-          {loading ? (
-            <View className="items-center my-4">
-              <ActivityIndicator size="large" color="#3B82F6" />
-            </View>
-          ) : (
-            <Button onPress={updateMapData} className="bg-blue-500 items-center mb-4">
-              <ButtonText className="text-typography-0 font-medium">
-                {mapDownloaded ? 'Update Map' : 'Download Map'}
-              </ButtonText>
-            </Button>
-          )}
+          {/* Contributing Section */}
+          <ContributingSection />
         </View>
       </ScrollView>
     </SafeAreaView>
