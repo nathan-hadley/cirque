@@ -6,13 +6,12 @@ import { useOfflineMaps } from '@/hooks/useOfflineMaps';
 import { useToast, Toast, ToastTitle } from '@/components/ui/toast';
 import { VStack } from '@/components/ui/vstack';
 import { Divider } from '@/components/ui/divider';
-import { HStack } from '@/components/ui/hstack';
 import { CircuitCard, DownloadStatusCard, ContributingSection } from './components';
 import { Icon } from '@/components/ui/icon';
 import { CircleIcon } from 'lucide-react-native';
 
 export default function AboutScreen() {
-  const { loading, mapDownloaded, updateMapData } = useOfflineMaps();
+  const { loading, mapDownloaded, progress, updateMapData, deleteMapData } = useOfflineMaps();
   const toast = useToast();
   const tabBarHeight = useBottomTabBarHeight();
 
@@ -39,28 +38,32 @@ export default function AboutScreen() {
     },
   ];
 
+  const showToast = (message: string, success: boolean = true) => {
+    toast.show({
+      placement: 'top',
+      render: ({ id }) => (
+        <Toast nativeID={`toast-${id}`} action={success ? "success" : "error"} variant="solid">
+          <ToastTitle>{message}</ToastTitle>
+        </Toast>
+      ),
+    });
+  };
+
   const handleMapUpdate = async () => {
     try {
       const result = await updateMapData();
-      
-      toast.show({
-        placement: 'top',
-        render: ({ id }) => (
-          <Toast nativeID={`toast-${id}`} action={result.success ? "success" : "error"} variant="solid">
-            <ToastTitle>{result.message}</ToastTitle>
-          </Toast>
-        ),
-      });
+      showToast(result.message, result.success);
     } catch (error) {
-      // Fallback error handling
-      toast.show({
-        placement: 'top',
-        render: ({ id }) => (
-          <Toast nativeID={`toast-${id}`} action="error" variant="solid">
-            <ToastTitle>An unexpected error occurred</ToastTitle>
-          </Toast>
-        ),
-      });
+      showToast('An unexpected error occurred', false);
+    }
+  };
+
+  const handleMapDelete = async () => {
+    try {
+      const result = await deleteMapData();
+      showToast(result.message, result.success);
+    } catch (error) {
+      showToast('An unexpected error occurred', false);
     }
   };
 
@@ -124,7 +127,9 @@ export default function AboutScreen() {
             <DownloadStatusCard
               loading={loading}
               mapDownloaded={mapDownloaded}
+              progress={progress}
               onUpdate={handleMapUpdate}
+              onDelete={handleMapDelete}
             />
           </VStack>
 

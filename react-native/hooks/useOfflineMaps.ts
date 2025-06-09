@@ -1,21 +1,24 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Mapbox from '@rnmapbox/maps';
 import { TILEPACK_ID, STYLE_URI, BBOX_COORDS } from '@/constants/map';
 
-interface OfflineMapsState {
+type OfflineMapsState = {
   loading: boolean;
   mapDownloaded: boolean;
+  progress: number;
   updateMapData: () => Promise<{ success: boolean; message: string }>;
-}
+  deleteMapData: () => Promise<{ success: boolean; message: string }>;
+};
 
-interface OfflinePack {
+type OfflinePack = {
   name: string;
   [key: string]: any;
-}
+};
 
 export function useOfflineMaps(): OfflineMapsState {
   const [loading, setLoading] = useState(false);
   const [mapDownloaded, setMapDownloaded] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   const checkIfMapExists = async (): Promise<boolean> => {
     try {
@@ -44,6 +47,7 @@ export function useOfflineMaps(): OfflineMapsState {
 
   const updateMapData = async (): Promise<{ success: boolean; message: string }> => {
     setLoading(true);
+    setProgress(0);
 
     try {
       const packExists = await checkIfMapExists();
@@ -52,25 +56,45 @@ export function useOfflineMaps(): OfflineMapsState {
         await Mapbox.offlineManager.deletePack(TILEPACK_ID);
       }
 
-      await Mapbox.offlineManager.createPack(
-        {
-          name: TILEPACK_ID,
-          styleURL: STYLE_URI,
-          bounds: [
-            [BBOX_COORDS[0][0], BBOX_COORDS[0][1]],
-            [BBOX_COORDS[2][0], BBOX_COORDS[2][1]],
-          ],
-          minZoom: 10,
-          maxZoom: 16,
-        },
-        (progressObj) => {
-          console.log('Download progress:', progressObj);
-        },
-        (error) => {
-          console.error('Offline pack error:', error);
-          return { success: false, message: 'Failed to download map data. Error: ' + error };
-        }
-      );
+      // Use Promise wrapper to handle the callback-based createPack API
+      await new Promise<void>((resolve, reject) => {
+        Mapbox.offlineManager.createPack(
+          {
+            name: TILEPACK_ID,
+            styleURL: STYLE_URI,
+            bounds: [
+              [BBOX_COORDS[0][0], BBOX_COORDS[0][1]],
+              [BBOX_COORDS[2][0], BBOX_COORDS[2][1]],
+            ],
+            minZoom: 10,
+            maxZoom: 16,
+          },
+          // Progress callback
+          (pack: { name: string }, status: { state: string | number; percentage: number }) => {
+            console.log('Download progress:', status);
+            if (status) {
+              const progressPercent = status.percentage || 0;
+              setProgress(progressPercent);
+
+              if (status.state === 'complete' || status.state === 1) {
+                setProgress(100);
+                resolve();
+              } else if (
+                status.state === 'inactive' ||
+                status.state === 'invalid' ||
+                status.state === 0
+              ) {
+                reject(new Error(`Pack download failed with state: ${status.state}`));
+              }
+            }
+          },
+          // Error callback
+          (pack: { name: string }) => {
+            console.error('Offline pack error for pack:', pack.name);
+            reject(new Error(`Download failed for pack: ${pack.name}`));
+          }
+        );
+      });
 
       setMapDownloaded(true);
       const message = packExists ? 'Map updated successfully' : 'Map downloaded successfully';
@@ -80,12 +104,33 @@ export function useOfflineMaps(): OfflineMapsState {
       return { success: false, message: 'Failed to download map data. Error: ' + error };
     } finally {
       setLoading(false);
+      setProgress(0);
+    }
+  };
+
+  const deleteMapData = async (): Promise<{ success: boolean; message: string }> => {
+    try {
+      const packExists = await checkIfMapExists();
+
+      if (!packExists) {
+        return { success: false, message: 'No offline maps to delete' };
+      }
+
+      await Mapbox.offlineManager.deletePack(TILEPACK_ID);
+      setMapDownloaded(false);
+
+      return { success: true, message: 'Offline maps deleted successfully' };
+    } catch (error) {
+      console.error('Error deleting map data:', error);
+      return { success: false, message: 'Failed to delete map data. Error: ' + error };
     }
   };
 
   return {
     loading,
     mapDownloaded,
+    progress,
     updateMapData,
+    deleteMapData,
   };
-} 
+}
