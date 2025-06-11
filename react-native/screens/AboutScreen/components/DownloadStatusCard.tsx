@@ -7,8 +7,9 @@ import { VStack } from '@/components/ui/vstack';
 import { Download, CheckCircle, RefreshCw, Trash2 } from 'lucide-react-native';
 import { Icon } from '@/components/ui/icon';
 import { Spinner } from '@/components/ui/spinner';
+import { CircularProgress } from '@/components/CircularProgress';
 
-interface DownloadStatusCardProps {
+type DownloadStatusCardProps = {
   loading: boolean;
   mapDownloaded: boolean;
   progress: number;
@@ -34,12 +35,12 @@ export function DownloadStatusCard({
           )}
           <VStack className="flex-1">
             <Text className="font-semibold text-lg">
-              {mapDownloaded ? 'Maps Downloaded' : 'Download Offline Maps'}
+              {mapDownloaded ? 'Map Downloaded' : 'Download Offline Map'}
             </Text>
             <Text className="text-sm text-typography-600">
               {mapDownloaded
-                ? 'Maps ready for offline use'
-                : 'Ensure circuits work without network'}
+                ? 'Map ready for offline use'
+                : 'Ensure map works without network'}
             </Text>
           </VStack>
           {mapDownloaded && (
@@ -56,17 +57,6 @@ export function DownloadStatusCard({
           )}
         </HStack>
 
-        {loading && (
-          <View className="bg-info-50 rounded-lg p-3 h-12">
-            <HStack space="sm" className="items-center">
-              <Spinner size="small" />
-              <Text className="text-info-700 text-sm">
-                Downloading map tiles... {progress > 0 ? `${progress.toFixed(1)}%` : ''}
-              </Text>
-            </HStack>
-          </View>
-        )}
-
         <Button
           onPress={onUpdate}
           disabled={loading}
@@ -76,14 +66,14 @@ export function DownloadStatusCard({
         >
           <HStack space="sm" className="items-center">
             {loading ? (
-              <Spinner size="small" color="white" />
+              <CircularProgress progress={progress} />
             ) : mapDownloaded ? (
               <ButtonIcon as={RefreshCw} size="sm" className="text-white" />
             ) : (
               <ButtonIcon as={Download} size="sm" className="text-white" />
             )}
             <ButtonText className="text-white font-semibold">
-              {loading ? 'Downloading...' : mapDownloaded ? 'Update Maps' : 'Download Maps'}
+              {loading ? 'Downloading...' : mapDownloaded ? 'Update Map' : 'Download Map'}
             </ButtonText>
           </HStack>
         </Button>

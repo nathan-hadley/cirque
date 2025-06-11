@@ -10,7 +10,7 @@ import { MapProvider } from '@/contexts/MapContext';
 export default function RootLayout() {
   return (
     <MapProvider>
-      <GluestackUIProvider>
+      <GluestackUIProvider mode="system">
         <Slot />
         <StatusBar style="auto" />
       </GluestackUIProvider>

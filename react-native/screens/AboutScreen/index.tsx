@@ -19,22 +19,22 @@ export default function AboutScreen() {
     {
       title: 'Forestland Blue Circuit',
       difficulty: 'V0-2 • Intermediate',
-      color: 'border-blue-200 bg-blue-50',
+      color: 'border-info-200 bg-info-50',
     },
     {
       title: 'Swiftwater Red Circuit',
       difficulty: 'V0-3 • Intermediate',
-      color: 'border-red-200 bg-red-50',
+      color: 'border-error-200 bg-error-50',
     },
     {
       title: 'Forestland Black Circuit',
       difficulty: 'V2-5 • Advanced',
-      color: 'border-gray-300 bg-gray-200',
+      color: 'border-typography-300 bg-typography-200',
     },
     {
       title: 'Straightaways White Circuit',
       difficulty: 'V4-9 • Expert',
-      color: 'border-gray-200',
+      color: 'border-typography-200',
     },
   ];
 

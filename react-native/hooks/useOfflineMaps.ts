@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Mapbox from '@rnmapbox/maps';
+import * as Network from 'expo-network';
 import { TILEPACK_ID, STYLE_URI, BBOX_COORDS } from '@/constants/map';
 
 type OfflineMapsState = {
@@ -19,6 +20,16 @@ export function useOfflineMaps(): OfflineMapsState {
   const [loading, setLoading] = useState(false);
   const [mapDownloaded, setMapDownloaded] = useState(false);
   const [progress, setProgress] = useState(0);
+
+  const checkNetworkConnectivity = async (): Promise<boolean> => {
+    try {
+      const networkState = await Network.getNetworkStateAsync();
+      return networkState.isInternetReachable === true;
+    } catch (error) {
+      console.log('Network connectivity check failed:', error);
+      return false;
+    }
+  };
 
   const checkIfMapExists = async (): Promise<boolean> => {
     try {
@@ -50,6 +61,14 @@ export function useOfflineMaps(): OfflineMapsState {
     setProgress(0);
 
     try {
+      const isConnected = await checkNetworkConnectivity();
+      if (!isConnected) {
+        return { 
+          success: false, 
+          message: 'No internet connection. Please check your network connectionand try again.' 
+        };
+      }
+
       const packExists = await checkIfMapExists();
 
       if (packExists) {
@@ -71,7 +90,6 @@ export function useOfflineMaps(): OfflineMapsState {
           },
           // Progress callback
           (pack: { name: string }, status: { state: string | number; percentage: number }) => {
-            console.log('Download progress:', status);
             if (status) {
               const progressPercent = status.percentage || 0;
               setProgress(progressPercent);

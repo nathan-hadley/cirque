@@ -19,10 +19,10 @@ export function ContributingSection() {
 
       <VStack space="md">
         <HStack
-          space="sm"
+          space="md"
           className="bg-background-50 border border-outline-200 rounded-xl p-4 items-center"
         >
-          <Icon as={MessageCircle} size="xl" className="text-pink-500" />
+          <Icon as={MessageCircle} size="xl" className="text-warning-500" />
           <VStack className="flex-1">
             <Text className="font-semibold">Contact</Text>
             <Text className="text-sm text-typography-600">
@@ -32,13 +32,13 @@ export function ContributingSection() {
         </HStack>
 
         <HStack
-          space="sm"
+          space="md"
           className=" bg-background-50 border border-outline-200 rounded-xl p-4 items-center"
         >
-          <Icon as={ExternalLink} size="xl" className="text-gray-700" />
+          <Icon as={ExternalLink} size="xl" className="text-typography-700" />
           <VStack className="flex-1">
             <Text className="font-semibold">Open Source Project</Text>
-            <Link href="https://github.com/nathan-hadley/cirque-ios" asChild>
+            <Link href="https://github.com/nathan-hadley/cirque" asChild>
               <Text className="text-sm text-primary-600 underline">View on GitHub →</Text>
             </Link>
           </VStack>

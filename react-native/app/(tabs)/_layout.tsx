@@ -1,9 +1,10 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
 import { Platform } from 'react-native';
+import { useColorScheme } from 'nativewind';
 
 import { HapticTab } from '@/components/HapticTab';
-import TabBarBackground from '@/components/ui/TabBarBackground';
+import TabBarBackground from '@/components/TabBarBackground';
 import { Icon } from '@/components/ui/icon';
 import { Map, Info } from 'lucide-react-native';
 
@@ -27,14 +28,24 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Map',
-          tabBarIcon: () => <Icon className="text-typography-500" as={Map} />,
+          tabBarIcon: ({ focused }) => (
+            <Icon 
+              className={`${focused ? 'text-blue-500' : 'text-typography-500'}`} 
+              as={Map} 
+            />
+          ),
         }}
       />
       <Tabs.Screen
         name="about"
         options={{
           title: 'About',
-          tabBarIcon: () => <Icon className="text-typography-500" as={Info} />,
+          tabBarIcon: ({ focused }) => (
+            <Icon 
+              className={`${focused ? 'text-blue-500' : 'text-typography-500'}`} 
+              as={Info} 
+            />
+          ),
         }}
       />
     </Tabs>
