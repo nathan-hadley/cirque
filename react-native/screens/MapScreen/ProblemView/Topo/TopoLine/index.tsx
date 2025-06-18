@@ -41,7 +41,7 @@ export function TopoLine({ problem, originalImageSize, displayedImageSize }: Top
 
   const animatedPathProps = useAnimatedProps(() => {
     return {
-      strokeDasharray: pathLength,
+      strokeDasharray: [pathLength, pathLength],
       strokeDashoffset: pathLength * (1 - progress.value),
     };
   });
