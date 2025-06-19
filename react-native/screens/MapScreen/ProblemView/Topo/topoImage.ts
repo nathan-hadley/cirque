@@ -3,6 +3,7 @@ import { ImageSourcePropType } from "react-native";
 // Map of problem names to their corresponding topo images
 const topoImages = {
   // Forestland problems
+  'forestland-alcove': require('@/assets/topos/forestland-alcove.jpeg'),
   'forestland-alfalfa-or-spanky': require('@/assets/topos/forestland-alfalfa-or-spanky.jpeg'),
   'forestland-bad-moon-rising': require('@/assets/topos/forestland-bad-moon-rising.jpeg'),
   'forestland-bowl-weevil': require('@/assets/topos/forestland-bowl-weevil.jpeg'),
@@ -64,6 +65,7 @@ const topoImages = {
   'straightaways-mftb': require('@/assets/topos/straightaways-mftb.jpeg'),
   'straightaways-millennium': require('@/assets/topos/straightaways-millennium.jpeg'),
   'straightaways-miracle-whip': require('@/assets/topos/straightaways-miracle-whip.jpeg'),
+  'straightaways-mothermilker': require('@/assets/topos/straightaways-mothermilker.jpeg'),
   'straightaways-mountain-man': require('@/assets/topos/straightaways-mountain-man.jpeg'),
   'straightaways-old-school': require('@/assets/topos/straightaways-old-school.jpeg'),
   'straightaways-pony-ride': require('@/assets/topos/straightaways-pony-ride.jpeg'),
@@ -74,6 +76,7 @@ const topoImages = {
 
   // Swiftwater problems
   'swiftwater-14-years': require('@/assets/topos/swiftwater-14-years.jpeg'),
+  'swiftwater-bam': require('@/assets/topos/swiftwater-bam.jpeg'),
   'swiftwater-balance-step': require('@/assets/topos/swiftwater-balance-step.jpeg'),
   'swiftwater-barista': require('@/assets/topos/swiftwater-barista.jpeg'),
   'swiftwater-bubbles': require('@/assets/topos/swiftwater-bubbles.jpeg'),
@@ -83,11 +86,16 @@ const topoImages = {
   'swiftwater-footless-traverse': require('@/assets/topos/swiftwater-footless-traverse.jpeg'),
   'swiftwater-hate-monger': require('@/assets/topos/swiftwater-hate-monger.jpeg'),
   'swiftwater-heel-hook-rock': require('@/assets/topos/swiftwater-heel-hook-rock.jpeg'),
+  'swiftwater-jump': require('@/assets/topos/swiftwater-jump.jpeg'),
+  'swiftwater-joels-slab': require('@/assets/topos/swiftwater-joels-slab.jpeg'),
   'swiftwater-lead-pants': require('@/assets/topos/swiftwater-lead-pants.jpeg'),
+  'swiftwater-little-guy': require('@/assets/topos/swiftwater-little-guy.jpeg'),
   'swiftwater-lowe-rider': require('@/assets/topos/swiftwater-lowe-rider.jpeg'),
+  'swiftwater-lowe-rider-ridge': require('@/assets/topos/swiftwater-lowe-rider-ridge.jpeg'),
   'swiftwater-mickey': require('@/assets/topos/swiftwater-mickey.jpeg'),
   'swiftwater-minnie': require('@/assets/topos/swiftwater-minnie.jpeg'),
   'swiftwater-oceanfront': require('@/assets/topos/swiftwater-oceanfront.jpeg'),
+  'swiftwater-pit': require('@/assets/topos/swiftwater-pit.jpeg'),
   'swiftwater-pod-racer': require('@/assets/topos/swiftwater-pod-racer.jpeg'),
   'swiftwater-premium-coffee': require('@/assets/topos/swiftwater-premium-coffee.jpeg'),
   'swiftwater-red': require('@/assets/topos/swiftwater-red.jpeg'),
