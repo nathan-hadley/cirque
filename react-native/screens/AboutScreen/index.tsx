@@ -1,5 +1,6 @@
 import { View, ScrollView, SafeAreaView } from 'react-native';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import { router } from 'expo-router';
 import { Text } from '@/components/ui/text';
 import { Heading } from '@/components/ui/heading';
 import { useOfflineMaps } from '@/hooks/useOfflineMaps';
@@ -9,32 +10,42 @@ import { Divider } from '@/components/ui/divider';
 import { CircuitCard, DownloadStatusCard, ContributingSection } from './components';
 import { Icon } from '@/components/ui/icon';
 import { CircleIcon } from 'lucide-react-native';
+import { useMapContext } from '@/hooks/useMapContext';
 
 export default function AboutScreen() {
   const { loading, mapDownloaded, progress, updateMapData, deleteMapData } = useOfflineMaps();
   const toast = useToast();
   const tabBarHeight = useBottomTabBarHeight();
+  const mapContext = useMapContext();
 
   const circuits = [
     {
       title: 'Forestland Blue Circuit',
       difficulty: 'V0-2 • Intermediate',
       color: 'border-info-200 bg-info-50',
+      circuitColor: 'blue',
+      subarea: 'Forestland',
     },
     {
       title: 'Swiftwater Red Circuit',
       difficulty: 'V0-3 • Intermediate',
       color: 'border-error-200 bg-error-50',
+      circuitColor: 'red',
+      subarea: 'Swiftwater',
     },
     {
       title: 'Forestland Black Circuit',
       difficulty: 'V2-5 • Advanced',
       color: 'border-typography-300 bg-typography-200',
+      circuitColor: 'black',
+      subarea: 'Forestland',
     },
     {
       title: 'Straightaways White Circuit',
       difficulty: 'V4-9 • Expert',
       color: 'border-typography-200',
+      circuitColor: 'white',
+      subarea: 'Straightaways',
     },
   ];
 
@@ -65,6 +76,20 @@ export default function AboutScreen() {
     } catch {
       showToast('An unexpected error occurred', false);
     }
+  };
+
+  const handleCircuitPress = async (circuit: typeof circuits[0]) => {
+    router.push('/');
+    
+    // Wait a bit for navigation to complete then navigate to the first problem
+    setTimeout(async () => {
+      if (mapContext) {
+        await mapContext.navigateToFirstProblem(
+          circuit.circuitColor,
+          circuit.subarea,
+        );
+      }
+    }, 300);
   };
 
   return (
@@ -105,6 +130,7 @@ export default function AboutScreen() {
                   title={circuit.title}
                   difficulty={circuit.difficulty}
                   color={circuit.color}
+                  onPress={() => handleCircuitPress(circuit)}
                 />
               ))}
             </VStack>

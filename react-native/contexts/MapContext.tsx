@@ -17,6 +17,7 @@ type MapContextType = {
   showNextProblem: () => Promise<void>;
   handleMapTap: (point: { x: number; y: number }) => Promise<void>;
   centerToUserLocation: () => Promise<void>;
+  navigateToFirstProblem: (circuitColor: string, subarea: string) => Promise<void>;
 };
 
 export const MapContext = createContext<MapContextType | undefined>(undefined);
@@ -112,6 +113,31 @@ export function MapProvider({ children }: { children: ReactNode }) {
     }
   }
 
+  async function navigateToFirstProblem(circuitColor: string, subarea: string) {
+    if (!mapRef.current) return;
+
+    const query = await mapRef.current.querySourceFeatures(
+      'composite',
+      [
+        'all',
+        ['==', ['get', 'color'], circuitColor],
+        ['==', ['get', 'subarea'], subarea],
+        [
+          'any',
+          ['==', ['get', 'order'], '1'],
+          ['==', ['get', 'order'], 1],
+        ],
+      ],
+      [PROBLEMS_LAYER]
+    );
+
+    if (query && query.features && query.features.length > 0) {
+      getProblemFromQuery(query);
+    } else {
+      Alert.alert('Error', 'Could not find the first problem in this circuit.');
+    }
+  }
+
   function getProblemFromQuery(query: FeatureCollection<Geometry, GeoJsonProperties>) {
     if (query && query.features && query.features.length > 0) {
       const feature = query.features[0] as Feature<Point, GeoJsonProperties>;
@@ -128,6 +154,7 @@ export function MapProvider({ children }: { children: ReactNode }) {
 
           cameraRef.current.setCamera({
             centerCoordinate: newProblem.coordinates,
+            zoomLevel: 18,
             animationDuration: 500,
             padding: {
               paddingBottom: centerOffset,
@@ -152,6 +179,7 @@ export function MapProvider({ children }: { children: ReactNode }) {
     showPreviousProblem,
     showNextProblem,
     centerToUserLocation,
+    navigateToFirstProblem,
   };
 
   return <MapContext.Provider value={value}>{children}</MapContext.Provider>;
