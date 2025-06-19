@@ -24,6 +24,8 @@ export function Topo({ problem }: TopoProps) {
   const [originalImageSize, setOriginalImageSize] = useState<ImageLayout>(null);
 
   const topoImage = getTopoImage(problem.topo);
+  console.log('problem.topo', problem.topo);
+  console.log('topoImage', topoImage);
 
   // Reset image state when the topo image changes
   useEffect(() => {
