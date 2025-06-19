@@ -53,7 +53,7 @@ export default function AboutScreen() {
     try {
       const result = await updateMapData();
       showToast(result.message, result.success);
-    } catch (error) {
+    } catch {
       showToast('An unexpected error occurred', false);
     }
   };
@@ -62,7 +62,7 @@ export default function AboutScreen() {
     try {
       const result = await deleteMapData();
       showToast(result.message, result.success);
-    } catch (error) {
+    } catch {
       showToast('An unexpected error occurred', false);
     }
   };

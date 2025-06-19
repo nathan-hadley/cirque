@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View } from 'react-native';
-import { Image } from 'expo-image';
+import { LayoutChangeEvent, View } from 'react-native';
+import { Image, ImageLoadEventData } from 'expo-image';
 import { Problem } from '@/models/problems';
 import { getTopoImage } from './topoImage';
 import { CameraOff } from 'lucide-react-native';
@@ -31,14 +31,14 @@ export function Topo({ problem }: TopoProps) {
     setOriginalImageSize(null);
   }, [problem.topo]);
 
-  function handleImageLoad(event: any) {
+  function handleImageLoad(event: ImageLoadEventData) {
     const { width, height } = event.source;
     if (width && height) {
       setOriginalImageSize({ width, height });
     }
   }
 
-  function handleImageLayout(event: any) {
+  function handleImageLayout(event: LayoutChangeEvent) {
     const { width, height } = event.nativeEvent.layout;
     setImageLayout({ width, height });
   }

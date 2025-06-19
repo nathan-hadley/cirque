@@ -6,7 +6,6 @@ import { HStack } from '@/components/ui/hstack';
 import { VStack } from '@/components/ui/vstack';
 import { Download, CheckCircle, RefreshCw, Trash2 } from 'lucide-react-native';
 import { Icon } from '@/components/ui/icon';
-import { Spinner } from '@/components/ui/spinner';
 import { CircularProgress } from '@/components/CircularProgress';
 
 type DownloadStatusCardProps = {

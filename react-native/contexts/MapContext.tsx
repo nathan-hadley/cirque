@@ -51,7 +51,7 @@ export function MapProvider({ children }: { children: ReactNode }) {
           animationDuration: 1000,
         });
       }
-    } catch (error) {
+    } catch {
       Alert.alert(
         'Location Error',
         'Unable to get your current location. Please make sure location services are enabled on your device.',
