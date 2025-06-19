@@ -25,12 +25,6 @@ export function Topo({ problem }: TopoProps) {
 
   const topoImage = getTopoImage(problem.topo);
 
-  // Reset image state when the topo image changes
-  useEffect(() => {
-    setImageLayout(null);
-    setOriginalImageSize(null);
-  }, [problem.topo]);
-
   function handleImageLoad(event: ImageLoadEventData) {
     const { width, height } = event.source;
     if (width && height) {

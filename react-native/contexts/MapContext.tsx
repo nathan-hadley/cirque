@@ -87,49 +87,19 @@ export function MapProvider({ children }: { children: ReactNode }) {
   }
 
   async function fetchAdjacentProblem(currentProblem: Problem, offset: number) {
-    if (!mapRef.current) return;
-
     const newProblemOrder = (currentProblem.order || 0) + offset;
 
-    try {
-      const query = await mapRef.current.querySourceFeatures(
-        'composite',
-        [
-          'all',
-          ['==', ['get', 'color'], currentProblem.colorStr],
-          ['==', ['get', 'subarea'], currentProblem.subarea || ''],
-          [
-            'any',
-            ['==', ['get', 'order'], newProblemOrder.toString()],
-            ['==', ['get', 'order'], newProblemOrder],
-          ],
-        ],
-        [PROBLEMS_LAYER]
-      );
+    const query = await queryProblems(currentProblem.colorStr, currentProblem.subarea || '', newProblemOrder);
 
+    if (query) {
       getProblemFromQuery(query);
-    } catch (error) {
-      console.error('Error fetching adjacent problem:', error);
+    } else {
+      Alert.alert('Error', 'Could not find the next problem in this circuit.');
     }
   }
 
   async function navigateToFirstProblem(circuitColor: string, subarea: string) {
-    if (!mapRef.current) return;
-
-    const query = await mapRef.current.querySourceFeatures(
-      'composite',
-      [
-        'all',
-        ['==', ['get', 'color'], circuitColor],
-        ['==', ['get', 'subarea'], subarea],
-        [
-          'any',
-          ['==', ['get', 'order'], '1'],
-          ['==', ['get', 'order'], 1],
-        ],
-      ],
-      [PROBLEMS_LAYER]
-    );
+    const query = await queryProblems(circuitColor, subarea, 1);
 
     if (query && query.features && query.features.length > 0) {
       getProblemFromQuery(query);
@@ -166,6 +136,23 @@ export function MapProvider({ children }: { children: ReactNode }) {
         }
       }
     }
+  }
+
+  async function queryProblems(circuitColor: string, subarea: string, order: number) {
+    if (!mapRef.current) return;
+
+    const query = await mapRef.current.querySourceFeatures(
+      'composite',
+      [
+        'all',
+        ['==', ['get', 'color'], circuitColor],
+        ['==', ['get', 'subarea'], subarea],
+        ['==', ['get', 'order'], order.toString()],
+      ],
+      [PROBLEMS_LAYER]
+    );
+
+    return query;
   }
 
   const value: MapContextType = {
