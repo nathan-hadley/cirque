@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View } from 'react-native';
 import { Image } from 'expo-image';
 import { Problem } from '@/models/problems';
@@ -25,6 +25,12 @@ export function Topo({ problem }: TopoProps) {
 
   const topoImage = getTopoImage(problem.topo);
 
+  // Reset image state when the topo image changes
+  useEffect(() => {
+    setImageLayout(null);
+    setOriginalImageSize(null);
+  }, [problem.topo]);
+
   function handleImageLoad(event: any) {
     const { width, height } = event.source;
     if (width && height) {
@@ -45,6 +51,7 @@ export function Topo({ problem }: TopoProps) {
       {topoImage ? (
         <>
           <Image
+            key={problem.topo}
             source={topoImage}
             style={{ width: '100%', height: '100%' }}
             contentFit="cover"

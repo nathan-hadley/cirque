@@ -68,7 +68,7 @@ export function MapScreen() {
         isOpen={viewProblem && problem !== null}
         onClose={() => setViewProblem(false)}
         closeOnOverlayClick={false}
-        snapPoints={[55]}
+        snapPoints={[50]}
       >
         <ActionsheetContent className="p-0">
           {problem && <ProblemView problem={problem} />}

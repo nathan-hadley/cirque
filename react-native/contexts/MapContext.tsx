@@ -1,5 +1,5 @@
 import React, { createContext, useState, useRef, ReactNode } from 'react';
-import { Dimensions } from 'react-native';
+import { Alert, Dimensions } from 'react-native';
 import { MapView, Camera } from '@rnmapbox/maps';
 import { Feature, FeatureCollection, GeoJsonProperties, Geometry, Point } from 'geojson';
 import * as Location from 'expo-location';
@@ -32,11 +32,11 @@ export function MapProvider({ children }: { children: ReactNode }) {
       const { status } = await Location.requestForegroundPermissionsAsync();
 
       if (status !== 'granted') {
-        alert({
-          title: 'Location Permission Required',
-          message:
-            'Cirque needs access to your location to show your position on the map. Please enable location permissions in your device settings.',
-        });
+        Alert.alert(
+          'Location Permission Required',
+          'Cirque needs access to your location to show your position on the map. Please enable location permissions in your device settings.',
+          [{ text: 'OK' }],
+        );
         return;
       }
 
@@ -52,11 +52,11 @@ export function MapProvider({ children }: { children: ReactNode }) {
         });
       }
     } catch (error) {
-      alert({
-        title: 'Location Error',
-        message:
-          'Unable to get your current location. Please make sure location services are enabled on your device.',
-      });
+      Alert.alert(
+        'Location Error',
+        'Unable to get your current location. Please make sure location services are enabled on your device.',
+        [{ text: 'OK' }],
+      );
     }
   }
 
