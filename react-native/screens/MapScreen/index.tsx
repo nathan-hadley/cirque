@@ -1,6 +1,6 @@
 import React from 'react';
 import { Platform, View } from 'react-native';
-import Mapbox, { MapView as RNMapboxMapView, UserLocation, Camera, ShapeSource, CircleLayer } from '@rnmapbox/maps';
+import Mapbox, { MapView as RNMapboxMapView, UserLocation, Camera, ShapeSource, CircleLayer, SymbolLayer } from '@rnmapbox/maps';
 import { Actionsheet, ActionsheetContent } from '@/components/ui/actionsheet';
 import { useMapContext } from '@/hooks/useMapContext';
 import { INITIAL_CENTER, INITIAL_ZOOM, STYLE_URI, MAPBOX_ACCESS_TOKEN } from '@/constants/map';
@@ -67,9 +67,8 @@ export function MapScreen() {
                   'interpolate',
                   ['linear'],
                   ['zoom'],
-                  10, 3,
-                  16, 8,
-                  20, 12
+                  16, 3,
+                  22, 20,
                 ],
                 circleColor: [
                   'case',
@@ -83,6 +82,29 @@ export function MapScreen() {
                 ],
                 circleStrokeWidth: 0,
                 circleOpacity: 0.8
+              }}
+            />
+            <SymbolLayer
+              id="problems-text-layer"
+              style={{
+                textField: ['get', 'order'],
+                textSize: [
+                  'interpolate',
+                  ['linear'],
+                  ['zoom'],
+                  17, 8,
+                  22, 26
+                ],
+                textColor: [
+                  'case',
+                  ['==', ['get', 'color'], 'white'], '#000000', // black text for white circles
+                  '#ffffff' // white text for all other circles
+                ],
+                textFont: ['Open Sans Regular', 'Arial Unicode MS Regular'],
+                textAnchor: 'center',
+                textOffset: [0, 0],
+                textAllowOverlap: true,
+                textIgnorePlacement: true
               }}
             />
           </ShapeSource>
