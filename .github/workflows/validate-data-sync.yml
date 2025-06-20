@@ -1,0 +1,14 @@
+name: Validate Data Sync
+
+on:
+  pull_request:
+    paths:
+      - 'cirque-data/problems/problems.geojson'
+      - 'react-native/assets/problems.ts'
+      - 'sync-problems.js'
+
+jobs:
+  validate-problems-data:
+    uses: ./.github/workflows/node-template.yml
+    with:
+      command: validate-problems 

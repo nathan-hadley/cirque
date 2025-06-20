@@ -1,6 +1,6 @@
 import React from 'react';
 import { Platform, View } from 'react-native';
-import Mapbox, { MapView as RNMapboxMapView, UserLocation, Camera } from '@rnmapbox/maps';
+import Mapbox, { MapView as RNMapboxMapView, UserLocation, Camera, ShapeSource, CircleLayer } from '@rnmapbox/maps';
 import { Actionsheet, ActionsheetContent } from '@/components/ui/actionsheet';
 import { useMapContext } from '@/hooks/useMapContext';
 import { INITIAL_CENTER, INITIAL_ZOOM, STYLE_URI, MAPBOX_ACCESS_TOKEN } from '@/constants/map';
@@ -15,6 +15,7 @@ export function MapScreen() {
     problem,
     viewProblem,
     setViewProblem,
+    problemsData,
     mapRef,
     cameraRef,
     handleMapTap,
@@ -55,6 +56,37 @@ export function MapScreen() {
           animationDuration={0}
         />
         <UserLocation showsUserHeadingIndicator={true} />
+        
+        {/* Problems Data Source */}
+        {problemsData && (
+          <ShapeSource id="problems-source" shape={problemsData}>
+            <CircleLayer
+              id="problems-layer"
+              style={{
+                circleRadius: [
+                  'interpolate',
+                  ['linear'],
+                  ['zoom'],
+                  10, 3,
+                  16, 8,
+                  20, 12
+                ],
+                circleColor: [
+                  'case',
+                  ['==', ['get', 'color'], 'red'], '#ff0000',
+                  ['==', ['get', 'color'], 'blue'], '#0000ff',
+                  ['==', ['get', 'color'], 'black'], '#000000',
+                  ['==', ['get', 'color'], 'white'], '#ffffff',
+                  ['==', ['get', 'color'], 'green'], '#00ff00',
+                  ['==', ['get', 'color'], 'yellow'], '#ffff00',
+                  '#888888' // default color
+                ],
+                circleStrokeWidth: 0,
+                circleOpacity: 0.8
+              }}
+            />
+          </ShapeSource>
+        )}
       </RNMapboxMapView>
 
       <LocateMeButton

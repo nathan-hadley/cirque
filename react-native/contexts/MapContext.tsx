@@ -1,9 +1,9 @@
 import React, { createContext, useState, useRef, ReactNode } from 'react';
 import { Alert, Dimensions } from 'react-native';
 import { MapView, Camera } from '@rnmapbox/maps';
-import { Feature, FeatureCollection, GeoJsonProperties, Geometry, Point } from 'geojson';
+import { Feature, FeatureCollection, GeoJsonProperties, Point } from 'geojson';
 import * as Location from 'expo-location';
-import { PROBLEMS_LAYER } from '@/constants/map';
+import { problemsData } from '@/assets/problems';
 import { createProblemFromFeature, Problem } from '@/models/problems';
 
 type MapContextType = {
@@ -11,6 +11,7 @@ type MapContextType = {
   cameraRef: React.RefObject<Camera>;
   problem: Problem | null;
   viewProblem: boolean;
+  problemsData: FeatureCollection<Point, GeoJsonProperties> | null;
   setProblem: (problem: Problem | null) => void;
   setViewProblem: (view: boolean) => void;
   showPreviousProblem: () => Promise<void>;
@@ -66,100 +67,98 @@ export function MapProvider({ children }: { children: ReactNode }) {
 
     try {
       const query = await mapRef.current.queryRenderedFeaturesAtPoint([point.x, point.y], {
-        layerIds: [PROBLEMS_LAYER],
+        layerIds: ['problems-layer'],
         filter: ['!=', ['get', 'color'], ''],
       });
 
-      if (query) getProblemFromQuery(query);
+      if (query && query.features && query.features.length > 0) {
+        const feature = query.features[0] as Feature<Point, GeoJsonProperties>;
+        navigateToProblem(feature);
+      }
     } catch (error) {
       console.error('Error querying features:', error);
     }
   }
 
   async function showPreviousProblem() {
-    if (!mapRef.current || !problem || problem.order === undefined) return;
+    if (!problem || problem.order === undefined) return;
     await fetchAdjacentProblem(problem, -1);
   }
 
   async function showNextProblem() {
-    if (!mapRef.current || !problem || problem.order === undefined) return;
+    if (!problem || problem.order === undefined) return;
     await fetchAdjacentProblem(problem, 1);
   }
 
   async function fetchAdjacentProblem(currentProblem: Problem, offset: number) {
     const newProblemOrder = (currentProblem.order || 0) + offset;
+    const feature = findProblemInLocalData(currentProblem.colorStr, currentProblem.subarea || '', newProblemOrder);
 
-    const query = await queryProblems(currentProblem.colorStr, currentProblem.subarea || '', newProblemOrder);
-
-    if (query) {
-      getProblemFromQuery(query);
+    if (feature) {
+      navigateToProblem(feature);
     } else {
       Alert.alert('Error', 'Could not find the next problem in this circuit.');
     }
   }
 
   async function navigateToFirstProblem(circuitColor: string, subarea: string) {
-    const query = await queryProblems(circuitColor, subarea, 1);
+    const feature = findProblemInLocalData(circuitColor, subarea, 1);
 
-    if (query && query.features && query.features.length > 0) {
-      getProblemFromQuery(query);
+    if (feature) {
+      navigateToProblem(feature);
     } else {
       Alert.alert('Error', 'Could not find the first problem in this circuit.');
     }
   }
 
-  function getProblemFromQuery(query: FeatureCollection<Geometry, GeoJsonProperties>) {
-    if (query && query.features && query.features.length > 0) {
-      const feature = query.features[0] as Feature<Point, GeoJsonProperties>;
-      const newProblem = createProblemFromFeature(feature);
+  function findProblemInLocalData(circuitColor: string, subarea: string, order: number): Feature<Point, GeoJsonProperties> | null {
+    if (!problemsData) return null;
 
-      if (newProblem) {
-        setProblem(newProblem);
-        setViewProblem(true);
+    return problemsData.features.find((feature: Feature<Point, GeoJsonProperties>) => {
+      const props = feature.properties;
+      return (
+        props?.color === circuitColor &&
+        props?.subarea === subarea &&
+        (props?.order === order || props?.order === order.toString())
+      );
+    }) || null;
+  }
 
-        if (newProblem.coordinates && cameraRef.current) {
-          // Get screen dimensions to calculate offset for actionsheet
-          const screenHeight = Dimensions.get('window').height;
-          const centerOffset = screenHeight * 0.4;
+  function navigateToProblem(feature: Feature<Point, GeoJsonProperties>) {
+    const newProblem = createProblemFromFeature(feature);
 
-          cameraRef.current.setCamera({
-            centerCoordinate: newProblem.coordinates,
-            zoomLevel: 18,
-            animationDuration: 500,
-            padding: {
-              paddingBottom: centerOffset,
-              paddingTop: 0,
-              paddingLeft: 0,
-              paddingRight: 0,
-            },
-          });
-        }
+    if (newProblem) {
+      setProblem(newProblem);
+      setViewProblem(true);
+
+      if (newProblem.coordinates && cameraRef.current) {
+        // Get screen dimensions to calculate offset for actionsheet
+        const screenHeight = Dimensions.get('window').height;
+        const centerOffset = screenHeight * 0.4;
+
+        cameraRef.current.setCamera({
+          centerCoordinate: newProblem.coordinates,
+          zoomLevel: 18,
+          animationDuration: 500,
+          padding: {
+            paddingBottom: centerOffset,
+            paddingTop: 0,
+            paddingLeft: 0,
+            paddingRight: 0,
+          },
+        });
       }
     }
   }
 
-  async function queryProblems(circuitColor: string, subarea: string, order: number) {
-    if (!mapRef.current) return;
 
-    const query = await mapRef.current.querySourceFeatures(
-      'composite',
-      [
-        'all',
-        ['==', ['get', 'color'], circuitColor],
-        ['==', ['get', 'subarea'], subarea],
-        ['==', ['get', 'order'], order.toString()],
-      ],
-      [PROBLEMS_LAYER]
-    );
-
-    return query;
-  }
 
   const value: MapContextType = {
     problem,
     setProblem,
     viewProblem,
     setViewProblem,
+    problemsData,
     mapRef,
     cameraRef,
     handleMapTap,
