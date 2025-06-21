@@ -1,12 +1,12 @@
 import React from 'react';
-import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react-native';
+import { ChevronLeftIcon, ChevronRightIcon, View } from 'lucide-react-native';
 import { Button, ButtonIcon } from '../ui/button';
 import { HStack } from '../ui/hstack';
 import { useMapContext } from '@/hooks/useMapContext';
 import * as Haptics from 'expo-haptics';
 
 export function CircuitNavButtons() {
-  const { problem, showPreviousProblem, showNextProblem } = useMapContext();
+  const { problem, getProblem, showPreviousProblem, showNextProblem } = useMapContext();
 
   const color = problem?.color ?? 'black';
 
@@ -20,23 +20,38 @@ export function CircuitNavButtons() {
     await showNextProblem();
   }
 
-  return (
-    <HStack className={`justify-between w-full px-2`}>
-      <Button
-        onPress={handlePreviousProblem}
-        action="secondary"
-        className="bg-typography-0/50 rounded-full w-12 h-12"
-      >
-        <ButtonIcon as={ChevronLeftIcon} size="lg" color={color} />
-      </Button>
+  function showPreviousButton() {
+    if (!problem || !problem.order) return false;
+    return problem.order !== 1;
+  }
 
-      <Button
-        onPress={handleNextProblem}
-        action="secondary"
-        className="bg-typography-0/50 rounded-full w-12 h-12"
-      >
-        <ButtonIcon as={ChevronRightIcon} size="lg" color={color} />
-      </Button>
+  function showNextButton() {
+    if (!problem || !problem.order) return false;
+    const nextProblem = getProblem(problem.colorStr, problem.subarea || '', problem.order + 1);
+    return nextProblem !== null;
+  }
+
+  return (
+    <HStack className={`${!showPreviousButton() ? 'justify-end' : 'justify-between'} w-full px-2`}>
+      {showPreviousButton() && (
+        <Button
+          onPress={handlePreviousProblem}
+          action="secondary"
+          className="bg-typography-0/50 rounded-full w-12 h-12"
+        >
+          <ButtonIcon as={ChevronLeftIcon} size="lg" color={color} />
+        </Button>
+      )}
+
+      {showNextButton() && (
+        <Button
+          onPress={handleNextProblem}
+          action="secondary"
+          className="bg-typography-0/50 rounded-full w-12 h-12"
+        >
+          <ButtonIcon as={ChevronRightIcon} size="lg" color={color} />
+        </Button>
+      )}
     </HStack>
   );
 }

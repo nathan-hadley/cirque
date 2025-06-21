@@ -81,7 +81,12 @@ export function MapScreen() {
                   '#888888' // default color
                 ],
                 circleStrokeWidth: 0,
-                circleOpacity: 0.8
+                circleOpacity: [
+                  'step',
+                  ['zoom'],
+                  0, // hidden below zoom 16
+                  16, 0.8 // visible at zoom 16+
+                ]
               }}
             />
             <SymbolLayer
@@ -104,7 +109,13 @@ export function MapScreen() {
                 textAnchor: 'center',
                 textOffset: [0, 0],
                 textAllowOverlap: true,
-                textIgnorePlacement: true
+                textIgnorePlacement: true,
+                textOpacity: [
+                  'step',
+                  ['zoom'],
+                  0, // hidden below zoom 17
+                  17, 1 // visible at zoom 17+
+                ]
               }}
             />
           </ShapeSource>

@@ -13,6 +13,7 @@ type MapContextType = {
   viewProblem: boolean;
   problemsData: FeatureCollection<Point, GeoJsonProperties> | null;
   setProblem: (problem: Problem | null) => void;
+  getProblem: (circuitColor: string, subarea: string, order: number) => Problem | null;
   setViewProblem: (view: boolean) => void;
   showPreviousProblem: () => Promise<void>;
   showNextProblem: () => Promise<void>;
@@ -73,7 +74,8 @@ export function MapProvider({ children }: { children: ReactNode }) {
 
       if (query && query.features && query.features.length > 0) {
         const feature = query.features[0] as Feature<Point, GeoJsonProperties>;
-        navigateToProblem(feature);
+        const problem = createProblemFromFeature(feature);
+        if (problem) navigateToProblem(problem);
       }
     } catch (error) {
       console.error('Error querying features:', error);
@@ -82,39 +84,32 @@ export function MapProvider({ children }: { children: ReactNode }) {
 
   async function showPreviousProblem() {
     if (!problem || problem.order === undefined) return;
-    await fetchAdjacentProblem(problem, -1);
+    const newProblemOrder = (problem.order || 0) - 1;
+    const newProblem = getProblem(problem.colorStr, problem.subarea || '', newProblemOrder);
+    if (newProblem) navigateToProblem(newProblem);
   }
 
   async function showNextProblem() {
     if (!problem || problem.order === undefined) return;
-    await fetchAdjacentProblem(problem, 1);
-  }
-
-  async function fetchAdjacentProblem(currentProblem: Problem, offset: number) {
-    const newProblemOrder = (currentProblem.order || 0) + offset;
-    const feature = findProblemInLocalData(currentProblem.colorStr, currentProblem.subarea || '', newProblemOrder);
-
-    if (feature) {
-      navigateToProblem(feature);
-    } else {
-      Alert.alert('Error', 'Could not find the next problem in this circuit.');
-    }
+    const newProblemOrder = (problem.order || 0) + 1;
+    const newProblem = getProblem(problem.colorStr, problem.subarea || '', newProblemOrder);
+    if (newProblem) navigateToProblem(newProblem);
   }
 
   async function navigateToFirstProblem(circuitColor: string, subarea: string) {
-    const feature = findProblemInLocalData(circuitColor, subarea, 1);
+    const problem = getProblem(circuitColor, subarea, 1);
 
-    if (feature) {
-      navigateToProblem(feature);
+    if (problem) {
+      navigateToProblem(problem);
     } else {
       Alert.alert('Error', 'Could not find the first problem in this circuit.');
     }
   }
 
-  function findProblemInLocalData(circuitColor: string, subarea: string, order: number): Feature<Point, GeoJsonProperties> | null {
+  function getProblem(circuitColor: string, subarea: string, order: number): Problem | null {
     if (!problemsData) return null;
 
-    return problemsData.features.find((feature: Feature<Point, GeoJsonProperties>) => {
+    const feature = problemsData.features.find((feature: Feature<Point, GeoJsonProperties>) => {
       const props = feature.properties;
       return (
         props?.color === circuitColor &&
@@ -122,23 +117,23 @@ export function MapProvider({ children }: { children: ReactNode }) {
         (props?.order === order || props?.order === order.toString())
       );
     }) || null;
+
+    return feature ? createProblemFromFeature(feature) : null;
   }
 
-  function navigateToProblem(feature: Feature<Point, GeoJsonProperties>) {
-    const newProblem = createProblemFromFeature(feature);
-
-    if (newProblem) {
-      setProblem(newProblem);
+  function navigateToProblem(problem: Problem) {
+    if (problem) {
+      setProblem(problem);
       setViewProblem(true);
 
-      if (newProblem.coordinates && cameraRef.current) {
+      if (problem.coordinates && cameraRef.current) {
         // Get screen dimensions to calculate offset for actionsheet
         const screenHeight = Dimensions.get('window').height;
         const centerOffset = screenHeight * 0.4;
 
         cameraRef.current.setCamera({
-          centerCoordinate: newProblem.coordinates,
-          zoomLevel: 18,
+          centerCoordinate: problem.coordinates,
+          zoomLevel: 19,
           animationDuration: 500,
           padding: {
             paddingBottom: centerOffset,
@@ -151,10 +146,9 @@ export function MapProvider({ children }: { children: ReactNode }) {
     }
   }
 
-
-
   const value: MapContextType = {
     problem,
+    getProblem,
     setProblem,
     viewProblem,
     setViewProblem,
