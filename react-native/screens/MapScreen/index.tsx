@@ -133,7 +133,7 @@ export function MapScreen() {
         isOpen={viewProblem && problem !== null}
         onClose={() => setViewProblem(false)}
         closeOnOverlayClick={false}
-        snapPoints={[50]}
+        snapPoints={Platform.OS === 'ios' ? [50] : undefined}
       >
         <ActionsheetContent className="p-0">
           {problem && <ProblemView problem={problem} />}

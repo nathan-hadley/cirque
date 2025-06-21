@@ -45,7 +45,6 @@ export function Topo({ problem }: TopoProps) {
       {topoImage ? (
         <>
           <Image
-            key={problem.topo}
             source={topoImage}
             style={{ width: '100%', height: '100%' }}
             contentFit="cover"
