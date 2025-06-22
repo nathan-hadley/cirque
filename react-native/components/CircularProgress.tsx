@@ -15,9 +15,7 @@ interface CircularProgressProps {
   progress: number; // 0-100
 }
 
-export function CircularProgress({
-  progress,
-}: CircularProgressProps) {
+export function CircularProgress({ progress }: CircularProgressProps) {
   const animatedProgress = useSharedValue(0);
   const size = 20;
   const strokeWidth = 2;
@@ -67,4 +65,4 @@ export function CircularProgress({
       </Svg>
     </View>
   );
-} 
+}

@@ -52,7 +52,7 @@ export default function AboutScreen() {
     toast.show({
       placement: 'top',
       render: ({ id }) => (
-        <Toast nativeID={`toast-${id}`} action={success ? "success" : "error"} variant="solid">
+        <Toast nativeID={`toast-${id}`} action={success ? 'success' : 'error'} variant="solid">
           <ToastTitle>{message}</ToastTitle>
         </Toast>
       ),
@@ -77,16 +77,12 @@ export default function AboutScreen() {
     }
   };
 
-  const handleCircuitPress = async (circuit: typeof circuits[0]) => {
+  const handleCircuitPress = async (circuit: (typeof circuits)[0]) => {
     router.push('/');
-    
+
     // Wait a bit for navigation to complete then navigate to the first problem
     setTimeout(() => {
-      mapProblemService.navigateToProblem(
-        circuit.circuitColor,
-        circuit.subarea,
-        1
-      );
+      mapProblemService.navigateToProblem(circuit.circuitColor, circuit.subarea, 1);
     }, 300);
   };
 

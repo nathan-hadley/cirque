@@ -24,7 +24,7 @@ type ProblemState = {
   showNextProblem: () => void;
   navigateToFirstProblem: (circuitColor: string, subarea: string) => void;
   createProblemFromMapFeature: (feature: Feature<Point, GeoJsonProperties>) => Problem | null;
-}
+};
 
 export const useProblemStore = create<ProblemState>((set, get) => ({
   // Initial state
@@ -40,14 +40,15 @@ export const useProblemStore = create<ProblemState>((set, get) => ({
     const { problemsData } = get();
     if (!problemsData) return null;
 
-    const feature = problemsData.features.find((feature: Feature<Point, GeoJsonProperties>) => {
-      const props = feature.properties;
-      return (
-        props?.color === params.circuitColor &&
-        props?.subarea === params.subarea &&
-        (props?.order === params.order || props?.order === params.order.toString())
-      );
-    }) || null;
+    const feature =
+      problemsData.features.find((feature: Feature<Point, GeoJsonProperties>) => {
+        const props = feature.properties;
+        return (
+          props?.color === params.circuitColor &&
+          props?.subarea === params.subarea &&
+          (props?.order === params.order || props?.order === params.order.toString())
+        );
+      }) || null;
 
     return feature ? createProblemFromFeature(feature) : null;
   },
@@ -158,4 +159,4 @@ function getColorFromString(colorString?: string): string {
     default:
       return '#000000';
   }
-};
+}

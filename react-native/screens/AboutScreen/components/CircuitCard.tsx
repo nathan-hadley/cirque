@@ -8,7 +8,7 @@ type CircuitCardProps = {
   difficulty: string;
   color: string;
   onPress?: () => void;
-}
+};
 
 export function CircuitCard({ title, difficulty, color, onPress }: CircuitCardProps) {
   return (
@@ -19,4 +19,4 @@ export function CircuitCard({ title, difficulty, color, onPress }: CircuitCardPr
       </VStack>
     </Pressable>
   );
-} 
+}

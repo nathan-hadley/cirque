@@ -58,7 +58,9 @@ export function ProblemView({ problem }: ProblemViewProps) {
         <ScrollView showsVerticalScrollIndicator={true}>
           <ProblemDescription problem={problem} />
         </ScrollView>
-      ) : <ProblemDescription problem={problem} />}
+      ) : (
+        <ProblemDescription problem={problem} />
+      )}
     </VStack>
   );
 }

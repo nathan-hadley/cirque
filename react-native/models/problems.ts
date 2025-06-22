@@ -1,10 +1,10 @@
-import { GeoJsonProperties } from "geojson";
+import { GeoJsonProperties } from 'geojson';
 
-import { Point } from "geojson";
+import { Point } from 'geojson';
 
-import { Feature } from "geojson";
+import { Feature } from 'geojson';
 
-export type Problem ={
+export type Problem = {
   id: string;
   name?: string;
   grade?: string;
@@ -16,4 +16,4 @@ export type Problem ={
   topo?: string;
   subarea?: string;
   coordinates?: [number, number]; // [longitude, latitude]
-} 
+};

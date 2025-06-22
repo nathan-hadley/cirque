@@ -14,13 +14,7 @@ const Spinner = React.forwardRef<
   React.ComponentRef<typeof ActivityIndicator>,
   React.ComponentProps<typeof ActivityIndicator>
 >(function Spinner(
-  {
-    className,
-    color,
-    focusable = false,
-    'aria-label': ariaLabel = 'loading',
-    ...props
-  },
+  { className, color, focusable = false, 'aria-label': ariaLabel = 'loading', ...props },
   ref
 ) {
   return (

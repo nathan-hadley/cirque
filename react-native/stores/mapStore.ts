@@ -13,7 +13,10 @@ interface MapState {
   // Actions
   setMapRef: (ref: RefObject<MapView>) => void;
   setCameraRef: (ref: RefObject<Camera>) => void;
-  handleMapTap: (point: { x: number; y: number }) => Promise<Feature<Point, GeoJsonProperties> | null>;
+  handleMapTap: (point: {
+    x: number;
+    y: number;
+  }) => Promise<Feature<Point, GeoJsonProperties> | null>;
   centerToUserLocation: () => Promise<void>;
   flyToProblemCoordinates: (coordinates: [number, number]) => void;
 }
@@ -29,7 +32,7 @@ export const useMapStore = create<MapState>((set, get) => ({
 
   flyToProblemCoordinates: (coordinates: [number, number]) => {
     const { cameraRef } = get();
-    
+
     if (coordinates && cameraRef?.current) {
       // Get screen dimensions to calculate offset for actionsheet
       const screenHeight = Dimensions.get('window').height;
@@ -51,7 +54,7 @@ export const useMapStore = create<MapState>((set, get) => ({
 
   centerToUserLocation: async () => {
     const { cameraRef } = get();
-    
+
     try {
       const { status } = await Location.requestForegroundPermissionsAsync();
 
@@ -59,7 +62,7 @@ export const useMapStore = create<MapState>((set, get) => ({
         Alert.alert(
           'Location Permission Required',
           'Cirque needs access to your location to show your position on the map. Please enable location permissions in your device settings.',
-          [{ text: 'OK' }],
+          [{ text: 'OK' }]
         );
         return;
       }
@@ -79,7 +82,7 @@ export const useMapStore = create<MapState>((set, get) => ({
       Alert.alert(
         'Location Error',
         'Unable to get your current location. Please make sure location services are enabled on your device.',
-        [{ text: 'OK' }],
+        [{ text: 'OK' }]
       );
     }
   },
@@ -105,4 +108,4 @@ export const useMapStore = create<MapState>((set, get) => ({
     }
     return null;
   },
-})); 
+}));

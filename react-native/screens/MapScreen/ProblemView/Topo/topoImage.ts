@@ -1,4 +1,4 @@
-import { ImageSourcePropType } from "react-native";
+import { ImageSourcePropType } from 'react-native';
 
 // Map of problem names to their corresponding topo images
 const topoImages = {
@@ -115,4 +115,4 @@ type TopoImageKey = keyof typeof topoImages;
 export function getTopoImage(key: string | undefined): ImageSourcePropType | undefined {
   if (!key) return undefined;
   return topoImages[key as TopoImageKey];
-} 
+}

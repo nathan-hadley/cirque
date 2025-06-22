@@ -14,7 +14,7 @@ type DownloadStatusCardProps = {
   progress: number;
   onUpdate: () => void;
   onDelete: () => void;
-}
+};
 
 export function DownloadStatusCard({
   loading,
@@ -37,9 +37,7 @@ export function DownloadStatusCard({
               {mapDownloaded ? 'Map Downloaded' : 'Download Offline Map'}
             </Text>
             <Text className="text-sm text-typography-600">
-              {mapDownloaded
-                ? 'Map ready for offline use'
-                : 'Ensure map works without network'}
+              {mapDownloaded ? 'Map ready for offline use' : 'Ensure map works without network'}
             </Text>
           </VStack>
           {mapDownloaded && (
