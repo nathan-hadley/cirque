@@ -11,9 +11,9 @@ import { HStack } from '@/components/ui/hstack';
 import { Text } from '@/components/ui/text';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-interface ProblemViewProps {
+type ProblemViewProps = {
   problem: Problem;
-}
+};
 
 function ProblemDescription({ problem }: ProblemViewProps) {
   const { bottom } = useSafeAreaInsets();

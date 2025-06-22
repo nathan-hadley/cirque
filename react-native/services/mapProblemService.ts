@@ -1,7 +1,5 @@
-import { Problem } from '@/models/problems';
 import { useMapStore } from '@/stores/mapStore';
 import { useProblemStore } from '@/stores/problemStore';
-import { Feature, GeoJsonProperties, Point } from 'geojson';
 
 type NavigateToProblemParams = {
   circuitColor: string;

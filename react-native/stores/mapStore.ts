@@ -5,7 +5,7 @@ import { Feature, GeoJsonProperties, Point } from 'geojson';
 import * as Location from 'expo-location';
 import { RefObject } from 'react';
 
-interface MapState {
+type MapState = {
   // State
   mapRef: RefObject<MapView> | null;
   cameraRef: RefObject<Camera> | null;
@@ -19,7 +19,7 @@ interface MapState {
   }) => Promise<Feature<Point, GeoJsonProperties> | null>;
   centerToUserLocation: () => Promise<void>;
   flyToProblemCoordinates: (coordinates: [number, number]) => void;
-}
+};
 
 export const useMapStore = create<MapState>((set, get) => ({
   // Initial state

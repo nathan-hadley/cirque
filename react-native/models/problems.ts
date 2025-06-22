@@ -1,9 +1,3 @@
-import { GeoJsonProperties } from 'geojson';
-
-import { Point } from 'geojson';
-
-import { Feature } from 'geojson';
-
 export type Problem = {
   id: string;
   name?: string;

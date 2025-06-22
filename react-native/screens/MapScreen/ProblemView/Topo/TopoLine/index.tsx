@@ -12,32 +12,31 @@ import { createPath, estimatePathLength, getScaledPoints } from './topoLineUtil'
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
-interface TopoLineProps {
+type TopoLineProps = {
   problem: Problem;
   originalImageSize: { width: number; height: number };
   displayedImageSize: { width: number; height: number };
-}
+};
 
 export function TopoLine({ problem, originalImageSize, displayedImageSize }: TopoLineProps) {
-  if (!problem.line || problem.line.length === 0) return null;
-
+  // All hooks must be called before any early returns
   const progress = useSharedValue(0);
 
   useEffect(() => {
-    // Trigger animation when problem changes
-    progress.value = 0;
-    progress.value = withDelay(200, withTiming(1, { duration: 500 }));
-  }, [problem.id]);
+    // Only trigger animation if there's a line
+    if (problem.line && problem.line.length > 0) {
+      progress.value = 0;
+      progress.value = withDelay(200, withTiming(1, { duration: 500 }));
+    }
+  }, [problem.id, progress, problem.line]);
 
-  const scaledPoints = getScaledPoints({
-    originalImageSize,
-    displayedImageSize,
-    problem,
-  });
-
-  const pathData = createPath(scaledPoints);
-  const pathLength = estimatePathLength(scaledPoints);
-  const startPoint = scaledPoints[0];
+  // Calculate values needed for animation (will be empty if no line)
+  const scaledPoints = problem.line && problem.line.length > 0 
+    ? getScaledPoints({ originalImageSize, displayedImageSize, problem })
+    : [];
+  const pathData = scaledPoints.length > 0 ? createPath(scaledPoints) : '';
+  const pathLength = scaledPoints.length > 0 ? estimatePathLength(scaledPoints) : 0;
+  const startPoint = scaledPoints.length > 0 ? scaledPoints[0] : [0, 0];
 
   const animatedPathProps = useAnimatedProps(() => {
     return {
@@ -45,6 +44,9 @@ export function TopoLine({ problem, originalImageSize, displayedImageSize }: Top
       strokeDashoffset: pathLength * (1 - progress.value),
     };
   });
+
+  // Early return after all hooks have been called
+  if (!problem.line || problem.line.length === 0) return null;
 
   return (
     <View className="absolute inset-0" pointerEvents="none">

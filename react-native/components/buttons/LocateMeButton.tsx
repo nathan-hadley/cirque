@@ -2,11 +2,11 @@ import React from 'react';
 import { CompassIcon } from 'lucide-react-native';
 import { Button, ButtonIcon } from '../ui/button';
 
-interface LocateMeButtonProps {
+type LocateMeButtonProps = {
   onPress: () => void;
   className?: string;
   style?: object;
-}
+};
 
 export function LocateMeButton({ onPress, className, style }: LocateMeButtonProps) {
   return (
