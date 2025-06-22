@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Platform, View } from 'react-native';
 import Mapbox, {
   MapView as RNMapboxMapView,
@@ -15,11 +15,16 @@ import { mapProblemService } from '@/services/mapProblemService';
 import { INITIAL_CENTER, INITIAL_ZOOM, STYLE_URI, MAPBOX_ACCESS_TOKEN } from '@/constants/map';
 import { ProblemView } from './ProblemView';
 import { LocateMeButton } from '../../components/buttons/LocateMeButton';
+import { MapSearchBar } from '../../components/MapSearchBar';
+import { SearchOverlay } from '../../components/SearchOverlay';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 
 Mapbox.setAccessToken(MAPBOX_ACCESS_TOKEN);
 
 export function MapScreen() {
+  // Local state for search overlay
+  const [isSearchVisible, setIsSearchVisible] = useState(false);
+
   // Map store for map-specific state and actions
   const { centerToUserLocation, setMapRef, setCameraRef } = useMapStore();
 
@@ -45,6 +50,11 @@ export function MapScreen() {
 
   return (
     <View className="flex-1">
+      {/* Search Bar */}
+      {!isSearchVisible && (
+        <MapSearchBar onPress={() => setIsSearchVisible(true)} />
+      )}
+
       <RNMapboxMapView
         ref={mapRef}
         styleURL={STYLE_URI}
@@ -149,6 +159,12 @@ export function MapScreen() {
           {problem && <ProblemView problem={problem} />}
         </ActionsheetContent>
       </Actionsheet>
+
+      {/* Search Overlay */}
+      <SearchOverlay 
+        isVisible={isSearchVisible} 
+        onClose={() => setIsSearchVisible(false)} 
+      />
     </View>
   );
 }

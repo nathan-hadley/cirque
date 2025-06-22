@@ -18,7 +18,7 @@ type MapState = {
     y: number;
   }) => Promise<Feature<Point, GeoJsonProperties> | null>;
   centerToUserLocation: () => Promise<void>;
-  flyToProblemCoordinates: (coordinates: [number, number]) => void;
+  flyToProblemCoordinates: (coordinates: [number, number], zoomLevel?: number) => void;
 };
 
 export const useMapStore = create<MapState>((set, get) => ({
@@ -30,7 +30,7 @@ export const useMapStore = create<MapState>((set, get) => ({
   setMapRef: (ref: RefObject<MapView>) => set({ mapRef: ref }),
   setCameraRef: (ref: RefObject<Camera>) => set({ cameraRef: ref }),
 
-  flyToProblemCoordinates: (coordinates: [number, number]) => {
+  flyToProblemCoordinates: (coordinates: [number, number], zoomLevel?: number) => {
     const { cameraRef } = get();
 
     if (coordinates && cameraRef?.current) {
@@ -40,7 +40,7 @@ export const useMapStore = create<MapState>((set, get) => ({
 
       cameraRef.current.setCamera({
         centerCoordinate: coordinates,
-        zoomLevel: 19,
+        zoomLevel: zoomLevel || 19,
         animationDuration: 500,
         padding: {
           paddingBottom: centerOffset,
