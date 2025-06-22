@@ -117,14 +117,45 @@ export function MapScreen() {
                 textFont: ['Open Sans Regular', 'Arial Unicode MS Regular'],
                 textAnchor: 'center',
                 textOffset: [0, 0],
-                textAllowOverlap: true,
-                textIgnorePlacement: true,
+                textIgnorePlacement: false,
                 textOpacity: [
                   'step',
                   ['zoom'],
                   0, // hidden below zoom 17
                   17,
                   1, // visible at zoom 17+
+                ],
+              }}
+            />
+          </ShapeSource>
+        )}
+
+        {/* Selected Problem Indicator */}
+        {problem && viewProblem && problem.coordinates && (
+          <ShapeSource
+            id="selected-problem-source"
+            shape={{
+              type: 'Feature',
+              geometry: {
+                type: 'Point',
+                coordinates: problem.coordinates,
+              },
+              properties: {},
+            }}
+          >
+            <CircleLayer
+              id="selected-problem-indicator"
+              style={{
+                circleRadius: ['interpolate', ['linear'], ['zoom'], 16, 3, 22, 20],
+                circleColor: 'transparent',
+                circleStrokeColor: '#22c55e', // green-500
+                circleStrokeWidth: ['interpolate', ['linear'], ['zoom'], 16, 2, 22, 3],
+                circleStrokeOpacity: [
+                  'step',
+                  ['zoom'],
+                  0, // hidden below zoom 16
+                  18,
+                  1, // visible at zoom 16+
                 ],
               }}
             />
