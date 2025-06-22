@@ -31,9 +31,10 @@ export function TopoLine({ problem, originalImageSize, displayedImageSize }: Top
   }, [problem.id, progress, problem.line]);
 
   // Calculate values needed for animation (will be empty if no line)
-  const scaledPoints = problem.line && problem.line.length > 0 
-    ? getScaledPoints({ originalImageSize, displayedImageSize, problem })
-    : [];
+  const scaledPoints =
+    problem.line && problem.line.length > 0
+      ? getScaledPoints({ originalImageSize, displayedImageSize, problem })
+      : [];
   const pathData = scaledPoints.length > 0 ? createPath(scaledPoints) : '';
   const pathLength = scaledPoints.length > 0 ? estimatePathLength(scaledPoints) : 0;
   const startPoint = scaledPoints.length > 0 ? scaledPoints[0] : [0, 0];
