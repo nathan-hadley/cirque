@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { 
   View, 
-  TextInput, 
   TouchableOpacity, 
   FlatList, 
   Keyboard,
@@ -11,6 +10,7 @@ import { X, Search } from 'lucide-react-native';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
 import { HStack } from '@/components/ui/hstack';
+import { Input, InputField, InputIcon } from '@/components/ui/input';
 import { useProblemStore } from '@/stores/problemStore';
 import { useMapStore } from '@/stores/mapStore';
 import { Problem } from '@/models/problems';
@@ -143,19 +143,20 @@ export function SearchOverlay({ isVisible, onClose }: SearchOverlayProps) {
         {/* Search Header */}
         <View className="px-4 py-3 border-b border-gray-200">
           <HStack space="sm" className="items-center">
-            <View className="flex-1 flex-row items-center bg-gray-100 rounded-lg px-3 py-2">
-              <Search size={20} color="#6b7280" />
-              <TextInput
+            <Input className="flex-1 bg-gray-100" variant="rounded" size="lg">
+              <InputIcon className="ml-3">
+                <Search size={20} color="#6b7280" />
+              </InputIcon>
+              <InputField
                 value={searchQuery}
                 onChangeText={setSearchQuery}
                 placeholder="Search problems by name, grade, or area..."
-                placeholderTextColor="#9ca3af"
                 autoFocus
                 returnKeyType="search"
-                className="flex-1 ml-2 text-gray-900"
+                className="text-gray-900"
                 style={{ fontSize: 16 }}
               />
-            </View>
+            </Input>
             <TouchableOpacity
               onPress={handleClose}
               className="p-2"
