@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { Feature, FeatureCollection, GeoJsonProperties, Point } from 'geojson';
 import { Alert } from 'react-native';
 import { problemsData } from '@/assets/problems';
-import { createProblemFromFeature, Problem } from '@/models/problems';
+import { Problem } from '@/models/problems';
 
 type GetProblemParams = {
   circuitColor: string;
@@ -37,7 +37,7 @@ export const useProblemStore = create<ProblemState>((set, get) => ({
   setViewProblem: (view: boolean) => set({ viewProblem: view }),
 
   getProblem: (params: GetProblemParams): Problem | null => {
-    const { problemsData } = get();
+    const { problemsData, createProblemFromMapFeature } = get();
     if (!problemsData) return null;
 
     const feature =
@@ -50,7 +50,7 @@ export const useProblemStore = create<ProblemState>((set, get) => ({
         );
       }) || null;
 
-    return feature ? createProblemFromFeature(feature) : null;
+    return feature ? createProblemFromMapFeature(feature) : null;
   },
 
   showPreviousProblem: () => {

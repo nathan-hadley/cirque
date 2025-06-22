@@ -82,7 +82,11 @@ export default function AboutScreen() {
 
     // Wait a bit for navigation to complete then navigate to the first problem
     setTimeout(() => {
-      mapProblemService.navigateToProblem(circuit.circuitColor, circuit.subarea, 1);
+      mapProblemService.navigateToProblem({
+        circuitColor: circuit.circuitColor,
+        subarea: circuit.subarea,
+        order: 1,
+      });
     }, 300);
   };
 

@@ -28,7 +28,11 @@ export function CircuitNavButtons() {
 
   function showNextButton() {
     if (!problem || !problem.order) return false;
-    const nextProblem = getProblem(problem.colorStr, problem.subarea || '', problem.order + 1);
+    const nextProblem = getProblem({
+      circuitColor: problem.colorStr,
+      subarea: problem.subarea || '',
+      order: problem.order + 1,
+    });
     return nextProblem !== null;
   }
 

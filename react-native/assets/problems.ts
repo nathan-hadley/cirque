@@ -17,7 +17,6 @@ import { FeatureCollection, Point, GeoJsonProperties } from 'geojson';
 
 export const problemsData: FeatureCollection<Point, GeoJsonProperties> = {
   type: 'FeatureCollection',
-  generator: 'JOSM',
   features: [
     {
       type: 'Feature',
