@@ -1,23 +1,24 @@
 import React from 'react';
-import { ChevronLeftIcon, ChevronRightIcon, View } from 'lucide-react-native';
+import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react-native';
 import { Button, ButtonIcon } from '../ui/button';
 import { HStack } from '../ui/hstack';
-import { useMapContext } from '@/hooks/useMapContext';
+import { useProblemStore } from '@/stores/problemStore';
+import { mapProblemService } from '@/services/mapProblemService';
 import * as Haptics from 'expo-haptics';
 
 export function CircuitNavButtons() {
-  const { problem, getProblem, showPreviousProblem, showNextProblem } = useMapContext();
+  const { problem, getProblem } = useProblemStore();
 
   const color = problem?.color ?? 'black';
 
   async function handlePreviousProblem() {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    await showPreviousProblem();
+    mapProblemService.showPreviousProblem();
   }
 
   async function handleNextProblem() {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    await showNextProblem();
+    mapProblemService.showNextProblem();
   }
 
   function showPreviousButton() {

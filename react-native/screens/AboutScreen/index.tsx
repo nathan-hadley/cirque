@@ -10,13 +10,12 @@ import { Divider } from '@/components/ui/divider';
 import { CircuitCard, DownloadStatusCard, ContributingSection } from './components';
 import { Icon } from '@/components/ui/icon';
 import { CircleIcon } from 'lucide-react-native';
-import { useMapContext } from '@/hooks/useMapContext';
+import { mapProblemService } from '@/services/mapProblemService';
 
 export default function AboutScreen() {
   const { loading, mapDownloaded, progress, updateMapData, deleteMapData } = useOfflineMaps();
   const toast = useToast();
   const tabBarHeight = useBottomTabBarHeight();
-  const mapContext = useMapContext();
 
   const circuits = [
     {
@@ -82,13 +81,12 @@ export default function AboutScreen() {
     router.push('/');
     
     // Wait a bit for navigation to complete then navigate to the first problem
-    setTimeout(async () => {
-      if (mapContext) {
-        await mapContext.navigateToFirstProblem(
-          circuit.circuitColor,
-          circuit.subarea,
-        );
-      }
+    setTimeout(() => {
+      mapProblemService.navigateToProblem(
+        circuit.circuitColor,
+        circuit.subarea,
+        1
+      );
     }, 300);
   };
 

@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Platform, View } from 'react-native';
 import Mapbox, { MapView as RNMapboxMapView, UserLocation, Camera, ShapeSource, CircleLayer, SymbolLayer } from '@rnmapbox/maps';
 import { Actionsheet, ActionsheetContent } from '@/components/ui/actionsheet';
-import { useMapContext } from '@/hooks/useMapContext';
+import { useMapStore } from '@/stores/mapStore';
+import { useProblemStore } from '@/stores/problemStore';
+import { mapProblemService } from '@/services/mapProblemService';
 import { INITIAL_CENTER, INITIAL_ZOOM, STYLE_URI, MAPBOX_ACCESS_TOKEN } from '@/constants/map';
 import { ProblemView } from './ProblemView';
 import { LocateMeButton } from '../../components/buttons/LocateMeButton';
@@ -11,19 +13,23 @@ import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 Mapbox.setAccessToken(MAPBOX_ACCESS_TOKEN);
 
 export function MapScreen() {
-  const {
-    problem,
-    viewProblem,
-    setViewProblem,
-    problemsData,
-    mapRef,
-    cameraRef,
-    handleMapTap,
-    centerToUserLocation,
-  } = useMapContext();
+  // Map store for map-specific state and actions
+  const { centerToUserLocation, setMapRef, setCameraRef } = useMapStore();
+  
+  // Problem store for problem-specific state
+  const { problem, viewProblem, setViewProblem, problemsData } = useProblemStore();
+
+  const mapRef = useRef<RNMapboxMapView>(null);
+  const cameraRef = useRef<Camera>(null);
 
   const tabBarHeight = useBottomTabBarHeight();
   const bottomOffset = Platform.OS === 'ios' ? tabBarHeight : 0;
+
+  // Set refs in the store when they're created
+  useEffect(() => {
+    setMapRef(mapRef);
+    setCameraRef(cameraRef);
+  }, [setMapRef, setCameraRef]);
 
   const gestureOptions = {
     pitchEnabled: false,
@@ -41,7 +47,7 @@ export function MapScreen() {
         onPress={e => {
           const { screenPointX, screenPointY } = e.properties || {};
           if (screenPointX && screenPointY) {
-            handleMapTap({
+            mapProblemService.handleMapTap({
               x: screenPointX,
               y: screenPointY,
             });
