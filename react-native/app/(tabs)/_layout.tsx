@@ -28,10 +28,7 @@ export default function TabLayout() {
         options={{
           title: 'Map',
           tabBarIcon: ({ focused }) => (
-            <Icon 
-              className={`${focused ? 'text-blue-500' : 'text-typography-500'}`} 
-              as={Map} 
-            />
+            <Icon className={`${focused ? 'text-blue-500' : 'text-typography-500'}`} as={Map} />
           ),
         }}
       />
@@ -40,10 +37,7 @@ export default function TabLayout() {
         options={{
           title: 'About',
           tabBarIcon: ({ focused }) => (
-            <Icon 
-              className={`${focused ? 'text-blue-500' : 'text-typography-500'}`} 
-              as={Info} 
-            />
+            <Icon className={`${focused ? 'text-blue-500' : 'text-typography-500'}`} as={Info} />
           ),
         }}
       />

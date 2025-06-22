@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { LayoutChangeEvent, View } from 'react-native';
 import { Image, ImageLoadEventData } from 'expo-image';
 import { Problem } from '@/models/problems';
@@ -45,7 +45,6 @@ export function Topo({ problem }: TopoProps) {
       {topoImage ? (
         <>
           <Image
-            key={problem.topo}
             source={topoImage}
             style={{ width: '100%', height: '100%' }}
             contentFit="cover"

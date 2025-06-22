@@ -6,7 +6,7 @@ import { Platform } from 'react-native';
 // This is a shim for web and Android where the tab bar is generally opaque.
 export default function TabBarBackground() {
   const { colorScheme } = useColorScheme();
-  
+
   // On iOS, use BlurView for the native blur effect
   if (Platform.OS === 'ios') {
     return (
@@ -23,11 +23,9 @@ export default function TabBarBackground() {
       />
     );
   }
-  
+
   // On Android and other platforms, use a solid background
-  return (
-    <View className="absolute inset-0 bg-background-0 border-t border-outline-200" />
-  );
+  return <View className="absolute inset-0 bg-background-0 border-t border-outline-200" />;
 }
 
 export function useBottomTabOverflow() {

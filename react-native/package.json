@@ -6,17 +6,17 @@
     "start": "expo start",
     "android": "expo run:android",
     "android:device": "expo run:android --device",
-    "android:build": "eas build --platform android --profile production",
-    "android:submit": "eas submit --platform android",
+    "android:build": "eas build --platform android --profile production --auto-submit",
     "ios": "expo run:ios",
     "ios:device": "expo run:ios --device",
-    "ios:build": "eas build --platform ios --profile production",
-    "ios:submit": "eas submit --platform ios",
+    "ios:build": "eas build --platform ios --profile production --auto-submit",
     "test": "jest",
     "lint": "expo lint",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
-    "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\""
+    "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "sync-problems": "node ../scripts/sync-problems.js",
+    "validate-problems": "node ../scripts/sync-problems.js --check"
   },
   "jest": {
     "preset": "jest-expo"
@@ -68,7 +68,8 @@
     "react-native-svg": "^15.8.0",
     "react-native-web": "~0.19.13",
     "react-native-webview": "13.12.5",
-    "tailwindcss": "^3.4.17"
+    "tailwindcss": "^3.4.17",
+    "zustand": "^5.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

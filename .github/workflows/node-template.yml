@@ -10,6 +10,9 @@ on:
 jobs:
   run-command:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: react-native
     steps:
       - uses: actions/checkout@v4
       - name: Install pnpm
@@ -21,6 +24,7 @@ jobs:
         with:
           node-version: 20
           cache: "pnpm"
+          cache-dependency-path: "react-native/pnpm-lock.yaml"
       - name: Install dependencies
         run: pnpm install
       - name: Run command

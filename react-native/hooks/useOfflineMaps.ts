@@ -29,7 +29,7 @@ export function useOfflineMaps(): OfflineMapsState {
   const checkIfMapExists = async (): Promise<boolean> => {
     try {
       const packs = await Mapbox.offlineManager.getPacks();
-      return packs.some((pack) => pack.name === TILEPACK_ID);
+      return packs.some(pack => pack.name === TILEPACK_ID);
     } catch (error) {
       console.error('Error checking if map exists:', error);
       return false;
@@ -58,9 +58,9 @@ export function useOfflineMaps(): OfflineMapsState {
     try {
       const isConnected = await checkNetworkConnectivity();
       if (!isConnected) {
-        return { 
-          success: false, 
-          message: 'No internet connection. Please check your network connectionand try again.' 
+        return {
+          success: false,
+          message: 'No internet connection. Please check your network connectionand try again.',
         };
       }
 

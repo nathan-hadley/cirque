@@ -1,0 +1,14 @@
+# Auto-generated files
+assets/problems.ts
+
+# Node modules
+node_modules/
+
+# Build outputs
+dist/
+build/
+.expo/
+
+# OS generated files
+.DS_Store
+Thumbs.db 

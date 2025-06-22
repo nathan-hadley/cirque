@@ -10,13 +10,12 @@ import { Divider } from '@/components/ui/divider';
 import { CircuitCard, DownloadStatusCard, ContributingSection } from './components';
 import { Icon } from '@/components/ui/icon';
 import { CircleIcon } from 'lucide-react-native';
-import { useMapContext } from '@/hooks/useMapContext';
+import { mapProblemService } from '@/services/mapProblemService';
 
 export default function AboutScreen() {
   const { loading, mapDownloaded, progress, updateMapData, deleteMapData } = useOfflineMaps();
   const toast = useToast();
   const tabBarHeight = useBottomTabBarHeight();
-  const mapContext = useMapContext();
 
   const circuits = [
     {
@@ -53,7 +52,7 @@ export default function AboutScreen() {
     toast.show({
       placement: 'top',
       render: ({ id }) => (
-        <Toast nativeID={`toast-${id}`} action={success ? "success" : "error"} variant="solid">
+        <Toast nativeID={`toast-${id}`} action={success ? 'success' : 'error'} variant="solid">
           <ToastTitle>{message}</ToastTitle>
         </Toast>
       ),
@@ -78,17 +77,16 @@ export default function AboutScreen() {
     }
   };
 
-  const handleCircuitPress = async (circuit: typeof circuits[0]) => {
+  const handleCircuitPress = async (circuit: (typeof circuits)[0]) => {
     router.push('/');
-    
+
     // Wait a bit for navigation to complete then navigate to the first problem
-    setTimeout(async () => {
-      if (mapContext) {
-        await mapContext.navigateToFirstProblem(
-          circuit.circuitColor,
-          circuit.subarea,
-        );
-      }
+    setTimeout(() => {
+      mapProblemService.navigateToProblem({
+        circuitColor: circuit.circuitColor,
+        subarea: circuit.subarea,
+        order: 1,
+      });
     }, 300);
   };
 
