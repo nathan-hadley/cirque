@@ -117,8 +117,7 @@ export function MapScreen() {
                 textFont: ['Open Sans Regular', 'Arial Unicode MS Regular'],
                 textAnchor: 'center',
                 textOffset: [0, 0],
-                textAllowOverlap: true,
-                textIgnorePlacement: true,
+                textIgnorePlacement: false,
                 textOpacity: [
                   'step',
                   ['zoom'],
@@ -132,7 +131,7 @@ export function MapScreen() {
         )}
 
         {/* Selected Problem Indicator */}
-        {problem && problem.coordinates && (
+        {problem && viewProblem && problem.coordinates && (
           <ShapeSource
             id="selected-problem-source"
             shape={{
@@ -147,22 +146,15 @@ export function MapScreen() {
             <CircleLayer
               id="selected-problem-indicator"
               style={{
-                circleRadius: ['interpolate', ['linear'], ['zoom'], 16, 6, 22, 26],
+                circleRadius: ['interpolate', ['linear'], ['zoom'], 16, 3, 22, 20],
                 circleColor: 'transparent',
                 circleStrokeColor: '#22c55e', // green-500
                 circleStrokeWidth: ['interpolate', ['linear'], ['zoom'], 16, 2, 22, 3],
-                circleOpacity: [
-                  'step',
-                  ['zoom'],
-                  0, // hidden below zoom 16
-                  16,
-                  1, // visible at zoom 16+
-                ],
                 circleStrokeOpacity: [
                   'step',
                   ['zoom'],
                   0, // hidden below zoom 16
-                  16,
+                  18,
                   1, // visible at zoom 16+
                 ],
               }}
