@@ -1,22 +1,25 @@
 import { GeoJsonProperties } from "geojson";
-
 import { Point } from "geojson";
-
 import { Feature } from "geojson";
+import { z } from 'zod';
 
-export type Problem ={
-  id: string;
-  name?: string;
-  grade?: string;
-  order?: number;
-  colorStr: string;
-  color: string;
-  description?: string;
-  line: number[][];
-  topo?: string;
-  subarea?: string;
-  coordinates?: [number, number]; // [longitude, latitude]
-} 
+// Zod schema for runtime validation
+export const ProblemSchema = z.object({
+  id: z.string(),
+  name: z.string().optional(),
+  grade: z.string().optional(),
+  order: z.number().optional(),
+  colorStr: z.string(),
+  color: z.string(),
+  description: z.string().optional(),
+  line: z.array(z.array(z.number())),
+  topo: z.string().optional(),
+  subarea: z.string().optional(),
+  coordinates: z.tuple([z.number(), z.number()]).optional(), // [longitude, latitude]
+});
+
+// Type inferred from schema
+export type Problem = z.infer<typeof ProblemSchema>; 
 
 export function createProblemFromFeature(feature: Feature<Point, GeoJsonProperties>): Problem | null {
   const properties = feature.properties || {};
@@ -43,7 +46,7 @@ export function createProblemFromFeature(feature: Feature<Point, GeoJsonProperti
     console.error('Failed to parse topo line coordinates:', error);
   }
 
-  return {
+  const problemData = {
     id: properties.id?.toString() || Date.now().toString(),
     name,
     grade: properties.grade?.toString(),
@@ -56,6 +59,14 @@ export function createProblemFromFeature(feature: Feature<Point, GeoJsonProperti
     subarea: properties.subarea?.toString(),
     coordinates,
   };
+
+  // Validate the data using Zod schema
+  try {
+    return ProblemSchema.parse(problemData);
+  } catch (error) {
+    console.error('Problem validation failed:', error);
+    return null;
+  }
 };
 
 function getColorFromString(colorString?: string): string {
