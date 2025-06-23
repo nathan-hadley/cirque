@@ -1,4 +1,4 @@
-import { ImageSourcePropType, Platform } from 'react-native';
+import { ImageSourcePropType } from "react-native";
 
 // Map of problem names to their corresponding topo images
 const topoImages = {

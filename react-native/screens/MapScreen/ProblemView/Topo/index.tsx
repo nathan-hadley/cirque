@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { LayoutChangeEvent, Platform, View } from "react-native";
+import { LayoutChangeEvent, View } from "react-native";
 import { Image, ImageLoadEventData } from "expo-image";
 import { Problem } from "@/models/problems";
 import { getTopoImage } from "./topoImage";
@@ -64,7 +64,7 @@ export function Topo({ problem }: TopoProps) {
 
           {shouldRenderLine && (
             <TopoLine
-              key={`${problem.id}-${problem.topo}`}
+              key={problem.id}
               problem={problem}
               originalImageSize={originalImageSize}
               displayedImageSize={imageLayout}
@@ -74,9 +74,7 @@ export function Topo({ problem }: TopoProps) {
       ) : (
         <Center className="flex-1 items-center">
           <Icon as={CameraOff} size="xl" className="text-typography-900" />
-          <Text className="text-typography-900">
-            {imageError ? imageError : 'No topo'}
-          </Text>
+          <Text className="text-typography-900">{imageError ? imageError : "No topo"}</Text>
         </Center>
       )}
 

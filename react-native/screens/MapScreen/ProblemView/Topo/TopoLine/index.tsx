@@ -19,15 +19,11 @@ type TopoLineProps = {
 };
 
 export function TopoLine({ problem, originalImageSize, displayedImageSize }: TopoLineProps) {
-  // All hooks must be called before any early returns
   const progress = useSharedValue(0);
 
   useEffect(() => {
-    // Only trigger animation if there's a line
     if (problem.line && problem.line.length > 0) {
-      // Reset animation state immediately
       progress.value = 0;
-      // Increase delay to ensure proper component initialization, especially when navigating from about screen
       progress.value = withDelay(500, withTiming(1, { duration: 500 }));
     }
   }, [problem.id, progress, problem.line]);
@@ -48,7 +44,6 @@ export function TopoLine({ problem, originalImageSize, displayedImageSize }: Top
     };
   });
 
-  // Early return after all hooks have been called
   if (!problem.line || problem.line.length === 0) return null;
 
   return (
