@@ -26,50 +26,17 @@ export function Topo({ problem }: TopoProps) {
 
   const topoImage = getTopoImage(problem.topo);
 
-  // Reset state when problem changes to prevent stale states
-  React.useEffect(() => {
-    setImageLayout(null);
-    setOriginalImageSize(null);
-    setImageError(null);
-
-    // Debug logging for iOS image loading issues
-    if (Platform.OS === 'ios' && problem.subarea === 'Swiftwater') {
-      console.log(`[iOS Debug] Loading image for: ${problem.name} (${problem.topo})`);
-      console.log(`[iOS Debug] Image exists: ${!!topoImage}`);
-      if (topoImage) {
-        console.log(`[iOS Debug] Image source: ${JSON.stringify(topoImage)}`);
-      }
-    }
-  }, [problem.id, problem.topo, problem.name, problem.subarea, topoImage]);
-
   function handleImageLoad(event: ImageLoadEventData) {
     const { width, height } = event.source;
     if (width && height) {
       setOriginalImageSize({ width, height });
-      setImageError(null); // Clear any previous errors
-
-      // iOS debug logging
-      if (Platform.OS === 'ios' && problem.subarea === 'Swiftwater') {
-        console.log(`[iOS Debug] Image loaded successfully: ${problem.name} - ${width}x${height}`);
-      }
+      setImageError(null);
     }
   }
 
-  function handleImageError(error: unknown) {
-    const errorMessage = `Failed to load image for ${problem.name} (${problem.topo})`;
+  function handleImageError() {
+    const errorMessage = `Failed to load image for ${problem.name}`;
     setImageError(errorMessage);
-
-    // Enhanced error logging for iOS Swiftwater issues
-    if (Platform.OS === 'ios' && problem.subarea === 'Swiftwater') {
-      console.error(`[iOS Error] ${errorMessage}`, error);
-      console.error(`[iOS Error] Problem details:`, {
-        id: problem.id,
-        name: problem.name,
-        topo: problem.topo,
-        subarea: problem.subarea,
-        topoImageExists: !!topoImage,
-      });
-    }
   }
 
   function handleImageLayout(event: LayoutChangeEvent) {
@@ -91,8 +58,7 @@ export function Topo({ problem }: TopoProps) {
             onLoad={handleImageLoad}
             onLayout={handleImageLayout}
             onError={handleImageError}
-            // Add retry and cache strategies for iOS
-            cachePolicy={Platform.OS === 'ios' ? 'memory-disk' : 'disk'}
+            cachePolicy="memory-disk"
             recyclingKey={`${problem.id}-${problem.topo}`}
           />
 
@@ -109,11 +75,8 @@ export function Topo({ problem }: TopoProps) {
         <Center className="flex-1 items-center">
           <Icon as={CameraOff} size="xl" className="text-typography-900" />
           <Text className="text-typography-900">
-            {imageError ? 'Failed to load image' : 'No topo'}
+            {imageError ? imageError : 'No topo'}
           </Text>
-          {imageError && Platform.OS === 'ios' && (
-            <Text className="text-xs text-typography-600 mt-2 px-4 text-center">{imageError}</Text>
-          )}
         </Center>
       )}
 
