@@ -22,7 +22,7 @@ type ImageLayout = {
 export function Topo({ problem }: TopoProps) {
   const [imageLayout, setImageLayout] = useState<ImageLayout>(null);
   const [originalImageSize, setOriginalImageSize] = useState<ImageLayout>(null);
-  const [imageError, setImageError] = useState<string | null>(null);
+  const [imageError, setImageError] = useState<boolean>(false);
 
   const topoImage = getTopoImage(problem.topo);
 
@@ -30,13 +30,12 @@ export function Topo({ problem }: TopoProps) {
     const { width, height } = event.source;
     if (width && height) {
       setOriginalImageSize({ width, height });
-      setImageError(null);
+      setImageError(false);
     }
   }
 
   function handleImageError() {
-    const errorMessage = `Failed to load image for ${problem.name}`;
-    setImageError(errorMessage);
+    setImageError(true);
   }
 
   function handleImageLayout(event: LayoutChangeEvent) {
@@ -74,7 +73,7 @@ export function Topo({ problem }: TopoProps) {
       ) : (
         <Center className="flex-1 items-center">
           <Icon as={CameraOff} size="xl" className="text-typography-900" />
-          <Text className="text-typography-900">{imageError ? imageError : "No topo"}</Text>
+          <Text className="text-typography-900">{imageError ? "Failed to load image" : "No topo"}</Text>
         </Center>
       )}
 
