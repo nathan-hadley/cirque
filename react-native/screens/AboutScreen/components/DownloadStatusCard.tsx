@@ -1,12 +1,12 @@
-import React from 'react';
-import { View } from 'react-native';
-import { Text } from '@/components/ui/text';
-import { Button, ButtonIcon, ButtonText } from '@/components/ui/button';
-import { HStack } from '@/components/ui/hstack';
-import { VStack } from '@/components/ui/vstack';
-import { Download, CheckCircle, RefreshCw, Trash2 } from 'lucide-react-native';
-import { Icon } from '@/components/ui/icon';
-import { CircularProgress } from '@/components/CircularProgress';
+import React from "react";
+import { View } from "react-native";
+import { Text } from "@/components/ui/text";
+import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
+import { HStack } from "@/components/ui/hstack";
+import { VStack } from "@/components/ui/vstack";
+import { Download, CheckCircle, RefreshCw, Trash2 } from "lucide-react-native";
+import { Icon } from "@/components/ui/icon";
+import { CircularProgress } from "@/components/CircularProgress";
 
 type DownloadStatusCardProps = {
   loading: boolean;
@@ -34,10 +34,10 @@ export function DownloadStatusCard({
           )}
           <VStack className="flex-1">
             <Text className="font-semibold text-lg">
-              {mapDownloaded ? 'Map Downloaded' : 'Download Offline Map'}
+              {mapDownloaded ? "Map Downloaded" : "Download Offline Map"}
             </Text>
             <Text className="text-sm text-typography-600">
-              {mapDownloaded ? 'Map ready for offline use' : 'Ensure map works without network'}
+              {mapDownloaded ? "Map ready for offline use" : "Ensure map works without network"}
             </Text>
           </VStack>
           {mapDownloaded && (
@@ -57,7 +57,7 @@ export function DownloadStatusCard({
         <Button
           onPress={onUpdate}
           disabled={loading}
-          action={'positive'}
+          action={"positive"}
           className={`rounded-xl`}
           size="lg"
         >
@@ -70,7 +70,7 @@ export function DownloadStatusCard({
               <ButtonIcon as={Download} size="sm" className="text-white" />
             )}
             <ButtonText className="text-white font-semibold">
-              {loading ? 'Downloading...' : mapDownloaded ? 'Update Map' : 'Download Map'}
+              {loading ? "Downloading..." : mapDownloaded ? "Update Map" : "Download Map"}
             </ButtonText>
           </HStack>
         </Button>

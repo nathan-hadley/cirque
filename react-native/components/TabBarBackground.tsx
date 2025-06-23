@@ -1,20 +1,20 @@
-import { useColorScheme } from 'nativewind';
-import { View } from 'react-native';
-import { BlurView } from 'expo-blur';
-import { Platform } from 'react-native';
+import { useColorScheme } from "nativewind";
+import { View } from "react-native";
+import { BlurView } from "expo-blur";
+import { Platform } from "react-native";
 
 // This is a shim for web and Android where the tab bar is generally opaque.
 export default function TabBarBackground() {
   const { colorScheme } = useColorScheme();
 
   // On iOS, use BlurView for the native blur effect
-  if (Platform.OS === 'ios') {
+  if (Platform.OS === "ios") {
     return (
       <BlurView
         intensity={95}
-        tint={colorScheme === 'dark' ? 'systemMaterialDark' : 'systemMaterialLight'}
+        tint={colorScheme === "dark" ? "systemMaterialDark" : "systemMaterialLight"}
         style={{
-          position: 'absolute',
+          position: "absolute",
           top: 0,
           left: 0,
           bottom: 0,

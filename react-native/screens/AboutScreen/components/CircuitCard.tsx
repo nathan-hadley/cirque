@@ -1,7 +1,7 @@
-import React from 'react';
-import { Pressable } from 'react-native';
-import { Text } from '@/components/ui/text';
-import { VStack } from '@/components/ui/vstack';
+import React from "react";
+import { Pressable } from "react-native";
+import { Text } from "@/components/ui/text";
+import { VStack } from "@/components/ui/vstack";
 
 type CircuitCardProps = {
   title: string;

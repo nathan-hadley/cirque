@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import Mapbox from '@rnmapbox/maps';
-import * as Network from 'expo-network';
-import { TILEPACK_ID, STYLE_URI, BBOX_COORDS } from '@/constants/map';
+import { useState, useEffect } from "react";
+import Mapbox from "@rnmapbox/maps";
+import * as Network from "expo-network";
+import { TILEPACK_ID, STYLE_URI, BBOX_COORDS } from "@/constants/map";
 
 type OfflineMapsState = {
   loading: boolean;
@@ -21,7 +21,7 @@ export function useOfflineMaps(): OfflineMapsState {
       const networkState = await Network.getNetworkStateAsync();
       return networkState.isInternetReachable === true;
     } catch (error) {
-      console.log('Network connectivity check failed:', error);
+      console.log("Network connectivity check failed:", error);
       return false;
     }
   };
@@ -31,7 +31,7 @@ export function useOfflineMaps(): OfflineMapsState {
       const packs = await Mapbox.offlineManager.getPacks();
       return packs.some(pack => pack.name === TILEPACK_ID);
     } catch (error) {
-      console.error('Error checking if map exists:', error);
+      console.error("Error checking if map exists:", error);
       return false;
     }
   };
@@ -43,7 +43,7 @@ export function useOfflineMaps(): OfflineMapsState {
         const exists = await checkIfMapExists();
         setMapDownloaded(exists);
       } catch (error) {
-        console.error('Error initializing map state:', error);
+        console.error("Error initializing map state:", error);
         setMapDownloaded(false);
       }
     };
@@ -60,7 +60,7 @@ export function useOfflineMaps(): OfflineMapsState {
       if (!isConnected) {
         return {
           success: false,
-          message: 'No internet connection. Please check your network connectionand try again.',
+          message: "No internet connection. Please check your network connectionand try again.",
         };
       }
 
@@ -89,12 +89,12 @@ export function useOfflineMaps(): OfflineMapsState {
               const progressPercent = status.percentage || 0;
               setProgress(progressPercent);
 
-              if (status.state === 'complete' || status.state === 1) {
+              if (status.state === "complete" || status.state === 1) {
                 setProgress(100);
                 resolve();
               } else if (
-                status.state === 'inactive' ||
-                status.state === 'invalid' ||
+                status.state === "inactive" ||
+                status.state === "invalid" ||
                 status.state === 0
               ) {
                 reject(new Error(`Pack download failed with state: ${status.state}`));
@@ -103,18 +103,18 @@ export function useOfflineMaps(): OfflineMapsState {
           },
           // Error callback
           (pack: { name: string }) => {
-            console.error('Offline pack error for pack:', pack.name);
+            console.error("Offline pack error for pack:", pack.name);
             reject(new Error(`Download failed for pack: ${pack.name}`));
           }
         );
       });
 
       setMapDownloaded(true);
-      const message = packExists ? 'Map updated successfully' : 'Map downloaded successfully';
+      const message = packExists ? "Map updated successfully" : "Map downloaded successfully";
       return { success: true, message };
     } catch (error) {
-      console.error('Error updating map data:', error);
-      return { success: false, message: 'Failed to download map data. Error: ' + error };
+      console.error("Error updating map data:", error);
+      return { success: false, message: "Failed to download map data. Error: " + error };
     } finally {
       setLoading(false);
       setProgress(0);
@@ -126,16 +126,16 @@ export function useOfflineMaps(): OfflineMapsState {
       const packExists = await checkIfMapExists();
 
       if (!packExists) {
-        return { success: false, message: 'No offline maps to delete' };
+        return { success: false, message: "No offline maps to delete" };
       }
 
       await Mapbox.offlineManager.deletePack(TILEPACK_ID);
       setMapDownloaded(false);
 
-      return { success: true, message: 'Offline maps deleted successfully' };
+      return { success: true, message: "Offline maps deleted successfully" };
     } catch (error) {
-      console.error('Error deleting map data:', error);
-      return { success: false, message: 'Failed to delete map data. Error: ' + error };
+      console.error("Error deleting map data:", error);
+      return { success: false, message: "Failed to delete map data. Error: " + error };
     }
   };
 

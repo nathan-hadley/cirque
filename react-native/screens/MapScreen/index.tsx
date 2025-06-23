@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { Platform, View } from 'react-native';
+import React, { useEffect, useRef, useState } from "react";
+import { Platform, View } from "react-native";
 import Mapbox, {
   MapView as RNMapboxMapView,
   UserLocation,
@@ -7,19 +7,24 @@ import Mapbox, {
   ShapeSource,
   CircleLayer,
   SymbolLayer,
-} from '@rnmapbox/maps';
-import { Actionsheet, ActionsheetContent } from '@/components/ui/actionsheet';
-import { useMapStore } from '@/stores/mapStore';
-import { useProblemStore } from '@/stores/problemStore';
-import { mapProblemService } from '@/services/mapProblemService';
-import { INITIAL_CENTER, INITIAL_ZOOM, STYLE_URI, MAPBOX_ACCESS_TOKEN } from '@/constants/map';
-import { ProblemView } from './ProblemView';
-import { LocateMeButton } from '../../components/buttons/LocateMeButton';
-import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+} from "@rnmapbox/maps";
+import { Actionsheet, ActionsheetContent } from "@/components/ui/actionsheet";
+import { useMapStore } from "@/stores/mapStore";
+import { useProblemStore } from "@/stores/problemStore";
+import { mapProblemService } from "@/services/mapProblemService";
+import { INITIAL_CENTER, INITIAL_ZOOM, STYLE_URI, MAPBOX_ACCESS_TOKEN } from "@/constants/map";
+import { ProblemView } from "./ProblemView";
+import { LocateMeButton } from "../../components/buttons/LocateMeButton";
+import { MapSearchBar } from "../../components/MapSearchBar";
+import { SearchOverlay } from "../SearchScreen";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 
 Mapbox.setAccessToken(MAPBOX_ACCESS_TOKEN);
 
 export function MapScreen() {
+  // Local state for search overlay
+  const [isSearchVisible, setIsSearchVisible] = useState(false);
+
   // Map store for map-specific state and actions
   const { centerToUserLocation, setMapRef, setCameraRef } = useMapStore();
 
@@ -30,7 +35,7 @@ export function MapScreen() {
   const cameraRef = useRef<Camera>(null);
 
   const tabBarHeight = useBottomTabBarHeight();
-  const bottomOffset = Platform.OS === 'ios' ? tabBarHeight : 0;
+  const bottomOffset = Platform.OS === "ios" ? tabBarHeight : 0;
 
   // Set refs in the store when they're created
   useEffect(() => {
@@ -76,27 +81,27 @@ export function MapScreen() {
             <CircleLayer
               id="problems-layer"
               style={{
-                circleRadius: ['interpolate', ['linear'], ['zoom'], 16, 3, 22, 20],
+                circleRadius: ["interpolate", ["linear"], ["zoom"], 16, 3, 22, 20],
                 circleColor: [
-                  'case',
-                  ['==', ['get', 'color'], 'red'],
-                  '#ff0000',
-                  ['==', ['get', 'color'], 'blue'],
-                  '#0000ff',
-                  ['==', ['get', 'color'], 'black'],
-                  '#000000',
-                  ['==', ['get', 'color'], 'white'],
-                  '#ffffff',
-                  ['==', ['get', 'color'], 'green'],
-                  '#00ff00',
-                  ['==', ['get', 'color'], 'yellow'],
-                  '#ffff00',
-                  '#888888', // default color
+                  "case",
+                  ["==", ["get", "color"], "red"],
+                  "#ff0000",
+                  ["==", ["get", "color"], "blue"],
+                  "#0000ff",
+                  ["==", ["get", "color"], "black"],
+                  "#000000",
+                  ["==", ["get", "color"], "white"],
+                  "#ffffff",
+                  ["==", ["get", "color"], "green"],
+                  "#00ff00",
+                  ["==", ["get", "color"], "yellow"],
+                  "#ffff00",
+                  "#888888", // default color
                 ],
                 circleStrokeWidth: 0,
                 circleOpacity: [
-                  'step',
-                  ['zoom'],
+                  "step",
+                  ["zoom"],
                   0, // hidden below zoom 16
                   16,
                   0.8, // visible at zoom 16+
@@ -106,22 +111,21 @@ export function MapScreen() {
             <SymbolLayer
               id="problems-text-layer"
               style={{
-                textField: ['get', 'order'],
-                textSize: ['interpolate', ['linear'], ['zoom'], 17, 8, 22, 26],
+                textField: ["get", "order"],
+                textSize: ["interpolate", ["linear"], ["zoom"], 17, 8, 22, 26],
                 textColor: [
-                  'case',
-                  ['==', ['get', 'color'], 'white'],
-                  '#000000', // black text for white circles
-                  '#ffffff', // white text for all other circles
+                  "case",
+                  ["==", ["get", "color"], "white"],
+                  "#000000", // black text for white circles
+                  "#ffffff", // white text for all other circles
                 ],
-                textFont: ['Open Sans Regular', 'Arial Unicode MS Regular'],
-                textAnchor: 'center',
+                textFont: ["Open Sans Regular", "Arial Unicode MS Regular"],
+                textAnchor: "center",
                 textOffset: [0, 0],
-                textAllowOverlap: true,
-                textIgnorePlacement: true,
+                textIgnorePlacement: false,
                 textOpacity: [
-                  'step',
-                  ['zoom'],
+                  "step",
+                  ["zoom"],
                   0, // hidden below zoom 17
                   17,
                   1, // visible at zoom 17+
@@ -130,7 +134,42 @@ export function MapScreen() {
             />
           </ShapeSource>
         )}
+
+        {/* Selected Problem Indicator */}
+        {problem && viewProblem && problem.coordinates && (
+          <ShapeSource
+            id="selected-problem-source"
+            shape={{
+              type: 'Feature',
+              geometry: {
+                type: 'Point',
+                coordinates: problem.coordinates,
+              },
+              properties: {},
+            }}
+          >
+            <CircleLayer
+              id="selected-problem-indicator"
+              style={{
+                circleRadius: ['interpolate', ['linear'], ['zoom'], 16, 3, 22, 20],
+                circleColor: 'transparent',
+                circleStrokeColor: '#22c55e', // green-500
+                circleStrokeWidth: ['interpolate', ['linear'], ['zoom'], 16, 2, 22, 3],
+                circleStrokeOpacity: [
+                  'step',
+                  ['zoom'],
+                  0, // hidden below zoom 16
+                  18,
+                  1, // visible at zoom 16+
+                ],
+              }}
+            />
+          </ShapeSource>
+        )}
       </RNMapboxMapView>
+
+      {/* Search Bar */}
+      {!isSearchVisible && <MapSearchBar onPress={() => setIsSearchVisible(true)} />}
 
       <LocateMeButton
         onPress={centerToUserLocation}
@@ -143,12 +182,15 @@ export function MapScreen() {
         isOpen={viewProblem && problem !== null}
         onClose={() => setViewProblem(false)}
         closeOnOverlayClick={false}
-        snapPoints={Platform.OS === 'ios' ? [50] : undefined}
+        snapPoints={Platform.OS === "ios" ? [50] : undefined}
       >
         <ActionsheetContent className="p-0">
           {problem && <ProblemView problem={problem} />}
         </ActionsheetContent>
       </Actionsheet>
+
+      {/* Search Overlay */}
+      <SearchOverlay isVisible={isSearchVisible} onClose={() => setIsSearchVisible(false)} />
     </View>
   );
 }
