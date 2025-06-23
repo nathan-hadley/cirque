@@ -1,16 +1,16 @@
-import { View, ScrollView, SafeAreaView } from 'react-native';
-import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
-import { router } from 'expo-router';
-import { Text } from '@/components/ui/text';
-import { Heading } from '@/components/ui/heading';
-import { useOfflineMaps } from '@/hooks/useOfflineMaps';
-import { useToast, Toast, ToastTitle } from '@/components/ui/toast';
-import { VStack } from '@/components/ui/vstack';
-import { Divider } from '@/components/ui/divider';
-import { CircuitCard, DownloadStatusCard, ContributingSection } from './components';
-import { Icon } from '@/components/ui/icon';
-import { CircleIcon } from 'lucide-react-native';
-import { mapProblemService } from '@/services/mapProblemService';
+import { View, ScrollView, SafeAreaView } from "react-native";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import { router } from "expo-router";
+import { Text } from "@/components/ui/text";
+import { Heading } from "@/components/ui/heading";
+import { useOfflineMaps } from "@/hooks/useOfflineMaps";
+import { useToast, Toast, ToastTitle } from "@/components/ui/toast";
+import { VStack } from "@/components/ui/vstack";
+import { Divider } from "@/components/ui/divider";
+import { CircuitCard, DownloadStatusCard, ContributingSection } from "./components";
+import { Icon } from "@/components/ui/icon";
+import { CircleIcon } from "lucide-react-native";
+import { mapProblemService } from "@/services/mapProblemService";
 
 export default function AboutScreen() {
   const { loading, mapDownloaded, progress, updateMapData, deleteMapData } = useOfflineMaps();
@@ -19,40 +19,40 @@ export default function AboutScreen() {
 
   const circuits = [
     {
-      title: 'Forestland Blue Circuit',
-      difficulty: 'V0-2 • Intermediate',
-      color: 'border-info-200 bg-info-50',
-      circuitColor: 'blue',
-      subarea: 'Forestland',
+      title: "Forestland Blue Circuit",
+      difficulty: "V0-2 • Intermediate",
+      color: "border-info-200 bg-info-50",
+      circuitColor: "blue",
+      subarea: "Forestland",
     },
     {
-      title: 'Swiftwater Red Circuit',
-      difficulty: 'V0-3 • Intermediate',
-      color: 'border-error-200 bg-error-50',
-      circuitColor: 'red',
-      subarea: 'Swiftwater',
+      title: "Swiftwater Red Circuit",
+      difficulty: "V0-3 • Intermediate",
+      color: "border-error-200 bg-error-50",
+      circuitColor: "red",
+      subarea: "Swiftwater",
     },
     {
-      title: 'Forestland Black Circuit',
-      difficulty: 'V2-5 • Advanced',
-      color: 'border-typography-300 bg-typography-200',
-      circuitColor: 'black',
-      subarea: 'Forestland',
+      title: "Forestland Black Circuit",
+      difficulty: "V2-5 • Advanced",
+      color: "border-typography-300 bg-typography-200",
+      circuitColor: "black",
+      subarea: "Forestland",
     },
     {
-      title: 'Straightaways White Circuit',
-      difficulty: 'V4-9 • Expert',
-      color: 'border-typography-200',
-      circuitColor: 'white',
-      subarea: 'Straightaways',
+      title: "Straightaways White Circuit",
+      difficulty: "V4-9 • Expert",
+      color: "border-typography-200",
+      circuitColor: "white",
+      subarea: "Straightaways",
     },
   ];
 
   const showToast = (message: string, success: boolean = true) => {
     toast.show({
-      placement: 'top',
+      placement: "top",
       render: ({ id }) => (
-        <Toast nativeID={`toast-${id}`} action={success ? 'success' : 'error'} variant="solid">
+        <Toast nativeID={`toast-${id}`} action={success ? "success" : "error"} variant="solid">
           <ToastTitle>{message}</ToastTitle>
         </Toast>
       ),
@@ -64,7 +64,7 @@ export default function AboutScreen() {
       const result = await updateMapData();
       showToast(result.message, result.success);
     } catch {
-      showToast('An unexpected error occurred', false);
+      showToast("An unexpected error occurred", false);
     }
   };
 
@@ -73,12 +73,12 @@ export default function AboutScreen() {
       const result = await deleteMapData();
       showToast(result.message, result.success);
     } catch {
-      showToast('An unexpected error occurred', false);
+      showToast("An unexpected error occurred", false);
     }
   };
 
   const handleCircuitPress = async (circuit: (typeof circuits)[0]) => {
-    router.push('/');
+    router.push("/");
 
     // Wait a bit for navigation to complete then navigate to the first problem
     setTimeout(() => {

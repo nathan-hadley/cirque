@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { LayoutChangeEvent, View } from 'react-native';
-import { Image, ImageLoadEventData } from 'expo-image';
-import { Problem } from '@/models/problems';
-import { getTopoImage } from './topoImage';
-import { CameraOff } from 'lucide-react-native';
-import { Center } from '@/components/ui/center';
-import { Icon } from '@/components/ui/icon';
-import { Text } from '@/components/ui/text';
-import { CircuitNavButtons } from '@/components/buttons/CircuitNavButtons';
-import { TopoLine } from './TopoLine';
+import React, { useState } from "react";
+import { LayoutChangeEvent, View } from "react-native";
+import { Image, ImageLoadEventData } from "expo-image";
+import { Problem } from "@/models/problems";
+import { getTopoImage } from "./topoImage";
+import { CameraOff } from "lucide-react-native";
+import { Center } from "@/components/ui/center";
+import { Icon } from "@/components/ui/icon";
+import { Text } from "@/components/ui/text";
+import { CircuitNavButtons } from "@/components/buttons/CircuitNavButtons";
+import { TopoLine } from "./TopoLine";
 
 type TopoProps = {
   problem: Problem;
@@ -46,7 +46,7 @@ export function Topo({ problem }: TopoProps) {
         <>
           <Image
             source={topoImage}
-            style={{ width: '100%', height: '100%' }}
+            style={{ width: "100%", height: "100%" }}
             contentFit="cover"
             onLoad={handleImageLoad}
             onLayout={handleImageLayout}

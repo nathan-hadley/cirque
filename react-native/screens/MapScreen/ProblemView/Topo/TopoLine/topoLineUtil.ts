@@ -1,4 +1,4 @@
-import { Problem } from '@/models/problems';
+import { Problem } from "@/models/problems";
 
 type GetScaledPointsParams = {
   originalImageSize: { width: number; height: number };
@@ -18,7 +18,7 @@ export function getScaledPoints({
 }
 
 export function createPath(points: number[][]) {
-  if (points.length === 0) return '';
+  if (points.length === 0) return "";
 
   let path = `M ${points[0][0]} ${points[0][1]}`;
 

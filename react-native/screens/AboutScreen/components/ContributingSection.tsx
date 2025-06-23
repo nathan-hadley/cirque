@@ -1,11 +1,11 @@
-import React from 'react';
-import { Text } from '@/components/ui/text';
-import { Heading } from '@/components/ui/heading';
-import { HStack } from '@/components/ui/hstack';
-import { VStack } from '@/components/ui/vstack';
-import { Link } from 'expo-router';
-import { Icon } from '@/components/ui/icon';
-import { MessageCircle, ExternalLink } from 'lucide-react-native';
+import React from "react";
+import { Text } from "@/components/ui/text";
+import { Heading } from "@/components/ui/heading";
+import { HStack } from "@/components/ui/hstack";
+import { VStack } from "@/components/ui/vstack";
+import { Link } from "expo-router";
+import { Icon } from "@/components/ui/icon";
+import { MessageCircle, ExternalLink } from "lucide-react-native";
 
 export function ContributingSection() {
   return (

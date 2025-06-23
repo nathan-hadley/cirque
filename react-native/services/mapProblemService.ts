@@ -1,5 +1,5 @@
-import { useMapStore } from '@/stores/mapStore';
-import { useProblemStore } from '@/stores/problemStore';
+import { useMapStore } from "@/stores/mapStore";
+import { useProblemStore } from "@/stores/problemStore";
 
 type NavigateToProblemParams = {
   circuitColor: string;
