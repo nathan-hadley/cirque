@@ -31,7 +31,7 @@ export function Topo({ problem }: TopoProps) {
     setImageLayout(null);
     setOriginalImageSize(null);
     setImageError(null);
-    
+
     // Debug logging for iOS image loading issues
     if (Platform.OS === 'ios' && problem.subarea === 'Swiftwater') {
       console.log(`[iOS Debug] Loading image for: ${problem.name} (${problem.topo})`);
@@ -47,7 +47,7 @@ export function Topo({ problem }: TopoProps) {
     if (width && height) {
       setOriginalImageSize({ width, height });
       setImageError(null); // Clear any previous errors
-      
+
       // iOS debug logging
       if (Platform.OS === 'ios' && problem.subarea === 'Swiftwater') {
         console.log(`[iOS Debug] Image loaded successfully: ${problem.name} - ${width}x${height}`);
@@ -55,10 +55,10 @@ export function Topo({ problem }: TopoProps) {
     }
   }
 
-  function handleImageError(error: any) {
+  function handleImageError(error: unknown) {
     const errorMessage = `Failed to load image for ${problem.name} (${problem.topo})`;
     setImageError(errorMessage);
-    
+
     // Enhanced error logging for iOS Swiftwater issues
     if (Platform.OS === 'ios' && problem.subarea === 'Swiftwater') {
       console.error(`[iOS Error] ${errorMessage}`, error);
@@ -67,7 +67,7 @@ export function Topo({ problem }: TopoProps) {
         name: problem.name,
         topo: problem.topo,
         subarea: problem.subarea,
-        topoImageExists: !!topoImage
+        topoImageExists: !!topoImage,
       });
     }
   }
@@ -112,9 +112,7 @@ export function Topo({ problem }: TopoProps) {
             {imageError ? 'Failed to load image' : 'No topo'}
           </Text>
           {imageError && Platform.OS === 'ios' && (
-            <Text className="text-xs text-typography-600 mt-2 px-4 text-center">
-              {imageError}
-            </Text>
+            <Text className="text-xs text-typography-600 mt-2 px-4 text-center">{imageError}</Text>
           )}
         </Center>
       )}

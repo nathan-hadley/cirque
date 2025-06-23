@@ -114,15 +114,20 @@ type TopoImageKey = keyof typeof topoImages;
 
 export function getTopoImage(key: string | undefined): ImageSourcePropType | undefined {
   if (!key) return undefined;
-  
+
   const image = topoImages[key as TopoImageKey];
-  
+
   // Debug logging for iOS Swiftwater image mapping issues
   if (Platform.OS === 'ios' && key.startsWith('swiftwater-')) {
     console.log(`[iOS Debug] getTopoImage called for key: ${key}`);
     console.log(`[iOS Debug] Image found: ${!!image}`);
-    console.log(`[iOS Debug] Available Swiftwater keys: ${Object.keys(topoImages).filter(k => k.startsWith('swiftwater-')).slice(0, 5).join(', ')}...`);
+    console.log(
+      `[iOS Debug] Available Swiftwater keys: ${Object.keys(topoImages)
+        .filter(k => k.startsWith('swiftwater-'))
+        .slice(0, 5)
+        .join(', ')}...`
+    );
   }
-  
+
   return image;
 }
