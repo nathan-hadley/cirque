@@ -16,7 +16,7 @@ import { INITIAL_CENTER, INITIAL_ZOOM, STYLE_URI, MAPBOX_ACCESS_TOKEN } from '@/
 import { ProblemView } from './ProblemView';
 import { LocateMeButton } from '../../components/buttons/LocateMeButton';
 import { MapSearchBar } from '../../components/MapSearchBar';
-import { SearchOverlay } from '../../components/SearchOverlay';
+import { SearchOverlay } from '../SearchScreen';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 
 Mapbox.setAccessToken(MAPBOX_ACCESS_TOKEN);
@@ -50,11 +50,6 @@ export function MapScreen() {
 
   return (
     <View className="flex-1">
-      {/* Search Bar */}
-      {!isSearchVisible && (
-        <MapSearchBar onPress={() => setIsSearchVisible(true)} />
-      )}
-
       <RNMapboxMapView
         ref={mapRef}
         styleURL={STYLE_URI}
@@ -142,6 +137,9 @@ export function MapScreen() {
         )}
       </RNMapboxMapView>
 
+      {/* Search Bar */}
+      {!isSearchVisible && <MapSearchBar onPress={() => setIsSearchVisible(true)} />}
+
       <LocateMeButton
         onPress={centerToUserLocation}
         className="absolute right-4"
@@ -161,10 +159,7 @@ export function MapScreen() {
       </Actionsheet>
 
       {/* Search Overlay */}
-      <SearchOverlay 
-        isVisible={isSearchVisible} 
-        onClose={() => setIsSearchVisible(false)} 
-      />
+      <SearchOverlay isVisible={isSearchVisible} onClose={() => setIsSearchVisible(false)} />
     </View>
   );
 }

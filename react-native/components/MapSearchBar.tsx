@@ -2,8 +2,8 @@ import React from 'react';
 import { TouchableOpacity, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Search } from 'lucide-react-native';
-import { Text } from '@/components/ui/text';
-import { HStack } from '@/components/ui/hstack';
+import { Input, InputField, InputIcon } from '@/components/ui/input';
+import { useProblemStore } from '@/stores/problemStore';
 
 type MapSearchBarProps = {
   onPress: () => void;
@@ -11,24 +11,37 @@ type MapSearchBarProps = {
 
 export function MapSearchBar({ onPress }: MapSearchBarProps) {
   const insets = useSafeAreaInsets();
+  const { setViewProblem } = useProblemStore();
   
-  const topOffset = Platform.OS === 'ios' ? insets.top + 8 : insets.top + 16;
+  // Match SearchScreen: SafeAreaView + py-4 (16px)
+  const topOffset = insets.top + 12;
 
-  return (
+  const handlePress = () => {
+    // Close the problem actionsheet if it's open
+    setViewProblem(false);
+    // Open the search overlay
+    onPress();
+  };
+
+    return (
     <TouchableOpacity
-      onPress={onPress}
-      className="absolute left-4 right-4 bg-white rounded-lg shadow-md"
+      onPress={handlePress}
+      className="absolute left-4 right-4"
       style={{ 
         top: topOffset,
         elevation: Platform.OS === 'android' ? 8 : undefined,
       }}
+      activeOpacity={0.7}
     >
-      <HStack space="sm" className="items-center px-4 py-3">
-        <Search size={20} color="#6b7280" />
-        <Text className="flex-1 text-gray-500">
-          Search problems...
-        </Text>
-      </HStack>
+      <Input className="bg-typography-100" variant="rounded" size="lg" pointerEvents="none">
+        <InputIcon as={Search} className="ml-3" />
+        <InputField
+          placeholder="Search problems..."
+          editable={false}
+          className="text-typography-600"
+          pointerEvents="none"
+        />
+      </Input>
     </TouchableOpacity>
   );
 }
