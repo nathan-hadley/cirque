@@ -25,8 +25,10 @@ export function TopoLine({ problem, originalImageSize, displayedImageSize }: Top
   useEffect(() => {
     // Only trigger animation if there's a line
     if (problem.line && problem.line.length > 0) {
+      // Reset animation state immediately
       progress.value = 0;
-      progress.value = withDelay(200, withTiming(1, { duration: 500 }));
+      // Increase delay to ensure proper component initialization, especially when navigating from about screen
+      progress.value = withDelay(500, withTiming(1, { duration: 500 }));
     }
   }, [problem.id, progress, problem.line]);
 

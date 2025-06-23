@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { LayoutChangeEvent, View } from 'react-native';
+import { LayoutChangeEvent, View, Platform } from 'react-native';
 import { Image, ImageLoadEventData } from 'expo-image';
 import { Problem } from '@/models/problems';
 import { getTopoImage } from './topoImage';
@@ -22,13 +22,53 @@ type ImageLayout = {
 export function Topo({ problem }: TopoProps) {
   const [imageLayout, setImageLayout] = useState<ImageLayout>(null);
   const [originalImageSize, setOriginalImageSize] = useState<ImageLayout>(null);
+  const [imageError, setImageError] = useState<string | null>(null);
 
   const topoImage = getTopoImage(problem.topo);
+
+  // Reset state when problem changes to prevent stale states
+  React.useEffect(() => {
+    setImageLayout(null);
+    setOriginalImageSize(null);
+    setImageError(null);
+    
+    // Debug logging for iOS image loading issues
+    if (Platform.OS === 'ios' && problem.subarea === 'Swiftwater') {
+      console.log(`[iOS Debug] Loading image for: ${problem.name} (${problem.topo})`);
+      console.log(`[iOS Debug] Image exists: ${!!topoImage}`);
+      if (topoImage) {
+        console.log(`[iOS Debug] Image source: ${JSON.stringify(topoImage)}`);
+      }
+    }
+  }, [problem.id, problem.topo, problem.name, problem.subarea, topoImage]);
 
   function handleImageLoad(event: ImageLoadEventData) {
     const { width, height } = event.source;
     if (width && height) {
       setOriginalImageSize({ width, height });
+      setImageError(null); // Clear any previous errors
+      
+      // iOS debug logging
+      if (Platform.OS === 'ios' && problem.subarea === 'Swiftwater') {
+        console.log(`[iOS Debug] Image loaded successfully: ${problem.name} - ${width}x${height}`);
+      }
+    }
+  }
+
+  function handleImageError(error: any) {
+    const errorMessage = `Failed to load image for ${problem.name} (${problem.topo})`;
+    setImageError(errorMessage);
+    
+    // Enhanced error logging for iOS Swiftwater issues
+    if (Platform.OS === 'ios' && problem.subarea === 'Swiftwater') {
+      console.error(`[iOS Error] ${errorMessage}`, error);
+      console.error(`[iOS Error] Problem details:`, {
+        id: problem.id,
+        name: problem.name,
+        topo: problem.topo,
+        subarea: problem.subarea,
+        topoImageExists: !!topoImage
+      });
     }
   }
 
@@ -42,7 +82,7 @@ export function Topo({ problem }: TopoProps) {
 
   return (
     <View className="w-full aspect-[4/3] rounded-t-3xl overflow-hidden bg-typography-300 relative">
-      {topoImage ? (
+      {topoImage && !imageError ? (
         <>
           <Image
             source={topoImage}
@@ -50,10 +90,15 @@ export function Topo({ problem }: TopoProps) {
             contentFit="cover"
             onLoad={handleImageLoad}
             onLayout={handleImageLayout}
+            onError={handleImageError}
+            // Add retry and cache strategies for iOS
+            cachePolicy={Platform.OS === 'ios' ? 'memory-disk' : 'disk'}
+            recyclingKey={`${problem.id}-${problem.topo}`}
           />
 
           {shouldRenderLine && (
             <TopoLine
+              key={`${problem.id}-${problem.topo}`}
               problem={problem}
               originalImageSize={originalImageSize}
               displayedImageSize={imageLayout}
@@ -63,7 +108,14 @@ export function Topo({ problem }: TopoProps) {
       ) : (
         <Center className="flex-1 items-center">
           <Icon as={CameraOff} size="xl" className="text-typography-900" />
-          <Text className="text-typography-900">No topo</Text>
+          <Text className="text-typography-900">
+            {imageError ? 'Failed to load image' : 'No topo'}
+          </Text>
+          {imageError && Platform.OS === 'ios' && (
+            <Text className="text-xs text-typography-600 mt-2 px-4 text-center">
+              {imageError}
+            </Text>
+          )}
         </Center>
       )}
 
