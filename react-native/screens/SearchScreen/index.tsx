@@ -97,10 +97,10 @@ export function SearchOverlay({ isVisible, onClose }: SearchOverlayProps) {
 
   return (
     <View className="absolute inset-0 bg-typography-0 z-1">
-      <StatusBar 
-        barStyle={colorScheme === "dark" ? "light-content" : "dark-content"} 
-        backgroundColor="transparent" 
-        translucent 
+      <StatusBar
+        barStyle={colorScheme === "dark" ? "light-content" : "dark-content"}
+        backgroundColor="transparent"
+        translucent
       />
       <SafeAreaView className="flex-1">
         {/* Search Header */}

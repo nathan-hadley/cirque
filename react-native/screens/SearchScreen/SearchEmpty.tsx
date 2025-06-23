@@ -1,5 +1,5 @@
 import React from "react";
-import { Search, View } from "lucide-react-native";
+import { Search } from "lucide-react-native";
 import { Text } from "@/components/ui/text";
 import { HStack } from "@/components/ui/hstack";
 import { Icon } from "@/components/ui/icon";
