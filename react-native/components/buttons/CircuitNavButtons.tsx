@@ -1,15 +1,15 @@
-import React from 'react';
-import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react-native';
-import { Button, ButtonIcon } from '../ui/button';
-import { HStack } from '../ui/hstack';
-import { useProblemStore } from '@/stores/problemStore';
-import { mapProblemService } from '@/services/mapProblemService';
-import * as Haptics from 'expo-haptics';
+import React from "react";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react-native";
+import { Button, ButtonIcon } from "../ui/button";
+import { HStack } from "../ui/hstack";
+import { useProblemStore } from "@/stores/problemStore";
+import { mapProblemService } from "@/services/mapProblemService";
+import * as Haptics from "expo-haptics";
 
 export function CircuitNavButtons() {
   const { problem, getProblem } = useProblemStore();
 
-  const color = problem?.color ?? 'black';
+  const color = problem?.color ?? "black";
 
   async function handlePreviousProblem() {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -30,14 +30,14 @@ export function CircuitNavButtons() {
     if (!problem || !problem.order) return false;
     const nextProblem = getProblem({
       circuitColor: problem.colorStr,
-      subarea: problem.subarea || '',
+      subarea: problem.subarea || "",
       order: problem.order + 1,
     });
     return nextProblem !== null;
   }
 
   return (
-    <HStack className={`${!showPreviousButton() ? 'justify-end' : 'justify-between'} w-full px-2`}>
+    <HStack className={`${!showPreviousButton() ? "justify-end" : "justify-between"} w-full px-2`}>
       {showPreviousButton() && (
         <Button
           onPress={handlePreviousProblem}

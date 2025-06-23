@@ -1,6 +1,6 @@
-import React from 'react';
-import { CompassIcon } from 'lucide-react-native';
-import { Button, ButtonIcon } from '../ui/button';
+import React from "react";
+import { CompassIcon } from "lucide-react-native";
+import { Button, ButtonIcon } from "../ui/button";
 
 type LocateMeButtonProps = {
   onPress: () => void;

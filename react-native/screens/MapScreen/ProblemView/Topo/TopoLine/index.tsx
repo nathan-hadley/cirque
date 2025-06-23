@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react';
-import { View } from 'react-native';
-import Svg, { Path, Circle } from 'react-native-svg';
+import React, { useEffect } from "react";
+import { View } from "react-native";
+import Svg, { Path, Circle } from "react-native-svg";
 import Animated, {
   useSharedValue,
   useAnimatedProps,
   withTiming,
   withDelay,
-} from 'react-native-reanimated';
-import { Problem } from '@/models/problems';
-import { createPath, estimatePathLength, getScaledPoints } from './topoLineUtil';
+} from "react-native-reanimated";
+import { Problem } from "@/models/problems";
+import { createPath, estimatePathLength, getScaledPoints } from "./topoLineUtil";
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
@@ -35,7 +35,7 @@ export function TopoLine({ problem, originalImageSize, displayedImageSize }: Top
     problem.line && problem.line.length > 0
       ? getScaledPoints({ originalImageSize, displayedImageSize, problem })
       : [];
-  const pathData = scaledPoints.length > 0 ? createPath(scaledPoints) : '';
+  const pathData = scaledPoints.length > 0 ? createPath(scaledPoints) : "";
   const pathLength = scaledPoints.length > 0 ? estimatePathLength(scaledPoints) : 0;
   const startPoint = scaledPoints.length > 0 ? scaledPoints[0] : [0, 0];
 

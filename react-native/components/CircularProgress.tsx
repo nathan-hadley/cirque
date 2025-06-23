@@ -1,13 +1,13 @@
-import React from 'react';
-import { View } from 'react-native';
-import Svg, { Circle } from 'react-native-svg';
+import React from "react";
+import { View } from "react-native";
+import Svg, { Circle } from "react-native-svg";
 import Animated, {
   useSharedValue,
   useAnimatedProps,
   withTiming,
   useDerivedValue,
-} from 'react-native-reanimated';
-import { useEffect } from 'react';
+} from "react-native-reanimated";
+import { useEffect } from "react";
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
@@ -19,8 +19,8 @@ export function CircularProgress({ progress }: CircularProgressProps) {
   const animatedProgress = useSharedValue(0);
   const size = 20;
   const strokeWidth = 2;
-  const color = '#3B82F6'; // blue-500
-  const backgroundColor = '#E5E7EB'; // gray-200
+  const color = "#3B82F6"; // blue-500
+  const backgroundColor = "#E5E7EB"; // gray-200
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * 2 * Math.PI;
 
@@ -40,7 +40,7 @@ export function CircularProgress({ progress }: CircularProgressProps) {
 
   return (
     <View style={{ width: size, height: size }}>
-      <Svg width={size} height={size} style={{ transform: [{ rotate: '-90deg' }] }}>
+      <Svg width={size} height={size} style={{ transform: [{ rotate: "-90deg" }] }}>
         {/* Background circle */}
         <Circle
           cx={size / 2}

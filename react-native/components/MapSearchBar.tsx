@@ -1,9 +1,9 @@
-import React from 'react';
-import { TouchableOpacity, Platform } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Search } from 'lucide-react-native';
-import { Input, InputField, InputIcon } from '@/components/ui/input';
-import { useProblemStore } from '@/stores/problemStore';
+import React from "react";
+import { TouchableOpacity, Platform } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Search } from "lucide-react-native";
+import { Input, InputField, InputIcon } from "@/components/ui/input";
+import { useProblemStore } from "@/stores/problemStore";
 
 type MapSearchBarProps = {
   onPress: () => void;
@@ -12,7 +12,7 @@ type MapSearchBarProps = {
 export function MapSearchBar({ onPress }: MapSearchBarProps) {
   const insets = useSafeAreaInsets();
   const { setViewProblem } = useProblemStore();
-  
+
   // Match SearchScreen: SafeAreaView + py-4 (16px)
   const topOffset = insets.top + 12;
 
@@ -23,13 +23,13 @@ export function MapSearchBar({ onPress }: MapSearchBarProps) {
     onPress();
   };
 
-    return (
+  return (
     <TouchableOpacity
       onPress={handlePress}
       className="absolute left-4 right-4"
-      style={{ 
+      style={{
         top: topOffset,
-        elevation: Platform.OS === 'android' ? 8 : undefined,
+        elevation: Platform.OS === "android" ? 8 : undefined,
       }}
       activeOpacity={0.7}
     >

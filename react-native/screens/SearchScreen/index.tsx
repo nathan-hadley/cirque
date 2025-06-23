@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { View, TouchableOpacity, FlatList, Keyboard } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { X, Search } from 'lucide-react-native';
-import { Text } from '@/components/ui/text';
-import { HStack } from '@/components/ui/hstack';
-import { Input, InputField, InputIcon } from '@/components/ui/input';
-import { useProblemStore } from '@/stores/problemStore';
-import { useMapStore } from '@/stores/mapStore';
-import { Problem } from '@/models/problems';
-import { SearchResultItem } from './SearchResultItem';
-import { Icon } from '@/components/ui/icon';
-import { Center } from '@/components/ui/center';
+import React, { useState } from "react";
+import { View, TouchableOpacity, Keyboard, Platform, StatusBar } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useColorScheme } from "nativewind";
+import { X, Search } from "lucide-react-native";
+import { HStack } from "@/components/ui/hstack";
+import { Input, InputField, InputIcon } from "@/components/ui/input";
+import { useProblemStore } from "@/stores/problemStore";
+import { useMapStore } from "@/stores/mapStore";
+import { Problem } from "@/models/problems";
+import { SearchResultItem } from "./SearchResultItem";
+import { SearchEmpty } from "./SearchEmpty";
+import { Icon } from "@/components/ui/icon";
+import { FlashList } from "@shopify/flash-list";
 
 type SearchOverlayProps = {
   isVisible: boolean;
@@ -19,45 +20,44 @@ type SearchOverlayProps = {
 
 type SearchResult = {
   problem: Problem;
-  matchType: 'name' | 'grade' | 'subarea';
+  matchType: "name" | "grade" | "subarea";
 };
 
 export function SearchOverlay({ isVisible, onClose }: SearchOverlayProps) {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const { problemsData, createProblemFromMapFeature, setProblem, setViewProblem } =
     useProblemStore();
   const { flyToProblemCoordinates } = useMapStore();
+  const { colorScheme } = useColorScheme();
 
-  // Search functionality
-  useEffect(() => {
-    if (!searchQuery.trim() || !problemsData) {
+  const handleSetSearchQuery = (query: string) => {
+    setSearchQuery(query);
+
+    if (!query.trim() || !problemsData) {
       setSearchResults([]);
       return;
     }
 
-    const query = searchQuery.toLowerCase().trim();
+    const searchTerm = query.toLowerCase().trim();
     const results: SearchResult[] = [];
 
     problemsData.features.forEach(feature => {
       const problem = createProblemFromMapFeature(feature);
       if (!problem) return;
 
-      // Search by name
-      if (problem.name?.toLowerCase().includes(query)) {
-        results.push({ problem, matchType: 'name' });
+      if (problem.name?.toLowerCase().includes(searchTerm)) {
+        results.push({ problem, matchType: "name" });
         return;
       }
 
-      // Search by grade
-      if (problem.grade?.toLowerCase().includes(query)) {
-        results.push({ problem, matchType: 'grade' });
+      if (problem.grade?.toLowerCase().includes(searchTerm)) {
+        results.push({ problem, matchType: "grade" });
         return;
       }
 
-      // Search by subarea
-      if (problem.subarea?.toLowerCase().includes(query)) {
-        results.push({ problem, matchType: 'subarea' });
+      if (problem.subarea?.toLowerCase().includes(searchTerm)) {
+        results.push({ problem, matchType: "subarea" });
         return;
       }
     });
@@ -69,36 +69,39 @@ export function SearchOverlay({ isVisible, onClose }: SearchOverlayProps) {
     });
 
     setSearchResults(results.slice(0, 50)); // Limit to 50 results
-  }, [searchQuery, problemsData, createProblemFromMapFeature]);
+  };
 
   const handleSelectResult = (result: SearchResult) => {
     const { problem } = result;
 
-    // Set the selected problem
     setProblem(problem);
     setViewProblem(true);
 
-    // Fly to the problem location with consistent zoom
     if (problem.coordinates) {
-      flyToProblemCoordinates(problem.coordinates, 18); // Fixed zoom level for all problems
+      flyToProblemCoordinates(problem.coordinates, 18);
     }
 
     // Close the search overlay
     onClose();
-    setSearchQuery('');
+    setSearchQuery("");
     Keyboard.dismiss();
   };
 
   const handleClose = () => {
     onClose();
-    setSearchQuery('');
+    setSearchQuery("");
     Keyboard.dismiss();
   };
 
   if (!isVisible) return null;
 
   return (
-    <View className="absolute inset-0 bg-white z-50">
+    <View className="absolute inset-0 bg-typography-0 z-1">
+      <StatusBar 
+        barStyle={colorScheme === "dark" ? "light-content" : "dark-content"} 
+        backgroundColor="transparent" 
+        translucent 
+      />
       <SafeAreaView className="flex-1">
         {/* Search Header */}
         <View className="px-4 py-3 border-b border-gray-200">
@@ -107,7 +110,7 @@ export function SearchOverlay({ isVisible, onClose }: SearchOverlayProps) {
               <InputIcon as={Search} className="ml-3" />
               <InputField
                 value={searchQuery}
-                onChangeText={setSearchQuery}
+                onChangeText={handleSetSearchQuery}
                 placeholder="Search problems..."
                 autoFocus
                 returnKeyType="search"
@@ -122,29 +125,10 @@ export function SearchOverlay({ isVisible, onClose }: SearchOverlayProps) {
 
         {/* Search Results */}
         <View className="flex-1">
-          {searchQuery.trim() === '' ? (
-            <Center className="flex-1 justify-center items-center px-4">
-              <HStack space="sm" className="items-center justify-center">
-                <Icon as={Search} size="xl" />
-                <Text className="text-lg font-bold">
-                  Search
-                </Text>
-              </HStack>
-              <Text className="text-typography-600 mt-2">
-                Search by problem name, grade, or area
-              </Text>
-            </Center>
-          ) : searchResults.length === 0 ? (
-            <Center className="flex-1 justify-center items-center px-4">
-              <Text className="text-typography-900 text-lg font-bold">
-                No problems found for "{searchQuery}"
-              </Text>
-              <Text className="text-typography-600 mt-2">
-                Try a different search term
-              </Text>
-            </Center>
+          {searchQuery.trim() === "" || searchResults.length === 0 ? (
+            <SearchEmpty searchQuery={searchQuery} />
           ) : (
-            <FlatList
+            <FlashList
               data={searchResults}
               renderItem={({ item }) => (
                 <SearchResultItem result={item} onPress={handleSelectResult} />
@@ -153,6 +137,9 @@ export function SearchOverlay({ isVisible, onClose }: SearchOverlayProps) {
               className="flex-1"
               keyboardShouldPersistTaps="handled"
               keyboardDismissMode="on-drag"
+              ListFooterComponent={() => (
+                <View style={{ height: Platform.OS === "ios" ? 48 : 0 }} />
+              )}
             />
           )}
         </View>

@@ -1,9 +1,9 @@
-import { create } from 'zustand';
-import { Alert, Dimensions } from 'react-native';
-import { MapView, Camera } from '@rnmapbox/maps';
-import { Feature, GeoJsonProperties, Point } from 'geojson';
-import * as Location from 'expo-location';
-import { RefObject } from 'react';
+import { create } from "zustand";
+import { Alert, Dimensions } from "react-native";
+import { MapView, Camera } from "@rnmapbox/maps";
+import { Feature, GeoJsonProperties, Point } from "geojson";
+import * as Location from "expo-location";
+import { RefObject } from "react";
 
 type MapState = {
   // State
@@ -35,7 +35,7 @@ export const useMapStore = create<MapState>((set, get) => ({
 
     if (coordinates && cameraRef?.current) {
       // Get screen dimensions to calculate offset for actionsheet
-      const screenHeight = Dimensions.get('window').height;
+      const screenHeight = Dimensions.get("window").height;
       const centerOffset = screenHeight * 0.4;
 
       cameraRef.current.setCamera({
@@ -58,11 +58,11 @@ export const useMapStore = create<MapState>((set, get) => ({
     try {
       const { status } = await Location.requestForegroundPermissionsAsync();
 
-      if (status !== 'granted') {
+      if (status !== "granted") {
         Alert.alert(
-          'Location Permission Required',
-          'Cirque needs access to your location to show your position on the map. Please enable location permissions in your device settings.',
-          [{ text: 'OK' }]
+          "Location Permission Required",
+          "Cirque needs access to your location to show your position on the map. Please enable location permissions in your device settings.",
+          [{ text: "OK" }]
         );
         return;
       }
@@ -80,9 +80,9 @@ export const useMapStore = create<MapState>((set, get) => ({
       }
     } catch {
       Alert.alert(
-        'Location Error',
-        'Unable to get your current location. Please make sure location services are enabled on your device.',
-        [{ text: 'OK' }]
+        "Location Error",
+        "Unable to get your current location. Please make sure location services are enabled on your device.",
+        [{ text: "OK" }]
       );
     }
   },
@@ -93,8 +93,8 @@ export const useMapStore = create<MapState>((set, get) => ({
 
     try {
       const query = await mapRef.current.queryRenderedFeaturesAtPoint([point.x, point.y], {
-        layerIds: ['problems-layer'],
-        filter: ['!=', ['get', 'color'], ''],
+        layerIds: ["problems-layer"],
+        filter: ["!=", ["get", "color"], ""],
       });
 
       if (query && query.features && query.features.length > 0) {
@@ -104,7 +104,7 @@ export const useMapStore = create<MapState>((set, get) => ({
         return feature;
       }
     } catch (error) {
-      console.error('Error querying features:', error);
+      console.error("Error querying features:", error);
     }
     return null;
   },
