@@ -22,6 +22,7 @@ type ImageLayout = {
 export function Topo({ problem }: TopoProps) {
   const [imageLayout, setImageLayout] = useState<ImageLayout>(null);
   const [originalImageSize, setOriginalImageSize] = useState<ImageLayout>(null);
+  const [imageError, setImageError] = useState<string | null>(null);
 
   const topoImage = getTopoImage(problem.topo);
 
@@ -29,7 +30,13 @@ export function Topo({ problem }: TopoProps) {
     const { width, height } = event.source;
     if (width && height) {
       setOriginalImageSize({ width, height });
+      setImageError(null);
     }
+  }
+
+  function handleImageError() {
+    const errorMessage = `Failed to load image for ${problem.name}`;
+    setImageError(errorMessage);
   }
 
   function handleImageLayout(event: LayoutChangeEvent) {
@@ -42,7 +49,7 @@ export function Topo({ problem }: TopoProps) {
 
   return (
     <View className="w-full aspect-[4/3] rounded-t-3xl overflow-hidden bg-typography-300 relative">
-      {topoImage ? (
+      {topoImage && !imageError ? (
         <>
           <Image
             source={topoImage}
@@ -50,10 +57,14 @@ export function Topo({ problem }: TopoProps) {
             contentFit="cover"
             onLoad={handleImageLoad}
             onLayout={handleImageLayout}
+            onError={handleImageError}
+            cachePolicy="memory-disk"
+            recyclingKey={`${problem.id}-${problem.topo}`}
           />
 
           {shouldRenderLine && (
             <TopoLine
+              key={problem.id}
               problem={problem}
               originalImageSize={originalImageSize}
               displayedImageSize={imageLayout}
@@ -63,7 +74,7 @@ export function Topo({ problem }: TopoProps) {
       ) : (
         <Center className="flex-1 items-center">
           <Icon as={CameraOff} size="xl" className="text-typography-900" />
-          <Text className="text-typography-900">No topo</Text>
+          <Text className="text-typography-900">{imageError ? imageError : "No topo"}</Text>
         </Center>
       )}
 

@@ -21,7 +21,7 @@ export function useOfflineMaps(): OfflineMapsState {
       const networkState = await Network.getNetworkStateAsync();
       return networkState.isInternetReachable === true;
     } catch (error) {
-      console.log("Network connectivity check failed:", error);
+      console.error("Network connectivity check failed:", error);
       return false;
     }
   };
