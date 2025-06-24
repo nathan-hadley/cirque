@@ -27,8 +27,7 @@ type SearchResult = {
 export function SearchOverlay({ isVisible, onClose }: SearchOverlayProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
-  const { createProblemFromMapFeature, setProblem, setViewProblem } =
-    useProblemStore();
+  const { createProblemFromMapFeature, setProblem, setViewProblem } = useProblemStore();
   const { flyToProblemCoordinates } = useMapStore();
   const { colorScheme } = useColorScheme();
 
