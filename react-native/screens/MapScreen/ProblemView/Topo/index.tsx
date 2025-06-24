@@ -73,7 +73,9 @@ export function Topo({ problem }: TopoProps) {
       ) : (
         <Center className="flex-1 items-center">
           <Icon as={CameraOff} size="xl" className="text-typography-900" />
-          <Text className="text-typography-900">{imageError ? "Failed to load image" : "No topo"}</Text>
+          <Text className="text-typography-900">
+            {imageError ? "Failed to load image" : "No topo"}
+          </Text>
         </Center>
       )}
 

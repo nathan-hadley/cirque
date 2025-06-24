@@ -18,7 +18,7 @@ export const BBOX_COORDS = [
 // Color constants
 export const PROBLEM_COLORS = {
   red: "#ff0000",
-  blue: "#0000ff", 
+  blue: "#0000ff",
   black: "#000000",
   white: "#ffffff",
   green: "#00ff00",

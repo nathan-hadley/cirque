@@ -1,10 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Platform, View } from "react-native";
-import Mapbox, {
-  MapView as RNMapboxMapView,
-  UserLocation,
-  Camera,
-} from "@rnmapbox/maps";
+import Mapbox, { MapView as RNMapboxMapView, UserLocation, Camera } from "@rnmapbox/maps";
 import { Actionsheet, ActionsheetContent } from "@/components/ui/actionsheet";
 import { useMapStore } from "@/stores/mapStore";
 import { useProblemStore } from "@/stores/problemStore";

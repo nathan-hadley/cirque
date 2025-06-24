@@ -12,6 +12,7 @@ import { SearchResultItem } from "./SearchResultItem";
 import { SearchEmpty } from "./SearchEmpty";
 import { Icon } from "@/components/ui/icon";
 import { FlashList } from "@shopify/flash-list";
+import { problemsData } from "@/assets/problems";
 
 type SearchOverlayProps = {
   isVisible: boolean;
@@ -26,7 +27,7 @@ type SearchResult = {
 export function SearchOverlay({ isVisible, onClose }: SearchOverlayProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
-  const { problemsData, createProblemFromMapFeature, setProblem, setViewProblem } =
+  const { createProblemFromMapFeature, setProblem, setViewProblem } =
     useProblemStore();
   const { flyToProblemCoordinates } = useMapStore();
   const { colorScheme } = useColorScheme();

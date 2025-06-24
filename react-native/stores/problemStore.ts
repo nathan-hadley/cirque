@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Feature, FeatureCollection, GeoJsonProperties, Point } from "geojson";
+import { Feature, GeoJsonProperties, Point } from "geojson";
 import { Alert } from "react-native";
 import { problemsData } from "@/assets/problems";
 import { Problem } from "@/models/problems";
