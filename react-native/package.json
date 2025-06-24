@@ -16,7 +16,9 @@
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "sync-problems": "node ../scripts/sync-problems.js",
-    "validate-problems": "node ../scripts/sync-problems.js --check"
+    "validate-problems": "node ../scripts/sync-problems.js --check",
+    "sync-circuits": "node ../scripts/sync-circuits.js",
+    "validate-circuits": "node ../scripts/sync-circuits.js --check"
   },
   "jest": {
     "preset": "jest-expo"

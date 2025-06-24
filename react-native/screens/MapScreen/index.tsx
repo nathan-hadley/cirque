@@ -7,6 +7,7 @@ import Mapbox, {
   ShapeSource,
   CircleLayer,
   SymbolLayer,
+  LineLayer,
 } from "@rnmapbox/maps";
 import { Actionsheet, ActionsheetContent } from "@/components/ui/actionsheet";
 import { useMapStore } from "@/stores/mapStore";
@@ -29,7 +30,9 @@ export function MapScreen() {
   const { centerToUserLocation, setMapRef, setCameraRef } = useMapStore();
 
   // Problem store for problem-specific state
-  const { problem, viewProblem, setViewProblem, problemsData } = useProblemStore();
+  const { problem, viewProblem, setViewProblem, problemsData, getCurrentCircuitLine } = useProblemStore();
+
+  const currentCircuitLine = getCurrentCircuitLine();
 
   const mapRef = useRef<RNMapboxMapView>(null);
   const cameraRef = useRef<Camera>(null);
@@ -129,6 +132,42 @@ export function MapScreen() {
                   0, // hidden below zoom 17
                   17,
                   1, // visible at zoom 17+
+                ],
+              }}
+            />
+          </ShapeSource>
+        )}
+
+        {/* Circuit Lines - Only show for current problem's circuit */}
+        {currentCircuitLine && viewProblem && (
+          <ShapeSource id="circuit-lines-source" shape={currentCircuitLine}>
+            <LineLayer
+              id="circuit-lines-layer"
+              style={{
+                lineColor: [
+                  "case",
+                  ["==", ["get", "color"], "red"],
+                  "#ff0000",
+                  ["==", ["get", "color"], "blue"],
+                  "#0000ff",
+                  ["==", ["get", "color"], "black"],
+                  "#000000",
+                  ["==", ["get", "color"], "white"],
+                  "#ffffff",
+                  ["==", ["get", "color"], "green"],
+                  "#00ff00",
+                  ["==", ["get", "color"], "yellow"],
+                  "#ffff00",
+                  "#888888",
+                ],
+                lineWidth: ["interpolate", ["linear"], ["zoom"], 16, 2, 22, 4],
+                lineDasharray: [2, 2],
+                lineOpacity: [
+                  "step",
+                  ["zoom"],
+                  0, // hidden below zoom 16
+                  16,
+                  0.8, // visible at zoom 16+
                 ],
               }}
             />
