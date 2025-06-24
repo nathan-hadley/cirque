@@ -7,10 +7,12 @@ import Mapbox, {
   ShapeSource,
   CircleLayer,
   SymbolLayer,
+  LineLayer,
 } from "@rnmapbox/maps";
 import { Actionsheet, ActionsheetContent } from "@/components/ui/actionsheet";
 import { useMapStore } from "@/stores/mapStore";
 import { useProblemStore } from "@/stores/problemStore";
+import { bouldersData } from "@/assets/boulders";
 import { mapProblemService } from "@/services/mapProblemService";
 import { INITIAL_CENTER, INITIAL_ZOOM, STYLE_URI, MAPBOX_ACCESS_TOKEN } from "@/constants/map";
 import { ProblemView } from "./ProblemView";
@@ -134,6 +136,34 @@ export function MapScreen() {
             />
           </ShapeSource>
         )}
+
+        {/* Boulders Data Source */}
+        <ShapeSource id="boulders-source" shape={bouldersData}>
+          <LineLayer
+            id="boulders-layer"
+            style={{
+              lineColor: "#808080", // light grey
+              lineWidth: [
+                "interpolate",
+                ["linear"],
+                ["zoom"],
+                10,
+                1,
+                16,
+                2,
+              ],
+              lineOpacity: [
+                "step",
+                ["zoom"],
+                0, // hidden below zoom 10
+                10,
+                0.6, // visible at zoom 10-16
+                16,
+                0, // hidden above zoom 16
+              ],
+            }}
+          />
+        </ShapeSource>
 
         {/* Selected Problem Indicator */}
         {problem && viewProblem && problem.coordinates && (
