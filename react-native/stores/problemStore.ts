@@ -14,7 +14,6 @@ type ProblemState = {
   // State
   problem: Problem | null;
   viewProblem: boolean;
-  problemsData: FeatureCollection<Point, GeoJsonProperties> | null;
 
   // Actions
   setProblem: (problem: Problem | null) => void;
@@ -37,7 +36,7 @@ export const useProblemStore = create<ProblemState>((set, get) => ({
   setViewProblem: (view: boolean) => set({ viewProblem: view }),
 
   getProblem: (params: GetProblemParams): Problem | null => {
-    const { problemsData, createProblemFromMapFeature } = get();
+    const { createProblemFromMapFeature } = get();
     if (!problemsData) return null;
 
     const feature =
