@@ -18,7 +18,9 @@
     "sync-problems": "node ../scripts/sync-problems.js",
     "validate-problems": "node ../scripts/sync-problems.js --check",
     "sync-circuits": "node ../scripts/sync-circuits.js",
-    "validate-circuits": "node ../scripts/sync-circuits.js --check"
+    "validate-circuits": "node ../scripts/sync-circuits.js --check",
+    "generate-circuits": "node ../scripts/generate-circuits.js",
+    "test-circuits": "node ../scripts/test-circuits.js"
   },
   "jest": {
     "preset": "jest-expo"

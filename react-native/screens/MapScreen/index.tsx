@@ -7,7 +7,6 @@ import Mapbox, {
   ShapeSource,
   CircleLayer,
   SymbolLayer,
-  LineLayer,
 } from "@rnmapbox/maps";
 import { Actionsheet, ActionsheetContent } from "@/components/ui/actionsheet";
 import { useMapStore } from "@/stores/mapStore";
@@ -19,6 +18,7 @@ import { LocateMeButton } from "../../components/buttons/LocateMeButton";
 import { MapSearchBar } from "../../components/MapSearchBar";
 import { SearchOverlay } from "../SearchScreen";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import { CircuitLinesLayer } from "./layers";
 
 Mapbox.setAccessToken(MAPBOX_ACCESS_TOKEN);
 
@@ -139,40 +139,10 @@ export function MapScreen() {
         )}
 
         {/* Circuit Lines - Only show for current problem's circuit */}
-        {currentCircuitLine && viewProblem && (
-          <ShapeSource id="circuit-lines-source" shape={currentCircuitLine}>
-            <LineLayer
-              id="circuit-lines-layer"
-              style={{
-                lineColor: [
-                  "case",
-                  ["==", ["get", "color"], "red"],
-                  "#ff0000",
-                  ["==", ["get", "color"], "blue"],
-                  "#0000ff",
-                  ["==", ["get", "color"], "black"],
-                  "#000000",
-                  ["==", ["get", "color"], "white"],
-                  "#ffffff",
-                  ["==", ["get", "color"], "green"],
-                  "#00ff00",
-                  ["==", ["get", "color"], "yellow"],
-                  "#ffff00",
-                  "#888888",
-                ],
-                lineWidth: ["interpolate", ["linear"], ["zoom"], 16, 2, 22, 4],
-                lineDasharray: [2, 2],
-                lineOpacity: [
-                  "step",
-                  ["zoom"],
-                  0, // hidden below zoom 16
-                  16,
-                  0.8, // visible at zoom 16+
-                ],
-              }}
-            />
-          </ShapeSource>
-        )}
+        <CircuitLinesLayer 
+          circuitLines={currentCircuitLine} 
+          visible={viewProblem} 
+        />
 
         {/* Selected Problem Indicator */}
         {problem && viewProblem && problem.coordinates && (
