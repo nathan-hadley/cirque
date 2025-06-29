@@ -11,7 +11,7 @@ import { FeatureCollection, Point, GeoJsonProperties } from 'geojson';
  *   2. Run: npm run sync-problems
  *   3. Commit both files
  *
- * Generated: 2025-06-24T14:16:58.108Z
+ * Generated: 2025-06-29T02:59:31.043Z
  * Features: 140
  */
 
