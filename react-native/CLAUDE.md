@@ -64,7 +64,8 @@ When working on an active PR:
 5. **Check CI status** - Use `gh pr view --json statusCheckRollup` to monitor CI health
 
 ### CI Scripts Available
+
 - `pnpm lint` - ESLint checks
-- `pnpm typecheck` - TypeScript compilation check  
+- `pnpm typecheck` - TypeScript compilation check
 - `pnpm format` - Prettier formatting
 - `pnpm validate-data` - Data synchronization validation
