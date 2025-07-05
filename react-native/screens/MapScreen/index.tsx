@@ -76,9 +76,9 @@ export function MapScreen() {
         <ProblemsLayer />
         <SelectedProblemLayer />
         
-        {/* Circuit Lines - Only show for current problem's circuit */}
+        {/* Circuit Line - Only show for current problem's circuit */}
         <CircuitLinesLayer 
-          circuitLines={currentCircuitLine} 
+          circuitLine={currentCircuitLine} 
           visible={viewProblem && !!problem} 
           circuitColor={problem?.color}
         />

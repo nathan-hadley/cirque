@@ -4,47 +4,47 @@ import { FeatureCollection, LineString, GeoJsonProperties } from "geojson";
 
 type CircuitLinesLayerProps = {
   /**
-   * Circuit lines data to display
+   * Circuit line data to display
    * Should be a FeatureCollection containing LineString features
    */
-  circuitLines: FeatureCollection<LineString, GeoJsonProperties> | null;
+  circuitLine: FeatureCollection<LineString, GeoJsonProperties> | null;
   
   /**
-   * Whether the circuit lines should be visible
+   * Whether the circuit line should be visible
    * @default true
    */
   visible?: boolean;
 
   /**
    * Color of the selected problem's circuit
-   * Used to style the circuit lines to match
+   * Used to style the circuit line to match
    */
   circuitColor?: string;
 };
 
 /**
- * CircuitLinesLayer component renders dashed circuit lines on the map
+ * CircuitLinesLayer component renders dashed circuit line on the map
  * 
  * Features:
- * - Displays dashed lines connecting problems in circuit order
+ * - Displays dashed line connecting problems in circuit order
  * - Color-coded based on selected problem's circuit color
  * - Conditional visibility based on current problem selection
  * - Zoom-dependent opacity and line width
- * - Only shows lines for the currently selected problem's circuit
+ * - Only shows line for the currently selected problem's circuit
  */
 export function CircuitLinesLayer({ 
-  circuitLines, 
+  circuitLine, 
   visible = true, 
   circuitColor = "#3B82F6" 
 }: CircuitLinesLayerProps) {
-  if (!circuitLines || !visible || circuitLines.features.length === 0) {
+  if (!circuitLine || !visible || circuitLine.features.length === 0) {
     return null;
   }
 
   return (
-    <ShapeSource id="circuit-lines-source" shape={circuitLines}>
+    <ShapeSource id="circuit-line-source" shape={circuitLine}>
       <LineLayer
-        id="circuit-lines-layer"
+        id="circuit-line-layer"
         style={{
           lineColor: circuitColor,
           lineWidth: [

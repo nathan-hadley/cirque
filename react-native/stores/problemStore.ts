@@ -16,7 +16,6 @@ type ProblemState = {
   problem: Problem | null;
   viewProblem: boolean;
   problemsData: FeatureCollection<Point, GeoJsonProperties> | null;
-  circuitsData: FeatureCollection<LineString, GeoJsonProperties> | null;
 
   // Actions
   setProblem: (problem: Problem | null) => void;
@@ -34,7 +33,6 @@ export const useProblemStore = create<ProblemState>((set, get) => ({
   problem: null,
   viewProblem: false,
   problemsData,
-  circuitsData,
 
   // Actions
   setProblem: (problem: Problem | null) => set({ problem }),
@@ -146,7 +144,7 @@ export const useProblemStore = create<ProblemState>((set, get) => ({
   },
 
   getCurrentCircuitLine: (): FeatureCollection<LineString, GeoJsonProperties> | null => {
-    const { problem, circuitsData } = get();
+    const { problem } = get();
     if (!problem || !problem.colorStr || !problem.subarea || !circuitsData) return null;
     
     const currentCircuit = circuitsData.features.find(feature => 
