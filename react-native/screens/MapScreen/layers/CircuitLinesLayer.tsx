@@ -24,6 +24,7 @@ type CircuitLinesLayerProps = {
  * - Color-coded based on circuit color property
  * - Conditional visibility based on current problem selection
  * - Zoom-dependent opacity and line width
+ * - Only shows lines for the currently selected problem's circuit
  */
 export function CircuitLinesLayer({ circuitLines, visible = true }: CircuitLinesLayerProps) {
   if (!circuitLines || !visible || circuitLines.features.length === 0) {
