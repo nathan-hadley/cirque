@@ -146,16 +146,19 @@ export const useProblemStore = create<ProblemState>((set, get) => ({
   getCurrentCircuitLine: (): FeatureCollection<LineString, GeoJsonProperties> | null => {
     const { problem } = get();
     if (!problem || !problem.colorStr || !problem.subarea || !circuitsData) return null;
-    
-    const currentCircuit = circuitsData.features.find(feature => 
-      feature.properties?.color === problem.colorStr && 
-      feature.properties?.subarea === problem.subarea
+
+    const currentCircuit = circuitsData.features.find(
+      feature =>
+        feature.properties?.color === problem.colorStr &&
+        feature.properties?.subarea === problem.subarea
     );
-    
-    return currentCircuit ? {
-      type: "FeatureCollection" as const,
-      features: [currentCircuit]
-    } : null;
+
+    return currentCircuit
+      ? {
+          type: "FeatureCollection" as const,
+          features: [currentCircuit],
+        }
+      : null;
   },
 }));
 

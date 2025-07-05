@@ -75,11 +75,11 @@ export function MapScreen() {
         <BouldersLayer />
         <ProblemsLayer />
         <SelectedProblemLayer />
-        
+
         {/* Circuit Line - Only show for current problem's circuit */}
-        <CircuitLinesLayer 
-          circuitLine={currentCircuitLine} 
-          visible={viewProblem && !!problem} 
+        <CircuitLinesLayer
+          circuitLine={currentCircuitLine}
+          visible={viewProblem && !!problem}
           circuitColor={problem?.color}
         />
       </RNMapboxMapView>

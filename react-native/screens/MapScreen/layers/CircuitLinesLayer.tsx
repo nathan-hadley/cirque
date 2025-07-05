@@ -8,7 +8,7 @@ type CircuitLinesLayerProps = {
    * Should be a FeatureCollection containing LineString features
    */
   circuitLine: FeatureCollection<LineString, GeoJsonProperties> | null;
-  
+
   /**
    * Whether the circuit line should be visible
    * @default true
@@ -24,7 +24,7 @@ type CircuitLinesLayerProps = {
 
 /**
  * CircuitLinesLayer component renders dashed circuit line on the map
- * 
+ *
  * Features:
  * - Displays dashed line connecting problems in circuit order
  * - Color-coded based on selected problem's circuit color
@@ -32,10 +32,10 @@ type CircuitLinesLayerProps = {
  * - Zoom-dependent opacity and line width
  * - Only shows line for the currently selected problem's circuit
  */
-export function CircuitLinesLayer({ 
-  circuitLine, 
-  visible = true, 
-  circuitColor = "#3B82F6" 
+export function CircuitLinesLayer({
+  circuitLine,
+  visible = true,
+  circuitColor = "#3B82F6",
 }: CircuitLinesLayerProps) {
   if (!circuitLine || !visible || circuitLine.features.length === 0) {
     return null;
@@ -51,19 +51,23 @@ export function CircuitLinesLayer({
             "interpolate",
             ["linear"],
             ["zoom"],
-            16, 2,    // 2px at zoom 16
-            22, 4     // 4px at zoom 22
+            16,
+            2, // 2px at zoom 16
+            22,
+            4, // 4px at zoom 22
           ],
           lineDasharray: [2, 2], // Dashed line pattern
           lineOpacity: [
             "step",
             ["zoom"],
-            0,    // hidden below zoom 16
-            16, 0.8,  // 80% opacity at zoom 16+
-            18, 1.0   // 100% opacity at zoom 18+
+            0, // hidden below zoom 16
+            16,
+            0.8, // 80% opacity at zoom 16+
+            18,
+            1.0, // 100% opacity at zoom 18+
           ],
           lineCap: "round",
-          lineJoin: "round"
+          lineJoin: "round",
         }}
       />
     </ShapeSource>
