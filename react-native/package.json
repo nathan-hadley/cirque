@@ -15,8 +15,14 @@
     "typecheck": "tsc --noEmit",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "sync-data": "node ../scripts/sync-data.js",
+    "validate-data": "node ../scripts/sync-data.js --check",
     "sync-problems": "node ../scripts/sync-problems.js",
-    "validate-problems": "node ../scripts/sync-problems.js --check"
+    "validate-problems": "node ../scripts/sync-problems.js --check",
+    "sync-boulders": "node ../scripts/sync-boulders.js",
+    "validate-boulders": "node ../scripts/sync-boulders.js --check",
+    "sync-circuits": "node ../scripts/sync-circuits.js",
+    "validate-circuits": "node ../scripts/sync-circuits.js --check"
   },
   "jest": {
     "preset": "jest-expo"
