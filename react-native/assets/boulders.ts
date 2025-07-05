@@ -8,10 +8,10 @@ import { FeatureCollection, LineString, GeoJsonProperties } from 'geojson';
  *
  * To update:
  *   1. Edit cirque-data/boulders/boulders.geojson
- *   2. Run: npm run sync-problems
+ *   2. Run: npm run sync-boulders
  *   3. Commit both files
  *
- * Generated: 2025-06-29T02:59:31.043Z
+ * Generated: 2025-07-05T22:08:54.966Z
  * Features: 84
  */
 
