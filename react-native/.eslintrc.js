@@ -24,7 +24,6 @@ module.exports = {
     // Disable import/no-unresolved for now as it's conflicting with TypeScript resolution
     "import/no-unresolved": "off",
 
-    // Multi-agent collaboration guardrails
     "no-console": ["warn", { allow: ["warn", "error"] }],
     "no-debugger": "error",
     "no-alert": "error",
@@ -34,12 +33,11 @@ module.exports = {
     "no-irregular-whitespace": "error",
     "no-multiple-empty-lines": ["error", { max: 2, maxEOF: 1 }],
 
-    // Code consistency for multiple agents
+    // Code consistency
     "prefer-const": "error",
     "no-var": "error",
     "object-shorthand": "error",
     "prefer-template": "error",
-    "quote-props": ["error", "as-needed"],
 
     // Security guardrails
     "no-eval": "error",
