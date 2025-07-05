@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Platform, View } from "react-native";
-import Mapbox, { MapView as RNMapboxMapView, UserLocation, Camera } from "@rnmapbox/maps";
+import Mapbox, { MapView as RNMapboxMapView, UserLocation, Camera, ShapeSource, CircleLayer, SymbolLayer } from "@rnmapbox/maps";
 import { Actionsheet, ActionsheetContent } from "@/components/ui/actionsheet";
 import { useMapStore } from "@/stores/mapStore";
 import { useProblemStore } from "@/stores/problemStore";
@@ -12,7 +12,7 @@ import { LocateMeButton } from "../../components/buttons/LocateMeButton";
 import { MapSearchBar } from "../../components/MapSearchBar";
 import { SearchOverlay } from "../SearchScreen";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
-import { BouldersLayer, ProblemsLayer, SelectedProblemLayer } from "./layers";
+import { BouldersLayer, ProblemsLayer, SelectedProblemLayer, CircuitLinesLayer } from "./layers";
 
 Mapbox.setAccessToken(MAPBOX_ACCESS_TOKEN);
 
@@ -24,7 +24,9 @@ export function MapScreen() {
   const { centerToUserLocation, setMapRef, setCameraRef } = useMapStore();
 
   // Problem store for problem-specific state
-  const { problem, viewProblem, setViewProblem } = useProblemStore();
+  const { problem, viewProblem, setViewProblem, problemsData, getCurrentCircuitLine } = useProblemStore();
+
+  const currentCircuitLine = getCurrentCircuitLine();
 
   const mapRef = useRef<RNMapboxMapView>(null);
   const cameraRef = useRef<Camera>(null);
@@ -73,6 +75,12 @@ export function MapScreen() {
         <BouldersLayer />
         <ProblemsLayer />
         <SelectedProblemLayer />
+        
+        {/* Circuit Lines - Only show for current problem's circuit */}
+        <CircuitLinesLayer 
+          circuitLines={currentCircuitLine} 
+          visible={viewProblem} 
+        />
       </RNMapboxMapView>
 
       {/* Search Bar */}
