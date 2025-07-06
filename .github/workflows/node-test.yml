@@ -22,6 +22,7 @@ jobs:
       command: typecheck
 
   build:
+    needs: typecheck
     uses: ./.github/workflows/node-template.yml
     with:
-      command: expo export --platform web --output-dir dist --clear
+      command: expo export --platform android --output-dir dist --clear
