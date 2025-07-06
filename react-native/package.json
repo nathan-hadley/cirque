@@ -15,6 +15,8 @@
     "typecheck": "tsc --noEmit",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "check-all": "pnpm format:check && pnpm lint && pnpm typecheck",
+    "pre-commit": "pnpm check-all",
     "sync-data": "node ../scripts/sync-data.js",
     "validate-data": "node ../scripts/sync-data.js --check"
   },

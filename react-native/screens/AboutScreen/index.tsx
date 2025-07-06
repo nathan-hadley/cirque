@@ -81,7 +81,7 @@ export default function AboutScreen() {
     router.push("/");
 
     // Wait a bit for navigation to complete then navigate to the first problem
-    setTimeout(() => {
+    global.setTimeout(() => {
       mapProblemService.navigateToProblem({
         circuitColor: circuit.circuitColor,
         subarea: circuit.subarea,
