@@ -114,7 +114,7 @@ export function useOfflineMaps(): OfflineMapsState {
       return { success: true, message };
     } catch (error) {
       console.error("Error updating map data:", error);
-      return { success: false, message: "Failed to download map data. Error: " + error };
+      return { success: false, message: `Failed to download map data. Error: ${error}` };
     } finally {
       setLoading(false);
       setProgress(0);
@@ -135,7 +135,7 @@ export function useOfflineMaps(): OfflineMapsState {
       return { success: true, message: "Offline maps deleted successfully" };
     } catch (error) {
       console.error("Error deleting map data:", error);
-      return { success: false, message: "Failed to delete map data. Error: " + error };
+      return { success: false, message: `Failed to delete map data. Error: ${error}` };
     }
   };
 
