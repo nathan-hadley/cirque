@@ -11,4 +11,4 @@ jobs:
   validate-problems-data:
     uses: ./.github/workflows/node-template.yml
     with:
-      command: validate-problems 
+      command: validate-data 

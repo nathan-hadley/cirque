@@ -1,7 +1,8 @@
 import { create } from "zustand";
-import { Feature, GeoJsonProperties, Point } from "geojson";
+import { Feature, FeatureCollection, GeoJsonProperties, Point, LineString } from "geojson";
 import { Alert } from "react-native";
 import { problemsData } from "@/assets/problems";
+import { circuitsData } from "@/assets/circuits";
 import { Problem } from "@/models/problems";
 
 type GetProblemParams = {
@@ -23,13 +24,13 @@ type ProblemState = {
   showNextProblem: () => void;
   navigateToFirstProblem: (circuitColor: string, subarea: string) => void;
   createProblemFromMapFeature: (feature: Feature<Point, GeoJsonProperties>) => Problem | null;
+  getCurrentCircuitLine: () => FeatureCollection<LineString, GeoJsonProperties> | null;
 };
 
 export const useProblemStore = create<ProblemState>((set, get) => ({
   // Initial state
   problem: null,
   viewProblem: false,
-  problemsData,
 
   // Actions
   setProblem: (problem: Problem | null) => set({ problem }),
@@ -138,6 +139,24 @@ export const useProblemStore = create<ProblemState>((set, get) => ({
       subarea: properties.subarea?.toString(),
       coordinates,
     };
+  },
+
+  getCurrentCircuitLine: (): FeatureCollection<LineString, GeoJsonProperties> | null => {
+    const { problem } = get();
+    if (!problem || !problem.colorStr || !problem.subarea || !circuitsData) return null;
+
+    const currentCircuit = circuitsData.features.find(
+      feature =>
+        feature.properties?.color === problem.colorStr &&
+        feature.properties?.subarea === problem.subarea
+    );
+
+    return currentCircuit
+      ? {
+          type: "FeatureCollection" as const,
+          features: [currentCircuit],
+        }
+      : null;
   },
 }));
 

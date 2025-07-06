@@ -52,3 +52,20 @@ Two-tier search system:
 - TypeScript with strict typing
 - Functional components with hooks
 - File paths use @ alias for absolute imports
+
+## Pull Request Workflow
+
+When working on an active PR:
+
+1. **Always check PR comments** - Use `gh pr view --comments` to read feedback
+2. **Commit fixes immediately** - When fixing CI failures or addressing feedback, always commit the changes
+3. **Follow commit message format** - Use descriptive messages that explain what was fixed
+4. **Run validation** - Always run `pnpm lint`, `pnpm typecheck`, and `pnpm format` before committing
+5. **Check CI status** - Use `gh pr view --json statusCheckRollup` to monitor CI health
+
+### CI Scripts Available
+
+- `pnpm lint` - ESLint checks
+- `pnpm typecheck` - TypeScript compilation check
+- `pnpm format` - Prettier formatting
+- `pnpm validate-data` - Data synchronization validation
