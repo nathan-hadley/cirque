@@ -93,8 +93,8 @@ export default function AboutScreen() {
   return (
     <SafeAreaView className="flex-1 bg-background-0">
       <ScrollView
-        className="flex-1"
-        contentContainerStyle={{ paddingBottom: tabBarHeight }}
+        style={{ flex: 1 }}
+        contentContainerStyle={{ paddingBottom: tabBarHeight, flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
       >
         <View className="px-6 py-8">
