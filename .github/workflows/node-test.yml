@@ -22,33 +22,6 @@ jobs:
       command: typecheck
 
   build:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: react-native
-    steps:
-      - uses: actions/checkout@v4
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10
-      - name: Use Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: "pnpm"
-          cache-dependency-path: "react-native/pnpm-lock.yaml"
-      - name: Install dependencies
-        run: pnpm install
-      - name: Setup Expo CLI
-        run: pnpm add --global @expo/cli@latest
-      - name: Build app for production
-        run: npx expo export --platform web --output-dir dist --clear
-      - name: Verify build output
-        run: |
-          if [ ! -d "dist" ]; then
-            echo "Build failed - no dist directory found"
-            exit 1
-          fi
-          echo "Build successful - dist directory created"
-          ls -la dist/
+    uses: ./.github/workflows/node-template.yml
+    with:
+      command: expo export --platform web --output-dir dist --clear
