@@ -12,7 +12,7 @@ import { LocateMeButton } from "../../components/buttons/LocateMeButton";
 import { MapSearchBar } from "../../components/MapSearchBar";
 import { SearchOverlay } from "../SearchScreen";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
-import { BouldersLayer, ProblemsLayer, SelectedProblemLayer, CircuitLinesLayer } from "./layers";
+import { BouldersLayer, ProblemsLayer, SelectedProblemLayer, CircuitLineLayer } from "./layers";
 
 Mapbox.setAccessToken(MAPBOX_ACCESS_TOKEN);
 
@@ -77,7 +77,7 @@ export function MapScreen() {
         <SelectedProblemLayer />
 
         {/* Circuit Line - Only show for current problem's circuit */}
-        <CircuitLinesLayer
+        <CircuitLineLayer
           circuitLine={currentCircuitLine}
           visible={viewProblem && !!problem}
           circuitColor={problem?.color}

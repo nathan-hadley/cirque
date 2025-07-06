@@ -2,7 +2,7 @@ import React from "react";
 import { ShapeSource, LineLayer } from "@rnmapbox/maps";
 import { FeatureCollection, LineString, GeoJsonProperties } from "geojson";
 
-type CircuitLinesLayerProps = {
+type CircuitLineLayerProps = {
   /**
    * Circuit line data to display
    * Should be a FeatureCollection containing LineString features
@@ -23,7 +23,7 @@ type CircuitLinesLayerProps = {
 };
 
 /**
- * CircuitLinesLayer component renders dashed circuit line on the map
+ * CircuitLineLayer component renders dashed circuit line on the map
  *
  * Features:
  * - Displays dashed line connecting problems in circuit order
@@ -32,11 +32,11 @@ type CircuitLinesLayerProps = {
  * - Zoom-dependent opacity and line width
  * - Only shows line for the currently selected problem's circuit
  */
-export function CircuitLinesLayer({
+export function CircuitLineLayer({
   circuitLine,
   visible = true,
   circuitColor = "#3B82F6",
-}: CircuitLinesLayerProps) {
+}: CircuitLineLayerProps) {
   if (!circuitLine || !visible || circuitLine.features.length === 0) {
     return null;
   }
