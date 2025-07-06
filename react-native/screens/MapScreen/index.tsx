@@ -11,6 +11,7 @@ import { ProblemView } from "./ProblemView";
 import { LocateMeButton } from "../../components/buttons/LocateMeButton";
 import { MapSearchBar } from "../../components/MapSearchBar";
 import { SearchOverlay } from "../SearchScreen";
+import GradeFilter from "../../components/GradeFilter";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import {
   BouldersLayer,
@@ -93,6 +94,13 @@ export function MapScreen() {
 
       {/* Search Bar */}
       {!isSearchVisible && <MapSearchBar onPress={() => setIsSearchVisible(true)} />}
+
+      {/* Grade Filter */}
+      {!isSearchVisible && !viewProblem && (
+        <View className="absolute top-20 left-0 right-0 z-10">
+          <GradeFilter />
+        </View>
+      )}
 
       <LocateMeButton
         onPress={centerToUserLocation}

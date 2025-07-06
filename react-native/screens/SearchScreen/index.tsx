@@ -27,7 +27,7 @@ type SearchResult = {
 export function SearchOverlay({ isVisible, onClose }: SearchOverlayProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
-  const { createProblemFromMapFeature, setProblem, setViewProblem } = useProblemStore();
+  const { createProblemFromMapFeature, setProblem, setViewProblem, selectedGrades } = useProblemStore();
   const { flyToProblemCoordinates } = useMapStore();
   const { colorScheme } = useColorScheme();
 
@@ -45,6 +45,11 @@ export function SearchOverlay({ isVisible, onClose }: SearchOverlayProps) {
     problemsData.features.forEach(feature => {
       const problem = createProblemFromMapFeature(feature);
       if (!problem) return;
+
+      // Apply grade filter if grades are selected
+      if (selectedGrades.length > 0 && problem.grade && !selectedGrades.includes(problem.grade)) {
+        return;
+      }
 
       if (problem.name?.toLowerCase().includes(searchTerm)) {
         results.push({ problem, matchType: "name" });

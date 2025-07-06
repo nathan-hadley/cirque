@@ -15,10 +15,13 @@ type ProblemState = {
   // State
   problem: Problem | null;
   viewProblem: boolean;
+  selectedGrades: string[];
 
   // Actions
   setProblem: (problem: Problem | null) => void;
   setViewProblem: (view: boolean) => void;
+  setSelectedGrades: (grades: string[]) => void;
+  toggleGrade: (grade: string) => void;
   getProblem: (params: GetProblemParams) => Problem | null;
   showPreviousProblem: () => void;
   showNextProblem: () => void;
@@ -31,10 +34,19 @@ export const useProblemStore = create<ProblemState>((set, get) => ({
   // Initial state
   problem: null,
   viewProblem: false,
+  selectedGrades: [],
 
   // Actions
   setProblem: (problem: Problem | null) => set({ problem }),
   setViewProblem: (view: boolean) => set({ viewProblem: view }),
+  setSelectedGrades: (grades: string[]) => set({ selectedGrades: grades }),
+  toggleGrade: (grade: string) => {
+    const { selectedGrades } = get();
+    const newGrades = selectedGrades.includes(grade)
+      ? selectedGrades.filter(g => g !== grade)
+      : [...selectedGrades, grade];
+    set({ selectedGrades: newGrades });
+  },
 
   getProblem: (params: GetProblemParams): Problem | null => {
     const { createProblemFromMapFeature } = get();
