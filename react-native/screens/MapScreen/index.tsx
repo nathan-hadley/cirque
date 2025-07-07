@@ -11,7 +11,7 @@ import { ProblemView } from "./ProblemView";
 import { LocateMeButton } from "../../components/buttons/LocateMeButton";
 import { MapSearchBar } from "../../components/MapSearchBar";
 import { SearchOverlay } from "../SearchScreen";
-import GradeFilter from "../../components/GradeFilter";
+import GradeFilterBottomSheet from "../../components/GradeFilterBottomSheet";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import {
   BouldersLayer,
@@ -24,8 +24,9 @@ import {
 Mapbox.setAccessToken(MAPBOX_ACCESS_TOKEN);
 
 export function MapScreen() {
-  // Local state for search overlay
+  // Local state for overlays
   const [isSearchVisible, setIsSearchVisible] = useState(false);
+  const [isFilterVisible, setIsFilterVisible] = useState(false);
 
   // Map store for map-specific state and actions
   const { centerToUserLocation, setMapRef, setCameraRef } = useMapStore();
@@ -92,14 +93,12 @@ export function MapScreen() {
         />
       </RNMapboxMapView>
 
-      {/* Search Bar */}
-      {!isSearchVisible && <MapSearchBar onPress={() => setIsSearchVisible(true)} />}
-
-      {/* Grade Filter */}
-      {!isSearchVisible && !viewProblem && (
-        <View className="absolute top-20 left-0 right-0 z-10">
-          <GradeFilter />
-        </View>
+      {/* Search Bar with Filter Button */}
+      {!isSearchVisible && (
+        <MapSearchBar 
+          onPress={() => setIsSearchVisible(true)} 
+          onFilterPress={() => setIsFilterVisible(true)}
+        />
       )}
 
       <LocateMeButton
@@ -122,6 +121,12 @@ export function MapScreen() {
 
       {/* Search Overlay */}
       <SearchOverlay isVisible={isSearchVisible} onClose={() => setIsSearchVisible(false)} />
+
+      {/* Grade Filter Bottom Sheet */}
+      <GradeFilterBottomSheet 
+        isOpen={isFilterVisible} 
+        onClose={() => setIsFilterVisible(false)} 
+      />
     </View>
   );
 }
