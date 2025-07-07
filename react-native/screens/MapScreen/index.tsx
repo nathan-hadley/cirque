@@ -11,6 +11,7 @@ import { ProblemView } from "./ProblemView";
 import { LocateMeButton } from "../../components/buttons/LocateMeButton";
 import { MapSearchBar } from "../../components/MapSearchBar";
 import { SearchOverlay } from "../SearchScreen";
+import GradeFilterBottomSheet from "../../components/GradeFilterBottomSheet";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import {
   BouldersLayer,
@@ -23,16 +24,17 @@ import {
 Mapbox.setAccessToken(MAPBOX_ACCESS_TOKEN);
 
 export function MapScreen() {
-  // Local state for search overlay
+  // Local state for overlays
   const [isSearchVisible, setIsSearchVisible] = useState(false);
+  const [isFilterVisible, setIsFilterVisible] = useState(false);
 
   // Map store for map-specific state and actions
   const { centerToUserLocation, setMapRef, setCameraRef } = useMapStore();
 
   // Problem store for problem-specific state
-  const { problem, viewProblem, setViewProblem, getCurrentCircuitLine } = useProblemStore();
+  const { problem, viewProblem, setViewProblem, getFilteredCircuitLine } = useProblemStore();
 
-  const currentCircuitLine = getCurrentCircuitLine();
+  const currentCircuitLine = getFilteredCircuitLine();
 
   const mapRef = useRef<RNMapboxMapView>(null);
   const cameraRef = useRef<Camera>(null);
@@ -91,8 +93,13 @@ export function MapScreen() {
         />
       </RNMapboxMapView>
 
-      {/* Search Bar */}
-      {!isSearchVisible && <MapSearchBar onPress={() => setIsSearchVisible(true)} />}
+      {/* Search Bar with Filter Button */}
+      {!isSearchVisible && (
+        <MapSearchBar 
+          onPress={() => setIsSearchVisible(true)} 
+          onFilterPress={() => setIsFilterVisible(true)}
+        />
+      )}
 
       <LocateMeButton
         onPress={centerToUserLocation}
@@ -114,6 +121,12 @@ export function MapScreen() {
 
       {/* Search Overlay */}
       <SearchOverlay isVisible={isSearchVisible} onClose={() => setIsSearchVisible(false)} />
+
+      {/* Grade Filter Bottom Sheet */}
+      <GradeFilterBottomSheet 
+        isOpen={isFilterVisible} 
+        onClose={() => setIsFilterVisible(false)} 
+      />
     </View>
   );
 }

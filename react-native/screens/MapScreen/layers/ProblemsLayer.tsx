@@ -1,14 +1,29 @@
 import { problemsData } from "@/assets/problems";
 import { CircleLayer, ShapeSource, SymbolLayer } from "@rnmapbox/maps";
 import { PROBLEM_COLORS } from "@/constants/map";
+import { useProblemStore } from "@/stores/problemStore";
+import { useMemo } from "react";
 
 export function ProblemsLayer() {
+  const { selectedGrades } = useProblemStore();
+  
   if (!problemsData) return null;
+
+  // Create filter expression for selected grades
+  const gradeFilter = useMemo(() => {
+    if (selectedGrades.length === 0) {
+      return true; // Show all problems when no grades are selected
+    }
+    
+    // Create an "in" expression for the selected grades
+    return ["in", ["get", "grade"], ["literal", selectedGrades]];
+  }, [selectedGrades]);
 
   return (
     <ShapeSource id="problems-source" shape={problemsData}>
       <CircleLayer
         id="problems-layer"
+        filter={gradeFilter}
         style={{
           circleRadius: ["interpolate", ["linear"], ["zoom"], 16, 3, 22, 20],
           circleColor: [
@@ -39,6 +54,7 @@ export function ProblemsLayer() {
       />
       <SymbolLayer
         id="problems-text-layer"
+        filter={gradeFilter}
         style={{
           textField: ["get", "order"],
           textSize: ["interpolate", ["linear"], ["zoom"], 17, 8, 22, 26],

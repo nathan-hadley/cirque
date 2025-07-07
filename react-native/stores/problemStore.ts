@@ -15,26 +15,39 @@ type ProblemState = {
   // State
   problem: Problem | null;
   viewProblem: boolean;
+  selectedGrades: string[];
 
   // Actions
   setProblem: (problem: Problem | null) => void;
   setViewProblem: (view: boolean) => void;
+  setSelectedGrades: (grades: string[]) => void;
+  toggleGrade: (grade: string) => void;
   getProblem: (params: GetProblemParams) => Problem | null;
   showPreviousProblem: () => void;
   showNextProblem: () => void;
   navigateToFirstProblem: (circuitColor: string, subarea: string) => void;
   createProblemFromMapFeature: (feature: Feature<Point, GeoJsonProperties>) => Problem | null;
   getCurrentCircuitLine: () => FeatureCollection<LineString, GeoJsonProperties> | null;
+  getFilteredCircuitLine: () => FeatureCollection<LineString, GeoJsonProperties> | null;
 };
 
 export const useProblemStore = create<ProblemState>((set, get) => ({
   // Initial state
   problem: null,
   viewProblem: false,
+  selectedGrades: [],
 
   // Actions
   setProblem: (problem: Problem | null) => set({ problem }),
   setViewProblem: (view: boolean) => set({ viewProblem: view }),
+  setSelectedGrades: (grades: string[]) => set({ selectedGrades: grades }),
+  toggleGrade: (grade: string) => {
+    const { selectedGrades } = get();
+    const newGrades = selectedGrades.includes(grade)
+      ? selectedGrades.filter(g => g !== grade)
+      : [...selectedGrades, grade];
+    set({ selectedGrades: newGrades });
+  },
 
   getProblem: (params: GetProblemParams): Problem | null => {
     const { createProblemFromMapFeature } = get();
@@ -152,6 +165,44 @@ export const useProblemStore = create<ProblemState>((set, get) => ({
     );
 
     return currentCircuit
+      ? {
+          type: "FeatureCollection" as const,
+          features: [currentCircuit],
+        }
+      : null;
+  },
+
+  getFilteredCircuitLine: (): FeatureCollection<LineString, GeoJsonProperties> | null => {
+    const { problem, selectedGrades } = get();
+    if (!problem || !problem.colorStr || !problem.subarea || !circuitsData) return null;
+
+    // If no grades are selected, show the full circuit line
+    if (selectedGrades.length === 0) {
+      return get().getCurrentCircuitLine();
+    }
+
+    // Find the current circuit
+    const currentCircuit = circuitsData.features.find(
+      feature =>
+        feature.properties?.color === problem.colorStr &&
+        feature.properties?.subarea === problem.subarea
+    );
+
+    if (!currentCircuit || !problemsData) return null;
+
+    // Check if any problems in this circuit match the selected grades
+    const hasMatchingProblems = problemsData.features.some(feature => {
+      const problemProps = feature.properties;
+      return (
+        problemProps?.color === problem.colorStr &&
+        problemProps?.subarea === problem.subarea &&
+        problemProps?.grade &&
+        selectedGrades.includes(problemProps.grade)
+      );
+    });
+
+    // Only show circuit line if it contains problems matching the selected grades
+    return hasMatchingProblems
       ? {
           type: "FeatureCollection" as const,
           features: [currentCircuit],
