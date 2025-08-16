@@ -11,8 +11,8 @@ export default function RootLayout() {
   return (
     <GluestackUIProvider mode="system">
       <KeyboardProvider>
-        <Slot />
         <StatusBar style="auto" />
+        <Slot />
       </KeyboardProvider>
     </GluestackUIProvider>
   );
