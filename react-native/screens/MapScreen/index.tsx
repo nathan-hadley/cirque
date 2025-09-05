@@ -11,7 +11,7 @@ import { ProblemView } from "./ProblemView";
 import { LocateMeButton } from "../../components/buttons/LocateMeButton";
 import { MapSearchBar } from "../../components/MapSearchBar";
 import { SearchOverlay } from "../SearchScreen";
-import GradeFilterBottomSheet from "../../components/GradeFilterBottomSheet";
+import GradeFilterSheet from "../../components/GradeFilterSheet";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import {
   BouldersLayer,
@@ -53,6 +53,16 @@ export function MapScreen() {
     rotateEnabled: false,
   };
 
+  function handleMapPress(e: any) {
+    const { screenPointX, screenPointY } = e.properties || {};
+    if (screenPointX && screenPointY) {
+      mapProblemService.handleMapTap({
+        x: screenPointX,
+        y: screenPointY,
+      });
+    }
+  }
+
   return (
     <View className="flex-1">
       <RNMapboxMapView
@@ -61,15 +71,7 @@ export function MapScreen() {
         scaleBarEnabled={false}
         compassEnabled={false}
         gestureSettings={gestureOptions}
-        onPress={e => {
-          const { screenPointX, screenPointY } = e.properties || {};
-          if (screenPointX && screenPointY) {
-            mapProblemService.handleMapTap({
-              x: screenPointX,
-              y: screenPointY,
-            });
-          }
-        }}
+        onPress={handleMapPress}
         style={{ flex: 1 }}
       >
         <Camera
@@ -78,22 +80,18 @@ export function MapScreen() {
           zoomLevel={INITIAL_ZOOM}
           animationDuration={0}
         />
-        <UserLocation showsUserHeadingIndicator={true} />
-
         <BouldersLayer />
+        <CircuitLineLayer
+          circuitLine={currentCircuitLine}
+          visible={!!problem}
+          circuitColor={problem?.color}
+        />
         <ProblemsLayer />
         <SelectedProblemLayer />
         <SubareaLabelsLayer />
-
-        {/* Circuit Line - Only show for current problem's circuit */}
-        <CircuitLineLayer
-          circuitLine={currentCircuitLine}
-          visible={viewProblem && !!problem}
-          circuitColor={problem?.color}
-        />
+        <UserLocation showsUserHeadingIndicator={true} />
       </RNMapboxMapView>
 
-      {/* Search Bar with Filter Button */}
       {!isSearchVisible && (
         <MapSearchBar 
           onPress={() => setIsSearchVisible(true)} 
@@ -107,7 +105,7 @@ export function MapScreen() {
         style={{ bottom: bottomOffset + 16 }}
       />
 
-      {/* Problem ActionSheet */}
+      {/* Problem Sheet */}
       <Actionsheet
         isOpen={viewProblem && problem !== null}
         onClose={() => setViewProblem(false)}
@@ -119,11 +117,9 @@ export function MapScreen() {
         </ActionsheetContent>
       </Actionsheet>
 
-      {/* Search Overlay */}
       <SearchOverlay isVisible={isSearchVisible} onClose={() => setIsSearchVisible(false)} />
 
-      {/* Grade Filter Bottom Sheet */}
-      <GradeFilterBottomSheet 
+      <GradeFilterSheet 
         isOpen={isFilterVisible} 
         onClose={() => setIsFilterVisible(false)} 
       />
