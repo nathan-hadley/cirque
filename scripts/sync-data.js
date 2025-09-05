@@ -2,7 +2,6 @@
 
 const { syncProblems } = require('./sync-problems');
 const { syncBoulders } = require('./sync-boulders');
-const { syncCircuits } = require('./sync-circuits');
 const { syncSubareas } = require('./sync-subareas');
 const { isValidationRun } = require('./shared/sync-utils');
 
@@ -28,10 +27,6 @@ function syncAllData() {
     // Sync boulders data
     const bouldersSuccess = syncBoulders();
     allSuccess = allSuccess && bouldersSuccess;
-    
-    // Sync circuits data
-    const circuitsSuccess = syncCircuits();
-    allSuccess = allSuccess && circuitsSuccess;
     
     // Sync subareas data
     const subareasSuccess = syncSubareas();

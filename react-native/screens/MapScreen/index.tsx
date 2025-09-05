@@ -33,9 +33,9 @@ export function MapScreen() {
   const { centerToUserLocation, setMapRef, setCameraRef } = useMapStore();
 
   // Problem store for problem-specific state
-  const { problem, viewProblem, setViewProblem, getFilteredCircuitLine } = useProblemStore();
+  const { problem, viewProblem, setViewProblem, getCircuitLine } = useProblemStore();
 
-  const currentCircuitLine = getFilteredCircuitLine();
+  const currentCircuitLine = getCircuitLine();
 
   const mapRef = useRef<RNMapboxMapView>(null);
   const cameraRef = useRef<Camera>(null);
