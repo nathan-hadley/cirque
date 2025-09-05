@@ -1,17 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Platform, View } from "react-native";
 import Mapbox, { MapView as RNMapboxMapView, UserLocation, Camera } from "@rnmapbox/maps";
-import { Actionsheet, ActionsheetContent } from "@/components/ui/actionsheet";
 import { useMapStore } from "@/stores/mapStore";
 import { useProblemStore } from "@/stores/problemStore";
 
 import { mapProblemService } from "@/services/mapProblemService";
 import { INITIAL_CENTER, INITIAL_ZOOM, STYLE_URI, MAPBOX_ACCESS_TOKEN } from "@/constants/map";
-import { ProblemView } from "./ProblemView";
+import { ProblemSheet } from "./ProblemSheet";
 import { LocateMeButton } from "../../components/buttons/LocateMeButton";
 import { MapSearchBar } from "../../components/MapSearchBar";
 import { SearchOverlay } from "../SearchScreen";
-import GradeFilterSheet from "../../components/GradeFilterSheet";
+import GradeFilterSheet from "./GradeFilterSheet";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import {
   BouldersLayer,
@@ -20,6 +19,8 @@ import {
   CircuitLineLayer,
   SubareaLabelsLayer,
 } from "./layers";
+import { FilterButton } from "@/components/buttons/FilterButton";
+import { Feature, GeoJsonProperties, Geometry } from "geojson";
 
 Mapbox.setAccessToken(MAPBOX_ACCESS_TOKEN);
 
@@ -53,8 +54,8 @@ export function MapScreen() {
     rotateEnabled: false,
   };
 
-  function handleMapPress(e: any) {
-    const { screenPointX, screenPointY } = e.properties || {};
+  function handleMapPress(feature: Feature<Geometry, GeoJsonProperties>) {
+    const { screenPointX, screenPointY } = feature.properties || {};
     if (screenPointX && screenPointY) {
       mapProblemService.handleMapTap({
         x: screenPointX,
@@ -92,12 +93,13 @@ export function MapScreen() {
         <UserLocation showsUserHeadingIndicator={true} />
       </RNMapboxMapView>
 
-      {!isSearchVisible && (
-        <MapSearchBar 
-          onPress={() => setIsSearchVisible(true)} 
-          onFilterPress={() => setIsFilterVisible(true)}
-        />
-      )}
+      <MapSearchBar onPress={() => setIsSearchVisible(true)} />
+
+      <FilterButton
+        onFilterPress={() => setIsFilterVisible(true)}
+        className="absolute right-4"
+        style={{ bottom: bottomOffset + 72 }}
+      />
 
       <LocateMeButton
         onPress={centerToUserLocation}
@@ -105,24 +107,17 @@ export function MapScreen() {
         style={{ bottom: bottomOffset + 16 }}
       />
 
-      {/* Problem Sheet */}
-      <Actionsheet
+      <ProblemSheet
+        problem={problem}
         isOpen={viewProblem && problem !== null}
         onClose={() => setViewProblem(false)}
         closeOnOverlayClick={false}
         snapPoints={Platform.OS === "ios" ? [50] : undefined}
-      >
-        <ActionsheetContent className="p-0">
-          {problem && <ProblemView problem={problem} />}
-        </ActionsheetContent>
-      </Actionsheet>
+      />
 
       <SearchOverlay isVisible={isSearchVisible} onClose={() => setIsSearchVisible(false)} />
 
-      <GradeFilterSheet 
-        isOpen={isFilterVisible} 
-        onClose={() => setIsFilterVisible(false)} 
-      />
+      <GradeFilterSheet isOpen={isFilterVisible} onClose={() => setIsFilterVisible(false)} />
     </View>
   );
 }

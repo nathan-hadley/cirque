@@ -6,22 +6,23 @@ import { useMemo } from "react";
 
 export function ProblemsLayer() {
   const { selectedGrades } = useProblemStore();
-  
-  if (!problemsData) return null;
 
-  // Create filter expression for selected grades
   const gradeFilter = useMemo(() => {
     if (selectedGrades.length === 0) {
-      return true; // Show all problems when no grades are selected
+      return undefined;
     }
-    
-    // Create an "in" expression for the selected grades
     return ["in", ["get", "grade"], ["literal", selectedGrades]];
   }, [selectedGrades]);
+
+  if (!problemsData) return null;
+
+  const layerKey =
+    selectedGrades.length === 0 ? "all-grades" : `filtered-${selectedGrades.join("-")}`;
 
   return (
     <ShapeSource id="problems-source" shape={problemsData}>
       <CircleLayer
+        key={`${layerKey}-circle`}
         id="problems-layer"
         filter={gradeFilter}
         style={{
@@ -53,6 +54,7 @@ export function ProblemsLayer() {
         }}
       />
       <SymbolLayer
+        key={`${layerKey}-symbol`}
         id="problems-text-layer"
         filter={gradeFilter}
         style={{
