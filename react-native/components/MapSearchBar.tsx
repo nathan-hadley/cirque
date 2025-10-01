@@ -1,5 +1,5 @@
 import React from "react";
-import { TouchableOpacity, Platform } from "react-native";
+import { Platform, View, Pressable } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Search } from "lucide-react-native";
 import { Input, InputField, InputIcon } from "@/components/ui/input";
@@ -24,24 +24,24 @@ export function MapSearchBar({ onPress }: MapSearchBarProps) {
   };
 
   return (
-    <TouchableOpacity
-      onPress={handlePress}
+    <View
       className="absolute left-4 right-4"
       style={{
         top: topOffset,
         elevation: Platform.OS === "android" ? 8 : undefined,
       }}
-      activeOpacity={0.7}
     >
-      <Input className="bg-typography-100" variant="rounded" size="lg" pointerEvents="none">
-        <InputIcon as={Search} className="ml-3" />
-        <InputField
-          placeholder="Search problems..."
-          editable={false}
-          className="text-typography-600"
-          pointerEvents="none"
-        />
-      </Input>
-    </TouchableOpacity>
+      <Pressable onPress={handlePress} className="flex-1">
+        <Input className="bg-typography-100" variant="rounded" size="lg" pointerEvents="none">
+          <InputIcon as={Search} className="ml-3" />
+          <InputField
+            placeholder="Search problems..."
+            editable={false}
+            className="text-typography-600"
+            pointerEvents="none"
+          />
+        </Input>
+      </Pressable>
+    </View>
   );
 }

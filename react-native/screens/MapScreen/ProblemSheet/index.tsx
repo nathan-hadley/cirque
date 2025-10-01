@@ -2,20 +2,25 @@ import React from "react";
 import { Problem } from "@/models/problems";
 import { Topo } from "./Topo/index";
 import { VStack } from "@/components/ui/vstack";
-import { ActionsheetDragIndicatorWrapper } from "@/components/ui/actionsheet";
+import {
+  Actionsheet,
+  ActionsheetContent,
+  ActionsheetDragIndicatorWrapper,
+  ActionsheetScrollView,
+} from "@/components/ui/actionsheet";
 import { MapPinIcon } from "lucide-react-native";
-import { Platform, ScrollView, View } from "react-native";
+import { Platform, View } from "react-native";
 import { Icon } from "@/components/ui/icon";
 import { Heading } from "@/components/ui/heading";
 import { HStack } from "@/components/ui/hstack";
 import { Text } from "@/components/ui/text";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-type ProblemViewProps = {
-  problem: Problem;
+type ProblemSheetProps = React.ComponentProps<typeof Actionsheet> & {
+  problem: Problem | null;
 };
 
-function ProblemDescription({ problem }: ProblemViewProps) {
+function ProblemDescription({ problem }: { problem: Problem }) {
   const { bottom } = useSafeAreaInsets();
   return (
     <VStack className="p-2 gap-1" style={{ paddingBottom: bottom }}>
@@ -44,23 +49,25 @@ function ProblemDescription({ problem }: ProblemViewProps) {
   );
 }
 
-export function ProblemView({ problem }: ProblemViewProps) {
+export function ProblemSheet({ problem, ...props }: ProblemSheetProps) {
   if (!problem) return null;
 
   return (
-    <VStack className="gap-1">
-      <ActionsheetDragIndicatorWrapper className="pt-0">
-        <Topo problem={problem} />
-      </ActionsheetDragIndicatorWrapper>
-      {/* The ScrollView doesn't work well on Android,
-      so we are letting the Actionsheet resize itself. */}
-      {Platform.OS === "ios" ? (
-        <ScrollView showsVerticalScrollIndicator={true}>
+    <Actionsheet className="gap-1" {...props}>
+      <ActionsheetContent className="p-0">
+        <ActionsheetDragIndicatorWrapper className="pt-0">
+          <Topo problem={problem} />
+        </ActionsheetDragIndicatorWrapper>
+        {/* The ScrollView doesn't work well on Android,
+        so we are letting the Actionsheet resize itself. */}
+        {Platform.OS === "ios" ? (
+          <ActionsheetScrollView showsVerticalScrollIndicator={true}>
+            <ProblemDescription problem={problem} />
+          </ActionsheetScrollView>
+        ) : (
           <ProblemDescription problem={problem} />
-        </ScrollView>
-      ) : (
-        <ProblemDescription problem={problem} />
-      )}
-    </VStack>
+        )}
+      </ActionsheetContent>
+    </Actionsheet>
   );
 }

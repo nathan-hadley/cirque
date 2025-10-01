@@ -18,6 +18,7 @@
     "check-all": "pnpm format:check && pnpm lint && pnpm typecheck",
     "pre-commit": "pnpm check-all",
     "sync-data": "node ../scripts/sync-data.js",
+    "sync-areas": "node ../scripts/sync-areas.js",
     "validate-data": "node ../scripts/sync-data.js --check"
   },
   "jest": {

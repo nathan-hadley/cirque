@@ -12,10 +12,11 @@ export function LocateMeButton({ onPress, className, style }: LocateMeButtonProp
   return (
     <Button
       onPress={onPress}
-      className={`w-12 h-12 rounded-full bg-typography-0 ${className}`}
+      className={`w-12 h-12 rounded-full shadow-md ${className}`}
       style={style}
+      action="secondary"
     >
-      <ButtonIcon as={CompassIcon} size="lg" className="text-blue-500" />
+      <ButtonIcon as={CompassIcon} size="lg" />
     </Button>
   );
 }

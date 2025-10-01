@@ -3,22 +3,8 @@ import { ShapeSource, LineLayer } from "@rnmapbox/maps";
 import { FeatureCollection, LineString, GeoJsonProperties } from "geojson";
 
 type CircuitLineLayerProps = {
-  /**
-   * Circuit line data to display
-   * Should be a FeatureCollection containing LineString features
-   */
   circuitLine: FeatureCollection<LineString, GeoJsonProperties> | null;
-
-  /**
-   * Whether the circuit line should be visible
-   * @default true
-   */
   visible?: boolean;
-
-  /**
-   * Color of the selected problem's circuit
-   * Used to style the circuit line to match
-   */
   circuitColor?: string;
 };
 

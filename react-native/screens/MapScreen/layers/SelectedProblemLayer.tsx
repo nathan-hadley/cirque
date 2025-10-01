@@ -29,9 +29,9 @@ export function SelectedProblemLayer() {
           circleStrokeOpacity: [
             "step",
             ["zoom"],
-            0, // hidden below zoom 16
+            0, // hidden below zoom 18
             18,
-            1, // visible at zoom 16+
+            1, // visible at zoom 18+
           ],
         }}
       />
