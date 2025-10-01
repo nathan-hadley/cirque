@@ -6,6 +6,11 @@
 
 ## Data Management
 
+### Adding new topos
+- Export from Photos app
+  - JPEG quality: Medium
+  - Size: Medium
+
 ### Problems Data Sync
 
 The app uses a single source of truth for problems data: `cirque-data/problems/problems.geojson`. 
