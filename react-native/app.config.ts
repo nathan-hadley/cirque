@@ -51,6 +51,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
           "Cirque requires your location to enable GPS navigation between boulder problems. For example, you will be able to see your location on the map and how close you are to a boulder.",
       },
     ],
+    "expo-font",
   ],
   experiments: {
     typedRoutes: true,
