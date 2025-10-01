@@ -1,4 +1,4 @@
-import { View, ScrollView, SafeAreaView } from "react-native";
+import { View, ScrollView, Platform } from "react-native";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { router } from "expo-router";
 import { Text } from "@/components/ui/text";
@@ -11,6 +11,8 @@ import { CircuitCard, DownloadStatusCard, ContributingSection } from "./componen
 import { Icon } from "@/components/ui/icon";
 import { CircleIcon } from "lucide-react-native";
 import { mapProblemService } from "@/services/mapProblemService";
+import { HStack } from "@/components/ui/hstack";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function AboutScreen() {
   const { loading, mapDownloaded, progress, updateMapData, deleteMapData } = useOfflineMaps();
@@ -92,18 +94,16 @@ export default function AboutScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-background-0">
-      <ScrollView
-        className="flex-1"
-        contentContainerStyle={{ paddingBottom: tabBarHeight }}
-        showsVerticalScrollIndicator={false}
-      >
-        <View className="px-6 py-8">
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View className="px-6 py-8 flex-1">
           {/* Header Section */}
           <VStack space="md" className="mb-8 items-center gap-2">
-            <Icon as={CircleIcon} size="xl" className="text-blue-600" />
-            <Heading size="2xl" className="text-center text-typography-900">
-              Cirque Leavy
-            </Heading>
+            <HStack className="items-center gap-2">
+              <Heading size="2xl" className="text-center text-typography-900">
+                Cirque Leavy
+              </Heading>
+              <Icon as={CircleIcon} size="xl" className="text-blue-600" />
+            </HStack>
             <Text className="text-center text-typography-600 text-lg">
               Fontainebleau-style circuits in Leavenworth
             </Text>
@@ -162,6 +162,7 @@ export default function AboutScreen() {
           {/* Contributing Section */}
           <ContributingSection />
         </View>
+        <View style={{ height: Platform.OS === "ios" ? tabBarHeight : 0 }} />
       </ScrollView>
     </SafeAreaView>
   );
