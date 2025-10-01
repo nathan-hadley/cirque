@@ -84,14 +84,14 @@ export function MapScreen() {
           animationDuration={0}
         />
         <BouldersLayer />
+        <SubareasLayer />
         <CircuitLineLayer
           circuitLine={currentCircuitLine}
           visible={!!problem}
           circuitColor={problem?.color}
         />
-        <ProblemsLayer />
         <SelectedProblemLayer />
-        <SubareasLayer />
+        <ProblemsLayer />
         <AreaLabelsLayer />
         <SubareaLabelsLayer />
         <UserLocation showsUserHeadingIndicator={true} />

@@ -7,12 +7,12 @@ import { useMemo } from "react";
 export function ProblemsLayer() {
   const { selectedGrades } = useProblemStore();
 
-  const gradeFilter = useMemo(() => {
+  const gradeFilter = () => {
     if (selectedGrades.length === 0) {
       return undefined;
     }
     return ["in", ["get", "grade"], ["literal", selectedGrades]];
-  }, [selectedGrades]);
+  };
 
   if (!problemsData) return null;
 
