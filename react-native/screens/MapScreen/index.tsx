@@ -17,6 +17,8 @@ import {
   ProblemsLayer,
   SelectedProblemLayer,
   CircuitLineLayer,
+  AreaLabelsLayer,
+  SubareasLayer,
   SubareaLabelsLayer,
 } from "./layers";
 import { FilterButton } from "@/components/buttons/FilterButton";
@@ -89,6 +91,8 @@ export function MapScreen() {
         />
         <ProblemsLayer />
         <SelectedProblemLayer />
+        <SubareasLayer />
+        <AreaLabelsLayer />
         <SubareaLabelsLayer />
         <UserLocation showsUserHeadingIndicator={true} />
       </RNMapboxMapView>

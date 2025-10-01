@@ -2,12 +2,12 @@
 
 const { syncProblems } = require('./sync-problems');
 const { syncBoulders } = require('./sync-boulders');
-const { syncSubareas } = require('./sync-subareas');
+const { syncAreasAndSubareas } = require('./sync-areas');
 const { isValidationRun } = require('./shared/sync-utils');
 
 /**
  * Main data synchronization script
- * Syncs all data types: problems, boulders, circuits, and subareas
+ * Syncs all data types: problems, boulders, areas, and subareas
  */
 function syncAllData() {
   const isValidation = isValidationRun();
@@ -28,9 +28,9 @@ function syncAllData() {
     const bouldersSuccess = syncBoulders();
     allSuccess = allSuccess && bouldersSuccess;
     
-    // Sync subareas data
-    const subareasSuccess = syncSubareas();
-    allSuccess = allSuccess && subareasSuccess;
+    // Sync areas and subareas data
+    const areasAndSubareasSuccess = syncAreasAndSubareas();
+    allSuccess = allSuccess && areasAndSubareasSuccess;
     
     if (isValidation) {
       if (allSuccess) {

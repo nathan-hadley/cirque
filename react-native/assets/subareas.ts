@@ -8,10 +8,10 @@ import { FeatureCollection, Point, GeoJsonProperties } from 'geojson';
  *
  * To update:
  *   1. Edit cirque-data/subareas/subarea-centers.geojson
- *   2. Run: npm run sync-subareas
+ *   2. Run: npm run sync-areas
  *   3. Commit both files
  *
- * Generated: 2025-07-06T19:50:13.406Z
+ * Generated: 2025-10-01T00:49:08.828Z
  * Features: 5
  */
 
