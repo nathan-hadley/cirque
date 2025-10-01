@@ -2,7 +2,6 @@ import { problemsData } from "@/assets/problems";
 import { CircleLayer, ShapeSource, SymbolLayer } from "@rnmapbox/maps";
 import { PROBLEM_COLORS } from "@/constants/map";
 import { useProblemStore } from "@/stores/problemStore";
-import { useMemo } from "react";
 
 export function ProblemsLayer() {
   const { selectedGrades } = useProblemStore();

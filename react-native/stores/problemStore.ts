@@ -69,11 +69,11 @@ export const useProblemStore = create<ProblemState>((set, get) => {
       type: "Feature",
       properties: {
         color: circuitColor,
-        subarea: subarea,
+        subarea,
       },
       geometry: {
         type: "LineString",
-        coordinates: coordinates,
+        coordinates,
       },
     };
 

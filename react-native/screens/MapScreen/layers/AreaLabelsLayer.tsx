@@ -26,7 +26,7 @@ export function AreaLabelsLayer() {
           textTransform: "none",
           textLetterSpacing: 0.5,
           textLineHeight: 1.2,
-          textMaxWidth: 10, 
+          textMaxWidth: 10,
           textJustify: "center",
           textAnchor: "center",
           textAllowOverlap: false,
