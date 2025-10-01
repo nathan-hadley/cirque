@@ -18,9 +18,9 @@ export function SubareaLabelsLayer() {
             16,
             16, // 16px at zoom 16
           ],
-          textColor: "#2D3748",
+          textColor: "#000000",
           textHaloColor: "#FFFFFF",
-          textHaloWidth: 2,
+          textHaloWidth: 1,
           textHaloBlur: 1,
           textOpacity: [
             "step",
@@ -31,8 +31,7 @@ export function SubareaLabelsLayer() {
             16,
             0, // Hidden at zoom 16 and above
           ],
-          textTransform: "uppercase",
-          textLetterSpacing: 0.1,
+          textLetterSpacing: 0.2,
           textJustify: "center",
           textAnchor: "center",
           textAllowOverlap: false,

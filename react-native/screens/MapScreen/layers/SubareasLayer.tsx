@@ -22,11 +22,7 @@ export function SubareasLayer() {
             0.2,
             16,
             0, // Hidden at zoom 16 and above
-
           ],
-          fillAntialias: true, // Antialias: True
-          fillTranslate: [0, 0], // Translate: 0, 0
-          fillTranslateAnchor: "map", // Translate anchor
         }}
       />
     </ShapeSource>

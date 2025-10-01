@@ -9,8 +9,8 @@ export function AreaLabelsLayer() {
         style={{
           textField: ["to-string", ["get", "name"]],
           textFont: ["Open Sans Regular"],
-          textSize: 14, // Fixed 14px size, no scaling
-          textColor: "#000000", // Black color from settings
+          textSize: 16, // Fixed 14px size, no scaling
+          textColor: "#000000",
           textHaloColor: "#FFFFFF",
           textHaloWidth: 2,
           textHaloBlur: 1,
