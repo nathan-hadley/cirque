@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Coordinates Recorder</title>
+    <meta charset="UTF-8">
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 20px; 
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .controls { 
+            margin-bottom: 20px; 
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        button { 
+            padding: 8px 16px; 
+            margin-right: 10px; 
+            margin-bottom: 5px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: #e9ecef;
+        }
+        button:active {
+            background-color: #dee2e6;
+        }
+        input[type="file"] {
+            margin-right: 10px;
+            padding: 5px;
+        }
+        #canvas { 
+            border: 2px solid #ddd; 
+            cursor: crosshair; 
+            display: block;
+            margin-bottom: 20px;
+            max-width: 100%;
+        }
+        #output { 
+            width: 100%; 
+            height: 150px; 
+            margin-top: 10px; 
+            font-family: 'Courier New', monospace;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+        }
+        .instructions {
+            background-color: #e7f3ff;
+            padding: 15px;
+            border-left: 4px solid #007bff;
+            margin-bottom: 20px;
+        }
+        .coordinates-count {
+            font-weight: bold;
+            color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Image Coordinates Recorder</h1>
+        
+        <div class="instructions">
+            <strong>How to use:</strong>
+            <ol>
+                <li>Click "Choose File" to select an image</li>
+                <li>Click on the image to record coordinates</li>
+                <li>Use "Clear" to reset coordinates</li>
+                <li>Use "Copy Results" to copy the output</li>
+            </ol>
+        </div>
+        
+        <div class="controls">
+            <input type="file" id="imageInput" accept="image/*">
+            <button onclick="clearCoordinates()">Clear Coordinates</button>
+            <button onclick="copyOutput()">Copy Results</button>
+            <span id="coordCount" class="coordinates-count"></span>
+        </div>
+        
+        <canvas id="canvas" style="display: none;"></canvas>
+        
+        <textarea id="output" placeholder="Load an image and click to record coordinates..."></textarea>
+    </div>
+    
+    <script>
+        // Global variables to store state
+        let coordinates = [];
+        let imageName = '';
+        let canvas, ctx;
+        
+        // Initialize when page loads
+        window.addEventListener('load', function() {
+            canvas = document.getElementById('canvas');
+            ctx = canvas.getContext('2d');
+            
+            // Set up file input handler
+            document.getElementById('imageInput').addEventListener('change', handleImageLoad);
+            
+            // Set up canvas click handler
+            canvas.addEventListener('click', recordCoordinates);
+            
+            updateOutput();
+        });
+        
+        /**
+         * Handle image file selection and loading
+         */
+        function handleImageLoad(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            // Validate file type
+            if (!file.type.startsWith('image/')) {
+                alert('Please select a valid image file.');
+                return;
+            }
+            
+            imageName = file.name;
+            const img = new Image();
+            
+            img.onload = function() {
+                // Set canvas size to match image
+                canvas.width = img.width;
+                canvas.height = img.height;
+                
+                // Draw image on canvas
+                ctx.drawImage(img, 0, 0);
+                
+                // Show canvas and reset coordinates
+                canvas.style.display = 'block';
+                coordinates = [];
+                updateOutput();
+                updateCoordinateCount();
+            };
+            
+            img.onerror = function() {
+                alert('Error loading image. Please try a different file.');
+            };
+            
+            // Load the image from the selected file
+            img.src = URL.createObjectURL(file);
+        }
+        
+        /**
+         * Record click coordinates on the canvas
+         */
+        function recordCoordinates(event) {
+            // Get canvas bounding rectangle to account for any CSS scaling
+            const rect = canvas.getBoundingClientRect();
+            
+            // Calculate actual coordinates relative to the image
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            
+            const x = Math.round((event.clientX - rect.left) * scaleX);
+            const y = Math.round((event.clientY - rect.top) * scaleY);
+            
+            // Add coordinates to array
+            coordinates.push([x, y]);
+            
+            // Visual feedback - draw a small circle at click point
+            drawClickMarker(x, y);
+            
+            // Update output and counter
+            updateOutput();
+            updateCoordinateCount();
+        }
+        
+        /**
+         * Draw a small marker where user clicked
+         */
+        function drawClickMarker(x, y) {
+            ctx.fillStyle = 'red';
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 2;
+            
+            // Draw circle
+            ctx.beginPath();
+            ctx.arc(x, y, 4, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.stroke();
+            
+            // Draw cross
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(x - 6, y);
+            ctx.lineTo(x + 6, y);
+            ctx.moveTo(x, y - 6);
+            ctx.lineTo(x, y + 6);
+            ctx.stroke();
+        }
+        
+        /**
+         * Update the output textarea with current results
+         */
+        function updateOutput() {
+            const output = document.getElementById('output');
+            
+            if (imageName && coordinates.length > 0) {
+                // Format output to match Python version
+                output.value = `image: ${imageName}\n"line": ${JSON.stringify(coordinates)}`;
+            } else if (imageName) {
+                output.value = `image: ${imageName}\n"line": []`;
+            } else {
+                output.value = 'Load an image and click to record coordinates...';
+            }
+        }
+        
+        /**
+         * Update the coordinate count display
+         */
+        function updateCoordinateCount() {
+            const countElement = document.getElementById('coordCount');
+            if (coordinates.length > 0) {
+                countElement.textContent = `Coordinates recorded: ${coordinates.length}`;
+            } else {
+                countElement.textContent = '';
+            }
+        }
+        
+        /**
+         * Clear all recorded coordinates
+         */
+        function clearCoordinates() {
+            coordinates = [];
+            updateOutput();
+            updateCoordinateCount();
+            
+            // Redraw image without markers
+            if (imageName && canvas.width > 0) {
+                // Re-trigger image load to clear markers
+                const fileInput = document.getElementById('imageInput');
+                if (fileInput.files[0]) {
+                    const img = new Image();
+                    img.onload = function() {
+                        ctx.drawImage(img, 0, 0);
+                    };
+                    img.src = URL.createObjectURL(fileInput.files[0]);
+                }
+            }
+        }
+        
+        /**
+         * Copy output to clipboard
+         */
+        function copyOutput() {
+            const output = document.getElementById('output');
+            output.select();
+            output.setSelectionRange(0, 99999); // For mobile devices
+            
+            try {
+                document.execCommand('copy');
+                
+                // Provide user feedback
+                const originalText = output.value;
+                output.value = 'Copied to clipboard!';
+                setTimeout(() => {
+                    output.value = originalText;
+                }, 1000);
+            } catch (err) {
+                // Fallback for older browsers
+                alert('Copy failed. Please select the text and copy manually.');
+            }
+        }
+    </script>
+</body>
+</html>
