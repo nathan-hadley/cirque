@@ -2551,6 +2551,176 @@
         "type": "Point",
         "coordinates": [-120.722821, 47.542825]
       }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Foot Fumpkin",
+        "grade": "V4",
+        "subarea": "Forestland",
+        "color": "red",
+        "order": "11",
+        "description": "Start with the tufa huecos in the deepest part of the cave, climbing through and out the 3D roof.",
+        "topo": "mad-meadows-foot-fumpkin",
+        "line": "[[363,403],[326,366],[342,346],[296,266],[292,145],[419,71]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-120.723169, 47.542911]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "The Undercling",
+        "grade": "V4",
+        "subarea": "Forestland",
+        "color": "red",
+        "order": "12",
+        "description": "Start in the big smooth heuco, climbing up into an undercling and topping out to the right.",
+        "topo": "mad-meadows-the-undercling",
+        "line": "[[323,333],[337,238],[366,155],[399,121]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-120.722431, 47.542588]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "The Scoop",
+        "grade": "V2",
+        "subarea": "Forestland",
+        "color": "red",
+        "order": "13",
+        "description": "Start sitting on the left and climb up and right.",
+        "topo": "mad-meadows-the-scoop",
+        "line": "[[275,281],[300,220],[427,161],[433,80]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-120.722903, 47.542616]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "The Rail",
+        "grade": "V4",
+        "subarea": "Forestland",
+        "color": "red",
+        "order": "14",
+        "description": "Start sitting with two low opposing sidepulls and a good heel hook.",
+        "topo": "mad-meadows-the-rail",
+        "line": "[[458,350],[487,236],[362,36]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-120.722933, 47.542603]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "The Crack",
+        "grade": "V2",
+        "subarea": "Forestland",
+        "color": "red",
+        "order": "15",
+        "description": "Crouch start on the blocky ledges and climb up and left, topping out in the V.",
+        "topo": "mad-meadows-the-rail",
+        "line": "[[320,316],[250,221],[246,109]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-120.723003, 47.542598]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Pruning Shears",
+        "grade": "V1",
+        "subarea": "Forestland",
+        "color": "red",
+        "order": "16",
+        "description": "Climb right arete, topping out left of the apex.",
+        "topo": "mad-meadows-pruning-shears",
+        "line": "[[392,247],[399,127],[341,47],[285,18]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-120.723031, 47.542578]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Madvillian",
+        "grade": "V2",
+        "subarea": "Forestland",
+        "color": "red",
+        "order": "17",
+        "description": "Climb right arete, finishing just right of the nose on jugs.",
+        "topo": "mad-meadows-the-pocket",
+        "line": "[[488,260],[453,195],[418,89]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-120.72307, 47.542633]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "The Pocket",
+        "grade": "V4",
+        "subarea": "Forestland",
+        "color": "red",
+        "order": "18",
+        "description": "Climb center of tall face on pockets and edges.",
+        "topo": "mad-meadows-the-pocket",
+        "line": "[[308,350],[292,273],[309,183],[335,126],[326,55]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-120.723178, 47.54262]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Dr. Doom",
+        "grade": "V2",
+        "subarea": "Forestland",
+        "color": "red",
+        "order": "19",
+        "description": "Start on the left arete but pull over, finishing up the right-facing crack.",
+        "topo": "mad-meadows-the-pocket",
+        "line": "[[147,265],[166,212],[220,145]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-120.723171, 47.542655]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "The Dish",
+        "grade": "V1",
+        "subarea": "Forestland",
+        "color": "red",
+        "order": "20",
+        "description": "Climb center of short boulder on heucos.",
+        "topo": "mad-meadows-the-dish",
+        "line": "[[328,282],[345,217],[341,60]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-120.723268, 47.542573]
+      }
     }
   ]
 }
