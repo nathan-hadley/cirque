@@ -2398,6 +2398,159 @@
         "type": "Point",
         "coordinates": [-120.720728, 47.54273]
       }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Dog Log",
+        "grade": "V2",
+        "subarea": "Forestland",
+        "color": "red",
+        "order": "2",
+        "description": "Climb friable edges from a high right-leaning crimp rail.",
+        "topo": "mad-meadows-dog-log",
+        "line": "[[314,210],[321,61]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-120720792, 47.542663]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Toprope Tough Guys",
+        "grade": "V0",
+        "subarea": "Forestland",
+        "color": "red",
+        "order": "4",
+        "description": "Tall easy face on downhill side of the Amphitheater boulder.",
+        "topo": "mad-meadows-toprope-tough-guys",
+        "line": "[[355,287],[385,196],[393,87]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-120.721636, 47.542335]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "The Kiddie Pool",
+        "grade": "V1",
+        "subarea": "Forestland",
+        "color": "red",
+        "order": "3",
+        "description": "Start on the right side of a sloping ledge and traverse left to the tree. Drop and continue onto the next boulder or mantle and climb easy face above.",
+        "topo": "mad-meadows-kiddie-pool",
+        "line": "[[451,250],[384,249],[267,229],[117,196]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-120.721528, 47.54236]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Winterbottom Arete",
+        "grade": "V3",
+        "subarea": "Forestland",
+        "color": "red",
+        "order": "5",
+        "description": "Start crouching and slap up arete.",
+        "topo": "mad-meadows-amphitheater",
+        "line": "[[68,328],[74,272],[130,199],[165,120]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-120.721515, 47.542412]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Crank",
+        "grade": "V1",
+        "subarea": "Forestland",
+        "color": "red",
+        "order": "6",
+        "description": "Climb the crack.",
+        "topo": "mad-meadows-amphitheater",
+        "line": "[[239,247],[204,191],[201,122]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-120.721526, 47.542409]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "The Ampitheater",
+        "grade": "V3",
+        "subarea": "Forestland",
+        "color": "red",
+        "order": "7",
+        "description": "Start on the two chest-high pods on the right side of the face. Climb straight up using a tiny crimp.",
+        "topo": "mad-meadows-amphitheater",
+        "line": "[[312,224],[328,166],[311,115],[308,52]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-120.721457, 47.542425]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Trail Mix",
+        "grade": "V3",
+        "subarea": "Forestland",
+        "color": "red",
+        "order": "8",
+        "description": "Climb the center of the slab through some high and committing moves.",
+        "topo": "mad-meadows-trail-mix",
+        "line": "[[313,290],[348,211],[390,132],[360,70],[356,48]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-120.72154, 47.54264]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Spongebob Squarepad",
+        "grade": "V3",
+        "subarea": "Forestland",
+        "color": "red",
+        "order": "9",
+        "description": "Start standing and slap and squeeze up the arete. The sit adds a few grades.",
+        "topo": "mad-meadows-spongebob-squarepad",
+        "line": "[[433,332],[441,257],[437,186],[393,72]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-120.722709, 47.542793]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "The Octopus",
+        "grade": "V2",
+        "subarea": "Forestland",
+        "color": "red",
+        "order": "10",
+        "description": "Start in the cool hueco and climb up juggy crack.",
+        "topo": "mad-meadows-spongebob-squarepad",
+        "line": "[[248,267],[221,184],[234,84]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-120.722821, 47.542825]
+      }
     }
   ]
 }
