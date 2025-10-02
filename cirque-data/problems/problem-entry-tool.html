@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Boulder Problem Data Entry Tool</title>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <div>
+      <h1>Boulder Problem Data Entry Tool</h1>
+
+      <div style="margin-bottom: 20px">
+        <strong>How to use:</strong>
+        <ol>
+          <li>Fill in the problem details in the form below</li>
+          <li>Click "Choose Image" to select a topo image</li>
+          <li>Click on the image to record the climbing line coordinates</li>
+          <li>Click "Add Problem" to save to problems.geojson</li>
+        </ol>
+        <strong>Note:</strong> The topo name will be automatically extracted
+        from your image filename (without extension).
+      </div>
+
+      <div id="status"></div>
+
+      <!-- Problem Details Form -->
+      <fieldset style="margin-bottom: 20px">
+        <legend>Problem Details</legend>
+
+        <div>
+          <label for="problemName"><strong>Name *</strong></label
+          ><br />
+          <input
+            type="text"
+            id="problemName"
+            required
+            placeholder="e.g. Toprope Slab"
+            style="width: 200px"
+          />
+        </div>
+        <br />
+
+        <div>
+          <label for="problemGrade"><strong>Grade *</strong></label
+          ><br />
+          <select id="problemGrade" required>
+            <option value="">Select Grade</option>
+            <option value="V0">V0</option>
+            <option value="V1">V1</option>
+            <option value="V2">V2</option>
+            <option value="V3">V3</option>
+            <option value="V4">V4</option>
+            <option value="V5">V5</option>
+            <option value="V6">V6</option>
+            <option value="V7">V7</option>
+            <option value="V8">V8</option>
+            <option value="V9">V9</option>
+            <option value="V10">V10</option>
+            <option value="V11">V11</option>
+            <option value="V12">V12</option>
+            <option value="Low 5th">Low 5th</option>
+          </select>
+        </div>
+        <br />
+
+        <div>
+          <label for="problemSubarea"><strong>Subarea *</strong></label
+          ><br />
+          <select id="problemSubarea" required>
+            <option value="">Select Subarea</option>
+            <option value="Forestland">Forestland</option>
+            <option value="Swiftwater">Swiftwater</option>
+            <option value="Straightaways">Straightaways</option>
+            <option value="Mad Meadows">Mad Meadows</option>
+          </select>
+        </div>
+        <br />
+
+        <div>
+          <label for="problemColor"><strong>Color *</strong></label
+          ><br />
+          <select id="problemColor" required>
+            <option value="">Select Color</option>
+            <option value="black">Black</option>
+            <option value="blue">Blue</option>
+            <option value="red">Red</option>
+            <option value="white">White</option>
+          </select>
+        </div>
+        <br />
+
+        <div>
+          <label for="problemOrder"><strong>Order *</strong></label
+          ><br />
+          <input
+            type="text"
+            id="problemOrder"
+            required
+            placeholder="e.g. 1, 26"
+            style="width: 100px"
+          />
+        </div>
+        <br />
+
+        <div>
+          <label for="problemDescription"><strong>Description</strong></label
+          ><br />
+          <textarea
+            id="problemDescription"
+            placeholder="e.g. Start just left of central blunt arete and work up and left to the left edge of the boulder."
+            style="width: 400px; height: 80px"
+          ></textarea>
+        </div>
+        <br />
+
+        <div>
+          <label for="problemLat"><strong>Latitude *</strong></label
+          ><br />
+          <input
+            type="number"
+            id="problemLat"
+            step="any"
+            required
+            placeholder="e.g. 47.54320900000"
+            style="width: 200px"
+          />
+        </div>
+        <br />
+
+        <div>
+          <label for="problemLng"><strong>Longitude *</strong></label
+          ><br />
+          <input
+            type="number"
+            id="problemLng"
+            step="any"
+            required
+            placeholder="e.g. -120.73552400000"
+            style="width: 200px"
+          />
+        </div>
+      </fieldset>
+
+      <!-- Image and Line Coordinates -->
+      <fieldset style="margin-bottom: 20px">
+        <legend>Topo Image and Climbing Line</legend>
+
+        <div style="margin-bottom: 10px">
+          <input type="file" id="imageInput" accept="image/*" />
+          <span id="filename" style="margin-left: 10px; font-style: italic"
+            >No image selected</span
+          >
+          <button onclick="clearCoordinates()" style="margin-left: 10px">
+            Clear Line
+          </button>
+          <span
+            id="coordCount"
+            style="margin-left: 10px; font-weight: bold"
+          ></span>
+        </div>
+
+        <canvas
+          id="canvas"
+          style="
+            display: none;
+            border: 1px solid #ccc;
+            cursor: crosshair;
+            max-width: 100%;
+          "
+        ></canvas>
+      </fieldset>
+
+      <!-- Controls -->
+      <fieldset style="margin-bottom: 20px">
+        <legend>Actions</legend>
+        <button
+          onclick="addProblem()"
+          style="
+            background-color: green;
+            color: white;
+            padding: 10px;
+            margin-right: 10px;
+          "
+        >
+          Add Problem to GeoJSON
+        </button>
+        <button onclick="clearForm()" style="margin-right: 10px">
+          Clear Form
+        </button>
+        <button onclick="loadProblemsFile()" style="margin-right: 10px">
+          Load Existing GeoJSON
+        </button>
+        <button onclick="downloadGeoJSON()">Download GeoJSON</button>
+      </fieldset>
+
+      <!-- Output -->
+      <fieldset>
+        <legend>Output Preview</legend>
+        <textarea
+          id="output"
+          placeholder="Problem data will appear here when you fill in the form..."
+          style="width: 100%; height: 200px; font-family: monospace"
+        ></textarea>
+      </fieldset>
+    </div>
+
+    <script>
+      // Global state
+      let coordinates = [];
+      let imageName = "";
+      let canvas, ctx;
+      let geojsonData = null;
+
+      // Initialize when page loads
+      window.addEventListener("load", function () {
+        canvas = document.getElementById("canvas");
+        ctx = canvas.getContext("2d");
+
+        // Set up event handlers
+        document
+          .getElementById("imageInput")
+          .addEventListener("change", handleImageLoad);
+        canvas.addEventListener("click", recordCoordinates);
+
+        // Add form change listeners to update preview
+        const formInputs = [
+          "problemName",
+          "problemGrade",
+          "problemSubarea",
+          "problemColor",
+          "problemOrder",
+          "problemDescription",
+          "problemLat",
+          "problemLng",
+        ];
+        formInputs.forEach((id) => {
+          document.getElementById(id).addEventListener("input", updateOutput);
+        });
+
+        updateOutput();
+        showStatus("Ready to create new problems!", "info");
+      });
+
+      /**
+       * Handle image file selection and loading
+       */
+      function handleImageLoad(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        if (!file.type.startsWith("image/")) {
+          showStatus("Please select a valid image file.", "error");
+          return;
+        }
+
+        imageName = file.name;
+        document.getElementById("filename").textContent = imageName;
+
+        const img = new Image();
+
+        img.onload = function () {
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
+          canvas.style.display = "block";
+          coordinates = [];
+          updateOutput();
+          updateCoordinateCount();
+          showStatus(
+            "Image loaded. Click on the image to record climbing line coordinates.",
+            "info"
+          );
+        };
+
+        img.onerror = function () {
+          showStatus(
+            "Error loading image. Please try a different file.",
+            "error"
+          );
+        };
+
+        img.src = URL.createObjectURL(file);
+      }
+
+      /**
+       * Record click coordinates on the canvas
+       */
+      function recordCoordinates(event) {
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+
+        const x = Math.round((event.clientX - rect.left) * scaleX);
+        const y = Math.round((event.clientY - rect.top) * scaleY);
+
+        coordinates.push([x, y]);
+        drawClickMarker(x, y);
+        updateOutput();
+        updateCoordinateCount();
+      }
+
+      /**
+       * Draw a marker where user clicked
+       */
+      function drawClickMarker(x, y) {
+        ctx.fillStyle = "red";
+        ctx.strokeStyle = "white";
+        ctx.lineWidth = 2;
+
+        ctx.beginPath();
+        ctx.arc(x, y, 4, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.strokeStyle = "white";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(x - 6, y);
+        ctx.lineTo(x + 6, y);
+        ctx.moveTo(x, y - 6);
+        ctx.lineTo(x, y + 6);
+        ctx.stroke();
+      }
+
+      /**
+       * Update the coordinate count display
+       */
+      function updateCoordinateCount() {
+        const countElement = document.getElementById("coordCount");
+        if (coordinates.length > 0) {
+          countElement.textContent = `Line points: ${coordinates.length}`;
+        } else {
+          countElement.textContent = "";
+        }
+      }
+
+      /**
+       * Clear all recorded coordinates
+       */
+      function clearCoordinates() {
+        coordinates = [];
+        updateOutput();
+        updateCoordinateCount();
+
+        if (imageName && canvas.width > 0) {
+          const fileInput = document.getElementById("imageInput");
+          if (fileInput.files[0]) {
+            const img = new Image();
+            img.onload = function () {
+              ctx.drawImage(img, 0, 0);
+            };
+            img.src = URL.createObjectURL(fileInput.files[0]);
+          }
+        }
+      }
+
+      /**
+       * Extract topo name from filename
+       */
+      function getTopoName(filename) {
+        if (!filename) return "";
+        return filename.replace(/\.[^/.]+$/, ""); // Remove file extension
+      }
+
+      /**
+       * Update the output preview
+       */
+      function updateOutput() {
+        const output = document.getElementById("output");
+
+        const name = document.getElementById("problemName").value;
+        const grade = document.getElementById("problemGrade").value;
+        const subarea = document.getElementById("problemSubarea").value;
+        const color = document.getElementById("problemColor").value;
+        const order = document.getElementById("problemOrder").value;
+        const description = document.getElementById("problemDescription").value;
+        const lat = document.getElementById("problemLat").value;
+        const lng = document.getElementById("problemLng").value;
+        const topo = getTopoName(imageName);
+
+        if (name || grade || subarea || coordinates.length > 0) {
+          const problem = {
+            type: "Feature",
+            properties: {
+              name: name || "",
+              grade: grade || "",
+              subarea: subarea || "",
+              color: color || "",
+              order: order || "",
+              description: description || "",
+              topo: topo,
+              line: JSON.stringify(coordinates),
+            },
+            geometry: {
+              type: "Point",
+              coordinates: [parseFloat(lng) || 0, parseFloat(lat) || 0],
+            },
+          };
+
+          output.value = JSON.stringify(problem, null, 2);
+        } else {
+          output.value = "Fill in the form to see problem data preview...";
+        }
+      }
+
+      /**
+       * Validate form data
+       */
+      function validateForm() {
+        const required = [
+          "problemName",
+          "problemGrade",
+          "problemSubarea",
+          "problemColor",
+          "problemOrder",
+          "problemLat",
+          "problemLng",
+        ];
+        const missing = [];
+
+        for (const fieldId of required) {
+          const value = document.getElementById(fieldId).value.trim();
+          if (!value) {
+            missing.push(
+              document
+                .querySelector(`label[for="${fieldId}"]`)
+                .textContent.replace(" *", "")
+            );
+          }
+        }
+
+        if (missing.length > 0) {
+          showStatus(
+            `Please fill in required fields: ${missing.join(", ")}`,
+            "error"
+          );
+          return false;
+        }
+
+        if (coordinates.length === 0) {
+          showStatus(
+            "Please click on the image to record climbing line coordinates.",
+            "error"
+          );
+          return false;
+        }
+
+        if (!imageName) {
+          showStatus("Please select a topo image.", "error");
+          return false;
+        }
+
+        return true;
+      }
+
+      /**
+       * Add problem to geojson data
+       */
+      function addProblem() {
+        if (!validateForm()) return;
+
+        const name = document.getElementById("problemName").value.trim();
+        const grade = document.getElementById("problemGrade").value;
+        const subarea = document.getElementById("problemSubarea").value;
+        const color = document.getElementById("problemColor").value;
+        const order = document.getElementById("problemOrder").value.trim();
+        const description = document
+          .getElementById("problemDescription")
+          .value.trim();
+        const lat = parseFloat(document.getElementById("problemLat").value);
+        const lng = parseFloat(document.getElementById("problemLng").value);
+        const topo = getTopoName(imageName);
+
+        const newProblem = {
+          type: "Feature",
+          properties: {
+            name: name,
+            grade: grade,
+            subarea: subarea,
+            color: color,
+            order: order,
+            description: description,
+            topo: topo,
+            line: JSON.stringify(coordinates),
+          },
+          geometry: {
+            type: "Point",
+            coordinates: [lng, lat],
+          },
+        };
+
+        // Initialize geojson if not loaded
+        if (!geojsonData) {
+          geojsonData = {
+            type: "FeatureCollection",
+            generator: "Problem Entry Tool",
+            features: [],
+          };
+        }
+
+        // Add the new problem
+        geojsonData.features.push(newProblem);
+
+        showStatus(
+          `Problem "${name}" added successfully! (${geojsonData.features.length} problems total)`,
+          "success"
+        );
+
+        // Clear form for next entry
+        clearForm();
+      }
+
+       /**
+        * Clear the entire form (but preserve subarea and color)
+        */
+       function clearForm() {
+         document.getElementById("problemName").value = "";
+         document.getElementById("problemGrade").value = "";
+         // Keep subarea and color selections
+         document.getElementById("problemOrder").value = "";
+         document.getElementById("problemDescription").value = "";
+         document.getElementById("problemLat").value = "";
+         document.getElementById("problemLng").value = "";
+         document.getElementById("imageInput").value = "";
+         document.getElementById("filename").textContent = "No image selected";
+
+         canvas.style.display = "none";
+         coordinates = [];
+         imageName = "";
+         updateOutput();
+         updateCoordinateCount();
+       }
+
+      /**
+       * Load existing problems.geojson file
+       */
+      function loadProblemsFile() {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = ".geojson,.json";
+        input.onchange = function (event) {
+          const file = event.target.files[0];
+          if (!file) return;
+
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            try {
+              geojsonData = JSON.parse(e.target.result);
+              if (geojsonData.features) {
+                showStatus(
+                  `Loaded ${geojsonData.features.length} existing problems from ${file.name}`,
+                  "success"
+                );
+              } else {
+                showStatus(
+                  "Invalid GeoJSON format - no features array found",
+                  "error"
+                );
+                geojsonData = null;
+              }
+            } catch (error) {
+              showStatus("Error parsing JSON file: " + error.message, "error");
+              geojsonData = null;
+            }
+          };
+          reader.readAsText(file);
+        };
+        input.click();
+      }
+
+      /**
+       * Download the current geojson data
+       */
+      function downloadGeoJSON() {
+        if (
+          !geojsonData ||
+          !geojsonData.features ||
+          geojsonData.features.length === 0
+        ) {
+          showStatus(
+            "No problems to download. Add some problems first.",
+            "error"
+          );
+          return;
+        }
+
+        const dataStr = JSON.stringify(geojsonData, null, 2);
+        const dataBlob = new Blob([dataStr], { type: "application/json" });
+        const url = URL.createObjectURL(dataBlob);
+
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "problems.geojson";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+
+        showStatus(
+          `Downloaded problems.geojson with ${geojsonData.features.length} problems`,
+          "success"
+        );
+      }
+
+      /**
+       * Show status message
+       */
+      function showStatus(message, type) {
+        const statusDiv = document.getElementById("status");
+        let bgColor, textColor, borderColor;
+
+        if (type === "success") {
+          bgColor = "#d4edda";
+          textColor = "#155724";
+          borderColor = "#c3e6cb";
+        } else if (type === "error") {
+          bgColor = "#f8d7da";
+          textColor = "#721c24";
+          borderColor = "#f5c6cb";
+        } else {
+          // info
+          bgColor = "#cce7ff";
+          textColor = "#004085";
+          borderColor = "#9fcdff";
+        }
+
+        statusDiv.innerHTML = `<div style="padding: 10px; border: 1px solid ${borderColor}; background-color: ${bgColor}; color: ${textColor}; margin-bottom: 15px;">${message}</div>`;
+
+        // Auto-hide info messages after 5 seconds
+        if (type === "info") {
+          setTimeout(() => {
+            statusDiv.innerHTML = "";
+          }, 5000);
+        }
+      }
+    </script>
+  </body>
+</html>
