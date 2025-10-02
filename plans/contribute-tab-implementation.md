@@ -769,17 +769,121 @@ react-native/services/
 - Intuitive drawing interface
 - Form auto-save functionality
 
-## Implementation Todos
+## Implementation Phases
 
-- [ ] Create new Contribute tab in navigation and basic screen structure
-- [ ] Add required packages: async-storage, document-picker, image-manipulator, netinfo
-- [ ] Implement Zustand store for contribution state management
-- [ ] Create offline queue service with AsyncStorage persistence and network detection
-- [ ] Create form components following existing UI patterns with validation
-- [ ] Build drawing canvas for capturing line coordinates on images using existing library
-- [ ] Integrate current location capture for coordinate input
-- [ ] Implement GitHub API service for branch creation, file commits, and PR creation
-- [ ] Add image resizing, validation, and topo naming functionality
-- [ ] Connect form submission to queue and GitHub API with error handling
-- [ ] Create UI for viewing and managing offline submission queue
-- [ ] Test offline/online scenarios, error handling, and end-to-end submission flow
+### Phase 1: Foundation & Setup
+**Goal: Get basic infrastructure ready**
+
+- [ ] **1.1** Create GitHub App and configure credentials
+  - Create GitHub App with required permissions
+  - Generate private key and installation ID
+  - Set up `.env.local` with credentials (gitignored)
+- [ ] **1.2** Install required dependencies
+  ```bash
+  pnpm install @react-native-async-storage/async-storage
+  pnpm install expo-document-picker expo-image-manipulator expo-secure-store
+  pnpm install @react-native-community/netinfo
+  pnpm install @shopify/react-native-skia
+  pnpm install react-native-url-polyfill jsonwebtoken @types/jsonwebtoken --save-dev
+  ```
+- [ ] **1.3** Configure build-time credential embedding
+  - Update `app.config.ts` to read environment variables
+  - Test credential initialization on first app launch
+
+### Phase 2: Core Services & State Management
+**Goal: Build the backend services and data flow**
+
+- [ ] **2.1** Create contribution Zustand store
+  - Form state management
+  - Submission status tracking
+  - Error state handling
+- [ ] **2.2** Implement offline queue service
+  - AsyncStorage persistence for submissions
+  - Network connectivity monitoring with NetInfo
+  - Queue processing with retry logic
+- [ ] **2.3** Build GitHub API service
+  - JWT token generation and caching
+  - Repository file operations (read/update problems.geojson)
+  - Branch creation and pull request generation
+  - Error handling and rate limiting
+
+### Phase 3: UI Components & Form
+**Goal: Create the user interface**
+
+- [ ] **3.1** Create Contribute tab structure
+  - Add contribute route to `(tabs)/_layout.tsx`
+  - Create basic `contribute.tsx` screen
+  - Set up navigation and tab icon
+- [ ] **3.2** Build form components
+  - Contact information fields (name, email)
+  - Problem details form (name, grade, subarea, color, order)
+  - Coordinate input with current location button
+  - Form validation using existing patterns
+- [ ] **3.3** Implement image handling
+  - Document picker for existing topo selection
+  - Image resizing to 640x480 using expo-image-manipulator
+  - Topo filename generation and validation
+
+### Phase 4: Drawing Canvas Integration
+**Goal: Add route drawing functionality**
+
+- [ ] **4.1** Implement Skia drawing canvas
+  - Set up touch gesture handling
+  - Path creation and rendering
+  - Clear/undo functionality
+- [ ] **4.2** Coordinate extraction system
+  - Sample 6 equally-spaced points from drawn path
+  - Scale coordinates from canvas to image dimensions
+  - Format coordinates as JSON string for GeoJSON
+
+### Phase 5: Integration & Submission Flow
+**Goal: Connect all pieces together**
+
+- [ ] **5.1** Connect form to services
+  - Form submission to offline queue
+  - Image processing and coordinate generation
+  - Validation and error handling
+- [ ] **5.2** Implement submission processing
+  - Queue processing when network available
+  - GitHub PR creation with contact info
+  - Success/failure feedback to users
+- [ ] **5.3** Add offline queue management UI
+  - Queue status display component
+  - Submission history and retry options
+  - Network status indicators
+
+### Phase 6: Testing & Polish
+**Goal: Ensure reliability and great UX**
+
+- [ ] **6.1** Comprehensive testing
+  - Test offline/online scenarios
+  - Network interruption handling
+  - Form validation edge cases
+  - Drawing canvas on different screen sizes
+- [ ] **6.2** Error handling & recovery
+  - GitHub API error responses
+  - Image processing failures
+  - Queue corruption recovery
+  - User-friendly error messages
+- [ ] **6.3** Performance optimization
+  - Image compression efficiency
+  - Drawing performance on older devices
+  - Background queue processing
+  - Memory usage optimization
+- [ ] **6.4** User experience polish
+  - Loading states and progress indicators
+  - Haptic feedback for drawing
+  - Form auto-save functionality
+  - Success animations and feedback
+
+### Phase 7: Deployment Preparation
+**Goal: Ready for production**
+
+- [ ] **7.1** Production build testing
+  - Test build with embedded credentials
+  - Verify SecureStore initialization
+  - End-to-end submission flow testing
+- [ ] **7.2** Documentation and monitoring
+  - Add contribution guidelines for PR reviewers
+  - Set up basic analytics for submission success rates
+  - Create troubleshooting guide for common issues
