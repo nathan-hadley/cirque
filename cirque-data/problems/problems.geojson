@@ -2721,6 +2721,26 @@
         "type": "Point",
         "coordinates": [-120.723268, 47.542573]
       }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "The Rudder",
+        "grade": "V1",
+        "subarea": "Forestland",
+        "color": "red",
+        "order": "21",
+        "description": "On uphill side of The Sail boulder, climb the face on edges without the left arete.",
+        "topo": "",
+        "line": "[]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.723254,
+          47.542571
+        ]
+      }
     }
   ]
 }
