@@ -2741,6 +2741,26 @@
           47.542571
         ]
       }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Lamb",
+        "grade": "V3",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "26",
+        "description": "Tiny boulder behind Drugstore Cowboy. Start matched on the low flat edge. Finish straight up.",
+        "topo": "",
+        "line": "[]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.72348,
+          47.54232
+        ]
+      }
     }
   ]
 }
