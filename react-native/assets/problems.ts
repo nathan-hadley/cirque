@@ -11,7 +11,7 @@ import { FeatureCollection, Point, GeoJsonProperties } from 'geojson';
  *   2. Run: npm run sync-problems
  *   3. Commit both files
  *
- * Generated: 2025-10-03T04:12:47.641Z
+ * Generated: 2025-10-03T04:25:10.852Z
  * Features: 170
  */
 
@@ -2853,7 +2853,7 @@ export const problemsData: FeatureCollection<Point, GeoJsonProperties> = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -120720792,
+          -120.720792,
           47.542663
         ]
       }
