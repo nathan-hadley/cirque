@@ -108,6 +108,30 @@ const topoImages = {
   "swiftwater-squatter": require("@/assets/topos/swiftwater-squatter.jpeg"),
   "swiftwater-transverse": require("@/assets/topos/swiftwater-transverse.jpeg"),
   "swiftwater-whelmed": require("@/assets/topos/swiftwater-whelmed.jpeg"),
+
+  // Mad Meadows problems
+  "mad-meadows-amphitheater": require("@/assets/topos/mad-meadows-amphitheater.jpeg"),
+  "mad-meadows-barnacles": require("@/assets/topos/mad-meadows-barnacles.jpeg"),
+  "mad-meadows-cloaca": require("@/assets/topos/mad-meadows-cloaca.jpeg"),
+  "mad-meadows-dog-log": require("@/assets/topos/mad-meadows-dog-log.jpeg"),
+  "mad-meadows-drugstore-cowboy": require("@/assets/topos/mad-meadows-drugstore-cowboy.jpeg"),
+  "mad-meadows-firefly": require("@/assets/topos/mad-meadows-firefly.jpeg"),
+  "mad-meadows-foot-fumpkin": require("@/assets/topos/mad-meadows-foot-fumpkin.jpeg"),
+  "mad-meadows-kiddie-pool": require("@/assets/topos/mad-meadows-kiddie-pool.jpeg"),
+  "mad-meadows-leopard-skin": require("@/assets/topos/mad-meadows-leopard-skin.jpeg"),
+  "mad-meadows-pocket-rocket": require("@/assets/topos/mad-meadows-pocket-rocket.jpeg"),
+  "mad-meadows-pruning-shears": require("@/assets/topos/mad-meadows-pruning-shears.jpeg"),
+  "mad-meadows-spongebob-squarepad": require("@/assets/topos/mad-meadows-spongebob-squarepad.jpeg"),
+  "mad-meadows-squarepusher": require("@/assets/topos/mad-meadows-squarepusher.jpeg"),
+  "mad-meadows-swordfish": require("@/assets/topos/mad-meadows-swordfish.jpeg"),
+  "mad-meadows-the-dish": require("@/assets/topos/mad-meadows-the-dish.jpeg"),
+  "mad-meadows-the-hole": require("@/assets/topos/mad-meadows-the-hole.jpeg"),
+  "mad-meadows-the-pocket": require("@/assets/topos/mad-meadows-the-pocket.jpeg"),
+  "mad-meadows-the-rail": require("@/assets/topos/mad-meadows-the-rail.jpeg"),
+  "mad-meadows-the-scoop": require("@/assets/topos/mad-meadows-the-scoop.jpeg"),
+  "mad-meadows-the-undercling": require("@/assets/topos/mad-meadows-the-undercling.jpeg"),
+  "mad-meadows-toprope-tough-guys": require("@/assets/topos/mad-meadows-toprope-tough-guys.jpeg"),
+  "mad-meadows-trail-mix": require("@/assets/topos/mad-meadows-trail-mix.jpeg"),
 } as const;
 
 type TopoImageKey = keyof typeof topoImages;

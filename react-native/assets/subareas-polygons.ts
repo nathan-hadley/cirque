@@ -11,7 +11,7 @@ import { FeatureCollection, LineString, GeoJsonProperties } from 'geojson';
  *   2. Run: npm run sync-areas
  *   3. Commit both files
  *
- * Generated: 2025-10-01T00:49:08.829Z
+ * Generated: 2025-10-03T04:12:47.656Z
  * Features: 5
  */
 

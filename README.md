@@ -18,11 +18,11 @@ The app uses a single source of truth for problems data: `cirque-data/problems/p
 **To update problems data:**
 
 1. Edit `cirque-data/problems/problems.geojson`
-2. Run sync command: `cd react-native && npm run sync-problems`
+2. Run sync command: `cd react-native && pnpm run sync-problems`
 3. Commit both files: `problems.geojson` and `react-native/assets/problems.ts`
 
 **Available commands:**
-- `npm run sync-problems` - Generate TypeScript from GeoJSON
-- `npm run validate-problems` - Check if files are in sync
+- `pnpm run sync-problems` - Generate TypeScript from GeoJSON
+- `pnpm run validate-problems` - Check if files are in sync
 
 The GitHub workflow automatically validates data sync on pull requests.

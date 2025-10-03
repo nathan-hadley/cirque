@@ -11,8 +11,8 @@ import { FeatureCollection, Point, GeoJsonProperties } from 'geojson';
  *   2. Run: npm run sync-problems
  *   3. Commit both files
  *
- * Generated: 2025-10-01T00:40:05.635Z
- * Features: 140
+ * Generated: 2025-10-03T04:12:47.641Z
+ * Features: 170
  */
 
 export const problemsData: FeatureCollection<Point, GeoJsonProperties> = {
@@ -2815,6 +2815,606 @@ export const problemsData: FeatureCollection<Point, GeoJsonProperties> = {
         "coordinates": [
           -120.729019,
           47.655893
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "The Firefly",
+        "grade": "V1",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "1",
+        "description": "Climb the short arete",
+        "topo": "mad-meadows-firefly",
+        "line": "[[470,229],[453,164],[376,57]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.720728,
+          47.54273
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Dog Log",
+        "grade": "V2",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "2",
+        "description": "Climb friable edges from a high right-leaning crimp rail.",
+        "topo": "mad-meadows-dog-log",
+        "line": "[[314,210],[321,61]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120720792,
+          47.542663
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "The Kiddie Pool",
+        "grade": "V1",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "3",
+        "description": "Start on the right side of a sloping ledge and traverse left to the tree. Drop and continue onto the next boulder or mantle and climb easy face above.",
+        "topo": "mad-meadows-kiddie-pool",
+        "line": "[[451,250],[384,249],[267,229],[117,196]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.721528,
+          47.54236
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Toprope Tough Guys",
+        "grade": "V0",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "4",
+        "description": "Tall easy face on downhill side of the Amphitheater boulder.",
+        "topo": "mad-meadows-toprope-tough-guys",
+        "line": "[[355,287],[385,196],[393,87]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.721636,
+          47.542335
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Winterbottom Arete",
+        "grade": "V3",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "5",
+        "description": "Start crouching and slap up arete.",
+        "topo": "mad-meadows-amphitheater",
+        "line": "[[68,328],[74,272],[130,199],[165,120]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.721515,
+          47.542412
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Crank",
+        "grade": "V1",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "6",
+        "description": "Climb the crack.",
+        "topo": "mad-meadows-amphitheater",
+        "line": "[[239,247],[204,191],[201,122]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.721526,
+          47.542409
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "The Ampitheater",
+        "grade": "V3",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "7",
+        "description": "Start on the two chest-high pods on the right side of the face. Climb straight up using a tiny crimp.",
+        "topo": "mad-meadows-amphitheater",
+        "line": "[[312,224],[328,166],[311,115],[308,52]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.721457,
+          47.542425
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Trail Mix",
+        "grade": "V3",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "8",
+        "description": "Climb the center of the slab through some high and committing moves.",
+        "topo": "mad-meadows-trail-mix",
+        "line": "[[313,290],[348,211],[390,132],[360,70],[356,48]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.72154,
+          47.54264
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Spongebob Squarepad",
+        "grade": "V3",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "9",
+        "description": "Start standing and slap and squeeze up the arete. The sit adds a few grades.",
+        "topo": "mad-meadows-spongebob-squarepad",
+        "line": "[[433,332],[441,257],[437,186],[393,72]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.722709,
+          47.542793
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "The Octopus",
+        "grade": "V2",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "10",
+        "description": "Start in the cool hueco and climb up juggy crack.",
+        "topo": "mad-meadows-spongebob-squarepad",
+        "line": "[[248,267],[221,184],[234,84]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.722821,
+          47.542825
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Foot Fumpkin",
+        "grade": "V4",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "11",
+        "description": "Start with the tufa huecos in the deepest part of the cave, climbing through and out the 3D roof.",
+        "topo": "mad-meadows-foot-fumpkin",
+        "line": "[[363,403],[326,366],[342,346],[296,266],[292,145],[419,71]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.723169,
+          47.542911
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "The Undercling",
+        "grade": "V4",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "12",
+        "description": "Start in the big smooth heuco, climbing up into an undercling and topping out to the right.",
+        "topo": "mad-meadows-the-undercling",
+        "line": "[[323,333],[337,238],[366,155],[399,121]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.722431,
+          47.542588
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "The Scoop",
+        "grade": "V2",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "13",
+        "description": "Start sitting on the left and climb up and right.",
+        "topo": "mad-meadows-the-scoop",
+        "line": "[[275,281],[300,220],[427,161],[433,80]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.722903,
+          47.542616
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "The Rail",
+        "grade": "V4",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "14",
+        "description": "Start sitting with two low opposing sidepulls and a good heel hook.",
+        "topo": "mad-meadows-the-rail",
+        "line": "[[458,350],[487,236],[362,36]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.722933,
+          47.542603
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "The Crack",
+        "grade": "V2",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "15",
+        "description": "Crouch start on the blocky ledges and climb up and left, topping out in the V.",
+        "topo": "mad-meadows-the-rail",
+        "line": "[[320,316],[250,221],[246,109]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.723003,
+          47.542598
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Pruning Shears",
+        "grade": "V1",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "16",
+        "description": "Climb right arete, topping out left of the apex.",
+        "topo": "mad-meadows-pruning-shears",
+        "line": "[[392,247],[399,127],[341,47],[285,18]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.723031,
+          47.542578
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Madvillian",
+        "grade": "V2",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "17",
+        "description": "Climb right arete, finishing just right of the nose on jugs.",
+        "topo": "mad-meadows-the-pocket",
+        "line": "[[488,260],[453,195],[418,89]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.72307,
+          47.542633
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "The Pocket",
+        "grade": "V4",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "18",
+        "description": "Climb center of tall face on pockets and edges.",
+        "topo": "mad-meadows-the-pocket",
+        "line": "[[308,350],[292,273],[309,183],[335,126],[326,55]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.723178,
+          47.54262
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Dr. Doom",
+        "grade": "V2",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "19",
+        "description": "Start on the left arete but pull over, finishing up the right-facing crack.",
+        "topo": "mad-meadows-the-pocket",
+        "line": "[[147,265],[166,212],[220,145]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.723171,
+          47.542655
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "The Dish",
+        "grade": "V1",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "20",
+        "description": "Climb center of short boulder on heucos.",
+        "topo": "mad-meadows-the-dish",
+        "line": "[[328,282],[345,217],[341,60]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.723268,
+          47.542573
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "The Rudder",
+        "grade": "V1",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "21",
+        "description": "On uphill side of The Sail boulder, climb the face on edges without the left arete.",
+        "topo": "",
+        "line": "[]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.723254,
+          47.542571
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Barnacles",
+        "grade": "V1",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "22",
+        "description": "Sit start on face striped with cracks behind the Sail. Climb up and right out of the chasm.",
+        "topo": "mad-meadows-barnacles",
+        "line": "[[302,320],[284,201],[408,110]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.723444,
+          47.542408
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Leopard Skin",
+        "grade": "V2",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "23",
+        "description": "Start crouched at the bottom of a crack. Work up and right, and under a stacked boulder. The top can gather dirt and pine needles.",
+        "topo": "mad-meadows-leopard-skin",
+        "line": "[[277,270],[370,203],[405,146],[348,88],[344,60]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.723466,
+          47.542496
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Hueco Route",
+        "grade": "V1",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "24",
+        "description": "Start sitting and climb through large huecos to last pocket. Bonus points for kicking feet out right and pushing up onto other boulder.",
+        "topo": "mad-meadows-cloaca",
+        "line": "[[211,363],[223,322],[315,310],[331,268]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.723529,
+          47.542445
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Drugstore Cowboy",
+        "grade": "V2",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "25",
+        "description": "Start sitting with two shallow pockets. Large foot ledge and boulder to the right are on.",
+        "topo": "mad-meadows-drugstore-cowboy",
+        "line": "[[333,335],[401,325],[451,281],[469,227],[463,143]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.723471,
+          47.542314
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Lamb",
+        "grade": "V3",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "26",
+        "description": "Tiny boulder behind Drugstore Cowboy. Start matched on the low flat edge. Finish straight up.",
+        "topo": "",
+        "line": "[]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.72348,
+          47.54232
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Swordfish",
+        "grade": "V4",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "27",
+        "description": "Tiny boulder behind Drugstore Cowboy. Start matched on the low flat edge. Finish straight up.",
+        "topo": "mad-meadows-swordfish",
+        "line": "[[363,309],[286,218],[323,122],[294,82],[307,58]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.723644,
+          47.542448
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Pocket Rocket",
+        "grade": "V3",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "28",
+        "description": "Start matched on a decent crimp.",
+        "topo": "mad-meadows-pocket-rocket",
+        "line": "[[290,316],[404,210],[406,120],[378,37]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.723499,
+          47.542415
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Harry Spotter",
+        "grade": "V4",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "29",
+        "description": "Climb up and right on left facing edges with a charred tree at your back.",
+        "topo": "mad-meadows-squarepusher",
+        "line": "[[221,235],[218,54]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.72382,
+          47.54239
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Squarepusher",
+        "grade": "V4",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "30",
+        "description": "Climb the blocky arete from a sit start. The crux is a hard cross left to a jug.",
+        "topo": "mad-meadows-squarepusher",
+        "line": "[[377,397],[418,332],[405,269],[353,213],[330,112],[337,76]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.723818,
+          47.542392
         ]
       }
     }
