@@ -2419,23 +2419,6 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Toprope Tough Guys",
-        "grade": "V0",
-        "subarea": "Mad Meadows",
-        "color": "red",
-        "order": "4",
-        "description": "Tall easy face on downhill side of the Amphitheater boulder.",
-        "topo": "mad-meadows-toprope-tough-guys",
-        "line": "[[355,287],[385,196],[393,87]]"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [-120.721636, 47.542335]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "name": "The Kiddie Pool",
         "grade": "V1",
         "subarea": "Mad Meadows",
@@ -2448,6 +2431,23 @@
       "geometry": {
         "type": "Point",
         "coordinates": [-120.721528, 47.54236]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Toprope Tough Guys",
+        "grade": "V0",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "4",
+        "description": "Tall easy face on downhill side of the Amphitheater boulder.",
+        "topo": "mad-meadows-toprope-tough-guys",
+        "line": "[[355,287],[385,196],[393,87]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-120.721636, 47.542335]
       }
     },
     {
@@ -2736,10 +2736,75 @@
       },
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          -120.723254,
-          47.542571
-        ]
+        "coordinates": [-120.723254, 47.542571]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Barnacles",
+        "grade": "V1",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "22",
+        "description": "Sit start on face striped with cracks behind the Sail. Climb up and right out of the chasm.",
+        "topo": "mad-meadows-barnacles",
+        "line": "[[302,320],[284,201],[408,110]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-120.723444, 47.542408]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Leopard Skin",
+        "grade": "V2",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "23",
+        "description": "Start crouched at the bottom of a crack. Work up and right, and under a stacked boulder. The top can gather dirt and pine needles.",
+        "topo": "mad-meadows-leopard-skin",
+        "line": "[[277,270],[370,203],[405,146],[348,88],[344,60]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-120.723466, 47.542496]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Hueco Route",
+        "grade": "V1",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "24",
+        "description": "Start sitting and climb through large huecos to last pocket. Bonus points for kicking feet out right and pushing up onto other boulder.",
+        "topo": "mad-meadows-cloaca",
+        "line": "[[211,363],[223,322],[315,310],[331,268]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-120.723529, 47.542445]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Drugstore Cowboy",
+        "grade": "V2",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "25",
+        "description": "Start sitting with two shallow pockets. Large foot ledge and boulder to the right are on.",
+        "topo": "mad-meadows-drugstore-cowboy",
+        "line": "[[333,335],[401,325],[451,281],[469,227],[463,143]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-120.723471, 47.542314]
       }
     },
     {
@@ -2756,10 +2821,75 @@
       },
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          -120.72348,
-          47.54232
-        ]
+        "coordinates": [-120.72348, 47.54232]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Swordfish",
+        "grade": "V4",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "27",
+        "description": "Tiny boulder behind Drugstore Cowboy. Start matched on the low flat edge. Finish straight up.",
+        "topo": "mad-meadows-swordfish",
+        "line": "[[363,309],[286,218],[323,122],[294,82],[307,58]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-120.723644, 47.542448]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Pocket Rocket",
+        "grade": "V3",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "28",
+        "description": "Start matched on a decent crimp.",
+        "topo": "mad-meadows-pocket-rocket",
+        "line": "[[290,316],[404,210],[406,120],[378,37]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-120.723499, 47.542415]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Harry Spotter",
+        "grade": "V4",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "29",
+        "description": "Climb up and right on left facing edges with a charred tree at your back.",
+        "topo": "mad-meadows-squarepusher",
+        "line": "[[221,235],[218,54]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-120.72382, 47.54239]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Squarepusher",
+        "grade": "V4",
+        "subarea": "Mad Meadows",
+        "color": "red",
+        "order": "30",
+        "description": "Climb the blocky arete from a sit start. The crux is a hard cross left to a jug.",
+        "topo": "mad-meadows-squarepusher",
+        "line": "[[377,397],[418,332],[405,269],[353,213],[330,112],[337,76]]"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-120.723818, 47.542392]
       }
     }
   ]
