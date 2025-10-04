@@ -807,6 +807,71 @@ react-native/services/
   - Branch creation and pull request generation
   - Error handling and rate limiting
 
+#### How to Test GitHub Service Actions (Manual/Mocked)
+
+Since GitHub calls are external, unit tests should mock `fetch` and `expo-secure-store`. Here’s how to manually verify without hitting real GitHub, plus how to structure mocks:
+
+1. Configure Jest Mocks
+
+```ts
+// jest.setup.ts (already configured)
+jest.mock("expo-secure-store", () => ({
+  getItemAsync: jest.fn().mockImplementation(async (key) => {
+    if (key === "github_app_id") return "123";
+    if (key === "github_installation_id") return "456";
+    if (key === "github_private_key") return "-----BEGIN RSA PRIVATE KEY-----\n...\n-----END RSA PRIVATE KEY-----";
+    return null;
+  }),
+  setItemAsync: jest.fn(),
+  deleteItemAsync: jest.fn(),
+}));
+
+// mock fetch responses for token, content, tree/commit, and PR endpoints
+(global as any).fetch = jest.fn(async (url, init) => {
+  if (String(url).includes("/access_tokens")) {
+    return new Response(JSON.stringify({ token: "x", expires_at: new Date(Date.now()+3600000).toISOString() }), { status: 200 });
+  }
+  if (String(url).includes("/repos/") && String(url).endsWith("/contents/cirque-data/problems/problems.geojson")) {
+    const content = Buffer.from(JSON.stringify({ type: "FeatureCollection", features: [] })).toString("base64");
+    return new Response(JSON.stringify({ content, sha: "sha-geojson" }), { status: 200 });
+  }
+  // add cases for blobs, trees, commits, refs, and pulls as needed
+  return new Response("{}", { status: 200 });
+});
+```
+
+2. Unit Test Structure (Examples)
+
+- `getInstallationToken()`
+  - Mock SecureStore values and `/access_tokens` fetch
+  - Assert Authorization header uses JWT (cannot fully validate signature in test)
+  - Assert token caching by calling twice and checking only one network request
+
+- `getFileContent(path)`
+  - Mock 404 to return null
+  - Mock 200 with `{ content, sha }` and ensure pass-through
+
+- `createBranch/commitFiles/createPullRequest`
+  - Stub Git data API endpoints and assert request shapes (refs, blobs, tree entries, commit message, head/base values)
+
+3. Manual End-to-End Test (Against Real GitHub)
+
+- Prereqs: Set `github_app_id`, `github_installation_id`, `github_private_key` in SecureStore at runtime (e.g., via your initialization flow)
+- Temporarily point `GitHubService` to a test repository you control
+- Add console logging and run in a dev client on a real device/emulator
+- Steps:
+  1. Call `getInstallationToken()` and verify a 200 response
+  2. Call `getFileContent('cirque-data/problems/problems.geojson')`
+  3. Create a temporary branch via `createBranch('contribution/test', baseSha)`
+  4. Commit a trivial file via `commitFiles()`
+  5. Open a PR via `createPullRequest()` and verify on GitHub
+
+4. Safety Notes
+
+- Never commit real credentials; prefer SecureStore at runtime
+- Use a sandbox repository for real calls
+- Clean up test branches/PRs after verification
+
 ### Phase 3: UI Components & Form
 **Goal: Create the user interface**
 

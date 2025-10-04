@@ -22,7 +22,13 @@
     "validate-data": "node ../scripts/sync-data.js --check"
   },
   "jest": {
-    "preset": "jest-expo"
+    "preset": "jest-expo",
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest.setup.ts"
+    ],
+    "moduleNameMapper": {
+      "^@/(.*)": "<rootDir>/$1"
+    }
   },
   "dependencies": {
     "@babel/runtime": "^7.28.4",
