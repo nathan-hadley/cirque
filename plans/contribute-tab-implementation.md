@@ -41,7 +41,6 @@ Implement a comprehensive problem contribution system with offline support, form
 #### GitHub Integration
 - `react-native-url-polyfill` - URL polyfill for Node.js APIs
 - `jsonwebtoken` - JWT token generation for GitHub App authentication
-- `crypto-js` or built-in crypto - Cryptographic operations for request signing
 
 #### Installation Commands
 ```bash
@@ -72,19 +71,9 @@ pnpm install @types/jsonwebtoken --save-dev
 - **Exponential Backoff**: Implement increasing delays between retry attempts
 - **Queue Structure**: Store form data, image data, and submission status
 
-### 3. GitHub API Integration Strategy
+### 3. GitHub API Integration Strategy (GitHub App)
 
-#### Authentication Approach: GitHub App
-
-**Why GitHub App is Perfect for This Use Case:**
-- **No user accounts required** - Users don't need GitHub accounts to contribute
-- **App acts as single contributor** - All PRs come from the Cirque app identity
-- **Better rate limiting** - 5,000 requests/hour vs 60 for unauthenticated
-- **More secure** - No user credentials to manage or store
-- **Simplified UX** - Users just fill out the form and submit
-- **Centralized management** - All contributions appear from one trusted source
-
-**Implementation Details:**
+Primary approach: GitHub App with credentials stored via SecureStore.
 
 ```typescript
 // GitHub service configuration
@@ -103,11 +92,6 @@ class GitHubService {
     // Generate JWT using app credentials
     // Exchange for installation access token
     // Cache token until expiry (1 hour)
-  }
-  
-  async createFork(): Promise<string> {
-    // Fork the main repository to app's account
-    // Return fork's full name
   }
   
   async createBranch(branchName: string, baseSha: string): Promise<void> {
@@ -244,45 +228,19 @@ const submitWithRetry = async (submission: ProblemSubmission, maxRetries = 3) =>
 
 #### Security & Privacy Considerations
 
-**Security:**
 - Store GitHub App private key in Expo SecureStore
-- Validate all user inputs before API calls
-- Sanitize file names and paths (spaces to hyphens, lowercase)
-- Limit file sizes (images max 5MB)
-- Implement request signing for sensitive operations
-
-**Privacy:**
-- Contact information only included in PR descriptions for maintainer follow-up
-- Not stored permanently in app or GeoJSON data
-- Clear privacy notice on form about contact info usage
-- Email validation to ensure valid contact method
+- Validate user inputs before API calls
+- Sanitize file names and paths
+- Limit image sizes (max 5MB)
+- Contact info appears only in PR description; not stored in GeoJSON or locally
 
 #### GitHub App Setup Process
 
-**1. Create GitHub App**
-- Navigate to GitHub Settings → Developer settings → GitHub Apps
-- Click "New GitHub App" with these settings:
-  - Name: "Cirque Problem Contributions"
-  - Homepage URL: Your app's URL or repository
-  - Webhook: Not required for this use case
-  - Permissions:
-    - Repository permissions:
-      - Contents: Read & Write (to modify files)
-      - Metadata: Read (to access repository info)
-      - Pull requests: Write (to create PRs)
-    - Account permissions: None needed
-  - Where can this GitHub App be installed: Only on this account
+1) Create GitHub App with permissions: Contents (R/W), Metadata (R), Pull requests (W)
+2) Install on target repository and note Installation ID
+3) Generate and securely store the private key
 
-**2. Configure App Installation**  
-- Install the app on your repository
-- Note the Installation ID from the installation URL
-- Generate and download private key (keep secure!)
-
-**3. Secure Configuration Storage**
-
-#### Primary Approach: Expo SecureStore (Recommended for Your Use Case)
-
-**Direct GitHub integration without needing a server:**
+#### Secure Credential Storage (Expo SecureStore)
 ```typescript
 import * as SecureStore from 'expo-secure-store';
 
@@ -317,48 +275,14 @@ class GitHubService {
 }
 ```
 
-**SecureStore Benefits for Your Use Case**:
-- **No server required**: Direct GitHub API integration
-- **Strong encryption**: Uses iOS Keychain and Android Keystore
-- **App-specific**: Cannot be accessed by other apps
-- **Persistent**: Survives app updates
-- **Offline-ready**: Perfect for remote climbing areas
+Benefits:
+- No server required; app talks directly to GitHub
+- Encrypted storage via iOS Keychain/Android Keystore
 
-**Considerations**:
-- Credentials lost on app uninstall (need setup flow)
-- Device-specific (each install needs setup)
-- Extractable with device root/jailbreak (rare scenario)
+Considerations:
+- Credentials are device-scoped; lost on uninstall
 
-#### Alternative: Environment Variables (Development Only)
-
-**For non-production or when server proxy isn't feasible:**
-```typescript
-// .env file (never commit to git!)
-GITHUB_APP_ID=123456
-GITHUB_INSTALLATION_ID=987654
-GITHUB_PRIVATE_KEY="-----BEGIN RSA PRIVATE KEY-----\nYOUR_KEY_HERE\n-----END RSA PRIVATE KEY-----"
-
-// expo-constants configuration
-// app.config.js
-export default {
-  expo: {
-    extra: {
-      githubAppId: process.env.GITHUB_APP_ID,
-      githubInstallationId: process.env.GITHUB_INSTALLATION_ID,
-      // DON'T PUT PRIVATE KEY HERE - too risky
-    }
-  }
-};
-
-// Access in app
-import Constants from 'expo-constants';
-
-const GITHUB_CONFIG = {
-  appId: Constants.expoConfig?.extra?.githubAppId,
-  installationId: Constants.expoConfig?.extra?.githubInstallationId,
-  // Private key would need to come from SecureStore
-};
-```
+// Development notes: use env only to embed build-time values; do not store private key in env for production
 
 #### Simple Implementation: Direct GitHub Integration
 
@@ -425,9 +349,9 @@ class ContributionService {
    - Still extractable with device root/jailbreak access
    - Better than plain storage, but not perfect
 
-**🛠️ Practical Implementation Steps:**
+**Implementation Steps:**
 
-**Step 1: Build-Time Credential Embedding (Users Never See This)**
+Step 1: Build-Time Credential Embedding
 ```typescript
 // app.config.js - Credentials embedded at build time
 export default {
@@ -456,13 +380,11 @@ const initializeCredentials = async () => {
   }
 };
 
-// Call this on app startup
-useEffect(() => {
-  initializeCredentials();
-}, []);
+// Call once on app startup
+useEffect(() => { initializeCredentials(); }, []);
 ```
 
-**Your .env file (NEVER commit this):**
+Your `.env.local` (never commit):
 ```bash
 # .env.local (add to .gitignore)
 GITHUB_APP_ID=123456
@@ -476,7 +398,7 @@ GITHUB_PRIVATE_KEY=base64_encoded_private_key_here
 expo build --env .env.local
 ```
 
-**Step 2: Runtime Usage**
+Step 2: Runtime Usage
 ```typescript
 class SecureGitHubService {
   private cachedToken: { token: string; expires: Date } | null = null;
@@ -516,7 +438,7 @@ class SecureGitHubService {
 }
 ```
 
-**Step 3: Error Handling & Recovery**
+Step 3: Error Handling & Recovery
 ```typescript
 const handleMissingCredentials = async () => {
   try {
@@ -539,7 +461,7 @@ const handleMissingCredentials = async () => {
 };
 ```
 
-**🚀 Deployment Strategy:**
+Deployment
 
 1. **Development Environment:**
    ```bash
@@ -563,7 +485,7 @@ const handleMissingCredentials = async () => {
    eas build --profile production --env .env.local
    ```
 
-3. **User Experience (Completely Seamless):**
+3. User Experience
    ```typescript
    // App automatically initializes on first launch
    const ContributeTab = () => {
@@ -588,28 +510,10 @@ const handleMissingCredentials = async () => {
    - No setup required for users
    - Credentials never exposed in source code
 
-**💡 Final Implementation Approach:**
-
-**Build-Time Embedding** - Perfect for your use case:
-- ✅ **No server needed**: Keep your serverless architecture
-- ✅ **No user setup**: Credentials embedded when you build the app
-- ✅ **Secure storage**: Uses iOS Keychain/Android Keystore encryption
-- ✅ **Simple for users**: They just use the contribute feature, no setup
-- ✅ **Simple for you**: Configure once in your build environment
-- ✅ **Offline-first**: Perfect for climbers in remote areas
-
-**User Experience:**
-- Download app from App Store/Play Store
-- Open Contribute tab - works immediately
-- No GitHub account needed, no setup required
-- All contributions automatically create PRs under "Cirque App" identity
-
-**Your Implementation Steps:**
-1. Create GitHub App (5 minutes)
-2. Add credentials to `.env.local` file (gitignored)
-3. Build app with `expo build --env .env.local`
-4. Distribute to App Store/Play Store
-5. Users can contribute immediately upon download
+User Experience Summary:
+- Open Contribute tab → fill form → submit
+- Offline submissions are queued and auto-submitted when online
+- PRs are created under the app identity; contact info only in PR description
 
 #### User Experience Benefits
 
@@ -806,6 +710,71 @@ react-native/services/
   - Repository file operations (read/update problems.geojson)
   - Branch creation and pull request generation
   - Error handling and rate limiting
+
+#### How to Test GitHub Service Actions (Manual/Mocked)
+
+Since GitHub calls are external, unit tests should mock `fetch` and `expo-secure-store`. Here’s how to manually verify without hitting real GitHub, plus how to structure mocks:
+
+1. Configure Jest Mocks
+
+```ts
+// jest.setup.ts (already configured)
+jest.mock("expo-secure-store", () => ({
+  getItemAsync: jest.fn().mockImplementation(async (key) => {
+    if (key === "github_app_id") return "123";
+    if (key === "github_installation_id") return "456";
+    if (key === "github_private_key") return "-----BEGIN RSA PRIVATE KEY-----\n...\n-----END RSA PRIVATE KEY-----";
+    return null;
+  }),
+  setItemAsync: jest.fn(),
+  deleteItemAsync: jest.fn(),
+}));
+
+// mock fetch responses for token, content, tree/commit, and PR endpoints
+(global as any).fetch = jest.fn(async (url, init) => {
+  if (String(url).includes("/access_tokens")) {
+    return new Response(JSON.stringify({ token: "x", expires_at: new Date(Date.now()+3600000).toISOString() }), { status: 200 });
+  }
+  if (String(url).includes("/repos/") && String(url).endsWith("/contents/cirque-data/problems/problems.geojson")) {
+    const content = Buffer.from(JSON.stringify({ type: "FeatureCollection", features: [] })).toString("base64");
+    return new Response(JSON.stringify({ content, sha: "sha-geojson" }), { status: 200 });
+  }
+  // add cases for blobs, trees, commits, refs, and pulls as needed
+  return new Response("{}", { status: 200 });
+});
+```
+
+2. Unit Test Structure (Examples)
+
+- `getInstallationToken()`
+  - Mock SecureStore values and `/access_tokens` fetch
+  - Assert Authorization header uses JWT (cannot fully validate signature in test)
+  - Assert token caching by calling twice and checking only one network request
+
+- `getFileContent(path)`
+  - Mock 404 to return null
+  - Mock 200 with `{ content, sha }` and ensure pass-through
+
+- `createBranch/commitFiles/createPullRequest`
+  - Stub Git data API endpoints and assert request shapes (refs, blobs, tree entries, commit message, head/base values)
+
+3. Manual End-to-End Test (Against Real GitHub)
+
+- Prereqs: Set `github_app_id`, `github_installation_id`, `github_private_key` in SecureStore at runtime (e.g., via your initialization flow)
+- Temporarily point `GitHubService` to a test repository you control
+- Add console logging and run in a dev client on a real device/emulator
+- Steps:
+  1. Call `getInstallationToken()` and verify a 200 response
+  2. Call `getFileContent('cirque-data/problems/problems.geojson')`
+  3. Create a temporary branch via `createBranch('contribution/test', baseSha)`
+  4. Commit a trivial file via `commitFiles()`
+  5. Open a PR via `createPullRequest()` and verify on GitHub
+
+4. Safety Notes
+
+- Never commit real credentials; prefer SecureStore at runtime
+- Use a sandbox repository for real calls
+- Clean up test branches/PRs after verification
 
 ### Phase 3: UI Components & Form
 **Goal: Create the user interface**

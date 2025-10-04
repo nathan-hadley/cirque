@@ -39,8 +39,8 @@ export function MapScreen() {
 
   const currentCircuitLine = getCircuitLine();
 
-  const mapRef = useRef<RNMapboxMapView>(null);
-  const cameraRef = useRef<Camera>(null);
+  const mapRef = useRef<RNMapboxMapView | null>(null);
+  const cameraRef = useRef<Camera | null>(null);
 
   const tabBarHeight = useBottomTabBarHeight();
   const bottomOffset = Platform.OS === "ios" ? tabBarHeight : 0;

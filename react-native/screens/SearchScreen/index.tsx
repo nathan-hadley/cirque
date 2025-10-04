@@ -140,7 +140,6 @@ export function SearchOverlay({ isVisible, onClose }: SearchOverlayProps) {
                 <SearchResultItem result={item} onPress={handleSelectResult} />
               )}
               keyExtractor={(item, index) => `${item.problem.id}-${index}`}
-              estimatedItemSize={73}
               className="flex-1"
               keyboardShouldPersistTaps="handled"
               keyboardDismissMode="on-drag"
