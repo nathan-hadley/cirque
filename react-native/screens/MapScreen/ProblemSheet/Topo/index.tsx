@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { LayoutChangeEvent, View } from "react-native";
 import { Image, ImageLoadEventData } from "expo-image";
 import { Problem } from "@/models/problems";
-import { getTopoImage } from "./topoImage";
+import { getTopoImage } from "@/assets/topo-image";
 import { CameraOff } from "lucide-react-native";
 import { Center } from "@/components/ui/center";
 import { Icon } from "@/components/ui/icon";

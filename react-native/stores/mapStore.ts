@@ -7,12 +7,12 @@ import { RefObject } from "react";
 
 type MapState = {
   // State
-  mapRef: RefObject<MapView> | null;
-  cameraRef: RefObject<Camera> | null;
+  mapRef: RefObject<MapView | null> | null;
+  cameraRef: RefObject<Camera | null> | null;
 
   // Actions
-  setMapRef: (ref: RefObject<MapView>) => void;
-  setCameraRef: (ref: RefObject<Camera>) => void;
+  setMapRef: (ref: RefObject<MapView | null>) => void;
+  setCameraRef: (ref: RefObject<Camera | null>) => void;
   handleMapTap: (point: {
     x: number;
     y: number;
@@ -27,8 +27,8 @@ export const useMapStore = create<MapState>((set, get) => ({
   cameraRef: null,
 
   // Actions
-  setMapRef: (ref: RefObject<MapView>) => set({ mapRef: ref }),
-  setCameraRef: (ref: RefObject<Camera>) => set({ cameraRef: ref }),
+  setMapRef: (ref: RefObject<MapView | null>) => set({ mapRef: ref }),
+  setCameraRef: (ref: RefObject<Camera | null>) => set({ cameraRef: ref }),
 
   flyToProblemCoordinates: (coordinates: [number, number], zoomLevel?: number) => {
     const { cameraRef } = get();
