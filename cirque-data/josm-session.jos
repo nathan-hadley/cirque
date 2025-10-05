@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <josm-session version="0.1">
     <viewport>
-        <center lat="47.54252451793918" lon="-120.72207034170627"/>
-        <scale meter-per-pixel="0.403111"/>
+        <center lat="47.542653973387864" lon="-120.72091698780655"/>
+        <scale meter-per-pixel="0.100778"/>
     </viewport>
     <projection>
         <projection-choice>
@@ -11,14 +11,35 @@
         </projection-choice>
         <code>EPSG:3857</code>
     </projection>
-    <layers active="1">
+    <layers active="2">
         <layer index="1" name="boulders.geojson" type="osm-data" version="0.1" visible="true">
             <file>file:/Users/nathanhadley/Dev/cirque/cirque-data/boulders/boulders.geojson</file>
         </layer>
         <layer index="2" name="problems.geojson" type="osm-data" version="0.1" visible="true">
             <file>file:/Users/nathanhadley/Dev/cirque/cirque-data/problems/problems.geojson</file>
         </layer>
-        <layer index="3" name="OpenStreetMap Carto (Standard)" type="imagery" version="0.1" visible="false">
+        <layer index="3" name="Mapbox Satellite" type="imagery" version="0.1" visible="false">
+            <max-zoom>22</max-zoom>
+            <noTileHeaders>{"ETag":["\"336b022ed883bc72347a637634e490d4\"|\"067736a547cafe90014b4e59b6510abe\"|\"ee1f6802b0234046b553cbbc672ac7d9\"|\"9f5a2f1d7cc131e58befc2052c71c827\""]}</noTileHeaders>
+            <noTileChecksums>{"MD5":["58e78313d04adf0ea64b8de8590c3d46"]}</noTileChecksums>
+            <transparent>true</transparent>
+            <minimumTileExpire>3600</minimumTileExpire>
+            <name>Mapbox Satellite</name>
+            <id>Mapbox</id>
+            <type>tms</type>
+            <url>https://{switch:a,b,c,d}.tiles.mapbox.com/v4/mapbox.satellite/{zoom}/{x}/{y}.jpg?access_token={apikey}</url>
+            <attribution-text>Terms &amp; Feedback</attribution-text>
+            <attribution-url>https://www.mapbox.com/about/maps/</attribution-url>
+            <permission-reference-url>https://wiki.openstreetmap.org/wiki/Vertical_Aerial_Photographs#DigitalGlobe_.2F_MapBox</permission-reference-url>
+            <cookies/>
+            <icon>data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAhFBMVEVHcEz///9CZPtphPtFZ/uMof1KavvO0uJifvtQcPuLn/1ng/ve4euQnv36+vtIaPtXdfvt7vTr7PG2v+jl5/BaePuhrv1devugrOC7wNdxi/uap96uuOXKzeDc3/O9xuqfrfzY2+ilsOLEy+xEZfuQntuwttG+w9mpsM2Zp/x3j/t0jfvA+Y0kAAAAAXRSTlMAQObYZgAAASRJREFUeF6Fk+eSwyAMhC2Be+9Ob9fv/d/viBQgDLnx98cedi2JNQTPhHkqZSrC4CVZjYYo8+SzRAdZunqCHsmznuILUk/3HX79fPmMN7vE7XK2n5yAuTVI8KRm/qYATSd4L7R/rddH0i4VObjGPY9IGxYgfvbchRNTBq2PFQkxzvzCk6r8teFKy+0WcSHHjlbDIEdGtne5pIbzXlk2tCxMSFtQ9DMSvxeAwyOsN2RK6lD1jfLGALpCbQwfwPQYtWBnkKZFDEw1TkDkjxYCGZNi39HjhIQw2xzAoXhUDk1QnaMfG2RUkrVuYakWXuSoMzsk015H1GT2d7/HxTAUh69J8Mbt7w6+8V9K58j5JGuHdv3Yr18cy7Ry9RRZ5F1ej1D41/8P1QwO53k2L5oAAAAASUVORK5CYII=</icon>
+            <customHttpHeaders>{"Referer":"https://josm.openstreetmap.de/"}</customHttpHeaders>
+            <category>photo</category>
+            <show-errors>true</show-errors>
+            <automatic-downloading>true</automatic-downloading>
+            <automatically-change-resolution>true</automatically-change-resolution>
+        </layer>
+        <layer index="4" name="OpenStreetMap Carto (Standard)" type="imagery" version="0.1" visible="true">
             <max-zoom>19</max-zoom>
             <valid-georeference>true</valid-georeference>
             <transparent>true</transparent>

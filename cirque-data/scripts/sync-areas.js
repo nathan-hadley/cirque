@@ -14,15 +14,15 @@ const {
 } = require('./shared/sync-utils');
 
 // Paths for areas
-const areasGeojsonPath = path.join(__dirname, '../cirque-data/areas/areas.geojson');
+const areasGeojsonPath = path.join(__dirname, '../areas/areas.geojson');
 const areasOutputPath = path.join(__dirname, '../react-native/assets/areas.ts');
 
 // Paths for subareas (labels)
-const subareasGeojsonPath = path.join(__dirname, '../cirque-data/subareas/subarea-centers.geojson');
+const subareasGeojsonPath = path.join(__dirname, '../subareas/subarea-centers.geojson');
 const subareasOutputPath = path.join(__dirname, '../react-native/assets/subareas.ts');
 
 // Paths for subarea polygons
-const subareaPolygonsGeojsonPath = path.join(__dirname, '../cirque-data/subareas/subareas.geojson');
+const subareaPolygonsGeojsonPath = path.join(__dirname, '../subareas/subareas.geojson');
 const subareaPolygonsOutputPath = path.join(__dirname, '../react-native/assets/subareas-polygons.ts');
 
 function syncAreas() {

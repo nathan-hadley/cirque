@@ -14,7 +14,7 @@ const {
 } = require('./shared/sync-utils');
 
 // Paths
-const problemsGeojsonPath = path.join(__dirname, '../cirque-data/problems/problems.geojson');
+const problemsGeojsonPath = path.join(__dirname, '../problems/problems.geojson');
 const problemsOutputPath = path.join(__dirname, '../react-native/assets/problems.ts');
 
 function syncProblems() {

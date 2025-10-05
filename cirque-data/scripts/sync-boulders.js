@@ -14,7 +14,7 @@ const {
 } = require('./shared/sync-utils');
 
 // Paths
-const bouldersGeojsonPath = path.join(__dirname, '../cirque-data/boulders/boulders.geojson');
+const bouldersGeojsonPath = path.join(__dirname, '../boulders/boulders.geojson');
 const bouldersOutputPath = path.join(__dirname, '../react-native/assets/boulders.ts');
 
 function syncBoulders() {
