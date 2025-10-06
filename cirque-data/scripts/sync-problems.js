@@ -15,7 +15,7 @@ const {
 
 // Paths
 const problemsGeojsonPath = path.join(__dirname, '../problems/problems.geojson');
-const problemsOutputPath = path.join(__dirname, '../react-native/assets/problems.ts');
+const problemsOutputPath = path.join(__dirname, '../../react-native/assets/problems.ts');
 
 function syncProblems() {
   const isValidation = isValidationRun();

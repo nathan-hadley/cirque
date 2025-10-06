@@ -15,7 +15,7 @@ const {
 
 // Paths
 const bouldersGeojsonPath = path.join(__dirname, '../boulders/boulders.geojson');
-const bouldersOutputPath = path.join(__dirname, '../react-native/assets/boulders.ts');
+const bouldersOutputPath = path.join(__dirname, '../../react-native/assets/boulders.ts');
 
 function syncBoulders() {
   const isValidation = isValidationRun();

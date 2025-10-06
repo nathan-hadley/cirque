@@ -11,7 +11,7 @@ import { FeatureCollection, Point, GeoJsonProperties } from 'geojson';
  *   2. Run: npm run sync-problems
  *   3. Commit both files
  *
- * Generated: 2025-10-05T03:47:41.559Z
+ * Generated: 2025-10-06T02:48:13.327Z
  * Features: 170
  */
 
@@ -313,8 +313,8 @@ export const problemsData: FeatureCollection<Point, GeoJsonProperties> = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -120.721528,
-          47.54236
+          -120.72152531779,
+          47.54235909469
         ]
       }
     },
@@ -914,7 +914,7 @@ export const problemsData: FeatureCollection<Point, GeoJsonProperties> = {
         "type": "Point",
         "coordinates": [
           -120.720728,
-          47.54273
+          47.5427281894
         ]
       }
     },
@@ -973,7 +973,7 @@ export const problemsData: FeatureCollection<Point, GeoJsonProperties> = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -120.721636,
+          -120.72162426534,
           47.542335
         ]
       }
@@ -1053,8 +1053,8 @@ export const problemsData: FeatureCollection<Point, GeoJsonProperties> = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -120.721457,
-          47.542425
+          -120.72158406965,
+          47.54239965146
         ]
       }
     },
@@ -1573,8 +1573,8 @@ export const problemsData: FeatureCollection<Point, GeoJsonProperties> = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -120.720792,
-          47.542663
+          -120.72076517791,
+          47.542735424
         ]
       }
     },
@@ -1633,8 +1633,8 @@ export const problemsData: FeatureCollection<Point, GeoJsonProperties> = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -120.721515,
-          47.542412
+          -120.72151600583,
+          47.54238823574
         ]
       }
     },
@@ -1713,8 +1713,8 @@ export const problemsData: FeatureCollection<Point, GeoJsonProperties> = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -120.72154,
-          47.54264
+          -120.72161644296,
+          47.54259473493
         ]
       }
     },
@@ -2273,8 +2273,8 @@ export const problemsData: FeatureCollection<Point, GeoJsonProperties> = {
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -120.721526,
-          47.542409
+          -120.7215471224,
+          47.54239066757
         ]
       }
     },
