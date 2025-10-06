@@ -1,4 +1,5 @@
 import subareasData from "@/assets/subareas";
+import { PROBLEM_COLORS } from "@/constants/map";
 import { ShapeSource, SymbolLayer } from "@rnmapbox/maps";
 
 export function SubareaLabelsLayer() {
@@ -18,8 +19,8 @@ export function SubareaLabelsLayer() {
             16,
             16, // 16px at zoom 16
           ],
-          textColor: "#000000",
-          textHaloColor: "#FFFFFF",
+          textColor: PROBLEM_COLORS.blackText,
+          textHaloColor: PROBLEM_COLORS.white,
           textHaloWidth: 1,
           textHaloBlur: 1,
           textOpacity: [
@@ -32,11 +33,6 @@ export function SubareaLabelsLayer() {
             0, // Hidden at zoom 16 and above
           ],
           textLetterSpacing: 0.2,
-          textJustify: "center",
-          textAnchor: "center",
-          textAllowOverlap: false,
-          textIgnorePlacement: false,
-          symbolPlacement: "point",
           symbolSortKey: 1,
         }}
       />

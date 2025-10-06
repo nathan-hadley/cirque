@@ -11,13 +11,39 @@ import { FeatureCollection, Point, GeoJsonProperties } from 'geojson';
  *   2. Run: npm run sync-areas
  *   3. Commit both files
  *
- * Generated: 2025-10-06T02:48:13.341Z
- * Features: 5
+ * Generated: 2025-10-06T18:51:12.504Z
+ * Features: 6
  */
 
 export const subareasData: FeatureCollection<Point, GeoJsonProperties> = {
   "type": "FeatureCollection",
   "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Swiftwater"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.72892998547,
+          47.65451318915
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Mad Meadows"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.72247268915,
+          47.54304779131
+        ]
+      }
+    },
     {
       "type": "Feature",
       "properties": {
@@ -28,19 +54,6 @@ export const subareasData: FeatureCollection<Point, GeoJsonProperties> = {
         "coordinates": [
           -120.73545458078,
           47.54297536774
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "Clamshell Cave"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -120.72937667906,
-          47.54487644229
         ]
       }
     },
@@ -60,6 +73,19 @@ export const subareasData: FeatureCollection<Point, GeoJsonProperties> = {
     {
       "type": "Feature",
       "properties": {
+        "name": "Clamshell Cave"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.72937667906,
+          47.54487644229
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
         "name": "Forestland"
       },
       "geometry": {
@@ -67,19 +93,6 @@ export const subareasData: FeatureCollection<Point, GeoJsonProperties> = {
         "coordinates": [
           -120.73302986383,
           47.54530735626
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "Swiftwater"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -120.72892998547,
-          47.65451318915
         ]
       }
     }

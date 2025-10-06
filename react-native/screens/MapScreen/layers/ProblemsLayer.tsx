@@ -68,7 +68,7 @@ export function ProblemsLayer() {
           textFont: ["Open Sans Regular", "Arial Unicode MS Regular"],
           textAnchor: "center",
           textOffset: [0, 0],
-          textIgnorePlacement: false,
+          textIgnorePlacement: true,
           textOpacity: [
             "step",
             ["zoom"],

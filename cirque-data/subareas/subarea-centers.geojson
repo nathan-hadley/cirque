@@ -5,6 +5,32 @@
         {
             "type": "Feature",
             "properties": {
+                "name": "Swiftwater"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72892998547,
+                    47.65451318915
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Mad Meadows"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72247268915,
+                    47.54304779131
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
                 "name": "Barney's Rubble"
             },
             "geometry": {
@@ -12,19 +38,6 @@
                 "coordinates": [
                     -120.73545458078,
                     47.54297536774
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "name": "Clamshell Cave"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    -120.72937667906,
-                    47.54487644229
                 ]
             }
         },
@@ -44,6 +57,19 @@
         {
             "type": "Feature",
             "properties": {
+                "name": "Clamshell Cave"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.72937667906,
+                    47.54487644229
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
                 "name": "Forestland"
             },
             "geometry": {
@@ -51,19 +77,6 @@
                 "coordinates": [
                     -120.73302986383,
                     47.54530735626
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "name": "Swiftwater"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    -120.72892998547,
-                    47.65451318915
                 ]
             }
         }

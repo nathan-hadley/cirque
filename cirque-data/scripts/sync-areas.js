@@ -39,7 +39,7 @@ function syncAreas() {
       syncCommand: 'sync-areas',
       dataName: 'areas',
       description: 'area boundary',
-      geometryType: 'LineString',
+      geometryType: 'Point',
       data: areasData,
       timestamp
     });

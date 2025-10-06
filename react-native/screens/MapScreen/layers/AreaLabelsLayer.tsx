@@ -1,4 +1,5 @@
 import areasData from "@/assets/areas";
+import { PROBLEM_COLORS } from "@/constants/map";
 import { ShapeSource, SymbolLayer } from "@rnmapbox/maps";
 
 export function AreaLabelsLayer() {
@@ -9,9 +10,9 @@ export function AreaLabelsLayer() {
         style={{
           textField: ["to-string", ["get", "name"]],
           textFont: ["Open Sans Regular"],
-          textSize: 16, // Fixed 14px size, no scaling
-          textColor: "#000000",
-          textHaloColor: "#FFFFFF",
+          textSize: 16, // Fixed 16px size, no scaling
+          textColor: PROBLEM_COLORS.blackText,
+          textHaloColor: PROBLEM_COLORS.white,
           textHaloWidth: 2,
           textHaloBlur: 1,
           textOpacity: [
@@ -23,19 +24,8 @@ export function AreaLabelsLayer() {
             12,
             0, // Hidden at zoom 12 and above
           ],
-          textTransform: "none",
           textLetterSpacing: 0.5,
           textLineHeight: 1.2,
-          textMaxWidth: 10,
-          textJustify: "center",
-          textAnchor: "center",
-          textAllowOverlap: false,
-          textIgnorePlacement: false,
-          symbolPlacement: "line", // Place labels along the line
-          textRotationAlignment: "map", // Rotate with the line
-          textPitchAlignment: "viewport", // Keep text readable
-          symbolSpacing: 300, // Space between repeated labels on long lines
-          textMaxAngle: 45, // Maximum angle change for curved text
           symbolSortKey: 0, // Lower priority than subarea labels
         }}
       />
