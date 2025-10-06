@@ -23,7 +23,7 @@ type ProblemSheetProps = React.ComponentProps<typeof Actionsheet> & {
 function ProblemDescription({ problem }: { problem: Problem }) {
   const { bottom } = useSafeAreaInsets();
   return (
-    <VStack className="p-2 gap-1" style={{ paddingBottom: bottom }}>
+    <VStack className="self-start p-4 gap-1" style={{ paddingBottom: bottom }}>
       <HStack className="items-center gap-2">
         <View
           style={{ backgroundColor: problem.color }}

@@ -186,8 +186,12 @@ export const useProblemStore = create<ProblemState>((set, get) => {
       const properties = feature.properties || {};
       const name = properties.name?.toString();
       const topo = properties.topo?.toString();
+      const subarea = properties.subarea?.toString();
+      const grade = properties.grade?.toString();
 
-      if (!name || !topo) return null;
+      // TODO: we need a way to identify problems vs other map features
+      // Name, subarea, and grade should be unique to problems
+      if (!name || !subarea || !grade) return null;
 
       const coordinates = feature.geometry?.coordinates?.slice(0, 2) as [number, number];
 
@@ -217,7 +221,7 @@ export const useProblemStore = create<ProblemState>((set, get) => {
         description: properties.description?.toString(),
         line,
         topo,
-        subarea: properties.subarea?.toString(),
+        subarea,
         coordinates,
       };
     },
