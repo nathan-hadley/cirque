@@ -37,21 +37,15 @@ export function CircuitLineLayer({
             "interpolate",
             ["linear"],
             ["zoom"],
+            15,
+            0, // 0px at zoom 15
             16,
             2, // 2px at zoom 16
             22,
             4, // 4px at zoom 22
           ],
           lineDasharray: [2, 2], // Dashed line pattern
-          lineOpacity: [
-            "step",
-            ["zoom"],
-            0, // hidden below zoom 16
-            16,
-            0.8, // 80% opacity at zoom 16+
-            18,
-            1.0, // 100% opacity at zoom 18+
-          ],
+          lineOpacity: 0.5,
           lineCap: "round",
           lineJoin: "round",
         }}
