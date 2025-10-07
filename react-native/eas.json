@@ -6,6 +6,9 @@
   "build": {
     "development": {
       "developmentClient": true,
+      "env": {
+        "APP_VARIANT": "dev"
+      },
       "distribution": "internal"
     },
     "preview": {

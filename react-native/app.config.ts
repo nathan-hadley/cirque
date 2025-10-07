@@ -1,25 +1,27 @@
 import { ExpoConfig, ConfigContext } from "expo/config";
 
+const IS_DEV = process.env.APP_VARIANT === 'dev';
+
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
-  name: "Cirque",
+  name: IS_DEV ? "Cirque Dev" : "Cirque",
   slug: "Cirque",
   version: "1.3.0",
   orientation: "portrait",
   icon: "./assets/images/icon.png",
-  scheme: "myapp",
+  scheme: "cirque",
   userInterfaceStyle: "automatic",
   newArchEnabled: true,
   ios: {
     supportsTablet: true,
-    bundleIdentifier: "com.nathanhadley.Cirque",
+    bundleIdentifier: IS_DEV ? "com.nathanhadley.Cirque.dev" : "com.nathanhadley.Cirque",
     infoPlist: {
       ITSAppUsesNonExemptEncryption: false,
     },
   },
   android: {
     softwareKeyboardLayoutMode: "pan",
-    package: "com.nathanhadley.Cirque",
+    package: IS_DEV ? "com.nathanhadley.Cirque.dev" : "com.nathanhadley.Cirque",
     adaptiveIcon: {
       foregroundImage: "./assets/images/icon.png",
       backgroundColor: "#ffffff",
