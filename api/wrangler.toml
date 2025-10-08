@@ -1,0 +1,12 @@
+name = "cirque-api"
+main = "src/index.ts"
+compatibility_date = "2024-10-01"
+
+[vars]
+# These are placeholders. Use  for real values.
+MAILERSEND_API_TOKEN = ""
+MAILERSEND_FROM_EMAIL = ""
+MAILERSEND_TO_EMAIL = ""
+
+[observability]
+enabled = true
