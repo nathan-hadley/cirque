@@ -41,7 +41,8 @@ export const useProblemStore = create<ProblemState>((set, get) => {
         return (
           props?.color === circuitColor &&
           props?.subarea === subarea &&
-          typeof props.order !== "undefined"
+          typeof props.order !== "undefined" &&
+          props.order !== ""
         );
       })
       .map(feature => get().createProblemFromMapFeature(feature))
