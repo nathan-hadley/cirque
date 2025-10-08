@@ -2,7 +2,7 @@
 
 ## Overview
 
-Build a contribute flow that lets users submit new problems with offline support, drawing on images, and a micro-backend on Cloudflare. Start by emailing submissions to maintainers; later switch the backend transport to auto-create GitHub PRs without frontend changes.
+Build a contribute flow that lets users submit new problems with offline support and a very simple Cloudflare micro-backend that emails submissions via MailerSend. Keep the backend minimal and stateless.
 
 ## Current Architecture Snapshot
 - **Tabs**: `react-native/app/(tabs)/_layout.tsx`
@@ -15,17 +15,15 @@ Build a contribute flow that lets users submit new problems with offline support
 ## Scope and Key Decisions
 - **Offline-first**: Queue submissions locally; auto-sync when online; retries with backoff
 - **Drawing**: Use react-native-svg overlay with react-native-gesture-handler; single saved gesture; clear/reset; store normalized points
-- **Backend on Cloudflare**: Single endpoint receives submissions; transport is pluggable: `email` now → `github` later
-- **Privacy**: Contact info only in email/PR body; never stored in GeoJSON
+- **Backend on Cloudflare**: Single minimal endpoint that sends an email via MailerSend
+- **Privacy**: Contact info only in email body; never stored in GeoJSON
 - **Security**: No secrets in the app; secrets only in Cloudflare environment
 
 ## Data Flow (end-to-end)
 1. Form validate → image pick/resize → draw line → build canonical submission payload
-2. Save to offline queue; when online, POST to Cloudflare `/v1/contributions` with idempotency key
-3. Worker validates and enqueues to Cloudflare Queues; consumer runs transport:
-   - Now: EmailTransport formats JSON body and attaches image (or R2 link)
-   - Later: GitHubTransport updates `problems.geojson`, uploads image, opens PR
-4. App shows status and any returned link (e.g., PR URL); retries on failure
+2. Save to offline queue; when online, POST to Cloudflare `/v1/problem`
+3. Worker forwards payload to MailerSend as an email (no queue/DB)
+4. App shows success or error; retries on failure
 
 ## Minimal Interfaces (conceptual)
 ```ts
@@ -39,29 +37,23 @@ interface ProblemSubmission {
 }
 ```
 
-## Backend API on Cloudflare (now) + GitHub PR (later)
-- **Endpoint**: `POST /v1/contributions`
-  - Headers: `Idempotency-Key` (UUID recommended)
-  - Body: `ProblemSubmission`
-  - Response: `{ submissionId, status, url? }` (url is email provider message URL or later PR URL)
+## Backend API on Cloudflare (simplified)
+- **Endpoint**: `POST /v1/problem`
+  - Body: `ProblemSubmission` (same object used client-side; no strict schema enforced initially)
+  - Response: `{ ok: true }` or `{ error }`
 - **Components**:
-  - Cloudflare Workers: HTTP API and job producer
-  - Cloudflare Queues: background processing and retries
-  - D1 (or KV): idempotency keys + submission status log
-  - R2 (optional): upload image if too large for email attachment; email includes signed URL
-  - Secrets: email provider API key now; GitHub App creds later (app id, installation id, private key)
-- **Transports (pluggable)**:
-  - EmailTransport (SendGrid/Mailgun/Resend via HTTPS): subject `New problem: {name} in {subarea} (grade {grade})`, body contains fenced JSON Feature; attach image or R2 link
-  - GitHubTransport (later): create branch, update `cirque-data/problems/problems.geojson`, add image under `react-native/assets/topos/`, open PR, return PR URL/number
-- **Validation**: strict schema (zod) and filename sanitization in Worker; size limits (e.g., 5MB); reject early with clear messages
-- **Idempotency**: store `(key, hash(payload), result, createdAt)`; if seen, return stored result
+  - Cloudflare Worker: single `fetch` handler with CORS
+  - No Queues, no D1/KV, no R2
+  - Secrets: MailerSend API token and emails
+- **Transport**:
+  - MailerSend via HTTPS: subject like `New problem submission`; body is the full JSON
 
 ## Frontend Integration (unchanged UX)
 - Replace GitHub calls with `SubmissionService.submit(payload)` → POST Worker
 - Keep offline queue, retries, and progress UI
 - Show returned URL when available (PR later)
 
-## File Structure (targets)
+## File Structure (planned targets)
 ```
 # Frontend (unchanged targets)
 react-native/app/(tabs)/contribute.tsx
@@ -75,47 +67,22 @@ react-native/services/offlineQueueService.ts
 react-native/services/imageService.ts
 react-native/services/submissionService.ts    # calls Cloudflare API
 
-# Backend (Cloudflare Workers)
-cloudflare/wrangler.toml
-cloudflare/src/index.ts                      # Router & bindings
-cloudflare/src/routes/contributions.ts       # POST /v1/contributions
-cloudflare/src/schema/submission.ts          # zod schema + normalization
-cloudflare/src/queue/consumer.ts             # Queue consumer handler
-cloudflare/src/transports/email.ts           # EmailTransport (now)
-cloudflare/src/transports/github.ts          # GitHubTransport (later)
-cloudflare/src/lib/idempotency.ts            # D1/KV helpers
-cloudflare/src/lib/r2.ts                     # R2 upload + signed URL (optional)
+# Backend (Cloudflare Workers, minimal)
+api/wrangler.toml
+api/src/index.ts
 ```
 
 ## Cloudflare Bindings (indicative)
 ```
 # wrangler.toml (excerpt)
-name = "cirque-contributions"
-main = "cloudflare/src/index.ts"
-compatibility_date = "2025-01-01"
+name = "cirque-api"
+main = "src/index.ts"
+compatibility_date = "2024-10-01"
 
 [vars]
-EMAIL_TO = "cirquebouldering@gmail.com"
-TRANSPORT = "email" # later: "github" or "both"
-
-[[queues.producers]]
-queue = "contributions-queue"
-binding = "CONTRIBUTIONS_QUEUE"
-
-[[queues.consumers]]
-queue = "contributions-queue"
-
-[[d1_databases]]
-binding = "CONTRIBUTIONS_DB"
-database_name = "contributions"
-
-[[r2_buckets]]
-binding = "TOPO_BUCKET"
-bucket_name = "cirque-topos"
-
-# Secrets (set via wrangler secret)
-# EMAIL_API_KEY, EMAIL_FROM
-# GITHUB_APP_ID, GITHUB_INSTALLATION_ID, GITHUB_PRIVATE_KEY_B64
+MAILERSEND_API_TOKEN = ""
+MAILERSEND_FROM_EMAIL = ""
+MAILERSEND_TO_EMAIL = ""
 ```
 
 ## Security and Privacy (non-negotiables)
