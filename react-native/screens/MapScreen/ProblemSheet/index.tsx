@@ -30,7 +30,7 @@ function ProblemDescription({ problem }: { problem: Problem }) {
           className={`w-4 h-4 rounded-full ${problem.color !== "FFFFFF" ? "border border-typography-200" : ""}`}
         />
         <Heading size="lg">{problem.name || "Unnamed Problem"}</Heading>
-        <Text className="text-typography-700">#{problem.order}</Text>
+        {problem.order && <Text className="text-typography-700">#{problem.order}</Text>}
       </HStack>
 
       <HStack className="items-center gap-2 pb-2">
