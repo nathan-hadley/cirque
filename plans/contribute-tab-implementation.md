@@ -13,13 +13,13 @@ Build a contribute flow that lets users submit new problems (with offline suppor
 
 ## Scope and Key Decisions
 - **Offline-first**: Queue submissions locally; auto-sync when online; limited retries with backoff
-- **Drawing**: Use Skia for fast path drawing and coordinate extraction (6 points, scaled to image size)
+- **Drawing**: Use react-native-svg overlay with react-native-gesture-handler; single saved gesture; clear/reset; store normalized points
 - **GitHub**: Create PRs via GitHub App credentials; commit GeoJSON + optional image
 - **Privacy**: Contact info only in PR description; never stored in GeoJSON
 - **Security**: Secrets stored via SecureStore; no secrets in source
 
 ## Data Flow
-1. User fills form → validates → picks/edits image → draws line (6 points extracted and scaled)
+1. User fills form → validates → picks/edits image → draws a single gesture line (points normalized to image size)
 2. Submission saved to offline queue (problem + contact + image payload)
 3. When network available → create branch → update `problems.geojson` → add image if needed → open PR (contact info only in PR body)
 4. Show status and PR link on success; keep/retry on failure
@@ -31,7 +31,7 @@ interface ProblemSubmission {
   contact: { name: string; email: string };
   problem: {
     name: string; grade: string; subarea: string; color: string; order: number;
-    description?: string; lat: number; lng: number; line: number[][]; // 6 points
+    description?: string; lat: number; lng: number; line: number[][]; // normalized points
     topoFilename?: string; imageBase64?: string; // if new image
   };
 }
@@ -88,8 +88,8 @@ react-native/services/imageService.ts
 - Image handling (picker, resize, filename generation)
 
 ### Phase 4: Drawing
-- Skia canvas for path drawing; clear/undo
-- Extract 6 evenly spaced points; scale to image dimensions
+- SVG overlay + gesture-handler; single saved gesture
+- Store normalized [x,y] points; clear to start over
 
 ### Phase 5: Wiring and Submission
 - Connect form → queue → GitHub PR flow
