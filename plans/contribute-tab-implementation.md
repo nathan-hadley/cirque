@@ -1,6 +1,7 @@
 # Contribute Tab Implementation Plan
 
 ## Overview
+
 Build a contribute flow that lets users submit new problems with offline support, drawing on images, and a micro-backend on Cloudflare. Start by emailing submissions to maintainers; later switch the backend transport to auto-create GitHub PRs without frontend changes.
 
 ## Current Architecture Snapshot
