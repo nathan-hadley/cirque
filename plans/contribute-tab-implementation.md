@@ -14,7 +14,7 @@ Build a contribute flow that lets users submit new problems with offline support
 
 ## Scope and Key Decisions
 - **Offline-first**: Queue submissions locally; auto-sync when online; retries with backoff
-- **Drawing**: Skia for path drawing and 6-point coordinate extraction (scaled to image size)
+- **Drawing**: Use react-native-svg overlay with react-native-gesture-handler; single saved gesture; clear/reset; store normalized points
 - **Backend on Cloudflare**: Single endpoint receives submissions; transport is pluggable: `email` now → `github` later
 - **Privacy**: Contact info only in email/PR body; never stored in GeoJSON
 - **Security**: No secrets in the app; secrets only in Cloudflare environment
@@ -33,7 +33,7 @@ interface ProblemSubmission {
   contact: { name: string; email: string };
   problem: {
     name: string; grade: string; subarea: string; color: string; order: number;
-    description?: string; lat: number; lng: number; line: number[][]; // 6 points
+    description?: string; lat: number; lng: number; line: number[][]; // normalized points
     topoFilename?: string; imageBase64?: string; // if new image
   };
 }
@@ -139,7 +139,8 @@ bucket_name = "cirque-topos"
 - Map server statuses to user-facing progress and errors
 
 ### Phase 4: Drawing and UX polish
-- Skia canvas, 6-point extraction, scaling; validation and clear errors
+- SVG overlay + gesture-handler; single saved gesture
+- Store normalized [x,y] points; validation and clear errors; clear/reset to start over
 - Progress, retries, autosave; link display from server response
 
 ### Phase 5: Reliability and safeguards
