@@ -1,7 +1,8 @@
 # Contribute Tab Implementation Plan
 
 ## Overview
-Build a contribute flow that lets users submit new problems (with offline support, drawing on images, and automatic GitHub PR creation). Keep it simple, resilient, and secure.
+
+Build a contribute flow that lets users submit new problems with offline support and a very simple Cloudflare micro-backend that emails submissions via MailerSend. Keep the backend minimal and stateless.
 
 ## Current Architecture Snapshot
 - **Tabs**: `react-native/app/(tabs)/_layout.tsx`
@@ -12,99 +13,115 @@ Build a contribute flow that lets users submit new problems (with offline suppor
 - **Sync**: Node scripts convert GeoJSON to TS assets
 
 ## Scope and Key Decisions
-- **Offline-first**: Queue submissions locally; auto-sync when online; limited retries with backoff
-- **Drawing**: Use Skia for fast path drawing and coordinate extraction (6 points, scaled to image size)
-- **GitHub**: Create PRs via GitHub App credentials; commit GeoJSON + optional image
-- **Privacy**: Contact info only in PR description; never stored in GeoJSON
-- **Security**: Secrets stored via SecureStore; no secrets in source
+- **Offline-first**: Queue submissions locally; auto-sync when online; retries with backoff
+- **Drawing**: Use react-native-svg overlay with react-native-gesture-handler; single saved gesture; clear/reset; store normalized points
+- **Backend on Cloudflare**: Single minimal endpoint that sends an email via MailerSend
+- **Privacy**: Contact info only in email body; never stored in GeoJSON
+- **Security**: No secrets in the app; secrets only in Cloudflare environment
 
-## Data Flow
-1. User fills form → validates → picks/edits image → draws line (6 points extracted and scaled)
-2. Submission saved to offline queue (problem + contact + image payload)
-3. When network available → create branch → update `problems.geojson` → add image if needed → open PR (contact info only in PR body)
-4. Show status and PR link on success; keep/retry on failure
+## Data Flow (end-to-end)
+1. Form validate → image pick/resize → draw line → build canonical submission payload
+2. Save to offline queue; when online, POST to Cloudflare `/v1/problem`
+3. Worker forwards payload to MailerSend as an email (no queue/DB)
+4. App shows success or error; retries on failure
 
 ## Minimal Interfaces (conceptual)
 ```ts
-// Submission payload (conceptual)
 interface ProblemSubmission {
   contact: { name: string; email: string };
   problem: {
     name: string; grade: string; subarea: string; color: string; order: number;
-    description?: string; lat: number; lng: number; line: number[][]; // 6 points
+    description?: string; lat: number; lng: number; line: number[][]; // normalized points
     topoFilename?: string; imageBase64?: string; // if new image
   };
 }
 ```
 
-## GitHub Integration (essentials)
-- Use a GitHub App installation token (cached ~50 min)
-- Operations: read/modify `cirque-data/problems/problems.geojson`, add image under `react-native/assets/topos/`, create branch, commit, open PR
-- PR title: `Add new problem: {name} in {subarea}`; PR body includes contact info and metadata
+## Backend API on Cloudflare (simplified)
+- **Endpoint**: `POST /v1/problem`
+  - Body: `ProblemSubmission` (same object used client-side; no strict schema enforced initially)
+  - Response: `{ ok: true }` or `{ error }`
+- **Components**:
+  - Cloudflare Worker: single `fetch` handler with CORS
+  - No Queues, no D1/KV, no R2
+  - Secrets: MailerSend API token and emails
+- **Transport**:
+  - MailerSend via HTTPS: subject like `New problem submission`; body is the full JSON
 
-## Offline Queue (essentials)
-- Store queue items with status, attempt count, and last error
-- Trigger processing on connectivity changes and app focus
-- Exponential backoff; cap retries; surface actionable errors to user
+## Frontend Integration (unchanged UX)
+- Replace GitHub calls with `SubmissionService.submit(payload)` → POST Worker
+- Keep offline queue, retries, and progress UI
+- Show returned URL when available (PR later)
 
-## Form and Validation (essentials)
-- Required: name, email, problem name, grade, subarea, color, order, coordinates
-- Optional: description; image (resize for consistency)
-- Validation: format checks, safe filename generation, clear inline errors
-
-## File Structure (target)
+## File Structure (planned targets)
 ```
-react-native/app/(tabs)/contribute.tsx                # Screen
+# Frontend (unchanged targets)
+react-native/app/(tabs)/contribute.tsx
 react-native/components/contribute/ContributeForm.tsx
 react-native/components/contribute/ImageDrawingCanvas.tsx
 react-native/components/contribute/SubareaSelector.tsx
 react-native/components/contribute/CoordinateInput.tsx
 react-native/components/contribute/OfflineQueueStatus.tsx
 react-native/stores/contributeStore.ts
-react-native/services/githubService.ts
 react-native/services/offlineQueueService.ts
 react-native/services/imageService.ts
+react-native/services/submissionService.ts    # calls Cloudflare API
+
+# Backend (Cloudflare Workers, minimal)
+api/wrangler.toml
+api/src/index.ts
+```
+
+## Cloudflare Bindings (indicative)
+```
+# wrangler.toml (excerpt)
+name = "cirque-api"
+main = "src/index.ts"
+compatibility_date = "2024-10-01"
+
+[vars]
+MAILERSEND_API_TOKEN = ""
+MAILERSEND_FROM_EMAIL = ""
+MAILERSEND_TO_EMAIL = ""
 ```
 
 ## Security and Privacy (non-negotiables)
-- Store GitHub App credentials only in SecureStore (initialized at first launch from build-time env)
-- Do not embed secrets in source code; never include contact info in GeoJSON
-- Enforce image size limits; sanitize filenames/paths; validate inputs
+- No secrets in the app; secrets only as Worker bindings/secrets
+- Validate and sanitize all inputs; enforce image limits; strip contact info from GeoJSON
+- CORS allowlist the mobile app origin; rate limit by IP/device fingerprint if needed
+- Store only what’s necessary for idempotency/audit; avoid PII persistence beyond email sending
 
 ## Implementation Phases
 
-### Phase 1: Foundation
-- Create GitHub App and configure credentials (contents: read/write; pull requests: write)
-- Build-time env → initialize to SecureStore on first launch
+### Phase 1: Backend foundation on Cloudflare
+- Bootstrap Worker, Queues, and D1 schema (idempotency + submissions log)
+- Add `/v1/contributions` with schema validation, idempotency, and queue enqueue
 
-### Phase 2: Services and State
-- Contribution store (form state, submission state)
-- Offline queue service (persistence, net monitoring, retries)
-- GitHub service (token, file ops, PR creation)
+### Phase 2: Email transport (now)
+- Implement EmailTransport using provider API; attach image or upload to R2 and link when too large
+- Observability: log outcomes; return provider message URL when available
 
-### Phase 3: UI
-- Contribute tab route and screen
-- Form components (contact, problem details, coordinate input, validation)
-- Image handling (picker, resize, filename generation)
+### Phase 3: Frontend wiring
+- Implement `submissionService.ts` (POST to Worker) and integrate with offline queue
+- Map server statuses to user-facing progress and errors
 
-### Phase 4: Drawing
-- Skia canvas for path drawing; clear/undo
-- Extract 6 evenly spaced points; scale to image dimensions
+### Phase 4: Drawing and UX polish
+- SVG overlay + gesture-handler; single saved gesture
+- Store normalized [x,y] points; validation and clear errors; clear/reset to start over
+- Progress, retries, autosave; link display from server response
 
-### Phase 5: Wiring and Submission
-- Connect form → queue → GitHub PR flow
-- Queue processing with success/failure feedback and PR link
+### Phase 5: Reliability and safeguards
+- Backoff and dead-letter handling in Queues; idempotent replays
+- Size limits, filename sanitation, and helpful error messages
 
-### Phase 6: Testing and Polish
-- Offline/online transitions; interruption handling
-- Error handling paths and user messages
-- Performance: compression, drawing perf, background processing
-- UX polish: loading/progress, autosave, success feedback
+### Phase 6: Add GitHub PR transport (later)
+- Implement GitHubTransport with App credentials (server-side only)
+- Config flip `TRANSPORT=github` (or `both` for canary); expose PR URL in response
 
-### Phase 7: Release Readiness
-- Production build sanity checks (credentials init, end-to-end PR)
-- Reviewer playbook and basic monitoring (submission success rate)
+### Phase 7: Release readiness
+- Production smoke tests (end-to-end email, then PR when ready)
+- Reviewer playbook and submission success monitoring
 
 ## Notes
-- Keep commands and setup docs out of this plan; maintain them in contributor docs
-- This plan focuses on responsibilities, data shapes, and integration touchpoints only
+- Keep detailed setup commands in contributor docs, not here
+- Frontend remains stable across the switch from email → GitHub PR; only backend config changes
