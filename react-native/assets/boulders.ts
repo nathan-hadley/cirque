@@ -11,7 +11,7 @@ import { FeatureCollection, LineString, GeoJsonProperties } from 'geojson';
  *   2. Run: npm run sync-boulders
  *   3. Commit both files
  *
- * Generated: 2025-10-14T20:35:36.192Z
+ * Generated: 2025-10-14T20:56:42.817Z
  * Features: 123
  */
 
