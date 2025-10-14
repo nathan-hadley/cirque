@@ -1,4 +1,4 @@
-import { FeatureCollection, GeoJsonProperties, Point } from 'geojson';
+import { FeatureCollection, Point, GeoJsonProperties } from 'geojson';
 
 /*
  * Auto-generated from cirque-data/areas/areas.geojson
@@ -11,7 +11,7 @@ import { FeatureCollection, GeoJsonProperties, Point } from 'geojson';
  *   2. Run: npm run sync-areas
  *   3. Commit both files
  *
- * Generated: 2025-10-06T18:51:12.503Z
+ * Generated: 2025-10-14T20:35:36.195Z
  * Features: 2
  */
 

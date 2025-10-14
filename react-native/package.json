@@ -18,7 +18,8 @@
     "check-all": "pnpm format:check && pnpm lint && pnpm typecheck",
     "pre-commit": "pnpm check-all",
     "sync-data": "node ../cirque-data/scripts/sync-data.js",
-    "validate-data": "node ../cirque-data/scripts/sync-data.js --check"
+    "validate-data": "node ../cirque-data/scripts/sync-data.js --check",
+    "open-problems-excel": "node ../cirque-data/problems/open-problems-excel.js"
   },
   "jest": {
     "preset": "jest-expo"
