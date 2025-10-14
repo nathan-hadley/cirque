@@ -35,7 +35,7 @@ export function MapScreen() {
   const { centerToUserLocation, setMapRef, setCameraRef } = useMapStore();
 
   // Problem store for problem-specific state
-  const { problem, viewProblem, setViewProblem, getCircuitLine } = useProblemStore();
+  const { problem, viewProblem, setViewProblem, getCircuitLine, setMinGrade, setMaxGrade } = useProblemStore();
 
   const currentCircuitLine = getCircuitLine();
 
@@ -64,6 +64,12 @@ export function MapScreen() {
         y: screenPointY,
       });
     }
+  }
+
+  function handleGradeFilterSet(minGrade: number, maxGrade: number) {
+    setMinGrade(minGrade);
+    setMaxGrade(maxGrade);
+    setIsFilterVisible(false);
   }
 
   return (
@@ -121,7 +127,7 @@ export function MapScreen() {
 
       <SearchOverlay isVisible={isSearchVisible} onClose={() => setIsSearchVisible(false)} />
 
-      <GradeFilterSheet isOpen={isFilterVisible} onClose={() => setIsFilterVisible(false)} />
+      <GradeFilterSheet isOpen={isFilterVisible} onClose={handleGradeFilterSet} />
     </View>
   );
 }

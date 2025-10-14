@@ -1,12 +1,10 @@
-import React from "react";
-import { ScrollView, Pressable } from "react-native";
+import React, { useState, useRef } from "react";
 import {
   Actionsheet,
   ActionsheetContent,
   ActionsheetBackdrop,
   ActionsheetDragIndicatorWrapper,
 } from "@/components/ui/actionsheet";
-import { Badge, BadgeText } from "@/components/ui/badge";
 import { HStack } from "@/components/ui/hstack";
 import { VStack } from "@/components/ui/vstack";
 import { Text } from "@/components/ui/text";
@@ -14,24 +12,47 @@ import { useProblemStore } from "@/stores/problemStore";
 import { X } from "lucide-react-native";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Slider, SliderFilledTrack, SliderThumb, SliderTrack } from "@/components/ui/slider";
 
-const AVAILABLE_GRADES = ["V0", "V1", "V2", "V3", "V4", "V5", "V6", "V7", "V8", "V9"];
+const numberToGrade = (num: number): string => `V${num}`;
 
 type GradeFilterSheetProps = {
   isOpen: boolean;
-  onClose: () => void;
+  onClose: (minGrade: number, maxGrade: number) => void;
 };
 
 export default function GradeFilterSheet({ isOpen, onClose }: GradeFilterSheetProps) {
-  const { selectedGrades, toggleGrade, setSelectedGrades } = useProblemStore();
+  const { minGrade, maxGrade } = useProblemStore();
   const { bottom } = useSafeAreaInsets();
+  
+  const [localMinGrade, setLocalMinGrade] = useState(minGrade);
+  const [localMaxGrade, setLocalMaxGrade] = useState(maxGrade);
+  const minGradeRef = useRef(minGrade);
+  const maxGradeRef = useRef(maxGrade);
 
-  const handleClearAll = () => {
-    setSelectedGrades([]);
+  function handleMinGradeChange(value: number) {
+    setLocalMinGrade(value);
+    minGradeRef.current = value;
+  }
+
+  function handleMaxGradeChange(value: number) {
+    setLocalMaxGrade(value);
+    maxGradeRef.current = value;
+  }
+
+  function handleReset() {
+    setLocalMinGrade(minGrade);
+    setLocalMaxGrade(maxGrade);
+    minGradeRef.current = minGrade;
+    maxGradeRef.current = maxGrade;
   };
 
+  function handleClose() {
+    onClose(minGradeRef.current, maxGradeRef.current);
+  }
+
   return (
-    <Actionsheet isOpen={isOpen} onClose={onClose}>
+    <Actionsheet isOpen={isOpen} onClose={handleClose}>
       <ActionsheetBackdrop />
       <ActionsheetContent className="p-0" style={{ paddingBottom: bottom + 16 }}>
         <VStack className="w-full">
@@ -39,49 +60,58 @@ export default function GradeFilterSheet({ isOpen, onClose }: GradeFilterSheetPr
           <ActionsheetDragIndicatorWrapper className="p-6">
             <HStack className="justify-between items-center w-full">
               <Text className="text-xl font-semibold text-typography-900">Filter by grade</Text>
-              <Button onPress={onClose} variant="link" className="p-1">
+              <Button onPress={handleClose} variant="link" className="p-1">
                 <ButtonIcon as={X} className="w-8 h-8" />
-              </Button>
-            </HStack>
-
-            <HStack className="justify-between items-center w-full">
-              <Text className="text-sm text-typography-600">
-                {selectedGrades.length} grade{selectedGrades.length !== 1 ? "s" : ""} selected
-              </Text>
-              <Button onPress={handleClearAll} variant="link">
-                <ButtonText className="text-info-600">Clear All</ButtonText>
               </Button>
             </HStack>
           </ActionsheetDragIndicatorWrapper>
 
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} className="px-6">
-            <HStack className="gap-3">
-              {AVAILABLE_GRADES.map(grade => {
-                const isSelected = selectedGrades.includes(grade);
-                return (
-                  <Pressable key={grade} onPress={() => toggleGrade(grade)}>
-                    <Badge
-                      className={`px-4 py-2 ${
-                        isSelected
-                          ? "bg-info-500 border-info-500"
-                          : "bg-background-100 border-background-300"
-                      }`}
-                      variant="solid"
-                    >
-                      <BadgeText
-                        size="lg"
-                        className={`font-semibold text-center ${
-                          isSelected ? "text-typography-0" : "text-typography-700"
-                        }`}
-                      >
-                        {grade}
-                      </BadgeText>
-                    </Badge>
-                  </Pressable>
-                );
-              })}
+          <VStack space="xl" className="px-6 pb-6">
+            <HStack className="justify-between items-center">
+              <Text>Maximum: {numberToGrade(localMaxGrade)}</Text>
+              <Button onPress={handleReset} variant="outline" size="sm">
+                <ButtonText>Reset</ButtonText>
+              </Button>
             </HStack>
-          </ScrollView>
+            <HStack space="2xl" className="items-center">
+              <Text>V0</Text>
+              <Slider 
+                value={localMaxGrade}
+                defaultValue={maxGrade}
+                onChange={handleMaxGradeChange}
+                minValue={0} 
+                maxValue={10} 
+                size="lg"
+                className="flex-1"
+              >
+                <SliderTrack className="h-2">
+                  <SliderFilledTrack />
+                </SliderTrack>
+                <SliderThumb hitSlop={10} />
+              </Slider>
+              <Text>V10</Text>
+            </HStack>
+            
+            <Text>Minimum: {numberToGrade(localMinGrade)}</Text>
+            <HStack space="2xl" className="items-center">
+              <Text>V0</Text>
+              <Slider 
+                value={localMinGrade}
+                onChange={handleMinGradeChange}
+                defaultValue={minGrade}
+                minValue={0} 
+                maxValue={10} 
+                size="lg"
+                className="flex-1"
+              >
+                <SliderTrack className="h-2">
+                  <SliderFilledTrack />
+                </SliderTrack>
+                <SliderThumb hitSlop={10} />
+              </Slider>
+              <Text>V10</Text>
+            </HStack>
+          </VStack>
         </VStack>
       </ActionsheetContent>
     </Actionsheet>

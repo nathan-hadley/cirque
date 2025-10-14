@@ -4,6 +4,9 @@ import { Alert } from "react-native";
 import { problemsData } from "@/assets/problems";
 import { Problem } from "@/models/problems";
 
+const MIN_GRADE = 0;
+const MAX_GRADE = 10;
+
 type GetProblemParams = {
   circuitColor: string;
   subarea: string;
@@ -14,13 +17,14 @@ type ProblemState = {
   // State
   problem: Problem | null;
   viewProblem: boolean;
-  selectedGrades: string[];
+  minGrade: number;
+  maxGrade: number;
 
   // Actions
   setProblem: (problem: Problem | null) => void;
   setViewProblem: (view: boolean) => void;
-  setSelectedGrades: (grades: string[]) => void;
-  toggleGrade: (grade: string) => void;
+  setMinGrade: (grade: number) => void;
+  setMaxGrade: (grade: number) => void;
   getProblem: (params: GetProblemParams) => Problem | null;
   showPreviousProblem: () => void;
   showNextProblem: () => void;
@@ -28,6 +32,11 @@ type ProblemState = {
   createProblemFromMapFeature: (feature: Feature<Point, GeoJsonProperties>) => Problem | null;
   getVisibleProblemsInCircuit: (circuitColor: string, subarea: string) => Problem[];
   getCircuitLine: () => FeatureCollection<LineString, GeoJsonProperties> | null;
+};
+
+const gradeToNumber = (grade: string): number => {
+  const match = grade.match(/V(\d+)/);
+  return match ? parseInt(match[1], 10) : MIN_GRADE;
 };
 
 export const useProblemStore = create<ProblemState>((set, get) => {
@@ -84,22 +93,26 @@ export const useProblemStore = create<ProblemState>((set, get) => {
     };
   };
 
+  const gradeFilterApplied = () => {
+    const { minGrade, maxGrade } = get();
+    return minGrade !== MIN_GRADE || maxGrade !== MAX_GRADE;
+  };
+
   return {
     // Initial state
     problem: null,
     viewProblem: false,
-    selectedGrades: [],
+    minGrade: MIN_GRADE,
+    maxGrade: MAX_GRADE,
 
     // Actions
     setProblem: (problem: Problem | null) => set({ problem }),
     setViewProblem: (view: boolean) => set({ viewProblem: view }),
-    setSelectedGrades: (grades: string[]) => set({ selectedGrades: grades }),
-    toggleGrade: (grade: string) => {
-      const { selectedGrades } = get();
-      const newGrades = selectedGrades.includes(grade)
-        ? selectedGrades.filter(g => g !== grade)
-        : [...selectedGrades, grade];
-      set({ selectedGrades: newGrades });
+    setMinGrade: (grade: number) => {
+      set({ minGrade: Math.min(grade, MAX_GRADE) });
+    },
+    setMaxGrade: (grade: number) => {
+      set({ maxGrade: Math.max(grade, MIN_GRADE) });
     },
 
     getProblem: (params: GetProblemParams): Problem | null => {
@@ -169,18 +182,17 @@ export const useProblemStore = create<ProblemState>((set, get) => {
     },
 
     getVisibleProblemsInCircuit: (circuitColor: string, subarea: string): Problem[] => {
-      const { selectedGrades } = get();
+      const { minGrade, maxGrade } = get();
 
-      // Get all problems in the circuit
       const allProblems = getAllProblemsInCircuit(circuitColor, subarea);
 
-      // If no grades are selected, return all problems
-      if (selectedGrades.length === 0) {
-        return allProblems;
-      }
+      if (!gradeFilterApplied()) return allProblems;
 
-      // Filter by selected grades (already sorted by getAllProblemsInCircuit)
-      return allProblems.filter(problem => problem.grade && selectedGrades.includes(problem.grade));
+      return allProblems.filter(problem => {
+        if (!problem.grade) return false;
+        const problemGradeNum = gradeToNumber(problem.grade);
+        return problemGradeNum >= minGrade && problemGradeNum <= maxGrade;
+      });
     },
 
     createProblemFromMapFeature: (feature: Feature<Point, GeoJsonProperties>): Problem | null => {
@@ -228,14 +240,12 @@ export const useProblemStore = create<ProblemState>((set, get) => {
     },
 
     getCircuitLine: (): FeatureCollection<LineString, GeoJsonProperties> | null => {
-      const { problem, getVisibleProblemsInCircuit, selectedGrades } = get();
+      const { problem, getVisibleProblemsInCircuit } = get();
       if (!problem || !problem.colorStr || !problem.subarea) return null;
 
-      // Get problems based on whether grades are filtered
-      const problems =
-        selectedGrades.length === 0
-          ? getAllProblemsInCircuit(problem.colorStr, problem.subarea) // All problems when no filter
-          : getVisibleProblemsInCircuit(problem.colorStr, problem.subarea); // Filtered problems
+      const problems = gradeFilterApplied()
+        ? getVisibleProblemsInCircuit(problem.colorStr, problem.subarea)
+        : getAllProblemsInCircuit(problem.colorStr, problem.subarea);
 
       return generateCircuitLineFromProblems(problems, problem.colorStr, problem.subarea);
     },

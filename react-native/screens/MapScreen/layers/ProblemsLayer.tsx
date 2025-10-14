@@ -4,26 +4,31 @@ import { PROBLEM_COLORS } from "@/constants/map";
 import { useProblemStore } from "@/stores/problemStore";
 
 export function ProblemsLayer() {
-  const { selectedGrades } = useProblemStore();
+  const { minGrade, maxGrade } = useProblemStore();
 
   const gradeFilter = () => {
-    if (selectedGrades.length === 0) {
+    if (minGrade === 0 && maxGrade === 10) {
       return undefined;
     }
-    return ["in", ["get", "grade"], ["literal", selectedGrades]];
+    
+    const gradeList = [];
+    for (let i = minGrade; i <= maxGrade; i++) {
+      gradeList.push(`V${i}`);
+    }
+    
+    return ["in", ["get", "grade"], ["literal", gradeList]];
   };
 
   if (!problemsData) return null;
 
   const layerKey =
-    selectedGrades.length === 0 ? "all-grades" : `filtered-${selectedGrades.join("-")}`;
+    minGrade === 0 && maxGrade === 10 ? "all-grades" : `filtered-${minGrade}-${maxGrade}`;
 
   return (
-    <ShapeSource id="problems-source" shape={problemsData}>
+    <ShapeSource key={layerKey} id={`problems-source-${layerKey}`} shape={problemsData}>
       <CircleLayer
-        key={`${layerKey}-circle`}
         id="problems-layer"
-        filter={gradeFilter}
+        filter={gradeFilter()}
         style={{
           circleRadius: ["interpolate", ["linear"], ["zoom"], 16, 3, 22, 20],
           circleColor: [
@@ -53,9 +58,8 @@ export function ProblemsLayer() {
         }}
       />
       <SymbolLayer
-        key={`${layerKey}-symbol`}
         id="problems-text-layer"
-        filter={gradeFilter}
+        filter={gradeFilter()}
         style={{
           textField: ["get", "order"],
           textSize: ["interpolate", ["linear"], ["zoom"], 17, 8, 22, 26],
