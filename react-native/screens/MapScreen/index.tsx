@@ -35,7 +35,8 @@ export function MapScreen() {
   const { centerToUserLocation, setMapRef, setCameraRef } = useMapStore();
 
   // Problem store for problem-specific state
-  const { problem, viewProblem, setViewProblem, getCircuitLine, setMinGrade, setMaxGrade } = useProblemStore();
+  const { problem, viewProblem, setViewProblem, getCircuitLine, setMinGrade, setMaxGrade } =
+    useProblemStore();
 
   const currentCircuitLine = getCircuitLine();
 

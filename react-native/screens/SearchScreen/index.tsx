@@ -50,8 +50,8 @@ export function SearchOverlay({ isVisible, onClose }: SearchOverlayProps) {
       // Apply grade filter if grades are filtered (not at full range)
       if (minGrade > 0 || maxGrade < 10) {
         if (!problem.grade) return;
-        
-        const problemGradeNum = parseInt(problem.grade.replace('V', ''), 10);
+
+        const problemGradeNum = parseInt(problem.grade.replace("V", ""), 10);
         if (problemGradeNum < minGrade || problemGradeNum > maxGrade) {
           return;
         }

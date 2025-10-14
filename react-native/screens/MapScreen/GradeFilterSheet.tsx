@@ -26,7 +26,7 @@ type GradeFilterSheetProps = {
 export default function GradeFilterSheet({ isOpen, onClose }: GradeFilterSheetProps) {
   const { minGrade, maxGrade } = useProblemStore();
   const { bottom } = useSafeAreaInsets();
-  
+
   const [localMinGrade, setLocalMinGrade] = useState(minGrade);
   const [localMaxGrade, setLocalMaxGrade] = useState(maxGrade);
   const minGradeRef = useRef(minGrade);
@@ -51,7 +51,7 @@ export default function GradeFilterSheet({ isOpen, onClose }: GradeFilterSheetPr
     setLocalMaxGrade(MAX_GRADE);
     minGradeRef.current = MIN_GRADE;
     maxGradeRef.current = MAX_GRADE;
-  };
+  }
 
   function handleClose() {
     onClose(minGradeRef.current, maxGradeRef.current);
@@ -65,7 +65,9 @@ export default function GradeFilterSheet({ isOpen, onClose }: GradeFilterSheetPr
           {/* Header */}
           <ActionsheetDragIndicatorWrapper className="p-6">
             <HStack className="justify-between items-center w-full">
-              <Text size="xl" className="font-semibold text-typography-900">Adjust grade range</Text>
+              <Text size="xl" className="font-semibold text-typography-900">
+                Adjust grade range
+              </Text>
               <Button onPress={handleClose} variant="link" className="p-1">
                 <ButtonIcon as={X} className="w-8 h-8" />
               </Button>
@@ -81,17 +83,17 @@ export default function GradeFilterSheet({ isOpen, onClose }: GradeFilterSheetPr
                 <ButtonText>Reset</ButtonText>
               </Button>
             </HStack>
-            
+
             <HStack space="2xl" className="items-center">
               <Text size="lg">V0</Text>
               <View className="flex-1 relative h-8">
                 {/* Min slider */}
                 <View className="absolute inset-0">
-                  <Slider 
+                  <Slider
                     value={localMinGrade}
                     onChange={handleMinGradeChange}
-                    minValue={0} 
-                    maxValue={10} 
+                    minValue={0}
+                    maxValue={10}
                     size="lg"
                     className="flex-1"
                   >
@@ -99,14 +101,14 @@ export default function GradeFilterSheet({ isOpen, onClose }: GradeFilterSheetPr
                     <SliderThumb hitSlop={15} />
                   </Slider>
                 </View>
-                
+
                 {/* Max slider - transparent track */}
                 <View className="absolute inset-0">
-                  <Slider 
+                  <Slider
                     value={localMaxGrade}
                     onChange={handleMaxGradeChange}
-                    minValue={0} 
-                    maxValue={10} 
+                    minValue={0}
+                    maxValue={10}
                     size="lg"
                     className="flex-1"
                   >

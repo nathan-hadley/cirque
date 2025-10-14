@@ -10,12 +10,12 @@ export function ProblemsLayer() {
     if (minGrade === 0 && maxGrade === 10) {
       return undefined;
     }
-    
+
     const gradeList = [];
     for (let i = minGrade; i <= maxGrade; i++) {
       gradeList.push(`V${i}`);
     }
-    
+
     return ["in", ["get", "grade"], ["literal", gradeList]];
   };
 
