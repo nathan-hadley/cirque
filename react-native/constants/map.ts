@@ -36,3 +36,6 @@ export const BOULDER_COLORS = {
   fill: "#B0B0B0", // light grey fill
   line: "#A0A0A0", // lighter grey line
 } as const;
+
+export const MIN_GRADE = 0;
+export const MAX_GRADE = 10;

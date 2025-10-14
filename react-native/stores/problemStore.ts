@@ -3,9 +3,7 @@ import { Feature, FeatureCollection, GeoJsonProperties, Point, LineString } from
 import { Alert } from "react-native";
 import { problemsData } from "@/assets/problems";
 import { Problem } from "@/models/problems";
-
-const MIN_GRADE = 0;
-const MAX_GRADE = 10;
+import { MIN_GRADE, MAX_GRADE } from "@/constants/map";
 
 type GetProblemParams = {
   circuitColor: string;

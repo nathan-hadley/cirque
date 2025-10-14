@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { View } from "react-native";
 import {
   Actionsheet,
   ActionsheetContent,
@@ -12,7 +13,8 @@ import { useProblemStore } from "@/stores/problemStore";
 import { X } from "lucide-react-native";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Slider, SliderFilledTrack, SliderThumb, SliderTrack } from "@/components/ui/slider";
+import { Slider, SliderThumb, SliderTrack } from "@/components/ui/slider";
+import { MAX_GRADE, MIN_GRADE } from "@/constants/map";
 
 const numberToGrade = (num: number): string => `V${num}`;
 
@@ -31,20 +33,24 @@ export default function GradeFilterSheet({ isOpen, onClose }: GradeFilterSheetPr
   const maxGradeRef = useRef(maxGrade);
 
   function handleMinGradeChange(value: number) {
-    setLocalMinGrade(value);
-    minGradeRef.current = value;
+    // Prevent min from exceeding max
+    const newMin = Math.min(value, localMaxGrade - 1);
+    setLocalMinGrade(newMin);
+    minGradeRef.current = newMin;
   }
 
   function handleMaxGradeChange(value: number) {
-    setLocalMaxGrade(value);
-    maxGradeRef.current = value;
+    // Prevent max from going below min
+    const newMax = Math.max(value, localMinGrade + 1);
+    setLocalMaxGrade(newMax);
+    maxGradeRef.current = newMax;
   }
 
   function handleReset() {
-    setLocalMinGrade(minGrade);
-    setLocalMaxGrade(maxGrade);
-    minGradeRef.current = minGrade;
-    maxGradeRef.current = maxGrade;
+    setLocalMinGrade(MIN_GRADE);
+    setLocalMaxGrade(MAX_GRADE);
+    minGradeRef.current = MIN_GRADE;
+    maxGradeRef.current = MAX_GRADE;
   };
 
   function handleClose() {
@@ -59,57 +65,57 @@ export default function GradeFilterSheet({ isOpen, onClose }: GradeFilterSheetPr
           {/* Header */}
           <ActionsheetDragIndicatorWrapper className="p-6">
             <HStack className="justify-between items-center w-full">
-              <Text className="text-xl font-semibold text-typography-900">Filter by grade</Text>
+              <Text size="xl" className="font-semibold text-typography-900">Adjust grade range</Text>
               <Button onPress={handleClose} variant="link" className="p-1">
                 <ButtonIcon as={X} className="w-8 h-8" />
               </Button>
             </HStack>
           </ActionsheetDragIndicatorWrapper>
 
-          <VStack space="xl" className="px-6 pb-6">
+          <VStack space="lg" className="px-6 pb-6">
             <HStack className="justify-between items-center">
-              <Text>Maximum: {numberToGrade(localMaxGrade)}</Text>
+              <Text size="lg" className="font-semibold">
+                {numberToGrade(localMinGrade)} - {numberToGrade(localMaxGrade)}
+              </Text>
               <Button onPress={handleReset} variant="outline" size="sm">
                 <ButtonText>Reset</ButtonText>
               </Button>
             </HStack>
-            <HStack space="2xl" className="items-center">
-              <Text>V0</Text>
-              <Slider 
-                value={localMaxGrade}
-                defaultValue={maxGrade}
-                onChange={handleMaxGradeChange}
-                minValue={0} 
-                maxValue={10} 
-                size="lg"
-                className="flex-1"
-              >
-                <SliderTrack className="h-2">
-                  <SliderFilledTrack />
-                </SliderTrack>
-                <SliderThumb hitSlop={10} />
-              </Slider>
-              <Text>V10</Text>
-            </HStack>
             
-            <Text>Minimum: {numberToGrade(localMinGrade)}</Text>
             <HStack space="2xl" className="items-center">
-              <Text>V0</Text>
-              <Slider 
-                value={localMinGrade}
-                onChange={handleMinGradeChange}
-                defaultValue={minGrade}
-                minValue={0} 
-                maxValue={10} 
-                size="lg"
-                className="flex-1"
-              >
-                <SliderTrack className="h-2">
-                  <SliderFilledTrack />
-                </SliderTrack>
-                <SliderThumb hitSlop={10} />
-              </Slider>
-              <Text>V10</Text>
+              <Text size="lg">V0</Text>
+              <View className="flex-1 relative h-8">
+                {/* Min slider */}
+                <View className="absolute inset-0">
+                  <Slider 
+                    value={localMinGrade}
+                    onChange={handleMinGradeChange}
+                    minValue={0} 
+                    maxValue={10} 
+                    size="lg"
+                    className="flex-1"
+                  >
+                    <SliderTrack />
+                    <SliderThumb hitSlop={15} />
+                  </Slider>
+                </View>
+                
+                {/* Max slider - transparent track */}
+                <View className="absolute inset-0">
+                  <Slider 
+                    value={localMaxGrade}
+                    onChange={handleMaxGradeChange}
+                    minValue={0} 
+                    maxValue={10} 
+                    size="lg"
+                    className="flex-1"
+                  >
+                    <SliderTrack className="bg-transparent" />
+                    <SliderThumb hitSlop={15} />
+                  </Slider>
+                </View>
+              </View>
+              <Text size="lg">V10</Text>
             </HStack>
           </VStack>
         </VStack>
