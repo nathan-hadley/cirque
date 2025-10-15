@@ -11,3 +11,6 @@ export type Problem = {
   subarea?: string;
   coordinates?: [number, number]; // [longitude, latitude]
 };
+
+export const MIN_GRADE = 0;
+export const MAX_GRADE = 10;

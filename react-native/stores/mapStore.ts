@@ -4,7 +4,7 @@ import { MapView, Camera } from "@rnmapbox/maps";
 import { Feature, GeoJsonProperties, Point } from "geojson";
 import * as Location from "expo-location";
 import { RefObject } from "react";
-import { LAYER_IDS } from "@/constants/map";
+import { LAYER_IDS, USER_LOCATION_ZOOM, PROBLEM_ZOOM } from "@/constants/map";
 
 type MapState = {
   // State
@@ -19,7 +19,7 @@ type MapState = {
     y: number;
   }) => Promise<Feature<Point, GeoJsonProperties> | null>;
   centerToUserLocation: () => Promise<void>;
-  flyToProblemCoordinates: (coordinates: [number, number], zoomLevel?: number) => void;
+  flyToProblemCoordinates: (coordinates: [number, number], zoomLevel?: number) => Promise<void>;
 };
 
 export const useMapStore = create<MapState>((set, get) => ({
@@ -31,17 +31,22 @@ export const useMapStore = create<MapState>((set, get) => ({
   setMapRef: (ref: RefObject<MapView | null>) => set({ mapRef: ref }),
   setCameraRef: (ref: RefObject<Camera | null>) => set({ cameraRef: ref }),
 
-  flyToProblemCoordinates: (coordinates: [number, number], zoomLevel?: number) => {
-    const { cameraRef } = get();
+  flyToProblemCoordinates: async (coordinates: [number, number], zoomLevel?: number) => {
+    const { cameraRef, mapRef } = get();
 
-    if (coordinates && cameraRef?.current) {
+    if (coordinates && cameraRef?.current && mapRef?.current) {
       // Get screen dimensions to calculate offset for actionsheet
       const screenHeight = Dimensions.get("window").height;
       const centerOffset = screenHeight * 0.4;
 
+      // Only change zoom if current zoom is less than target zoom
+      const currentZoom = await mapRef.current.getZoom();
+      const targetZoom = zoomLevel || PROBLEM_ZOOM;
+      const finalZoom = currentZoom > targetZoom ? currentZoom : targetZoom;
+
       cameraRef.current.setCamera({
         centerCoordinate: coordinates,
-        zoomLevel: zoomLevel || 19,
+        zoomLevel: finalZoom,
         animationDuration: 500,
         padding: {
           paddingBottom: centerOffset,
@@ -54,7 +59,7 @@ export const useMapStore = create<MapState>((set, get) => ({
   },
 
   centerToUserLocation: async () => {
-    const { cameraRef } = get();
+    const { cameraRef, mapRef } = get();
 
     try {
       const { status } = await Location.requestForegroundPermissionsAsync();
@@ -72,10 +77,15 @@ export const useMapStore = create<MapState>((set, get) => ({
         accuracy: Location.Accuracy.Balanced,
       });
 
-      if (cameraRef?.current) {
+      if (cameraRef?.current && mapRef?.current) {
+        // Only change zoom if current zoom is less than target zoom
+        const currentZoom = await mapRef.current.getZoom();
+        const targetZoom = USER_LOCATION_ZOOM;
+        const finalZoom = currentZoom > targetZoom ? currentZoom : targetZoom;
+
         cameraRef.current.setCamera({
           centerCoordinate: [location.coords.longitude, location.coords.latitude],
-          zoomLevel: 16,
+          zoomLevel: finalZoom,
           animationDuration: 1000,
         });
       }

@@ -1,5 +1,7 @@
 // Map constants
 export const INITIAL_ZOOM = 10.5;
+export const USER_LOCATION_ZOOM = 16; // Zoom level when centering to user location
+export const PROBLEM_ZOOM = 19; // Zoom level when flying to a problem
 export const INITIAL_CENTER = [-120.713, 47.585]; // Note: [longitude, latitude] in React Native
 export const STYLE_URI = "mapbox://styles/mapbox/outdoors-v12";
 export const PROBLEMS_LAYER = "leavenworth-problems";
@@ -40,9 +42,6 @@ export const BOULDER_COLORS = {
 export const SUBAREA_COLORS = {
   fill: "#808080", // grey fill
 } as const;
-
-export const MIN_GRADE = 0;
-export const MAX_GRADE = 10;
 
 // Layer IDs
 export const LAYER_IDS = {

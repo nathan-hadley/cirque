@@ -14,7 +14,7 @@ import { X } from "lucide-react-native";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Slider, SliderThumb, SliderTrack } from "@/components/ui/slider";
-import { MAX_GRADE, MIN_GRADE } from "@/constants/map";
+import { MAX_GRADE, MIN_GRADE } from "@/models/problems";
 
 const numberToGrade = (num: number): string => `V${num}`;
 
