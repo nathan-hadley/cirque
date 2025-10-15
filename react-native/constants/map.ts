@@ -23,7 +23,7 @@ export const PROBLEM_COLORS = {
   white: "#ffffff",
   green: "#00ff00",
   yellow: "#ffff00",
-  default: "#888888",
+  default: "#888888", // grey
   blackText: "#000000", // black text for white circles
   defaultText: "#ffffff", // white text for all other circles
 } as const;
@@ -37,5 +37,33 @@ export const BOULDER_COLORS = {
   line: "#A0A0A0", // lighter grey line
 } as const;
 
+export const SUBAREA_COLORS = {
+  fill: "#808080", // grey fill
+} as const;
+
 export const MIN_GRADE = 0;
 export const MAX_GRADE = 10;
+
+// Layer IDs
+export const LAYER_IDS = {
+  problems: "problems-layer",
+  problemsText: "problems-text-layer",
+  circuitLine: "circuit-line-layer",
+  bouldersFill: "boulders-fill-layer",
+  boulders: "boulders-layer",
+  selectedProblem: "selected-problem-indicator",
+  subareaFill: "subarea-fill-layer",
+  subareaLabels: "subarea-labels-layer",
+  areaLabels: "area-labels-layer",
+} as const;
+
+// Source IDs
+export const SOURCE_IDS = {
+  problems: "problems-source",
+  circuitLine: "circuit-line-source",
+  boulders: "boulders-source",
+  selectedProblem: "selected-problem-source",
+  subareas: "subareas-source",
+  subareaLabels: "subarea-labels-source",
+  areaLabels: "area-labels-source",
+} as const;

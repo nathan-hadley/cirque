@@ -1,18 +1,18 @@
 import bouldersData from "@/assets/boulders";
 import { FillLayer, LineLayer, ShapeSource } from "@rnmapbox/maps";
-import { BOULDER_COLORS } from "@/constants/map";
+import { BOULDER_COLORS, LAYER_IDS, SOURCE_IDS } from "@/constants/map";
 
 export function BouldersLayer() {
   return (
-    <ShapeSource id="boulders-source" shape={bouldersData}>
+    <ShapeSource id={SOURCE_IDS.boulders} shape={bouldersData}>
       <FillLayer
-        id="boulders-fill-layer"
+        id={LAYER_IDS.bouldersFill}
         style={{
           fillColor: BOULDER_COLORS.fill,
         }}
       />
       <LineLayer
-        id="boulders-layer"
+        id={LAYER_IDS.boulders}
         style={{
           lineColor: BOULDER_COLORS.line,
           lineWidth: 1,

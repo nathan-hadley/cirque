@@ -1,6 +1,6 @@
 import { CircleLayer, ShapeSource } from "@rnmapbox/maps";
 import { useProblemStore } from "@/stores/problemStore";
-import { SELECTED_PROBLEM_COLORS } from "@/constants/map";
+import { SELECTED_PROBLEM_COLORS, LAYER_IDS, SOURCE_IDS } from "@/constants/map";
 
 export function SelectedProblemLayer() {
   const { problem, viewProblem } = useProblemStore();
@@ -9,7 +9,7 @@ export function SelectedProblemLayer() {
 
   return (
     <ShapeSource
-      id="selected-problem-source"
+      id={SOURCE_IDS.selectedProblem}
       shape={{
         type: "Feature",
         geometry: {
@@ -20,7 +20,7 @@ export function SelectedProblemLayer() {
       }}
     >
       <CircleLayer
-        id="selected-problem-indicator"
+        id={LAYER_IDS.selectedProblem}
         style={{
           circleRadius: ["interpolate", ["linear"], ["zoom"], 16, 3, 22, 20],
           circleColor: "transparent",

@@ -1,12 +1,12 @@
 import areasData from "@/assets/areas";
-import { PROBLEM_COLORS } from "@/constants/map";
+import { PROBLEM_COLORS, LAYER_IDS, SOURCE_IDS } from "@/constants/map";
 import { ShapeSource, SymbolLayer } from "@rnmapbox/maps";
 
 export function AreaLabelsLayer() {
   return (
-    <ShapeSource id="areas-source" shape={areasData}>
+    <ShapeSource id={SOURCE_IDS.areaLabels} shape={areasData}>
       <SymbolLayer
-        id="area-labels-layer"
+        id={LAYER_IDS.areaLabels}
         style={{
           textField: ["to-string", ["get", "name"]],
           textFont: ["Open Sans Regular"],

@@ -1,12 +1,12 @@
 import subareasData from "@/assets/subareas";
-import { PROBLEM_COLORS } from "@/constants/map";
+import { PROBLEM_COLORS, LAYER_IDS, SOURCE_IDS } from "@/constants/map";
 import { ShapeSource, SymbolLayer } from "@rnmapbox/maps";
 
 export function SubareaLabelsLayer() {
   return (
-    <ShapeSource id="subareas-source" shape={subareasData}>
+    <ShapeSource id={SOURCE_IDS.subareaLabels} shape={subareasData}>
       <SymbolLayer
-        id="subarea-labels-layer"
+        id={LAYER_IDS.subareaLabels}
         style={{
           textField: ["get", "name"],
           textFont: ["Arial Unicode MS Bold"],

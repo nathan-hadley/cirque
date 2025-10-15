@@ -1,13 +1,14 @@
 import subareaPolygonsData from "@/assets/subareas-polygons";
 import { ShapeSource, FillLayer } from "@rnmapbox/maps";
+import { LAYER_IDS, SOURCE_IDS, SUBAREA_COLORS } from "@/constants/map";
 
 export function SubareasLayer() {
   return (
-    <ShapeSource id="subarea-polygons-source" shape={subareaPolygonsData}>
+    <ShapeSource id={SOURCE_IDS.subareas} shape={subareaPolygonsData}>
       <FillLayer
-        id="subarea-fill-layer"
+        id={LAYER_IDS.subareaFill}
         style={{
-          fillColor: "#808080", // Grey color
+          fillColor: SUBAREA_COLORS.fill,
           fillOpacity: [
             "interpolate",
             ["linear"],

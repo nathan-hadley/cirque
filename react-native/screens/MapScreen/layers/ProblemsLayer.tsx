@@ -1,6 +1,6 @@
 import { problemsData } from "@/assets/problems";
 import { CircleLayer, ShapeSource, SymbolLayer } from "@rnmapbox/maps";
-import { PROBLEM_COLORS } from "@/constants/map";
+import { PROBLEM_COLORS, LAYER_IDS, SOURCE_IDS } from "@/constants/map";
 import { useProblemStore } from "@/stores/problemStore";
 
 export function ProblemsLayer() {
@@ -25,9 +25,9 @@ export function ProblemsLayer() {
     minGrade === 0 && maxGrade === 10 ? "all-grades" : `filtered-${minGrade}-${maxGrade}`;
 
   return (
-    <ShapeSource key={layerKey} id={`problems-source-${layerKey}`} shape={problemsData}>
+    <ShapeSource key={layerKey} id={`${SOURCE_IDS.problems}-${layerKey}`} shape={problemsData}>
       <CircleLayer
-        id="problems-layer"
+        id={LAYER_IDS.problems}
         filter={gradeFilter()}
         style={{
           circleRadius: ["interpolate", ["linear"], ["zoom"], 16, 3, 22, 20],
@@ -58,7 +58,7 @@ export function ProblemsLayer() {
         }}
       />
       <SymbolLayer
-        id="problems-text-layer"
+        id={LAYER_IDS.problemsText}
         filter={gradeFilter()}
         style={{
           textField: ["get", "order"],

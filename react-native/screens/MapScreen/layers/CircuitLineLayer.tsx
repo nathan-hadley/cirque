@@ -1,6 +1,7 @@
 import React from "react";
 import { ShapeSource, LineLayer } from "@rnmapbox/maps";
 import { FeatureCollection, LineString, GeoJsonProperties } from "geojson";
+import { LAYER_IDS, SOURCE_IDS, PROBLEM_COLORS } from "@/constants/map";
 
 type CircuitLineLayerProps = {
   circuitLine: FeatureCollection<LineString, GeoJsonProperties> | null;
@@ -21,17 +22,17 @@ type CircuitLineLayerProps = {
 export function CircuitLineLayer({
   circuitLine,
   visible = true,
-  circuitColor = "#3B82F6",
+  circuitColor = PROBLEM_COLORS.default,
 }: CircuitLineLayerProps) {
   if (!circuitLine || !visible || circuitLine.features.length === 0) {
     return null;
   }
 
   return (
-    <ShapeSource id="circuit-line-source" shape={circuitLine}>
+    <ShapeSource id={SOURCE_IDS.circuitLine} shape={circuitLine}>
       <LineLayer
-        id="circuit-line-layer"
-        belowLayerID="problems-layer"
+        id={LAYER_IDS.circuitLine}
+        belowLayerID={LAYER_IDS.problems}
         style={{
           lineColor: circuitColor,
           lineWidth: [

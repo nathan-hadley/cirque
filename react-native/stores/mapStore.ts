@@ -4,6 +4,7 @@ import { MapView, Camera } from "@rnmapbox/maps";
 import { Feature, GeoJsonProperties, Point } from "geojson";
 import * as Location from "expo-location";
 import { RefObject } from "react";
+import { LAYER_IDS } from "@/constants/map";
 
 type MapState = {
   // State
@@ -93,7 +94,7 @@ export const useMapStore = create<MapState>((set, get) => ({
 
     try {
       const query = await mapRef.current.queryRenderedFeaturesAtPoint([point.x, point.y], {
-        layerIds: ["problems-layer"],
+        layerIds: [LAYER_IDS.problems],
         filter: ["!=", ["get", "color"], ""],
       });
 
