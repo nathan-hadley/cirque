@@ -31,6 +31,7 @@ export function CircuitLineLayer({
     <ShapeSource id="circuit-line-source" shape={circuitLine}>
       <LineLayer
         id="circuit-line-layer"
+        belowLayerID="problems-layer"
         style={{
           lineColor: circuitColor,
           lineWidth: [

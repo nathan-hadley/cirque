@@ -91,7 +91,6 @@ export function MapScreen() {
           animationDuration={0}
         />
         <BouldersLayer />
-        <SubareasLayer />
         <CircuitLineLayer
           circuitLine={currentCircuitLine}
           visible={!!problem}
@@ -99,8 +98,9 @@ export function MapScreen() {
         />
         <SelectedProblemLayer />
         <ProblemsLayer />
-        <AreaLabelsLayer />
+        <SubareasLayer />
         <SubareaLabelsLayer />
+        <AreaLabelsLayer />
         <UserLocation showsUserHeadingIndicator={true} />
       </RNMapboxMapView>
 
