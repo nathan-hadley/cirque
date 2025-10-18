@@ -1,0 +1,11 @@
+name = "cirque-api"
+main = "src/index.ts"
+compatibility_date = "2024-10-01"
+
+# Set these as secrets using: wrangler secret put <SECRET_NAME>
+# Never commit actual secret values to version control
+[vars]
+# These will be overridden by secrets in production
+# MAILERSEND_API_TOKEN = ""
+# MAILERSEND_FROM_EMAIL = ""
+# MAILERSEND_TO_EMAIL = ""
