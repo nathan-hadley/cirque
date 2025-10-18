@@ -107,7 +107,7 @@ export function MapScreen() {
       <MapSearchBar onPress={() => setIsSearchVisible(true)} />
 
       <FilterButton
-        onFilterPress={() => setIsFilterVisible(true)}
+        onPress={() => setIsFilterVisible(true)}
         className="absolute right-4"
         style={{ bottom: bottomOffset + 72 }}
       />
