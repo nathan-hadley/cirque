@@ -53,19 +53,17 @@ interface ProblemSubmission {
 - Keep offline queue, retries, and progress UI
 - Show returned URL when available (PR later)
 
-## File Structure (planned targets)
+## Possible File Structure
 ```
-# Frontend (unchanged targets)
+# Frontend
 react-native/app/(tabs)/contribute.tsx
-react-native/components/contribute/ContributeForm.tsx
-react-native/components/contribute/ImageDrawingCanvas.tsx
-react-native/components/contribute/SubareaSelector.tsx
-react-native/components/contribute/CoordinateInput.tsx
-react-native/components/contribute/OfflineQueueStatus.tsx
+react-native/screens/Contribute/index.tsx
+react-native/screens/Contribute/ImageDrawingCanvas.tsx
+react-native/screens/Contribute/CoordinateInput.tsx
 react-native/stores/contributeStore.ts
 react-native/services/offlineQueueService.ts
 react-native/services/imageService.ts
-react-native/services/submissionService.ts    # calls Cloudflare API
+react-native/services/submissionService.ts
 
 # Backend (Cloudflare Workers, minimal)
 api/wrangler.toml
@@ -87,41 +85,48 @@ MAILERSEND_TO_EMAIL = ""
 
 ## Security and Privacy (non-negotiables)
 - No secrets in the app; secrets only as Worker bindings/secrets
-- Validate and sanitize all inputs; enforce image limits; strip contact info from GeoJSON
+- Validate and sanitize all inputs; enforce image limits; contact info should not make it into GeoJSON
 - CORS allowlist the mobile app origin; rate limit by IP/device fingerprint if needed
-- Store only what’s necessary for idempotency/audit; avoid PII persistence beyond email sending
+- Store only what's necessary for idempotency/audit; avoid PII persistence beyond email sending
 
-## Implementation Phases
+## Development Phases
 
-### Phase 1: Backend foundation on Cloudflare
-- Bootstrap Worker, Queues, and D1 schema (idempotency + submissions log)
-- Add `/v1/contributions` with schema validation, idempotency, and queue enqueue
+### Phase 1: Foundation & Form
+- Add contribute tab to `_layout.tsx`
+- Create basic `contribute.tsx` and `Contribute/index.tsx` screens
+- Build problem details form (name, grade, subarea, description)
+- Add coordinate input component with map picker
+- Implement client-side validation
 
-### Phase 2: Email transport (now)
-- Implement EmailTransport using provider API; attach image or upload to R2 and link when too large
-- Observability: log outcomes; return provider message URL when available
+### Phase 2: Image & Drawing
+- Create image picker/camera integration with size/format validation
+- Build SVG drawing canvas with gesture handler
+- Implement line drawing, clear/reset functionality
+- Store normalized points and base64 image data
 
-### Phase 3: Frontend wiring
-- Implement `submissionService.ts` (POST to Worker) and integrate with offline queue
-- Map server statuses to user-facing progress and errors
+### Phase 3: Backend API (parallel with Phase 2)
+- Set up Cloudflare Worker project structure
+- Implement `/v1/problem` endpoint with MailerSend integration
+- Add CORS configuration and rate limiting
+- Validate and sanitize inputs server-side
 
-### Phase 4: Drawing and UX polish
-- SVG overlay + gesture-handler; single saved gesture
-- Store normalized [x,y] points; validation and clear errors; clear/reset to start over
-- Progress, retries, autosave; link display from server response
+### Phase 4: Offline Queue & Storage
+- Create `offlineQueueService.ts` and `contributeStore.ts`
+- Implement local submission storage with retry logic
+- Add online/offline detection and auto-sync with backoff
+- **Testing checkpoint**: Verify queue persistence and retry behavior
 
-### Phase 5: Reliability and safeguards
-- Backoff and dead-letter handling in Queues; idempotent replays
-- Size limits, filename sanitation, and helpful error messages
+### Phase 5: Integration & Error Handling
+- Connect frontend to backend API via `submissionService.ts`
+- Implement proper error handling for network failures
+- Add progress indicators and success/error UI states
+- Handle edge cases (network timeout, malformed responses)
+- **Testing checkpoint**: End-to-end submission flow
 
-### Phase 6: Add GitHub PR transport (later)
-- Implement GitHubTransport with App credentials (server-side only)
-- Config flip `TRANSPORT=github` (or `both` for canary); expose PR URL in response
-
-### Phase 7: Release readiness
-- Production smoke tests (end-to-end email, then PR when ready)
-- Reviewer playbook and submission success monitoring
-
-## Notes
-- Keep detailed setup commands in contributor docs, not here
-- Frontend remains stable across the switch from email → GitHub PR; only backend config changes
+### Phase 6: Security & UX Polish
+- Enforce image size limits and file type restrictions
+- Add network error recovery UX (retry prompts, queue visibility)
+- Implement loading states and optimistic UI updates
+- Verify no secrets in app bundle
+- Audit contact info flow (never persisted in GeoJSON)
+- Final security review and user acceptance testing
