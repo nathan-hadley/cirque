@@ -37,6 +37,7 @@
     "@gluestack-ui/nativewind-utils": "^1.0.28",
     "@gluestack-ui/overlay": "^0.1.22",
     "@gluestack-ui/slider": "^0.1.32",
+    "@gluestack-ui/select": "^0.2.50",
     "@gluestack-ui/spinner": "^0.1.15",
     "@gluestack-ui/toast": "^1.0.9",
     "@legendapp/motion": "^2.4.0",

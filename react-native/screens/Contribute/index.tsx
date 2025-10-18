@@ -6,7 +6,7 @@ import { VStack } from "@/components/ui/vstack";
 import { HStack } from "@/components/ui/hstack";
 import { Input, InputField } from "@/components/ui/input";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
-import { Actionsheet, ActionsheetBackdrop, ActionsheetContent, ActionsheetItem, ActionsheetItemText } from "@/components/ui/actionsheet";
+import { Select, SelectTrigger, SelectInput, SelectContent, SelectItem, SelectItemText, SelectBackdrop, SelectPortal } from "@/components/ui/select";
 import { ChevronDown, FileText } from "lucide-react-native";
 import CoordinateInput from "./CoordinateInput";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
@@ -89,23 +89,47 @@ export default function ContributeScreen() {
 
           <VStack space="md">
             <Text className="text-typography-700">Grade</Text>
-            <Button variant="outline" onPress={() => setIsGradeOpen(true)}>
-              <HStack className="items-center" space="sm">
-                <ButtonText>{grade || "Select grade"}</ButtonText>
-                <ButtonIcon as={ChevronDown} />
-              </HStack>
-            </Button>
+            <Select isOpen={isGradeOpen} onOpen={() => setIsGradeOpen(true)} onClose={() => setIsGradeOpen(false)}>
+              <SelectTrigger onPress={() => setIsGradeOpen(true)}>
+                <HStack className="items-center justify-between w-full">
+                  <SelectInput>{grade || "Select grade"}</SelectInput>
+                  <ChevronDown />
+                </HStack>
+              </SelectTrigger>
+              <SelectPortal>
+                <SelectBackdrop onPress={() => setIsGradeOpen(false)} />
+                <SelectContent>
+                  {GRADES.map(g => (
+                    <SelectItem key={g} onPress={() => { setGrade(g); setIsGradeOpen(false); }}>
+                      <SelectItemText>{g}</SelectItemText>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </SelectPortal>
+            </Select>
             {errors.grade ? <Text className="text-error-600">{errors.grade}</Text> : null}
           </VStack>
 
           <VStack space="md">
             <Text className="text-typography-700">Subarea</Text>
-            <Button variant="outline" onPress={() => setIsSubareaOpen(true)}>
-              <HStack className="items-center" space="sm">
-                <ButtonText>{subarea || "Select subarea"}</ButtonText>
-                <ButtonIcon as={ChevronDown} />
-              </HStack>
-            </Button>
+            <Select isOpen={isSubareaOpen} onOpen={() => setIsSubareaOpen(true)} onClose={() => setIsSubareaOpen(false)}>
+              <SelectTrigger onPress={() => setIsSubareaOpen(true)}>
+                <HStack className="items-center justify-between w-full">
+                  <SelectInput>{subarea || "Select subarea"}</SelectInput>
+                  <ChevronDown />
+                </HStack>
+              </SelectTrigger>
+              <SelectPortal>
+                <SelectBackdrop onPress={() => setIsSubareaOpen(false)} />
+                <SelectContent>
+                  {SUBAREAS.map(s => (
+                    <SelectItem key={s} onPress={() => { setSubarea(s); setIsSubareaOpen(false); }}>
+                      <SelectItemText>{s}</SelectItemText>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </SelectPortal>
+            </Select>
             {errors.subarea ? <Text className="text-error-600">{errors.subarea}</Text> : null}
           </VStack>
 
@@ -145,29 +169,7 @@ export default function ContributeScreen() {
       </View>
       <View style={{ height: tabBarHeight }} />
 
-      {/* Grade Picker */}
-      <Actionsheet isOpen={isGradeOpen} onClose={() => setIsGradeOpen(false)}>
-        <ActionsheetBackdrop />
-        <ActionsheetContent>
-          {GRADES.map(g => (
-            <ActionsheetItem key={g} onPress={() => { setGrade(g); setIsGradeOpen(false); }}>
-              <ActionsheetItemText>{g}</ActionsheetItemText>
-            </ActionsheetItem>
-          ))}
-        </ActionsheetContent>
-      </Actionsheet>
-
-      {/* Subarea Picker */}
-      <Actionsheet isOpen={isSubareaOpen} onClose={() => setIsSubareaOpen(false)}>
-        <ActionsheetBackdrop />
-        <ActionsheetContent>
-          {SUBAREAS.map(s => (
-            <ActionsheetItem key={s} onPress={() => { setSubarea(s); setIsSubareaOpen(false); }}>
-              <ActionsheetItemText>{s}</ActionsheetItemText>
-            </ActionsheetItem>
-          ))}
-        </ActionsheetContent>
-      </Actionsheet>
+      {/* Select modals are handled by SelectPortal */}
     </ScrollView>
   );
 }
