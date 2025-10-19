@@ -3,7 +3,7 @@ import React from "react";
 import { Platform } from "react-native";
 
 import { HapticTab } from "@/components/HapticTab";
-import TabBarBackground from "@/components/TabBarBackground";
+import BlurBackground from "@/components/BlurBackground";
 import { Icon } from "@/components/ui/icon";
 import { Map, Info, PlusCircle } from "lucide-react-native";
 
@@ -13,7 +13,7 @@ export default function TabLayout() {
       screenOptions={{
         headerShown: false,
         tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
+        tabBarBackground: () => <BlurBackground position="tabBar" />,
         tabBarStyle: Platform.select({
           ios: {
             // Use a transparent background on iOS to show the blur effect

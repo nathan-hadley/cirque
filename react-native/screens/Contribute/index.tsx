@@ -13,7 +13,7 @@ import AreaPicker from "./AreaPicker";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ToastTitle, Toast, ToastDescription, useToast } from "@/components/ui/toast";
-import TabBarBackground from "@/components/TabBarBackground";
+import BlurBackground from "@/components/BlurBackground";
 
 export const GRADES = Array.from({ length: 18 }, (_, i) => `V${i}`);
 
@@ -83,9 +83,13 @@ export default function ContributeScreen() {
   };
 
   return (
-    <>
-      <View style={{ height: insets.top }} className="bg-background-0"/>
-      <ScrollView className="flex-1 bg-background-0" showsVerticalScrollIndicator={false}>
+    <View className="flex-1 bg-background-0">
+      <BlurBackground position="statusBar" />
+      <ScrollView
+        className="flex-1"
+        showsVerticalScrollIndicator={false}
+        style={{ paddingTop: insets.top }}
+      >
         <VStack className="px-6 py-6 flex-1" space="xl">
           <VStack space="xs">
             <Heading size="2xl" className="text-typography-900">
@@ -172,16 +176,16 @@ export default function ContributeScreen() {
           </Button>
         </VStack>
         <View style={{ height: Platform.OS === "ios" ? tabBarHeight : 16 }} />
-
-        <GradePicker isOpen={isGradeOpen} onClose={handleGradeSelect} currentGrade={grade} />
-        <AreaPicker
-          isOpen={isAreaOpen}
-          onClose={() => setIsAreaOpen(false)}
-          onSelect={setSubarea}
-          currentArea={subarea}
-        />
       </ScrollView>
-    </>
+
+      <GradePicker isOpen={isGradeOpen} onClose={handleGradeSelect} currentGrade={grade} />
+      <AreaPicker
+        isOpen={isAreaOpen}
+        onClose={() => setIsAreaOpen(false)}
+        onSelect={setSubarea}
+        currentArea={subarea}
+      />
+    </View>
   );
 }
 
