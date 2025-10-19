@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import { config } from "./config";
 import { View, ViewProps } from "react-native";
 import { OverlayProvider } from "@gluestack-ui/overlay";
 import { ToastProvider } from "@gluestack-ui/toast";
 import { useColorScheme } from "nativewind";
+import { config } from "./config";
 
 export type ModeType = "light" | "dark" | "system";
 

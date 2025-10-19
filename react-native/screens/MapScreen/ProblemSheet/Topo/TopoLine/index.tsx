@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { View } from "react-native";
-import Svg, { Path, Circle } from "react-native-svg";
 import Animated, {
-  useSharedValue,
   useAnimatedProps,
-  withTiming,
+  useSharedValue,
   withDelay,
+  withTiming,
 } from "react-native-reanimated";
+import Svg, { Circle, Path } from "react-native-svg";
 import { Problem } from "@/models/problems";
 import { createPath, estimatePathLength, getScaledPoints } from "./topoLineUtil";
 

@@ -1,28 +1,27 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Platform, View } from "react-native";
-import Mapbox, { MapView as RNMapboxMapView, UserLocation, Camera } from "@rnmapbox/maps";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import Mapbox, { Camera, MapView as RNMapboxMapView, UserLocation } from "@rnmapbox/maps";
+import { Feature, GeoJsonProperties, Geometry } from "geojson";
+import { FilterButton } from "@/components/buttons/FilterButton";
+import { INITIAL_CENTER, INITIAL_ZOOM, MAPBOX_ACCESS_TOKEN, STYLE_URI } from "@/constants/map";
+import { mapProblemService } from "@/services/mapProblemService";
 import { useMapStore } from "@/stores/mapStore";
 import { useProblemStore } from "@/stores/problemStore";
-
-import { mapProblemService } from "@/services/mapProblemService";
-import { INITIAL_CENTER, INITIAL_ZOOM, STYLE_URI, MAPBOX_ACCESS_TOKEN } from "@/constants/map";
-import { ProblemSheet } from "./ProblemSheet";
 import { LocateMeButton } from "../../components/buttons/LocateMeButton";
 import { MapSearchBar } from "../../components/MapSearchBar";
 import { SearchOverlay } from "../SearchScreen";
 import GradeFilterSheet from "./GradeFilterSheet";
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import {
+  AreaLabelsLayer,
   BouldersLayer,
+  CircuitLineLayer,
   ProblemsLayer,
   SelectedProblemLayer,
-  CircuitLineLayer,
-  AreaLabelsLayer,
-  SubareasLayer,
   SubareaLabelsLayer,
+  SubareasLayer,
 } from "./layers";
-import { FilterButton } from "@/components/buttons/FilterButton";
-import { Feature, GeoJsonProperties, Geometry } from "geojson";
+import { ProblemSheet } from "./ProblemSheet";
 
 Mapbox.setAccessToken(MAPBOX_ACCESS_TOKEN);
 

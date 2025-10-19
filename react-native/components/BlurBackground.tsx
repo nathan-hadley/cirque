@@ -1,7 +1,6 @@
-import { useColorScheme } from "nativewind";
-import { View, ViewStyle, StyleProp } from "react-native";
+import { Platform, StyleProp, View, ViewStyle } from "react-native";
 import { BlurView } from "expo-blur";
-import { Platform } from "react-native";
+import { useColorScheme } from "nativewind";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type BlurBackgroundProps = {

@@ -1,9 +1,8 @@
-import { create } from "zustand";
-import { Feature, FeatureCollection, GeoJsonProperties, Point, LineString } from "geojson";
 import { Alert } from "react-native";
+import { Feature, FeatureCollection, GeoJsonProperties, LineString, Point } from "geojson";
+import { create } from "zustand";
 import { problemsData } from "@/assets/problems";
-import { Problem } from "@/models/problems";
-import { MIN_GRADE, MAX_GRADE } from "@/models/problems";
+import { MAX_GRADE, MIN_GRADE, Problem } from "@/models/problems";
 
 type GetProblemParams = {
   circuitColor: string;

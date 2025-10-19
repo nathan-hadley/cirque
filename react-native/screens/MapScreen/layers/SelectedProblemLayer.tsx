@@ -1,6 +1,6 @@
 import { CircleLayer, ShapeSource } from "@rnmapbox/maps";
+import { LAYER_IDS, SELECTED_PROBLEM_COLORS, SOURCE_IDS } from "@/constants/map";
 import { useProblemStore } from "@/stores/problemStore";
-import { SELECTED_PROBLEM_COLORS, LAYER_IDS, SOURCE_IDS } from "@/constants/map";
 
 export function SelectedProblemLayer() {
   const { problem, viewProblem } = useProblemStore();

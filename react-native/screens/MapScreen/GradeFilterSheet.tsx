@@ -1,19 +1,19 @@
-import React, { useState, useRef } from "react";
+import React, { useRef, useState } from "react";
 import { View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
   Actionsheet,
-  ActionsheetContent,
   ActionsheetBackdrop,
+  ActionsheetContent,
   ActionsheetHeader,
 } from "@/components/ui/actionsheet";
-import { HStack } from "@/components/ui/hstack";
-import { VStack } from "@/components/ui/vstack";
-import { Text } from "@/components/ui/text";
-import { useProblemStore } from "@/stores/problemStore";
 import { Button, ButtonText } from "@/components/ui/button";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { HStack } from "@/components/ui/hstack";
 import { Slider, SliderThumb, SliderTrack } from "@/components/ui/slider";
+import { Text } from "@/components/ui/text";
+import { VStack } from "@/components/ui/vstack";
 import { MAX_GRADE, MIN_GRADE } from "@/models/problems";
+import { useProblemStore } from "@/stores/problemStore";
 
 const numberToGrade = (num: number): string => `V${num}`;
 

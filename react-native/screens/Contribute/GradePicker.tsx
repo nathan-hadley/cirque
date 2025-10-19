@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
+import WheelPicker from "react-native-wheely";
 import {
   Actionsheet,
   ActionsheetBackdrop,
   ActionsheetContent,
   ActionsheetHeader,
 } from "@/components/ui/actionsheet";
-import WheelPicker from "react-native-wheely";
 import { GRADES } from "./index";
 
 type GradePickerProps = {

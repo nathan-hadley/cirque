@@ -1,5 +1,5 @@
+import { FillLayer, ShapeSource } from "@rnmapbox/maps";
 import subareaPolygonsData from "@/assets/subareas-polygons";
-import { ShapeSource, FillLayer } from "@rnmapbox/maps";
 import { LAYER_IDS, SOURCE_IDS, SUBAREA_COLORS } from "@/constants/map";
 
 export function SubareasLayer() {

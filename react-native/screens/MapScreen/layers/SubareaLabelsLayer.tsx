@@ -1,6 +1,6 @@
-import subareasData from "@/assets/subareas";
-import { PROBLEM_COLORS, LAYER_IDS, SOURCE_IDS } from "@/constants/map";
 import { ShapeSource, SymbolLayer } from "@rnmapbox/maps";
+import subareasData from "@/assets/subareas";
+import { LAYER_IDS, PROBLEM_COLORS, SOURCE_IDS } from "@/constants/map";
 
 export function SubareaLabelsLayer() {
   return (

@@ -1,13 +1,13 @@
 import React from "react";
 import { View } from "react-native";
+import * as Location from "expo-location";
+import { Crosshair } from "lucide-react-native";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
-import { VStack } from "@/components/ui/vstack";
 import { HStack } from "@/components/ui/hstack";
 import { Input, InputField } from "@/components/ui/input";
 import { Text } from "@/components/ui/text";
-import { Crosshair } from "lucide-react-native";
-import * as Location from "expo-location";
-import { ToastDescription, Toast, useToast, ToastTitle } from "@/components/ui/toast";
+import { Toast, ToastDescription, ToastTitle, useToast } from "@/components/ui/toast";
+import { VStack } from "@/components/ui/vstack";
 
 export type CoordinateInputProps = {
   latitude: string;

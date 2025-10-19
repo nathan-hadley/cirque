@@ -1,10 +1,10 @@
 import React from "react";
 import { TouchableOpacity } from "react-native";
+import { Badge, BadgeText } from "@/components/ui/badge";
+import { HStack } from "@/components/ui/hstack";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
-import { HStack } from "@/components/ui/hstack";
 import { Problem } from "@/models/problems";
-import { Badge, BadgeText } from "@/components/ui/badge";
 
 type SearchResult = {
   problem: Problem;

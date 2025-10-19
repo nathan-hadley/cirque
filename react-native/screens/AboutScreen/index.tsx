@@ -1,19 +1,19 @@
-import { View, ScrollView, Platform } from "react-native";
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import { Platform, ScrollView, View } from "react-native";
 import { router } from "expo-router";
-import { Text } from "@/components/ui/text";
-import { Heading } from "@/components/ui/heading";
-import { useOfflineMaps } from "@/hooks/useOfflineMaps";
-import { useToast, Toast, ToastTitle } from "@/components/ui/toast";
-import { VStack } from "@/components/ui/vstack";
-import { Divider } from "@/components/ui/divider";
-import { CircuitCard, DownloadStatusCard, ContributingSection } from "./components";
-import { Icon } from "@/components/ui/icon";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { CircleIcon } from "lucide-react-native";
-import { mapProblemService } from "@/services/mapProblemService";
-import { HStack } from "@/components/ui/hstack";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import BlurBackground from "@/components/BlurBackground";
+import { Divider } from "@/components/ui/divider";
+import { Heading } from "@/components/ui/heading";
+import { HStack } from "@/components/ui/hstack";
+import { Icon } from "@/components/ui/icon";
+import { Text } from "@/components/ui/text";
+import { Toast, ToastTitle, useToast } from "@/components/ui/toast";
+import { VStack } from "@/components/ui/vstack";
+import { useOfflineMaps } from "@/hooks/useOfflineMaps";
+import { mapProblemService } from "@/services/mapProblemService";
+import { CircuitCard, ContributingSection, DownloadStatusCard } from "./components";
 
 export default function AboutScreen() {
   const { loading, mapDownloaded, progress, updateMapData, deleteMapData } = useOfflineMaps();

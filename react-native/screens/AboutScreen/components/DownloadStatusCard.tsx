@@ -1,12 +1,12 @@
 import React from "react";
 import { View } from "react-native";
-import { Text } from "@/components/ui/text";
+import { CheckCircle, Download, RefreshCw, Trash2 } from "lucide-react-native";
+import { CircularProgress } from "@/components/CircularProgress";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
 import { HStack } from "@/components/ui/hstack";
-import { VStack } from "@/components/ui/vstack";
-import { Download, CheckCircle, RefreshCw, Trash2 } from "lucide-react-native";
 import { Icon } from "@/components/ui/icon";
-import { CircularProgress } from "@/components/CircularProgress";
+import { Text } from "@/components/ui/text";
+import { VStack } from "@/components/ui/vstack";
 
 type DownloadStatusCardProps = {
   loading: boolean;

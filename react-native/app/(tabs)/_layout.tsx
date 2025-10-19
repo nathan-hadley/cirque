@@ -1,11 +1,10 @@
-import { Tabs } from "expo-router";
 import React from "react";
 import { Platform } from "react-native";
-
-import { HapticTab } from "@/components/HapticTab";
+import { Tabs } from "expo-router";
+import { Info, Map, PlusCircle } from "lucide-react-native";
 import BlurBackground from "@/components/BlurBackground";
+import { HapticTab } from "@/components/HapticTab";
 import { Icon } from "@/components/ui/icon";
-import { Map, Info, PlusCircle } from "lucide-react-native";
 
 export default function TabLayout() {
   return (

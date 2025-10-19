@@ -1,20 +1,20 @@
 import React from "react";
-import { Problem } from "@/models/problems";
-import { Topo } from "./Topo/index";
-import { VStack } from "@/components/ui/vstack";
+import { Platform, View } from "react-native";
+import { MapPinIcon } from "lucide-react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
   Actionsheet,
   ActionsheetContent,
   ActionsheetDragIndicatorWrapper,
   ActionsheetScrollView,
 } from "@/components/ui/actionsheet";
-import { MapPinIcon } from "lucide-react-native";
-import { Platform, View } from "react-native";
-import { Icon } from "@/components/ui/icon";
 import { Heading } from "@/components/ui/heading";
 import { HStack } from "@/components/ui/hstack";
+import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { VStack } from "@/components/ui/vstack";
+import { Problem } from "@/models/problems";
+import { Topo } from "./Topo/index";
 
 type ProblemSheetProps = React.ComponentProps<typeof Actionsheet> & {
   problem: Problem | null;

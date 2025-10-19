@@ -1,5 +1,5 @@
-import bouldersData from "@/assets/boulders";
 import { FillLayer, LineLayer, ShapeSource } from "@rnmapbox/maps";
+import bouldersData from "@/assets/boulders";
 import { BOULDER_COLORS, LAYER_IDS, SOURCE_IDS } from "@/constants/map";
 
 export function BouldersLayer() {

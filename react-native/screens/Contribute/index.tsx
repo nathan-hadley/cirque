@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import { Platform, ScrollView, View } from "react-native";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import { ChevronDown, FileText, MapPin } from "lucide-react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import BlurBackground from "@/components/BlurBackground";
+import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
-import { Text } from "@/components/ui/text";
-import { VStack } from "@/components/ui/vstack";
 import { HStack } from "@/components/ui/hstack";
 import { Input, InputField } from "@/components/ui/input";
-import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
-import { ChevronDown, FileText, MapPin } from "lucide-react-native";
+import { Text } from "@/components/ui/text";
+import { Toast, ToastDescription, ToastTitle, useToast } from "@/components/ui/toast";
+import { VStack } from "@/components/ui/vstack";
+import AreaPicker from "./AreaPicker";
 import CoordinateInput from "./CoordinateInput";
 import GradePicker from "./GradePicker";
-import AreaPicker from "./AreaPicker";
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { ToastTitle, Toast, ToastDescription, useToast } from "@/components/ui/toast";
-import BlurBackground from "@/components/BlurBackground";
 
 export const GRADES = Array.from({ length: 18 }, (_, i) => `V${i}`);
 

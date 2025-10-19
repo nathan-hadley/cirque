@@ -1,13 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View } from "react-native";
-import Svg, { Circle } from "react-native-svg";
 import Animated, {
-  useSharedValue,
   useAnimatedProps,
-  withTiming,
   useDerivedValue,
+  useSharedValue,
+  withTiming,
 } from "react-native-reanimated";
-import { useEffect } from "react";
+import Svg, { Circle } from "react-native-svg";
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 

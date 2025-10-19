@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { LayoutChangeEvent, View } from "react-native";
 import { Image, ImageLoadEventData } from "expo-image";
-import { Problem } from "@/models/problems";
-import { getTopoImage } from "@/assets/topo-image";
 import { CameraOff } from "lucide-react-native";
+import { getTopoImage } from "@/assets/topo-image";
+import { CircuitNavButtons } from "@/components/buttons/CircuitNavButtons";
 import { Center } from "@/components/ui/center";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
-import { CircuitNavButtons } from "@/components/buttons/CircuitNavButtons";
+import { Problem } from "@/models/problems";
 import { TopoLine } from "./TopoLine";
 
 type TopoProps = {

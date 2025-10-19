@@ -1,6 +1,6 @@
-import areasData from "@/assets/areas";
-import { PROBLEM_COLORS, LAYER_IDS, SOURCE_IDS } from "@/constants/map";
 import { ShapeSource, SymbolLayer } from "@rnmapbox/maps";
+import areasData from "@/assets/areas";
+import { LAYER_IDS, PROBLEM_COLORS, SOURCE_IDS } from "@/constants/map";
 
 export function AreaLabelsLayer() {
   return (

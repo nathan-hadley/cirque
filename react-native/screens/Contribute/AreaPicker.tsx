@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { View } from "react-native";
+import { Circle } from "lucide-react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
   Actionsheet,
   ActionsheetBackdrop,
@@ -7,12 +9,10 @@ import {
   ActionsheetHeader,
   ActionsheetScrollView,
 } from "@/components/ui/actionsheet";
-import { Input, InputField } from "@/components/ui/input";
-import { Text } from "@/components/ui/text";
-import { Radio, RadioGroup, RadioIcon, RadioIndicator, RadioLabel } from "@/components/ui/radio";
-import { Circle } from "lucide-react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Divider } from "@/components/ui/divider";
+import { Input, InputField } from "@/components/ui/input";
+import { Radio, RadioGroup, RadioIcon, RadioIndicator, RadioLabel } from "@/components/ui/radio";
+import { Text } from "@/components/ui/text";
 
 const LEAVENWORTH_AREAS = [
   "Barney's Rubble",

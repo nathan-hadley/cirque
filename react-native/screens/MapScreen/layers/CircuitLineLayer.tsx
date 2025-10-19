@@ -1,7 +1,7 @@
 import React from "react";
-import { ShapeSource, LineLayer } from "@rnmapbox/maps";
-import { FeatureCollection, LineString, GeoJsonProperties } from "geojson";
-import { LAYER_IDS, SOURCE_IDS, PROBLEM_COLORS } from "@/constants/map";
+import { LineLayer, ShapeSource } from "@rnmapbox/maps";
+import { FeatureCollection, GeoJsonProperties, LineString } from "geojson";
+import { LAYER_IDS, PROBLEM_COLORS, SOURCE_IDS } from "@/constants/map";
 
 type CircuitLineLayerProps = {
   circuitLine: FeatureCollection<LineString, GeoJsonProperties> | null;
