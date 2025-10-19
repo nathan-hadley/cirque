@@ -6,18 +6,10 @@ import { VStack } from "@/components/ui/vstack";
 import { HStack } from "@/components/ui/hstack";
 import { Input, InputField } from "@/components/ui/input";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
-import { Select, SelectTrigger, SelectInput, SelectContent, SelectItem, SelectItemText, SelectBackdrop, SelectPortal } from "@/components/ui/select";
+import { Actionsheet, ActionsheetBackdrop, ActionsheetContent, ActionsheetDragIndicatorWrapper } from "@/components/ui/actionsheet";
 import { ChevronDown, FileText } from "lucide-react-native";
 import CoordinateInput from "./CoordinateInput";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
-
-const SUBAREAS = [
-  "Barney's Rubble",
-  "Clamshell Cave",
-  "Straightaways",
-  "Forestland",
-  "Swiftwater",
-] as const;
 
 const GRADES = Array.from({ length: 11 }, (_, i) => `V${i}`);
 
@@ -32,13 +24,13 @@ type Errors = Partial<{
 export default function ContributeScreen() {
   const [name, setName] = useState("");
   const [grade, setGrade] = useState<string | null>(null);
-  const [subarea, setSubarea] = useState<string | null>(null);
+  const [subarea, setSubarea] = useState<string>("");
   const [description, setDescription] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
 
   const [isGradeOpen, setIsGradeOpen] = useState(false);
-  const [isSubareaOpen, setIsSubareaOpen] = useState(false);
+  const [gradeIndex, setGradeIndex] = useState(0);
 
   const tabBarHeight = useBottomTabBarHeight();
 
@@ -49,7 +41,8 @@ export default function ContributeScreen() {
 
     if (!grade || !GRADES.includes(grade)) e.grade = "Select a grade (V0-V10).";
 
-    if (!subarea || !SUBAREAS.includes(subarea as any)) e.subarea = "Select a subarea.";
+    const subareaTrim = subarea.trim();
+    if (subareaTrim.length < 2) e.subarea = "Please enter an area (min 2 chars).";
 
     const latNum = parseFloat(latitude);
     const lngNum = parseFloat(longitude);
@@ -89,47 +82,33 @@ export default function ContributeScreen() {
 
           <VStack space="md">
             <Text className="text-typography-700">Grade</Text>
-            <Select isOpen={isGradeOpen} onOpen={() => setIsGradeOpen(true)} onClose={() => setIsGradeOpen(false)}>
-              <SelectTrigger onPress={() => setIsGradeOpen(true)}>
-                <HStack className="items-center justify-between w-full">
-                  <SelectInput>{grade || "Select grade"}</SelectInput>
-                  <ChevronDown />
-                </HStack>
-              </SelectTrigger>
-              <SelectPortal>
-                <SelectBackdrop onPress={() => setIsGradeOpen(false)} />
-                <SelectContent>
-                  {GRADES.map(g => (
-                    <SelectItem key={g} onPress={() => { setGrade(g); setIsGradeOpen(false); }}>
-                      <SelectItemText>{g}</SelectItemText>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </SelectPortal>
-            </Select>
+            <Button
+              variant="outline"
+              onPress={() => {
+                const currentIndex = grade ? GRADES.indexOf(grade) : 0;
+                setGradeIndex(currentIndex >= 0 ? currentIndex : 0);
+                setIsGradeOpen(true);
+              }}
+            >
+              <HStack className="items-center" space="sm">
+                <ButtonText>{grade || "Select grade"}</ButtonText>
+                <ChevronDown />
+              </HStack>
+            </Button>
             {errors.grade ? <Text className="text-error-600">{errors.grade}</Text> : null}
           </VStack>
 
           <VStack space="md">
-            <Text className="text-typography-700">Subarea</Text>
-            <Select isOpen={isSubareaOpen} onOpen={() => setIsSubareaOpen(true)} onClose={() => setIsSubareaOpen(false)}>
-              <SelectTrigger onPress={() => setIsSubareaOpen(true)}>
-                <HStack className="items-center justify-between w-full">
-                  <SelectInput>{subarea || "Select subarea"}</SelectInput>
-                  <ChevronDown />
-                </HStack>
-              </SelectTrigger>
-              <SelectPortal>
-                <SelectBackdrop onPress={() => setIsSubareaOpen(false)} />
-                <SelectContent>
-                  {SUBAREAS.map(s => (
-                    <SelectItem key={s} onPress={() => { setSubarea(s); setIsSubareaOpen(false); }}>
-                      <SelectItemText>{s}</SelectItemText>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </SelectPortal>
-            </Select>
+            <Text className="text-typography-700">Area</Text>
+            <Input>
+              <InputField
+                placeholder="Area / Subarea"
+                value={subarea}
+                onChangeText={setSubarea}
+                accessibilityLabel="Area"
+                autoCapitalize="words"
+              />
+            </Input>
             {errors.subarea ? <Text className="text-error-600">{errors.subarea}</Text> : null}
           </VStack>
 
@@ -169,7 +148,42 @@ export default function ContributeScreen() {
       </View>
       <View style={{ height: tabBarHeight }} />
 
-      {/* Select modals are handled by SelectPortal */}
+      {/* Grade Picker - Actionsheet with WheelPicker */}
+      <Actionsheet isOpen={isGradeOpen} onClose={() => setIsGradeOpen(false)}>
+        <ActionsheetBackdrop />
+        <ActionsheetContent>
+          <ActionsheetDragIndicatorWrapper className="p-4">
+            <Text size="lg" className="font-semibold">Select grade</Text>
+          </ActionsheetDragIndicatorWrapper>
+          <View style={{ height: 200 }} className="px-4">
+            {
+              // eslint-disable-next-line @typescript-eslint/no-var-requires
+              (() => {
+                const mod = require("@quidone/react-native-wheel-picker");
+                const Wheel = (mod.WheelPicker || mod.default) as any;
+                return (
+                  <Wheel
+                    data={GRADES}
+                    options={GRADES}
+                    selectedIndex={gradeIndex}
+                    onChange={(index: number) => setGradeIndex(index)}
+                    onValueChange={(_: string, index: number) => setGradeIndex(index)}
+                    style={{ height: 200 }}
+                  />
+                );
+              })()
+            }
+          </View>
+          <HStack className="justify-end p-4" space="md">
+            <Button variant="outline" onPress={() => setIsGradeOpen(false)}>
+              <ButtonText>Cancel</ButtonText>
+            </Button>
+            <Button action="positive" onPress={() => { setGrade(GRADES[gradeIndex]); setIsGradeOpen(false); }}>
+              <ButtonText>Done</ButtonText>
+            </Button>
+          </HStack>
+        </ActionsheetContent>
+      </Actionsheet>
     </ScrollView>
   );
 }
