@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { LayoutChangeEvent, View } from "react-native";
 import { Image } from "expo-image";
 import { Button, ButtonText } from "@/components/ui/button";
@@ -75,13 +75,7 @@ export default function ContributeImageAndDrawing() {
               contentFit="cover"
             />
             <View className="absolute inset-0">
-              <ImageDrawingCanvas
-                imageUri={pickedImage.uri}
-                imageNaturalSize={{ width: pickedImage.width, height: pickedImage.height }}
-                onChangePoints={onChangePoints}
-                onClear={onClear}
-                resetKey={resetKey}
-              />
+              <ImageDrawingCanvas onChangePoints={onChangePoints} resetKey={resetKey} />
             </View>
           </>
         )}
