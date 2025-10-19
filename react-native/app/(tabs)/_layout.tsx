@@ -5,7 +5,7 @@ import { Platform } from "react-native";
 import { HapticTab } from "@/components/HapticTab";
 import TabBarBackground from "@/components/TabBarBackground";
 import { Icon } from "@/components/ui/icon";
-import { Map, Info } from "lucide-react-native";
+import { Map, Info, PlusCircle } from "lucide-react-native";
 
 export default function TabLayout() {
   return (
@@ -38,6 +38,15 @@ export default function TabLayout() {
           title: "About",
           tabBarIcon: ({ focused }) => (
             <Icon className={`${focused ? "text-blue-500" : "text-typography-500"}`} as={Info} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="contribute"
+        options={{
+          title: "Contribute",
+          tabBarIcon: ({ focused }) => (
+            <Icon className={`${focused ? "text-blue-500" : "text-typography-500"}`} as={PlusCircle} />
           ),
         }}
       />

@@ -23,6 +23,8 @@ import {
   createMotionAnimatedComponent,
   MotionComponentProps,
 } from "@legendapp/motion";
+import { Icon } from "../icon";
+import { X } from "lucide-react-native";
 
 const ItemWrapper = React.forwardRef<React.ComponentRef<typeof Pressable>, PressableProps>(
   function ItemWrapper({ ...props }, ref) {
@@ -529,6 +531,34 @@ const ActionsheetIcon = React.forwardRef<
   );
 });
 
+type ActionsheetHeaderProps = {
+  title: string;
+  onClose?: () => void;
+  showCloseButton?: boolean;
+  className?: string;
+};
+
+const ActionsheetHeader = React.forwardRef<React.ComponentRef<typeof View>, ActionsheetHeaderProps>(
+  function ActionsheetHeader({ title, onClose, showCloseButton = true, className }, ref) {
+    return (
+      <ActionsheetDragIndicatorWrapper>
+        <ActionsheetDragIndicator />
+        <View
+          ref={ref}
+          className={`flex-row justify-between items-center w-full pb-4 ${className || ""}`}
+        >
+          <Text className="text-xl font-semibold text-typography-900">{title}</Text>
+          {showCloseButton && onClose && (
+            <Pressable onPress={onClose} className="p-1">
+              <Icon as={X} size="xl" />
+            </Pressable>
+          )}
+        </View>
+      </ActionsheetDragIndicatorWrapper>
+    );
+  }
+);
+
 export {
   Actionsheet,
   ActionsheetContent,
@@ -543,4 +573,5 @@ export {
   ActionsheetSectionList,
   ActionsheetSectionHeaderText,
   ActionsheetIcon,
+  ActionsheetHeader,
 };
