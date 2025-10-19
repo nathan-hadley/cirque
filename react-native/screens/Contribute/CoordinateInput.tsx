@@ -14,6 +14,7 @@ export type CoordinateInputProps = {
   longitude: string;
   onChangeLatitude: (value: string) => void;
   onChangeLongitude: (value: string) => void;
+  onBlur?: () => void;
   error?: string;
 };
 
@@ -22,10 +23,11 @@ export default function CoordinateInput({
   longitude,
   onChangeLatitude,
   onChangeLongitude,
+  onBlur,
   error,
 }: CoordinateInputProps) {
   const toast = useToast();
-  
+
   async function handleUseMyLocation() {
     try {
       const { status } = await Location.requestForegroundPermissionsAsync();
@@ -61,6 +63,7 @@ export default function CoordinateInput({
               placeholder="Latitude"
               value={latitude}
               onChangeText={onChangeLatitude}
+              onBlur={onBlur}
               accessibilityLabel="Latitude"
             />
           </Input>
@@ -72,6 +75,7 @@ export default function CoordinateInput({
               placeholder="Longitude"
               value={longitude}
               onChangeText={onChangeLongitude}
+              onBlur={onBlur}
               accessibilityLabel="Longitude"
             />
           </Input>

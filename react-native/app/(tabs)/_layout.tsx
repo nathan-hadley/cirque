@@ -46,7 +46,10 @@ export default function TabLayout() {
         options={{
           title: "Contribute",
           tabBarIcon: ({ focused }) => (
-            <Icon className={`${focused ? "text-blue-500" : "text-typography-500"}`} as={PlusCircle} />
+            <Icon
+              className={`${focused ? "text-blue-500" : "text-typography-500"}`}
+              as={PlusCircle}
+            />
           ),
         }}
       />
