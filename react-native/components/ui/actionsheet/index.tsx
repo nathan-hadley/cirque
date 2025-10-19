@@ -12,10 +12,10 @@ import {
   ViewStyle,
   VirtualizedList,
 } from "react-native";
-import { createActionsheet } from "@gluestack-ui/actionsheet";
-import { PrimitiveIcon, UIIcon } from "@gluestack-ui/icon";
-import type { VariantProps } from "@gluestack-ui/nativewind-utils";
-import { tva } from "@gluestack-ui/nativewind-utils/tva";
+import { createActionsheet } from "@gluestack-ui/core/actionsheet/creator";
+import { PrimitiveIcon, UIIcon } from "@gluestack-ui/core/icon/creator";
+import type { VariantProps } from "@gluestack-ui/utils/nativewind-utils";
+import { tva } from "@gluestack-ui/utils/nativewind-utils";
 import { H4 } from "@expo/html-elements";
 import {
   AnimatePresence,

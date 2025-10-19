@@ -2,10 +2,9 @@
 
 import React from "react";
 import { Pressable, View } from "react-native";
-import type { VariantProps } from "@gluestack-ui/nativewind-utils";
-import { tva } from "@gluestack-ui/nativewind-utils/tva";
-import { useStyleContext, withStyleContext } from "@gluestack-ui/nativewind-utils/withStyleContext";
-import { createSlider } from "@gluestack-ui/slider";
+import { createSlider } from "@gluestack-ui/core/slider/creator";
+import type { VariantProps } from "@gluestack-ui/utils/nativewind-utils";
+import { tva, useStyleContext, withStyleContext } from "@gluestack-ui/utils/nativewind-utils";
 import { cssInterop } from "nativewind";
 
 const SCOPE = "SLIDER";

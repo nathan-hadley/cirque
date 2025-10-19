@@ -2,11 +2,10 @@
 
 import React from "react";
 import { Pressable, Text, View } from "react-native";
-import { PrimitiveIcon, UIIcon } from "@gluestack-ui/icon";
-import type { VariantProps } from "@gluestack-ui/nativewind-utils";
-import { tva } from "@gluestack-ui/nativewind-utils/tva";
-import { useStyleContext, withStyleContext } from "@gluestack-ui/nativewind-utils/withStyleContext";
-import { createRadio } from "@gluestack-ui/radio";
+import { PrimitiveIcon, UIIcon } from "@gluestack-ui/core/icon/creator";
+import { createRadio } from "@gluestack-ui/core/radio/creator";
+import type { VariantProps } from "@gluestack-ui/utils/nativewind-utils";
+import { tva, useStyleContext, withStyleContext } from "@gluestack-ui/utils/nativewind-utils";
 import { cssInterop } from "nativewind";
 
 const SCOPE = "RADIO";

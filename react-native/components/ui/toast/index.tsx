@@ -2,10 +2,9 @@
 
 import React from "react";
 import { AccessibilityInfo, Text, View, ViewStyle } from "react-native";
-import type { VariantProps } from "@gluestack-ui/nativewind-utils";
-import { tva } from "@gluestack-ui/nativewind-utils/tva";
-import { useStyleContext, withStyleContext } from "@gluestack-ui/nativewind-utils/withStyleContext";
-import { createToastHook } from "@gluestack-ui/toast";
+import { createToastHook } from "@gluestack-ui/core/toast/creator";
+import type { VariantProps } from "@gluestack-ui/utils/nativewind-utils";
+import { tva, useStyleContext, withStyleContext } from "@gluestack-ui/utils/nativewind-utils";
 import { AnimatePresence, Motion, MotionComponentProps } from "@legendapp/motion";
 import { cssInterop } from "nativewind";
 

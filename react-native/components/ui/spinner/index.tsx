@@ -2,7 +2,7 @@
 
 import React from "react";
 import { ActivityIndicator } from "react-native";
-import { tva } from "@gluestack-ui/nativewind-utils/tva";
+import { tva } from "@gluestack-ui/utils/nativewind-utils";
 import { cssInterop } from "nativewind";
 
 cssInterop(ActivityIndicator, {

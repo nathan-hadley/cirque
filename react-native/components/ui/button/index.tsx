@@ -2,11 +2,10 @@
 
 import React from "react";
 import { ActivityIndicator, Pressable, Text, View } from "react-native";
-import { createButton } from "@gluestack-ui/button";
-import { PrimitiveIcon, UIIcon } from "@gluestack-ui/icon";
-import type { VariantProps } from "@gluestack-ui/nativewind-utils";
-import { tva } from "@gluestack-ui/nativewind-utils/tva";
-import { useStyleContext, withStyleContext } from "@gluestack-ui/nativewind-utils/withStyleContext";
+import { createButton } from "@gluestack-ui/core/button/creator";
+import { PrimitiveIcon, UIIcon } from "@gluestack-ui/core/icon/creator";
+import type { VariantProps } from "@gluestack-ui/utils/nativewind-utils";
+import { tva, useStyleContext, withStyleContext } from "@gluestack-ui/utils/nativewind-utils";
 import { cssInterop } from "nativewind";
 
 const SCOPE = "BUTTON";
