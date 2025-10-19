@@ -104,7 +104,7 @@ export default function AboutScreen() {
     <ScrollView
       className="flex-1 bg-background-0"
       showsVerticalScrollIndicator={false}
-      style={{ paddingTop: insets.top }}
+      style={{ paddingTop: insets.top, paddingBottom: insets.bottom + 16 }}
     >
       <View className="px-6 py-8 flex-1">
         {/* Header Section */}
