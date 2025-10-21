@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View } from "react-native";
-import { Circle } from "lucide-react-native";
+import { CircleIcon } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
   Actionsheet,
@@ -65,7 +65,7 @@ function AreaPickerSheet({ isOpen, onClose, onSelect, currentArea }: AreaPickerS
                   <Text className="text-typography-900">{area}</Text>
                 </RadioLabel>
                 <RadioIndicator>
-                  <RadioIcon as={Circle} />
+                  <RadioIcon as={CircleIcon} />
                 </RadioIndicator>
               </Radio>
             ))}

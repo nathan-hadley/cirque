@@ -14,3 +14,5 @@ export type Problem = {
 
 export const MIN_GRADE = 0;
 export const MAX_GRADE = 10;
+
+export const GRADES = Array.from({ length: 18 }, (_, i) => `V${i}`);

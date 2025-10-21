@@ -7,7 +7,7 @@ import {
   ActionsheetContent,
   ActionsheetHeader,
 } from "@/components/ui/actionsheet";
-import { GRADES } from "./index";
+import { GRADES } from "@/models/problems";
 
 type GradePickerProps = {
   isOpen: boolean;

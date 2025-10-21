@@ -11,11 +11,10 @@ import { Input, InputField } from "@/components/ui/input";
 import { Text } from "@/components/ui/text";
 import { Toast, ToastDescription, ToastTitle, useToast } from "@/components/ui/toast";
 import { VStack } from "@/components/ui/vstack";
+import { GRADES } from "@/models/problems";
 import AreaPicker from "./AreaPicker";
 import CoordinateInput from "./CoordinateInput";
 import GradePicker from "./GradePicker";
-
-export const GRADES = Array.from({ length: 18 }, (_, i) => `V${i}`);
 
 type FieldErrors = {
   name?: string;
