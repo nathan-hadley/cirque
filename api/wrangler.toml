@@ -1,0 +1,14 @@
+name = "cirque-api"
+main = "src/index.ts"
+compatibility_date = "2024-10-01"
+
+# Secrets (set via `wrangler secret put <NAME>`)
+# MAILERSEND_API_TOKEN - MailerSend API token
+# MAILERSEND_FROM_EMAIL - Sender email address
+# MAILERSEND_TO_EMAIL - Recipient email address for submissions
+
+[env.production]
+name = "cirque-api"
+
+[env.staging]
+name = "cirque-api-staging"

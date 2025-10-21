@@ -1,0 +1,7 @@
+# Local development environment variables
+# Copy this file to .dev.vars and fill in your values
+# DO NOT commit .dev.vars to version control
+
+MAILERSEND_API_TOKEN=your_mailersend_api_token_here
+MAILERSEND_FROM_EMAIL=noreply@yourdomain.com
+MAILERSEND_TO_EMAIL=admin@yourdomain.com
