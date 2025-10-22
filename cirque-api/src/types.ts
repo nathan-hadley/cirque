@@ -1,13 +1,34 @@
-import { DateTime, Str } from "chanfana";
+import { Str, Num } from "chanfana";
 import type { Context } from "hono";
 import { z } from "zod";
 
 export type AppContext = Context<{ Bindings: Env }>;
 
-export const Task = z.object({
-	name: Str({ example: "lorem" }),
-	slug: Str(),
-	description: Str({ required: false }),
-	completed: z.boolean().default(false),
-	due_date: DateTime(),
+export const ProblemSubmission = z.object({
+  contact: z.object({
+    name: Str({ example: "John Doe" }),
+    email: Str({ example: "john.doe@example.com" }),
+  }),
+  problem: z.object({
+    name: Str({ example: "The Physical" }),
+    grade: Str({ example: "V4" }),
+    subarea: Str({ example: "Forestland" }),
+    color: Str({ example: "black" }),
+    order: Num({ example: 1 }),
+    description: Str({
+      required: false,
+      example: "Reach high off the slab and pull into compression.",
+    }),
+    lat: Num({ example: 47.54520973656 }),
+    lng: Num({ example: -120.73245630919 }),
+    line: z.array(z.array(Num(), Num())),
+    topoFilename: Str({ required: false }),
+    imageBase64: Str({ required: false }),
+  }),
 });
+
+// export type Env {
+//   MAILERSEND_API_TOKEN: string;
+//   MAILERSEND_FROM_EMAIL: string;
+//   MAILERSEND_TO_EMAIL: string;
+// }
