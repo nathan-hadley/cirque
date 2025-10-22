@@ -2,6 +2,11 @@ import { Str, Num } from "chanfana";
 import type { Context } from "hono";
 import { z } from "zod";
 
+export interface Env {
+  MAILERSEND_API_TOKEN: string;
+  CIRQUE_EMAIL: string;
+}
+
 export type AppContext = Context<{ Bindings: Env }>;
 
 export const ProblemSubmission = z.object({
@@ -26,9 +31,3 @@ export const ProblemSubmission = z.object({
     imageBase64: Str({ required: false }),
   }),
 });
-
-// export type Env {
-//   MAILERSEND_API_TOKEN: string;
-//   MAILERSEND_FROM_EMAIL: string;
-//   MAILERSEND_TO_EMAIL: string;
-// }

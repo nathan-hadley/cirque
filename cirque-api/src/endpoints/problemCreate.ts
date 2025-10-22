@@ -1,6 +1,6 @@
 import { Bool, Str, OpenAPIRoute } from "chanfana";
 import { z } from "zod";
-import { type AppContext, ProblemSubmission } from "../types";
+import { type AppContext, ProblemSubmission, Env } from "../types";
 
 export class SubmitProblem extends OpenAPIRoute {
   schema = {
@@ -82,4 +82,61 @@ export class SubmitProblem extends OpenAPIRoute {
 
 function errorResponse(error: string) {
   return Response.json({ success: false, error: error }, { status: 400 });
+}
+
+async function sendEmail(
+  submission: z.infer<typeof ProblemSubmission>,
+  env: Env
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    // Format email content
+    const emailContent = `
+      New Problem Submission
+      =====================
+
+      Contact Information:
+      - Name: ${submission.contact.name}
+      - Email: ${submission.contact.email}
+
+      Problem Details:
+      - Name: ${submission.problem.name}
+      - Grade: ${submission.problem.grade}
+      - Subarea: ${submission.problem.subarea}
+      - Color: ${submission.problem.color}
+      - Order: ${submission.problem.order}
+      - Coordinates: ${submission.problem.lat}, ${submission.problem.lng}
+      - Description: ${submission.problem.description || "N/A"}
+      - Topo filename: ${submission.problem.topoFilename || "N/A"}
+      - Line points: ${submission.problem.line.length} points
+      - Has image: ${submission.problem.imageBase64 ? "Yes" : "No"}
+
+      Full JSON: ${JSON.stringify(submission, null, 2)}
+    `.trim();
+
+    // Send via MailerSend API
+    const response = await fetch("https://api.mailersend.com/v1/email", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${env.MAILERSEND_API_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: { email: env.CIRQUE_EMAIL },
+        to: [{ email: env.CIRQUE_EMAIL }],
+        subject: `New problem submission: ${submission.problem.name}`,
+        text: emailContent,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("MailerSend error:", response.status, errorText);
+      return { success: false, error: `MailerSend error: ${response.status}` };
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error("Error sending to MailerSend:", error);
+    return { success: false, error: "Failed to send email" };
+  }
 }
