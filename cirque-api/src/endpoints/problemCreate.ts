@@ -1,6 +1,11 @@
 import { Bool, Str, OpenAPIRoute } from "chanfana";
 import { z } from "zod";
-import { type AppContext, ProblemSubmission, Env } from "../types";
+import {
+  type AppContext,
+  ProblemSubmissionSchema,
+  type ProblemSubmission,
+  Env,
+} from "../types";
 
 export class SubmitProblem extends OpenAPIRoute {
   schema = {
@@ -10,7 +15,7 @@ export class SubmitProblem extends OpenAPIRoute {
       body: {
         content: {
           "application/json": {
-            schema: ProblemSubmission,
+            schema: ProblemSubmissionSchema,
           },
         },
       },
@@ -85,7 +90,7 @@ function errorResponse(error: string) {
 }
 
 async function sendEmail(
-  submission: z.infer<typeof ProblemSubmission>,
+  submission: ProblemSubmission,
   env: Env
 ): Promise<{ success: boolean; error?: string }> {
   try {

@@ -9,7 +9,7 @@ export interface Env {
 
 export type AppContext = Context<{ Bindings: Env }>;
 
-export const ProblemSubmission = z.object({
+export const ProblemSubmissionSchema = z.object({
   contact: z.object({
     name: Str({ example: "John Doe" }),
     email: Str({ example: "john.doe@example.com" }),
@@ -31,3 +31,5 @@ export const ProblemSubmission = z.object({
     imageBase64: Str({ required: false }),
   }),
 });
+
+export type ProblemSubmission = z.infer<typeof ProblemSubmissionSchema>;

@@ -4,6 +4,7 @@
     "strict": true,
     "paths": {
       "@/*": ["./*"],
+      "@cirque-api/*": ["../cirque-api/src/*"],
       "tailwind.config": ["./tailwind.config.js"]
     }
   },

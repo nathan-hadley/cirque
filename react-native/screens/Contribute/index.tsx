@@ -1,22 +1,26 @@
 import React, { useState } from "react";
 import { Platform, ScrollView, View } from "react-native";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
-import { ChevronDown, FileText, MapPin } from "lucide-react-native";
+import { ChevronDown, MapPin } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import BlurBackground from "@/components/BlurBackground";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { HStack } from "@/components/ui/hstack";
 import { Input, InputField } from "@/components/ui/input";
+import { Spinner } from "@/components/ui/spinner";
 import { Text } from "@/components/ui/text";
 import { Toast, ToastDescription, ToastTitle, useToast } from "@/components/ui/toast";
 import { VStack } from "@/components/ui/vstack";
+import { useSubmitProblem } from "@/hooks/useSubmitProblem";
 import { GRADES } from "@/models/problems";
 import AreaPicker from "./AreaPicker";
 import CoordinateInput from "./CoordinateInput";
 import GradePicker from "./GradePicker";
 
 type FieldErrors = {
+  contactName?: string;
+  contactEmail?: string;
   name?: string;
   grade?: string;
   area?: string;
@@ -29,7 +33,10 @@ export default function ContributeScreen() {
   const insets = useSafeAreaInsets();
   const tabBarHeight = useBottomTabBarHeight();
   const toast = useToast();
+  const submitMutation = useSubmitProblem();
 
+  const [contactName, setContactName] = useState("");
+  const [contactEmail, setContactEmail] = useState("");
   const [name, setName] = useState("");
   const [grade, setGrade] = useState<string | null>(null);
   const [subarea, setSubarea] = useState<string>("");
@@ -42,7 +49,7 @@ export default function ContributeScreen() {
   const [touched, setTouched] = useState<Set<FieldName>>(new Set());
   const [submitAttempted, setSubmitAttempted] = useState(false);
 
-  const errors = validateForm(name, grade, subarea, latitude, longitude);
+  const errors = validateForm(contactName, contactEmail, name, grade, subarea, latitude, longitude);
   const visibleErrors = getVisibleErrors(errors, touched, submitAttempted);
   const isValid = Object.keys(errors).length === 0;
 
@@ -56,29 +63,77 @@ export default function ContributeScreen() {
     markTouched("grade");
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setSubmitAttempted(true);
-    if (isValid) {
-      toast.show({
-        placement: "top",
-        render: ({ id }) => (
-          <Toast nativeID={`toast-${id}`} action="success">
-            <ToastTitle>Success</ToastTitle>
-            <ToastDescription>Problem submitted successfully.</ToastDescription>
-          </Toast>
-        ),
-      });
-    } else {
+    if (!isValid) {
       toast.show({
         placement: "top",
         render: ({ id }) => (
           <Toast nativeID={`toast-${id}`} action="error">
-            <ToastTitle>Error</ToastTitle>
-            <ToastDescription>Please fill out all fields.</ToastDescription>
+            <ToastTitle>Validation Error</ToastTitle>
+            <ToastDescription>Please fill out all required fields correctly.</ToastDescription>
           </Toast>
         ),
       });
+      return;
     }
+
+    submitMutation.mutate(
+      {
+        contact: {
+          name: contactName,
+          email: contactEmail,
+        },
+        problem: {
+          name,
+          grade: grade!,
+          subarea,
+          description: description.trim() ? description : undefined,
+          lat: parseFloat(latitude),
+          lng: parseFloat(longitude),
+          line: [], // Will be added in future when topo drawing is implemented
+        },
+      },
+      {
+        onSuccess: () => {
+          toast.show({
+            placement: "top",
+            render: ({ id }) => (
+              <Toast nativeID={`toast-${id}`} action="success">
+                <ToastTitle>Success</ToastTitle>
+                <ToastDescription>
+                  Problem submitted successfully! We'll review it shortly.
+                </ToastDescription>
+              </Toast>
+            ),
+          });
+          // Reset form
+          setContactName("");
+          setContactEmail("");
+          setName("");
+          setGrade(null);
+          setSubarea("");
+          setDescription("");
+          setLatitude("");
+          setLongitude("");
+          setTouched(new Set());
+          setSubmitAttempted(false);
+        },
+        onError: error => {
+          toast.show({
+            placement: "top",
+            render: ({ id }) => (
+              <Toast nativeID={`toast-${id}`} action="error">
+                <ToastTitle>Submission Failed</ToastTitle>
+                <ToastDescription>
+                  {error instanceof Error ? error.message : "Failed to submit problem"}
+                </ToastDescription>
+              </Toast>
+            ),
+          });
+        },
+      }
+    );
   };
 
   return (
@@ -99,19 +154,56 @@ export default function ContributeScreen() {
             </Text>
           </VStack>
 
-          <VStack space="md">
-            <Text className="text-typography-700">Name</Text>
-            <Input>
-              <InputField
-                placeholder="Problem name"
-                value={name}
-                onChangeText={setName}
-                onBlur={() => markTouched("name")}
-                accessibilityLabel="Problem name"
-                autoCapitalize="words"
-              />
-            </Input>
-            <FieldError message={visibleErrors.name} />
+          <VStack space="lg">
+            <Text className="text-typography-700 font-semibold">Contact Information</Text>
+            <VStack space="md">
+              <Text className="text-typography-700">Your Name</Text>
+              <Input>
+                <InputField
+                  placeholder="Your name"
+                  value={contactName}
+                  onChangeText={setContactName}
+                  onBlur={() => markTouched("contactName")}
+                  accessibilityLabel="Your name"
+                  autoCapitalize="words"
+                />
+              </Input>
+              <FieldError message={visibleErrors.contactName} />
+            </VStack>
+
+            <VStack space="md">
+              <Text className="text-typography-700">Email</Text>
+              <Input>
+                <InputField
+                  placeholder="your.email@example.com"
+                  value={contactEmail}
+                  onChangeText={setContactEmail}
+                  onBlur={() => markTouched("contactEmail")}
+                  accessibilityLabel="Email"
+                  autoCapitalize="none"
+                  keyboardType="email-address"
+                />
+              </Input>
+              <FieldError message={visibleErrors.contactEmail} />
+            </VStack>
+          </VStack>
+
+          <VStack space="lg">
+            <Text className="text-typography-700 font-semibold">Problem Details</Text>
+            <VStack space="md">
+              <Text className="text-typography-700">Name</Text>
+              <Input>
+                <InputField
+                  placeholder="Problem name"
+                  value={name}
+                  onChangeText={setName}
+                  onBlur={() => markTouched("name")}
+                  accessibilityLabel="Problem name"
+                  autoCapitalize="words"
+                />
+              </Input>
+              <FieldError message={visibleErrors.name} />
+            </VStack>
           </VStack>
 
           <VStack space="md">
@@ -170,8 +262,12 @@ export default function ContributeScreen() {
             </Input>
           </VStack>
 
-          <Button action="positive" onPress={handleSubmit}>
-            <ButtonText>Continue</ButtonText>
+          <Button action="positive" onPress={handleSubmit} isDisabled={submitMutation.isPending}>
+            {submitMutation.isPending ? (
+              <Spinner size="small" color="white" />
+            ) : (
+              <ButtonText>Submit Problem</ButtonText>
+            )}
           </Button>
         </VStack>
         <View style={{ height: Platform.OS === "ios" ? tabBarHeight : 16 }} />
@@ -194,6 +290,8 @@ function FieldError({ message }: { message?: string }) {
 }
 
 function validateForm(
+  contactName: string,
+  contactEmail: string,
   name: string,
   grade: string | null,
   area: string,
@@ -202,8 +300,19 @@ function validateForm(
 ): FieldErrors {
   const errors: FieldErrors = {};
 
+  if (!contactName.trim()) {
+    errors.contactName = "Please enter your name.";
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!contactEmail.trim()) {
+    errors.contactEmail = "Please enter your email.";
+  } else if (!emailRegex.test(contactEmail)) {
+    errors.contactEmail = "Please enter a valid email.";
+  }
+
   if (!name.trim()) {
-    errors.name = "Please enter a name.";
+    errors.name = "Please enter a problem name.";
   }
 
   if (!grade || !GRADES.includes(grade)) {
