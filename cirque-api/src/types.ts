@@ -18,8 +18,8 @@ export const ProblemSubmission = z.object({
     name: Str({ example: "The Physical" }),
     grade: Str({ example: "V4" }),
     subarea: Str({ example: "Forestland" }),
-    color: Str({ example: "black" }),
-    order: Num({ example: 1 }),
+    color: Str({ required: false, example: "black" }),
+    order: Num({ required: false, example: 1 }),
     description: Str({
       required: false,
       example: "Reach high off the slab and pull into compression.",
