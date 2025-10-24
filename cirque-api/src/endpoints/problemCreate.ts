@@ -1,5 +1,6 @@
 import { Bool, Str, OpenAPIRoute } from "chanfana";
 import { z } from "zod";
+import { MailerSend, EmailParams, Sender, Recipient } from "mailersend";
 import {
   type AppContext,
   ProblemSubmissionSchema,
@@ -81,7 +82,15 @@ export class SubmitProblem extends OpenAPIRoute {
       }
     }
 
-    return { success: true };
+    // Send email in background (non-blocking)
+    c.executionCtx.waitUntil(
+      sendEmail(submission, c.env).catch((error) => {
+        console.error("Failed to send email:", error);
+      })
+    );
+
+    // Return success response immediately
+    return Response.json({ success: true });
   }
 }
 
@@ -94,7 +103,10 @@ async function sendEmail(
   env: Env
 ): Promise<{ success: boolean; error?: string }> {
   try {
-    // Format email content
+    const mailerSend = new MailerSend({
+      apiKey: env.MAILERSEND_API_TOKEN,
+    });
+
     const emailContent = `
       New Problem Submission
       =====================
@@ -118,30 +130,23 @@ async function sendEmail(
       Full JSON: ${JSON.stringify(submission, null, 2)}
     `.trim();
 
-    // Send via MailerSend API
-    const response = await fetch("https://api.mailersend.com/v1/email", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${env.MAILERSEND_API_TOKEN}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: { email: env.CIRQUE_EMAIL },
-        to: [{ email: env.CIRQUE_EMAIL }],
-        subject: `New problem submission: ${submission.problem.name}`,
-        text: emailContent,
-      }),
-    });
+    const sentFrom = new Sender(env.CIRQUE_EMAIL, "Cirque App");
+    const recipients = [new Recipient(env.CIRQUE_EMAIL)];
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("MailerSend error:", response.status, errorText);
-      return { success: false, error: `MailerSend error: ${response.status}` };
-    }
+    const emailParams = new EmailParams()
+      .setFrom(sentFrom)
+      .setTo(recipients)
+      .setSubject(`New problem submission: ${submission.problem.name}`)
+      .setText(emailContent)
+      .setReplyTo(
+        new Recipient(submission.contact.email, submission.contact.name)
+      );
+
+    await mailerSend.email.send(emailParams);
 
     return { success: true };
   } catch (error) {
-    console.error("Error sending to MailerSend:", error);
+    console.error("Error sending email via MailerSend:", error);
     return { success: false, error: "Failed to send email" };
   }
 }

@@ -1,5 +1,5 @@
 import type { ProblemSubmission } from "@cirque-api/types";
-import { API_ENDPOINTS } from "@/constants/api";
+import { API_ENDPOINTS, API_KEY } from "@/constants/api";
 
 export type SubmitProblemResponse = {
   success: boolean;
@@ -7,10 +7,15 @@ export type SubmitProblemResponse = {
 };
 
 export async function submitProblem(submission: ProblemSubmission): Promise<SubmitProblemResponse> {
+  if (!API_KEY) {
+    throw new Error("API key is not set");
+  }
+
   const response = await fetch(API_ENDPOINTS.submitProblem, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "X-API-Key": API_KEY,
     },
     body: JSON.stringify(submission),
   });

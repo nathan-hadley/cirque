@@ -232,7 +232,7 @@ export default function ContributeScreen() {
             <Button variant="outline" onPress={() => setIsAreaOpen(true)}>
               <HStack className="items-center" space="sm">
                 <ButtonIcon as={MapPin} size="sm" />
-                <ButtonText>Browse common areas</ButtonText>
+                <ButtonText>Browse areas</ButtonText>
               </HStack>
             </Button>
             <FieldError message={visibleErrors.area} />

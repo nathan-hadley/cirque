@@ -1,9 +1,13 @@
 import { fromHono } from "chanfana";
 import { Hono } from "hono";
 import { SubmitProblem } from "./endpoints/problemCreate";
+import { authMiddleware, rateLimitMiddleware } from "./middleware";
 
 // Start a Hono app
 const app = new Hono<{ Bindings: Env }>();
+
+// Apply security middleware to all routes
+app.use("*", authMiddleware, rateLimitMiddleware);
 
 // Setup OpenAPI registry
 const openapi = fromHono(app, {

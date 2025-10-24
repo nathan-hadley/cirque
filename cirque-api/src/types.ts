@@ -5,6 +5,8 @@ import { z } from "zod";
 export interface Env {
   MAILERSEND_API_TOKEN: string;
   CIRQUE_EMAIL: string;
+  API_KEY: string;
+  RATE_LIMIT_KV: KVNamespace;
 }
 
 export type AppContext = Context<{ Bindings: Env }>;
