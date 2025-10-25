@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { Platform, ScrollView, View } from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { Image } from "expo-image";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { Camera, ChevronDown, ImageIcon, MapPin, Pencil } from "lucide-react-native";
@@ -7,6 +7,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Svg, { Circle, Path } from "react-native-svg";
 import BlurBackground from "@/components/BlurBackground";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
+import { Divider } from "@/components/ui/divider";
 import { Heading } from "@/components/ui/heading";
 import { HStack } from "@/components/ui/hstack";
 import { Input, InputField } from "@/components/ui/input";
@@ -204,176 +205,186 @@ export default function ContributeScreen() {
 
   return (
     <View className="flex-1 bg-background-0">
-      <BlurBackground position="statusBar" />
-      <ScrollView
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
         className="flex-1"
-        showsVerticalScrollIndicator={false}
-        style={{ paddingTop: insets.top }}
       >
-        <VStack className="px-6 py-6 flex-1" space="xl">
-          <VStack space="xs">
-            <Heading size="2xl" className="text-typography-900">
-              Contribute a Problem
-            </Heading>
-            <Text className="text-typography-600">
-              Share a new boulder problem. In later steps, you can add a topo line and image.
-            </Text>
-          </VStack>
-
-          <VStack space="lg">
-            <Text className="text-typography-700 font-semibold">Contact Information</Text>
-            <VStack space="md">
-              <Text className="text-typography-700">Your Name</Text>
-              <Input>
-                <InputField
-                  placeholder="Your name"
-                  value={contactName}
-                  onChangeText={setContactName}
-                  onBlur={() => markTouched("contactName")}
-                  accessibilityLabel="Your name"
-                  autoCapitalize="words"
-                />
-              </Input>
-              <FieldError message={visibleErrors.contactName} />
+        <BlurBackground position="statusBar" />
+        <ScrollView
+          className="flex-1"
+          showsVerticalScrollIndicator={false}
+          style={{ paddingTop: insets.top }}
+        >
+          <VStack className="flex-1 py-6" space="xl">
+            <VStack space="xs" className="px-6">
+              <Heading size="2xl" className="text-typography-900">
+                Contribute a Problem
+              </Heading>
+              <Text className="text-typography-600">Share a new boulder problem.</Text>
             </VStack>
 
-            <VStack space="md">
-              <Text className="text-typography-700">Email</Text>
-              <Input>
-                <InputField
-                  placeholder="your.email@example.com"
-                  value={contactEmail}
-                  onChangeText={setContactEmail}
-                  onBlur={() => markTouched("contactEmail")}
-                  accessibilityLabel="Email"
-                  autoCapitalize="none"
-                  keyboardType="email-address"
-                />
-              </Input>
-              <FieldError message={visibleErrors.contactEmail} />
-            </VStack>
-          </VStack>
+            <Divider />
 
-          <VStack space="lg">
-            <Text className="text-typography-700 font-semibold">Problem Details</Text>
-            <VStack space="md">
-              <Text className="text-typography-700">Name</Text>
-              <Input>
-                <InputField
-                  placeholder="Problem name"
-                  value={name}
-                  onChangeText={setName}
-                  onBlur={() => markTouched("name")}
-                  accessibilityLabel="Problem name"
-                  autoCapitalize="words"
-                />
-              </Input>
-              <FieldError message={visibleErrors.name} />
-            </VStack>
-          </VStack>
-
-          <VStack space="md">
-            <Text className="text-typography-700">Grade</Text>
-            <Button variant="outline" onPress={() => setIsGradeOpen(true)}>
-              <HStack className="items-center" space="sm">
-                <ButtonText>{grade || "Select grade"}</ButtonText>
-                <ChevronDown />
-              </HStack>
-            </Button>
-            <FieldError message={visibleErrors.grade} />
-          </VStack>
-
-          <VStack space="md">
-            <Text className="text-typography-700">Area</Text>
-            <Input>
-              <InputField
-                placeholder="Area"
-                value={subarea}
-                onChangeText={setSubarea}
-                onBlur={() => markTouched("area")}
-                accessibilityLabel="Area"
-                autoCapitalize="words"
-              />
-            </Input>
-            <Button variant="outline" onPress={() => setIsAreaOpen(true)}>
-              <HStack className="items-center" space="sm">
-                <ButtonIcon as={MapPin} size="sm" />
-                <ButtonText>Browse areas</ButtonText>
-              </HStack>
-            </Button>
-            <FieldError message={visibleErrors.area} />
-          </VStack>
-
-          <CoordinateInput
-            latitude={latitude}
-            longitude={longitude}
-            onChangeLatitude={setLatitude}
-            onChangeLongitude={setLongitude}
-            onBlur={() => markTouched("coordinates")}
-            error={visibleErrors.coordinates}
-          />
-
-          <VStack space="md">
-            <Text className="text-typography-700">Description (optional)</Text>
-            <Input className="h-20">
-              <InputField
-                placeholder="Short description"
-                value={description}
-                onChangeText={setDescription}
-                textAlignVertical="top"
-                multiline
-                accessibilityLabel="Problem description"
-                className="pt-2"
-              />
-            </Input>
-          </VStack>
-
-          <VStack space="lg">
-            <Text className="text-typography-700 font-semibold">Topo Image & Line (optional)</Text>
-            <Text className="text-typography-600">
-              Add a photo and draw the line to help others find this problem.
-            </Text>
-            <HStack space="md">
-              <Button
-                onPress={handlePickImage}
-                action="secondary"
-                variant="outline"
-                className="flex-1"
-              >
-                <ButtonIcon as={ImageIcon} />
-                <ButtonText>Select Photo</ButtonText>
-              </Button>
-              <Button
-                onPress={handleCaptureImage}
-                action="secondary"
-                variant="outline"
-                className="flex-1"
-              >
-                <ButtonIcon as={Camera} />
-                <ButtonText>Camera</ButtonText>
-              </Button>
-            </HStack>
-            {pickedImage && (
+            <VStack space="lg" className="px-6">
+              <Text className="text-typography-700 font-semibold">Contact Information</Text>
               <VStack space="md">
-                <ImagePreview imageUri={pickedImage.uri} points={normalizedPoints} />
-                <Button onPress={handleOpenDrawingModal} action="primary" variant="outline">
-                  <ButtonIcon as={Pencil} />
-                  <ButtonText>Draw Line</ButtonText>
-                </Button>
+                <Text className="text-typography-700">Your Name</Text>
+                <Input>
+                  <InputField
+                    placeholder="Your name"
+                    value={contactName}
+                    onChangeText={setContactName}
+                    onBlur={() => markTouched("contactName")}
+                    accessibilityLabel="Your name"
+                    autoCapitalize="words"
+                  />
+                </Input>
+                <FieldError message={visibleErrors.contactName} />
               </VStack>
-            )}
-          </VStack>
 
-          <Button action="positive" onPress={handleSubmit} isDisabled={submitMutation.isPending}>
-            {submitMutation.isPending ? (
-              <Spinner size="small" color="white" />
-            ) : (
-              <ButtonText>Submit Problem</ButtonText>
-            )}
-          </Button>
-        </VStack>
-        <View style={{ height: Platform.OS === "ios" ? tabBarHeight : 16 }} />
-      </ScrollView>
+              <VStack space="md">
+                <Text className="text-typography-700">Email</Text>
+                <Input>
+                  <InputField
+                    placeholder="your.email@example.com"
+                    value={contactEmail}
+                    onChangeText={setContactEmail}
+                    onBlur={() => markTouched("contactEmail")}
+                    accessibilityLabel="Email"
+                    autoCapitalize="none"
+                    keyboardType="email-address"
+                  />
+                </Input>
+                <FieldError message={visibleErrors.contactEmail} />
+              </VStack>
+            </VStack>
+
+            <Divider />
+
+            <VStack space="lg" className="px-6">
+              <Text className="text-typography-700 font-semibold">Problem Details</Text>
+              <VStack space="md">
+                <Text className="text-typography-700">Name</Text>
+                <Input>
+                  <InputField
+                    placeholder="Problem name"
+                    value={name}
+                    onChangeText={setName}
+                    onBlur={() => markTouched("name")}
+                    accessibilityLabel="Problem name"
+                    autoCapitalize="words"
+                  />
+                </Input>
+                <FieldError message={visibleErrors.name} />
+              </VStack>
+            </VStack>
+
+            <VStack space="md" className="px-6">
+              <Text className="text-typography-700">Grade</Text>
+              <Button variant="outline" onPress={() => setIsGradeOpen(true)}>
+                <HStack className="items-center" space="sm">
+                  <ButtonText>{grade || "Select grade"}</ButtonText>
+                  <ChevronDown />
+                </HStack>
+              </Button>
+              <FieldError message={visibleErrors.grade} />
+            </VStack>
+
+            <VStack space="md" className="px-6">
+              <Text className="text-typography-700">Area</Text>
+              <Input>
+                <InputField
+                  placeholder="Area"
+                  value={subarea}
+                  onChangeText={setSubarea}
+                  onBlur={() => markTouched("area")}
+                  accessibilityLabel="Area"
+                  autoCapitalize="words"
+                />
+              </Input>
+              <Button variant="outline" onPress={() => setIsAreaOpen(true)}>
+                <HStack className="items-center" space="sm">
+                  <ButtonIcon as={MapPin} size="sm" />
+                  <ButtonText>Browse areas</ButtonText>
+                </HStack>
+              </Button>
+              <FieldError message={visibleErrors.area} />
+            </VStack>
+
+            <CoordinateInput
+              latitude={latitude}
+              longitude={longitude}
+              onChangeLatitude={setLatitude}
+              onChangeLongitude={setLongitude}
+              onBlur={() => markTouched("coordinates")}
+              error={visibleErrors.coordinates}
+            />
+
+            <VStack space="md" className="px-6">
+              <Text className="text-typography-700">Description (optional)</Text>
+              <Input className="h-20">
+                <InputField
+                  placeholder="Short description"
+                  value={description}
+                  onChangeText={setDescription}
+                  textAlignVertical="top"
+                  multiline
+                  accessibilityLabel="Problem description"
+                  className="pt-2"
+                />
+              </Input>
+            </VStack>
+
+            <Divider />
+
+            <VStack space="lg" className="px-6">
+              <Text className="text-typography-700 font-semibold">
+                Topo Image & Line (optional)
+              </Text>
+              <Text className="text-typography-600">
+                Add a photo and draw the line to help others find this problem.
+              </Text>
+              <HStack space="md">
+                <Button onPress={handlePickImage} variant="outline" className="flex-1">
+                  <ButtonIcon as={ImageIcon} />
+                  <ButtonText>Select Photo</ButtonText>
+                </Button>
+                <Button onPress={handleCaptureImage} variant="outline" className="flex-1">
+                  <ButtonIcon as={Camera} />
+                  <ButtonText>Camera</ButtonText>
+                </Button>
+              </HStack>
+              {pickedImage && (
+                <VStack space="md">
+                  <ImagePreview imageUri={pickedImage.uri} points={normalizedPoints} />
+                  <Button onPress={handleOpenDrawingModal} action="primary" variant="outline">
+                    <ButtonIcon as={Pencil} />
+                    <ButtonText>
+                      {normalizedPoints.length > 0 ? "Edit Line" : "Draw Line"}
+                    </ButtonText>
+                  </Button>
+                </VStack>
+              )}
+            </VStack>
+
+            <Divider />
+
+            <Button
+              action="positive"
+              onPress={handleSubmit}
+              isDisabled={submitMutation.isPending}
+              className="mx-6"
+            >
+              {submitMutation.isPending ? (
+                <Spinner size="small" color="white" />
+              ) : (
+                <ButtonText>Submit Problem</ButtonText>
+              )}
+            </Button>
+          </VStack>
+          <View style={{ height: Platform.OS === "ios" ? tabBarHeight : 16 }} />
+        </ScrollView>
+      </KeyboardAvoidingView>
 
       <GradePicker isOpen={isGradeOpen} onClose={handleGradeSelect} currentGrade={grade} />
       <AreaPicker

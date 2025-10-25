@@ -53,7 +53,7 @@ export default function CoordinateInput({
   }
 
   return (
-    <VStack space="sm">
+    <VStack space="sm" className="px-6">
       <Text className="text-typography-700">Coordinates</Text>
       <HStack space="md" className="items-center">
         <View className="flex-1">
