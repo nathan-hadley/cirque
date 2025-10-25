@@ -163,3 +163,23 @@ export function normalizePoints(
 export function clearPointsSetter(setter: (pts: NormalizedPoint[]) => void) {
   return () => setter([]);
 }
+
+// Downsample points to a maximum count while maintaining shape
+export function downsamplePoints(
+  points: NormalizedPoint[],
+  maxPoints: number = 10
+): NormalizedPoint[] {
+  if (points.length <= maxPoints) {
+    return points;
+  }
+
+  const result: NormalizedPoint[] = [];
+  const step = (points.length - 1) / (maxPoints - 1);
+
+  for (let i = 0; i < maxPoints; i++) {
+    const index = Math.round(i * step);
+    result.push(points[index]);
+  }
+
+  return result;
+}

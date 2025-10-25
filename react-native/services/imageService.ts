@@ -62,7 +62,6 @@ export async function pickFromLibrary(
     fileSize: (asset as any).fileSize ?? undefined,
   };
 
-  validateImageBasics(picked, constraints);
   return ensureConstraints(picked, constraints);
 }
 
@@ -91,14 +90,7 @@ export async function captureFromCamera(
     fileSize: (asset as any).fileSize ?? undefined,
   };
 
-  validateImageBasics(picked, constraints);
   return ensureConstraints(picked, constraints);
-}
-
-function validateImageBasics(image: PickedImage, constraints: ImageConstraints) {
-  if (!image.width || !image.height) throw new Error("Image dimensions unavailable");
-  // Don't validate MIME type - we'll convert everything to JPEG in ensureConstraints
-  // This allows HEIC and other formats from physical devices
 }
 
 async function ensureConstraints(

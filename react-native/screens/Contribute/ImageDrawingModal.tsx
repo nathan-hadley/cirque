@@ -5,7 +5,7 @@ import { X } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
 import { HStack } from "@/components/ui/hstack";
-import { ImageDrawingCanvas, NormalizedPoint } from "./ImageDrawingCanvas";
+import { downsamplePoints, ImageDrawingCanvas, NormalizedPoint } from "./ImageDrawingCanvas";
 
 type ImageDrawingModalProps = {
   isOpen: boolean;
@@ -45,7 +45,9 @@ export function ImageDrawingModal({
   }, []);
 
   const handleConfirm = useCallback(() => {
-    onConfirm(points);
+    // Downsample to max 10 points for submission
+    const downsampled = downsamplePoints(points, 10);
+    onConfirm(downsampled);
   }, [points, onConfirm]);
 
   const handleClose = useCallback(() => {
@@ -84,12 +86,7 @@ export function ImageDrawingModal({
         {/* Footer Buttons */}
         <View className="px-4 py-4" style={{ paddingBottom: insets.bottom + 16 }}>
           <HStack space="md">
-            <Button
-              onPress={handleClearLine}
-              action="negative"
-              variant="outline"
-              className="flex-1"
-            >
+            <Button onPress={handleClearLine} action="negative" className="flex-1">
               <ButtonText>Clear Line</ButtonText>
             </Button>
             <Button onPress={handleConfirm} action="positive" className="flex-1">
