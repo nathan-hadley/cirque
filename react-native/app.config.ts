@@ -56,6 +56,12 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
           "Cirque requires your location to enable GPS navigation between boulder problems. For example, you will be able to see your location on the map and how close you are to a boulder.",
       },
     ],
+    [
+      "expo-image-picker",
+      {
+        photosPermission: "Cirque requires accesses your photos to contribute boulders to the app.",
+      },
+    ],
     "expo-font",
   ],
   experiments: {
