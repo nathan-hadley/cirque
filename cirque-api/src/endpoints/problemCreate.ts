@@ -1,12 +1,7 @@
 import { Bool, Str, OpenAPIRoute } from "chanfana";
 import { z } from "zod";
-import { MailerSend, EmailParams, Sender, Recipient } from "mailersend";
-import {
-  type AppContext,
-  ProblemSubmissionSchema,
-  type ProblemSubmission,
-  Env,
-} from "../types";
+import { type AppContext, ProblemSubmissionSchema } from "../types";
+import { sendProblemSubmissionEmail } from "../services/emailService";
 
 export class SubmitProblem extends OpenAPIRoute {
   schema = {
@@ -84,7 +79,7 @@ export class SubmitProblem extends OpenAPIRoute {
 
     // Send email in background (non-blocking)
     c.executionCtx.waitUntil(
-      sendEmail(submission, c.env).catch((error) => {
+      sendProblemSubmissionEmail(submission, c.env).catch((error) => {
         console.error("Failed to send email:", error);
       })
     );
@@ -97,58 +92,3 @@ export class SubmitProblem extends OpenAPIRoute {
 function errorResponse(error: string) {
   return Response.json({ success: false, error: error }, { status: 400 });
 }
-
-async function sendEmail(
-  submission: ProblemSubmission,
-  env: Env
-): Promise<{ success: boolean; error?: string }> {
-  try {
-    const mailerSend = new MailerSend({
-      apiKey: env.MAILERSEND_API_TOKEN,
-    });
-
-    const sentFrom = new Sender("noreply@nathanhadley.com", "Cirque App");
-    const recipients = [new Recipient(env.CIRQUE_EMAIL)];
-
-    const emailParams = new EmailParams()
-      .setFrom(sentFrom)
-      .setTo(recipients)
-      .setSubject(`New problem submission: ${submission.problem.name}`)
-      .setText(emailContent(submission))
-      .setReplyTo(
-        new Recipient(submission.contact.email, submission.contact.name)
-      );
-
-    await mailerSend.email.send(emailParams);
-
-    return { success: true };
-  } catch (error) {
-    console.error("Error sending email via MailerSend:", error);
-    return { success: false, error: "Failed to send email" };
-  }
-}
-
-const emailContent = (submission: ProblemSubmission): string => {
-  return `
-New Problem Submission
-=====================
-
-Contact Information:
-- Name: ${submission.contact.name}
-- Email: ${submission.contact.email}
-
-Problem Details:
-- Name: ${submission.problem.name}
-- Grade: ${submission.problem.grade}
-- Subarea: ${submission.problem.subarea}
-- Color: ${submission.problem.color}
-- Order: ${submission.problem.order}
-- Coordinates: ${submission.problem.lat}, ${submission.problem.lng}
-- Description: ${submission.problem.description || "N/A"}
-- Topo filename: ${submission.problem.topoFilename || "N/A"}
-- Line points: ${submission.problem.line.length} points
-- Has image: ${submission.problem.imageBase64 ? "Yes" : "No"}
-
-Full JSON: ${JSON.stringify(submission.problem, null, 2)}
-`.trim();
-};
