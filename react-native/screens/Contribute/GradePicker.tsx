@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
+import { useColorScheme } from "nativewind";
 import WheelPicker from "react-native-wheely";
 import {
   Actionsheet,
@@ -15,9 +16,12 @@ type GradePickerProps = {
   currentGrade: string | null;
 };
 
+const DEFAULT_INDEX = 3; // V3
+
 export default function GradePicker({ isOpen, onClose, currentGrade }: GradePickerProps) {
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
-  const gradeRef = useRef<number>(0);
+  const { colorScheme } = useColorScheme();
+  const gradeRef = useRef<number>(DEFAULT_INDEX);
 
   useEffect(() => {
     if (isOpen && currentGrade) {
@@ -49,6 +53,10 @@ export default function GradePicker({ isOpen, onClose, currentGrade }: GradePick
             options={GRADES}
             onChange={handleSelect}
             itemHeight={40}
+            itemTextStyle={{ color: colorScheme === "dark" ? "#FFFFFF" : undefined }}
+            selectedIndicatorStyle={{
+              backgroundColor: colorScheme === "dark" ? "#374151" : undefined,
+            }}
           />
         </View>
       </ActionsheetContent>
