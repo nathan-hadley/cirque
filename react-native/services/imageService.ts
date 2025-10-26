@@ -10,18 +10,20 @@ export type PickedImage = {
   fileSize?: number; // in bytes if available
 };
 
+export type NormalizedPoint = [number, number];
+
 export type ImageConstraints = {
-  maxWidth: number; // e.g., 1600
-  maxHeight: number; // e.g., 1200
-  maxBytes: number; // e.g., 1_000_000
+  maxWidth: number; // e.g., 640
+  maxHeight: number; // e.g., 480
+  maxBytes: number; // e.g., 200_000
   allowedMimeTypes: string[]; // ["image/jpeg", "image/png"]
   compress: number; // 0..1 for JPEG
 };
 
 const DEFAULT_CONSTRAINTS: ImageConstraints = {
-  maxWidth: 1600,
-  maxHeight: 1200,
-  maxBytes: 900_000,
+  maxWidth: 640,
+  maxHeight: 480,
+  maxBytes: 200_000,
   allowedMimeTypes: ["image/jpeg", "image/png"],
   compress: 0.8,
 };
@@ -190,4 +192,38 @@ async function ensureConstraints(
   }
 
   return processed;
+}
+
+/**
+ * Converts normalized points (0-1) to pixel coordinates (640×480)
+ * for submission to the API and storage in GeoJSON format
+ */
+export function convertNormalizedToPixels(normalizedPoints: NormalizedPoint[]): number[][] {
+  return normalizedPoints.map(([x, y]) => [
+    Math.round(x * DEFAULT_CONSTRAINTS.maxWidth),
+    Math.round(y * DEFAULT_CONSTRAINTS.maxHeight),
+  ]);
+}
+
+/**
+ * Downsample points to a maximum count while maintaining shape
+ * Uses evenly distributed sampling across the point array
+ */
+export function downsamplePoints(
+  points: NormalizedPoint[],
+  maxPoints: number = 10
+): NormalizedPoint[] {
+  if (points.length <= maxPoints) {
+    return points;
+  }
+
+  const result: NormalizedPoint[] = [];
+  const step = (points.length - 1) / (maxPoints - 1);
+
+  for (let i = 0; i < maxPoints; i++) {
+    const index = Math.round(i * step);
+    result.push(points[index]);
+  }
+
+  return result;
 }

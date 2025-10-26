@@ -5,7 +5,8 @@ import { X } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
 import { HStack } from "@/components/ui/hstack";
-import { downsamplePoints, ImageDrawingCanvas, NormalizedPoint } from "./ImageDrawingCanvas";
+import { downsamplePoints, type NormalizedPoint } from "@/services/imageService";
+import { ImageDrawingCanvas } from "./ImageDrawingCanvas";
 
 type ImageDrawingModalProps = {
   isOpen: boolean;

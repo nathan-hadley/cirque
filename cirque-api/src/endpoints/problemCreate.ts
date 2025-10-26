@@ -30,7 +30,7 @@ export class SubmitProblem extends OpenAPIRoute {
         },
       },
       "400": {
-        description: "Invalid request body",
+        description: "Invalid request or email sending failed",
         content: {
           "application/json": {
             schema: z.object({
@@ -77,14 +77,16 @@ export class SubmitProblem extends OpenAPIRoute {
       }
     }
 
-    // Send email in background (non-blocking)
-    c.executionCtx.waitUntil(
-      sendProblemSubmissionEmail(submission, c.env).catch((error) => {
-        console.error("Failed to send email:", error);
-      })
-    );
+    // Send email and wait for result
+    const emailResult = await sendProblemSubmissionEmail(submission, c.env);
 
-    // Return success response immediately
+    if (!emailResult.success) {
+      return errorResponse(
+        emailResult.error || "Failed to send submission email"
+      );
+    }
+
+    // Return success only if email was sent
     return Response.json({ success: true });
   }
 }

@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { LayoutChangeEvent, PanResponder, View } from "react-native";
 import Svg, { Circle, Path } from "react-native-svg";
-
-export type NormalizedPoint = [number, number];
+import { type NormalizedPoint } from "@/services/imageService";
 
 export type ImageDrawingCanvasProps = {
   onChangePoints?: (points: NormalizedPoint[]) => void;
@@ -144,42 +143,4 @@ export function ImageDrawingCanvas({
       {/* This component focuses on drawing and exposing normalized points. */}
     </View>
   );
-}
-
-export function denormalizePoints(
-  normalized: NormalizedPoint[],
-  target: { width: number; height: number }
-): number[][] {
-  return normalized.map(([nx, ny]) => [nx * target.width, ny * target.height]);
-}
-
-export function normalizePoints(
-  points: number[][],
-  source: { width: number; height: number }
-): NormalizedPoint[] {
-  return points.map(([x, y]) => [x / source.width, y / source.height]);
-}
-
-export function clearPointsSetter(setter: (pts: NormalizedPoint[]) => void) {
-  return () => setter([]);
-}
-
-// Downsample points to a maximum count while maintaining shape
-export function downsamplePoints(
-  points: NormalizedPoint[],
-  maxPoints: number = 10
-): NormalizedPoint[] {
-  if (points.length <= maxPoints) {
-    return points;
-  }
-
-  const result: NormalizedPoint[] = [];
-  const step = (points.length - 1) / (maxPoints - 1);
-
-  for (let i = 0; i < maxPoints; i++) {
-    const index = Math.round(i * step);
-    result.push(points[index]);
-  }
-
-  return result;
 }

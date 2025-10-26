@@ -17,11 +17,16 @@ import { Toast, ToastDescription, ToastTitle, useToast } from "@/components/ui/t
 import { VStack } from "@/components/ui/vstack";
 import { useSubmitProblem } from "@/hooks/useSubmitProblem";
 import { GRADES } from "@/models/problems";
-import { captureFromCamera, PickedImage, pickFromLibrary } from "@/services/imageService";
+import {
+  captureFromCamera,
+  convertNormalizedToPixels,
+  NormalizedPoint,
+  PickedImage,
+  pickFromLibrary,
+} from "@/services/imageService";
 import AreaPicker from "./AreaPicker";
 import CoordinateInput from "./CoordinateInput";
 import GradePicker from "./GradePicker";
-import { NormalizedPoint } from "./ImageDrawingCanvas";
 import { ImageDrawingModal } from "./ImageDrawingModal";
 
 type FieldErrors = {
@@ -142,6 +147,8 @@ export default function ContributeScreen() {
       return;
     }
 
+    const pixelPoints = convertNormalizedToPixels(normalizedPoints);
+
     submitMutation.mutate(
       {
         contact: {
@@ -155,7 +162,7 @@ export default function ContributeScreen() {
           ...(description.trim() && { description }),
           lat: parseFloat(latitude),
           lng: parseFloat(longitude),
-          line: normalizedPoints,
+          line: pixelPoints,
           ...(pickedImage?.base64 && { imageBase64: pickedImage.base64 }),
         },
       } as any,
