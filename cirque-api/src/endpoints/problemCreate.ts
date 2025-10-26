@@ -130,7 +130,7 @@ async function sendEmail(
       Full JSON: ${JSON.stringify(submission, null, 2)}
     `.trim();
 
-    const sentFrom = new Sender(env.CIRQUE_EMAIL, "Cirque App");
+    const sentFrom = new Sender("noreply@nathanhadley.com", "Cirque App");
     const recipients = [new Recipient(env.CIRQUE_EMAIL)];
 
     const emailParams = new EmailParams()
