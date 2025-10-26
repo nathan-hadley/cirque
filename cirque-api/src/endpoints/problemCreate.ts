@@ -107,29 +107,6 @@ async function sendEmail(
       apiKey: env.MAILERSEND_API_TOKEN,
     });
 
-    const emailContent = `
-      New Problem Submission
-      =====================
-
-      Contact Information:
-      - Name: ${submission.contact.name}
-      - Email: ${submission.contact.email}
-
-      Problem Details:
-      - Name: ${submission.problem.name}
-      - Grade: ${submission.problem.grade}
-      - Subarea: ${submission.problem.subarea}
-      - Color: ${submission.problem.color}
-      - Order: ${submission.problem.order}
-      - Coordinates: ${submission.problem.lat}, ${submission.problem.lng}
-      - Description: ${submission.problem.description || "N/A"}
-      - Topo filename: ${submission.problem.topoFilename || "N/A"}
-      - Line points: ${submission.problem.line.length} points
-      - Has image: ${submission.problem.imageBase64 ? "Yes" : "No"}
-
-      Full JSON: ${JSON.stringify(submission, null, 2)}
-    `.trim();
-
     const sentFrom = new Sender("noreply@nathanhadley.com", "Cirque App");
     const recipients = [new Recipient(env.CIRQUE_EMAIL)];
 
@@ -137,7 +114,7 @@ async function sendEmail(
       .setFrom(sentFrom)
       .setTo(recipients)
       .setSubject(`New problem submission: ${submission.problem.name}`)
-      .setText(emailContent)
+      .setText(emailContent(submission))
       .setReplyTo(
         new Recipient(submission.contact.email, submission.contact.name)
       );
@@ -150,3 +127,28 @@ async function sendEmail(
     return { success: false, error: "Failed to send email" };
   }
 }
+
+const emailContent = (submission: ProblemSubmission): string => {
+  return `
+New Problem Submission
+=====================
+
+Contact Information:
+- Name: ${submission.contact.name}
+- Email: ${submission.contact.email}
+
+Problem Details:
+- Name: ${submission.problem.name}
+- Grade: ${submission.problem.grade}
+- Subarea: ${submission.problem.subarea}
+- Color: ${submission.problem.color}
+- Order: ${submission.problem.order}
+- Coordinates: ${submission.problem.lat}, ${submission.problem.lng}
+- Description: ${submission.problem.description || "N/A"}
+- Topo filename: ${submission.problem.topoFilename || "N/A"}
+- Line points: ${submission.problem.line.length} points
+- Has image: ${submission.problem.imageBase64 ? "Yes" : "No"}
+
+Full JSON: ${JSON.stringify(submission.problem, null, 2)}
+`.trim();
+};
