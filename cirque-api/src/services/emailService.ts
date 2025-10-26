@@ -69,7 +69,10 @@ function createImageAttachment(
       .replace(/[^a-z0-9]/gi, "-")
       .toLowerCase()}.jpeg`;
 
-    return new Attachment(base64Data, filename, "image/jpeg");
+    const attachment = new Attachment(base64Data, filename);
+    attachment.disposition = "attachment";
+
+    return attachment;
   } catch (error) {
     console.error("Failed to create image attachment:", error);
     return null;
