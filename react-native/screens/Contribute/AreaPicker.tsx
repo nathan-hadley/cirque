@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { View } from "react-native";
 import { CircleIcon } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import BottomSearchBar from "@/components/BottomSearchBar";
 import {
   Actionsheet,
   ActionsheetBackdrop,
@@ -10,7 +10,6 @@ import {
   ActionsheetScrollView,
 } from "@/components/ui/actionsheet";
 import { Divider } from "@/components/ui/divider";
-import { Input, InputField } from "@/components/ui/input";
 import { Radio, RadioGroup, RadioIcon, RadioIndicator, RadioLabel } from "@/components/ui/radio";
 import { Text } from "@/components/ui/text";
 
@@ -71,16 +70,11 @@ function AreaPickerSheet({ isOpen, onClose, onSelect, currentArea }: AreaPickerS
             ))}
           </RadioGroup>
         </ActionsheetScrollView>
-        <View className="w-full border-t border-outline-200 px-6 py-4">
-          <Input size="lg">
-            <InputField
-              placeholder="Search areas..."
-              value={searchTerm}
-              onChangeText={setSearchTerm}
-              autoCapitalize="words"
-            />
-          </Input>
-        </View>
+        <BottomSearchBar
+          placeholder="Search areas..."
+          value={searchTerm}
+          onChangeText={setSearchTerm}
+        />
       </ActionsheetContent>
     </Actionsheet>
   );
