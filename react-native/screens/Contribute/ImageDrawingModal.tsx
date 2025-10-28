@@ -5,34 +5,36 @@ import { X } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
 import { HStack } from "@/components/ui/hstack";
-import { downsamplePoints, type NormalizedPoint } from "@/services/imageService";
+import {
+  convertNormalizedToPixels,
+  downsamplePoints,
+  type NormalizedPoint,
+} from "@/services/imageService";
 import { ImageDrawingCanvas } from "./ImageDrawingCanvas";
 
 type ImageDrawingModalProps = {
   isOpen: boolean;
   imageUri: string;
-  initialPoints: NormalizedPoint[];
   onClose: () => void;
-  onConfirm: (points: NormalizedPoint[]) => void;
+  onConfirm: (pixelPoints: number[][]) => void; // Returns downsampled pixel coordinates (640x480)
 };
 
 export function ImageDrawingModal({
   isOpen,
   imageUri,
-  initialPoints,
   onClose,
   onConfirm,
 }: ImageDrawingModalProps) {
   const insets = useSafeAreaInsets();
-  const [points, setPoints] = useState<NormalizedPoint[]>(initialPoints);
+  const [points, setPoints] = useState<NormalizedPoint[]>([]);
   const [resetKey, setResetKey] = useState(0);
 
-  // Sync points when modal opens with existing data
+  // Reset points when modal opens
   useEffect(() => {
     if (isOpen) {
-      setPoints(initialPoints);
+      setPoints([]);
     }
-  }, [isOpen, initialPoints]);
+  }, [isOpen]);
 
   const handleChangePoints = useCallback((pts: NormalizedPoint[]) => {
     queueMicrotask(() => {
@@ -46,16 +48,15 @@ export function ImageDrawingModal({
   }, []);
 
   const handleConfirm = useCallback(() => {
-    // Downsample to max 10 points for submission
+    // Downsample to max 10 points, then convert to pixel coordinates
     const downsampled = downsamplePoints(points, 10);
-    onConfirm(downsampled);
+    const pixelCoords = convertNormalizedToPixels(downsampled);
+    onConfirm(pixelCoords);
   }, [points, onConfirm]);
 
   const handleClose = useCallback(() => {
-    // Reset to initial points on cancel
-    setPoints(initialPoints);
     onClose();
-  }, [initialPoints, onClose]);
+  }, [onClose]);
 
   return (
     <Modal visible={isOpen} animationType="fade" transparent={true} onRequestClose={handleClose}>

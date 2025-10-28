@@ -1,35 +1,25 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
-import { Image } from "expo-image";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
-import { Camera, ChevronDown, CircleIcon, ImageIcon, MapPin, Pencil } from "lucide-react-native";
+import { ChevronDown, MapPin } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import Svg, { Circle, Path } from "react-native-svg";
 import BlurBackground from "@/components/BlurBackground";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
 import { Divider } from "@/components/ui/divider";
 import { Heading } from "@/components/ui/heading";
 import { HStack } from "@/components/ui/hstack";
 import { Input, InputField } from "@/components/ui/input";
-import { Radio, RadioGroup, RadioIcon, RadioIndicator, RadioLabel } from "@/components/ui/radio";
 import { Spinner } from "@/components/ui/spinner";
 import { Text } from "@/components/ui/text";
 import { Toast, ToastDescription, ToastTitle, useToast } from "@/components/ui/toast";
 import { VStack } from "@/components/ui/vstack";
 import { useSubmitProblem } from "@/hooks/useSubmitProblem";
 import { GRADES } from "@/models/problems";
-import {
-  captureFromCamera,
-  convertNormalizedToPixels,
-  NormalizedPoint,
-  PickedImage,
-  pickFromLibrary,
-} from "@/services/imageService";
 import AreaPicker from "./AreaPicker";
 import CoordinateInput from "./CoordinateInput";
 import GradePicker from "./GradePicker";
 import { ImageDrawingModal } from "./ImageDrawingModal";
-import TopoPicker, { getTopoUri } from "./TopoPicker";
+import TopoPicker, { TopoData } from "./TopoPicker";
 
 type FieldErrors = {
   contactName?: string;
@@ -63,12 +53,12 @@ export default function ContributeScreen() {
   const [submitAttempted, setSubmitAttempted] = useState(false);
 
   // Topo and image state
-  const [topoSource, setTopoSource] = useState<"existing" | "new">("new");
-  const [selectedTopoKey, setSelectedTopoKey] = useState<string | null>(null);
-  const [selectedTopoUri, setSelectedTopoUri] = useState<string | null>(null);
-  const [isTopoPickerOpen, setIsTopoPickerOpen] = useState(false);
-  const [pickedImage, setPickedImage] = useState<PickedImage | null>(null);
-  const [normalizedPoints, setNormalizedPoints] = useState<NormalizedPoint[]>([]);
+  const [topoData, setTopoData] = useState<TopoData>({
+    selectedTopoKey: null,
+    selectedTopoUri: null,
+    pickedImage: null,
+    linePixels: [],
+  });
   const [isDrawingModalOpen, setIsDrawingModalOpen] = useState(false);
 
   const errors = validateForm(contactName, contactEmail, name, grade, subarea, latitude, longitude);
@@ -85,111 +75,18 @@ export default function ContributeScreen() {
     markTouched("grade");
   };
 
-  const handleTopoSelect = async (topoKey: string | null, problemName: string) => {
-    setIsTopoPickerOpen(false);
-
-    // Check if problem has a topo
-    if (!topoKey) {
-      toast.show({
-        placement: "top",
-        render: ({ id }) => (
-          <Toast nativeID={`toast-${id}`} action="warning">
-            <ToastTitle>No Topo Available</ToastTitle>
-            <ToastDescription>
-              "{problemName}" doesn't have a topo image yet. Please upload a new photo instead.
-            </ToastDescription>
-          </Toast>
-        ),
-      });
-      return;
-    }
-
-    setSelectedTopoKey(topoKey);
-
-    // Load the topo URI
-    try {
-      const uri = await getTopoUri(topoKey);
-      if (uri) {
-        setSelectedTopoUri(uri);
-        setNormalizedPoints([]);
-      }
-    } catch (e) {
-      toast.show({
-        placement: "top",
-        render: ({ id }) => (
-          <Toast nativeID={`toast-${id}`} action="error">
-            <ToastTitle>Error</ToastTitle>
-            <ToastDescription>Failed to load topo image.</ToastDescription>
-          </Toast>
-        ),
-      });
-    }
-  };
-
-  const handlePickImage = useCallback(async () => {
-    try {
-      const img = await pickFromLibrary();
-      if (img) {
-        setPickedImage(img);
-        setNormalizedPoints([]);
-      }
-    } catch (e) {
-      toast.show({
-        placement: "top",
-        render: ({ id }) => (
-          <Toast nativeID={`toast-${id}`} action="error">
-            <ToastTitle>Error</ToastTitle>
-            <ToastDescription>Failed to pick image. Please try again.</ToastDescription>
-          </Toast>
-        ),
-      });
-    }
-  }, [toast]);
-
-  const handleCaptureImage = useCallback(async () => {
-    try {
-      const img = await captureFromCamera();
-      if (img) {
-        setPickedImage(img);
-        setNormalizedPoints([]);
-      }
-    } catch (e) {
-      toast.show({
-        placement: "top",
-        render: ({ id }) => (
-          <Toast nativeID={`toast-${id}`} action="error">
-            <ToastTitle>Error</ToastTitle>
-            <ToastDescription>Failed to capture image. Please try again.</ToastDescription>
-          </Toast>
-        ),
-      });
-    }
-  }, [toast]);
-
-  const handleOpenDrawingModal = useCallback(() => {
+  const handleOpenDrawingModal = () => {
     setIsDrawingModalOpen(true);
-  }, []);
-
-  const handleTopoSourceChange = (value: string) => {
-    setTopoSource(value as "existing" | "new");
-    // Clear both when switching
-    setSelectedTopoKey(null);
-    setSelectedTopoUri(null);
-    setPickedImage(null);
-    setNormalizedPoints([]);
   };
 
-  // Get the current image URI for drawing (either from existing topo or picked image)
-  const currentImageUri = topoSource === "existing" ? selectedTopoUri : pickedImage?.uri;
-
-  const handleCloseDrawingModal = useCallback(() => {
+  const handleCloseDrawingModal = () => {
     setIsDrawingModalOpen(false);
-  }, []);
+  };
 
-  const handleConfirmDrawing = useCallback((pts: NormalizedPoint[]) => {
-    setNormalizedPoints(pts);
+  const handleConfirmDrawing = (pixelPoints: number[][]) => {
+    setTopoData((prev: TopoData) => ({ ...prev, linePixels: pixelPoints }));
     setIsDrawingModalOpen(false);
-  }, []);
+  };
 
   const handleSubmit = async () => {
     setSubmitAttempted(true);
@@ -206,7 +103,13 @@ export default function ContributeScreen() {
       return;
     }
 
-    const pixelPoints = convertNormalizedToPixels(normalizedPoints);
+    // Generate topo filename for new photos: area-problemname
+    let topoFilename = topoData.selectedTopoKey;
+    if (!topoFilename && topoData.pickedImage?.base64) {
+      const slugifiedArea = subarea.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+      const slugifiedName = name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+      topoFilename = `${slugifiedArea}-${slugifiedName}`;
+    }
 
     submitMutation.mutate(
       {
@@ -221,11 +124,9 @@ export default function ContributeScreen() {
           ...(description.trim() && { description }),
           lat: parseFloat(latitude),
           lng: parseFloat(longitude),
-          line: pixelPoints,
-          // Include topoFilename if using existing topo
-          ...(topoSource === "existing" && selectedTopoKey && { topoFilename: selectedTopoKey }),
-          // Include imageBase64 if using new photo
-          ...(topoSource === "new" && pickedImage?.base64 && { imageBase64: pickedImage.base64 }),
+          line: topoData.linePixels,
+          ...(topoFilename && { topo: topoFilename }),
+          ...(topoData.pickedImage?.base64 && { imageBase64: topoData.pickedImage.base64 }),
         },
       } as any,
       {
@@ -250,11 +151,12 @@ export default function ContributeScreen() {
           setDescription("");
           setLatitude("");
           setLongitude("");
-          setTopoSource("new");
-          setSelectedTopoKey(null);
-          setSelectedTopoUri(null);
-          setPickedImage(null);
-          setNormalizedPoints([]);
+          setTopoData({
+            selectedTopoKey: null,
+            selectedTopoUri: null,
+            pickedImage: null,
+            linePixels: [],
+          });
           setTouched(new Set());
           setSubmitAttempted(false);
         },
@@ -409,75 +311,11 @@ export default function ContributeScreen() {
 
             <Divider />
 
-            <VStack space="lg" className="px-6">
-              <Text className="text-typography-700 font-semibold">
-                Topo Image & Line (optional)
-              </Text>
-              <Text className="text-typography-600">
-                Add a photo and draw the line to help others find this problem.
-              </Text>
-
-              <RadioGroup value={topoSource} onChange={handleTopoSourceChange}>
-                <VStack space="sm">
-                  <Radio value="existing">
-                    <RadioIndicator>
-                      <RadioIcon as={CircleIcon} />
-                    </RadioIndicator>
-                    <RadioLabel>Use existing problem's topo</RadioLabel>
-                  </Radio>
-                  <Radio value="new">
-                    <RadioIndicator>
-                      <RadioIcon as={CircleIcon} />
-                    </RadioIndicator>
-                    <RadioLabel>Upload new photo</RadioLabel>
-                  </Radio>
-                </VStack>
-              </RadioGroup>
-
-              {topoSource === "existing" ? (
-                <VStack space="md">
-                  <Button onPress={() => setIsTopoPickerOpen(true)} variant="outline">
-                    <ButtonIcon as={ImageIcon} />
-                    <ButtonText>{selectedTopoKey ? "Change Problem" : "Select Problem"}</ButtonText>
-                  </Button>
-                  {selectedTopoUri && (
-                    <VStack space="md">
-                      <ImagePreview imageUri={selectedTopoUri} points={normalizedPoints} />
-                      <Button onPress={handleOpenDrawingModal} action="primary" variant="outline">
-                        <ButtonIcon as={Pencil} />
-                        <ButtonText>
-                          {normalizedPoints.length > 0 ? "Edit Line" : "Draw Line"}
-                        </ButtonText>
-                      </Button>
-                    </VStack>
-                  )}
-                </VStack>
-              ) : (
-                <VStack space="md">
-                  <HStack space="md">
-                    <Button onPress={handlePickImage} variant="outline" className="flex-1">
-                      <ButtonIcon as={ImageIcon} />
-                      <ButtonText>Select Photo</ButtonText>
-                    </Button>
-                    <Button onPress={handleCaptureImage} variant="outline" className="flex-1">
-                      <ButtonIcon as={Camera} />
-                      <ButtonText>Camera</ButtonText>
-                    </Button>
-                  </HStack>
-                  {pickedImage && (
-                    <VStack space="md">
-                      <ImagePreview imageUri={pickedImage.uri} points={normalizedPoints} />
-                      <Button onPress={handleOpenDrawingModal} action="primary" variant="outline">
-                        <ButtonIcon as={Pencil} />
-                        <ButtonText>
-                          {normalizedPoints.length > 0 ? "Edit Line" : "Draw Line"}
-                        </ButtonText>
-                      </Button>
-                    </VStack>
-                  )}
-                </VStack>
-              )}
-            </VStack>
+            <TopoPicker
+              value={topoData}
+              onChange={setTopoData}
+              onOpenDrawingModal={handleOpenDrawingModal}
+            />
 
             <Divider />
 
@@ -505,93 +343,14 @@ export default function ContributeScreen() {
         onSelect={setSubarea}
         currentArea={subarea}
       />
-      <TopoPicker
-        isOpen={isTopoPickerOpen}
-        onClose={() => setIsTopoPickerOpen(false)}
-        onSelect={handleTopoSelect}
-        currentTopo={selectedTopoKey || undefined}
-      />
-      {currentImageUri && (
+      {(topoData.selectedTopoUri || topoData.pickedImage?.uri) && (
         <ImageDrawingModal
           isOpen={isDrawingModalOpen}
-          imageUri={currentImageUri}
-          initialPoints={normalizedPoints}
+          imageUri={topoData.selectedTopoUri || topoData.pickedImage?.uri || ""}
           onClose={handleCloseDrawingModal}
           onConfirm={handleConfirmDrawing}
         />
       )}
-    </View>
-  );
-}
-
-// Component to preview the image with drawn line (non-editable)
-function ImagePreview({ imageUri, points }: { imageUri: string; points: NormalizedPoint[] }) {
-  const [layout, setLayout] = React.useState<{ width: number; height: number } | null>(null);
-
-  const handleLayout = React.useCallback((e: any) => {
-    const { width } = e.nativeEvent.layout;
-    const height = Math.round((width * 3) / 4); // 4:3 aspect ratio
-    setLayout({ width, height });
-  }, []);
-
-  // Generate path from normalized points
-  const getScreenPoints = () => {
-    if (!layout || points.length === 0) return [];
-    return points.map(([nx, ny]) => [nx * layout.width, ny * layout.height]);
-  };
-
-  const screenPoints = getScreenPoints();
-
-  let pathData = "";
-  if (screenPoints.length > 0) {
-    pathData = `M ${screenPoints[0][0]} ${screenPoints[0][1]}`;
-    for (let i = 1; i < screenPoints.length; i++) {
-      const prev = screenPoints[i - 1];
-      const curr = screenPoints[i];
-      const midX = (prev[0] + curr[0]) / 2;
-      const midY = (prev[1] + curr[1]) / 2;
-      pathData += ` Q ${prev[0]} ${prev[1]} ${midX} ${midY}`;
-    }
-    if (screenPoints.length > 1) {
-      const last = screenPoints[screenPoints.length - 1];
-      pathData += ` L ${last[0]} ${last[1]}`;
-    }
-  }
-
-  const startPoint = screenPoints.length > 0 ? screenPoints[0] : null;
-
-  return (
-    <View onLayout={handleLayout}>
-      <View
-        className="w-full rounded-xl overflow-hidden bg-typography-300"
-        style={{ height: layout?.height }}
-      >
-        <Image
-          source={{ uri: imageUri }}
-          style={{ width: "100%", height: "100%" }}
-          contentFit="cover"
-        />
-        {layout && points.length > 0 && (
-          <Svg
-            width={layout.width}
-            height={layout.height}
-            style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0 }}
-          >
-            <Path
-              d={pathData}
-              stroke="#ff3333"
-              strokeWidth={3}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              fill="none"
-              opacity={0.9}
-            />
-            {startPoint && (
-              <Circle cx={startPoint[0]} cy={startPoint[1]} r={6} fill="#ff3333" opacity={0.9} />
-            )}
-          </Svg>
-        )}
-      </View>
     </View>
   );
 }

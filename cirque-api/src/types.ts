@@ -29,7 +29,7 @@ export const ProblemSubmissionSchema = z.object({
     lat: Num({ example: 47.54520973656 }),
     lng: Num({ example: -120.73245630919 }),
     line: z.array(z.array(Num(), Num())),
-    topoFilename: Str({ required: false }),
+    topo: Str({ required: false, example: "forestland-physical" }),
     imageBase64: Str({ required: false }),
   }),
 });

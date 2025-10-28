@@ -97,11 +97,10 @@ Problem Details:
 - Name: ${submission.problem.name}
 - Grade: ${submission.problem.grade}
 - Subarea: ${submission.problem.subarea}
-- Color: ${submission.problem.color}
-- Order: ${submission.problem.order || "N/A"}
+- Color: ${submission.problem.color || "N/A"}
 - Coordinates: ${submission.problem.lat}, ${submission.problem.lng}
 - Description: ${submission.problem.description || "N/A"}
-- Topo filename: ${submission.problem.topoFilename || "N/A"}
+- Topo: ${submission.problem.topo || "N/A"}
 - Line points: ${submission.problem.line.length} points
 - Image attached: ${
     submission.problem.imageBase64 ? "Yes (see attachment)" : "No"
@@ -122,13 +121,8 @@ function buildGeoJsonFeature(submission: ProblemSubmission) {
       name: submission.problem.name,
       grade: submission.problem.grade,
       subarea: submission.problem.subarea,
-      color: submission.problem.color || "black",
-      ...(submission.problem.order !== undefined && {
-        order: String(submission.problem.order),
-      }),
-      ...(submission.problem.topoFilename && {
-        topo: submission.problem.topoFilename,
-      }),
+      ...(submission.problem.color && { color: submission.problem.color }),
+      ...(submission.problem.topo && { topo: submission.problem.topo }),
       line: JSON.stringify(submission.problem.line),
       ...(submission.problem.description && {
         description: submission.problem.description,

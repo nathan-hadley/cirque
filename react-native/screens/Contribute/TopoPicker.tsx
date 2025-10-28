@@ -1,167 +1,235 @@
-import React, { useCallback, useState } from "react";
-import { FlatList, Image, Pressable, View } from "react-native";
-import type { Feature, GeoJsonProperties, Point } from "geojson";
-import { AlertCircle } from "lucide-react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { problemsData } from "@/assets/problems";
-import { getTopoImage } from "@/assets/topo-image";
-import BottomSearchBar from "@/components/BottomSearchBar";
-import {
-  Actionsheet,
-  ActionsheetBackdrop,
-  ActionsheetContent,
-  ActionsheetDragIndicator,
-  ActionsheetDragIndicatorWrapper,
-} from "@/components/ui/actionsheet";
-import { Heading } from "@/components/ui/heading";
+import React, { useState } from "react";
+import { View } from "react-native";
+import { Camera, CircleIcon, ImageIcon, Pencil } from "lucide-react-native";
+import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
 import { HStack } from "@/components/ui/hstack";
-import { Icon } from "@/components/ui/icon";
+import { Radio, RadioGroup, RadioIcon, RadioIndicator, RadioLabel } from "@/components/ui/radio";
 import { Text } from "@/components/ui/text";
+import { Toast, ToastDescription, ToastTitle, useToast } from "@/components/ui/toast";
 import { VStack } from "@/components/ui/vstack";
+import { Problem } from "@/models/problems";
+import { Topo } from "@/screens/MapScreen/ProblemSheet/Topo";
+import { captureFromCamera, PickedImage, pickFromLibrary } from "@/services/imageService";
+import ProblemPicker, { getTopoUri } from "./ProblemPicker";
 
-type ProblemFeature = Feature<Point, GeoJsonProperties>;
-
-/**
- * Search problems by name, grade, or area
- */
-function searchProblems(query: string): ProblemFeature[] {
-  if (!query.trim()) return problemsData.features;
-
-  const lowerQuery = query.toLowerCase();
-  return problemsData.features.filter(feature => {
-    const searchText =
-      `${feature.properties?.name} ${feature.properties?.grade} ${feature.properties?.subarea}`.toLowerCase();
-    return searchText.includes(lowerQuery);
-  });
-}
-
-/**
- * Check if a problem has a topo image
- */
-function hasTopo(feature: ProblemFeature): boolean {
-  const topo = feature.properties?.topo;
-  return !!(topo && typeof topo === "string" && topo.length > 0);
-}
-
-/**
- * Get URI from topo image for use with Image component
- */
-export async function getTopoUri(topoKey: string): Promise<string | null> {
-  const imageSource = getTopoImage(topoKey);
-  if (!imageSource || typeof imageSource === "number") {
-    return Image.resolveAssetSource(imageSource as number).uri;
-  }
-  return null;
-}
+export type TopoData = {
+  selectedTopoKey: string | null;
+  selectedTopoUri: string | null;
+  pickedImage: PickedImage | null;
+  linePixels: number[][]; // Pixel coordinates (already downsampled to max 10 points)
+};
 
 type TopoPickerProps = {
-  isOpen: boolean;
-  onClose: () => void;
-  onSelect: (topoKey: string | null, problemName: string) => void;
-  currentTopo?: string;
+  value: TopoData;
+  onChange: (data: TopoData) => void;
+  onOpenDrawingModal: () => void;
 };
 
-export default function TopoPicker({ isOpen, onClose, onSelect, currentTopo }: TopoPickerProps) {
-  const insets = useSafeAreaInsets();
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const filteredProblems = searchProblems(searchQuery);
-
-  const handleSelect = (feature: ProblemFeature) => {
-    const topoKey = feature.properties?.topo as string | undefined;
-    const problemName = feature.properties?.name as string;
-
-    onSelect(topoKey || null, problemName);
-    onClose();
-    setSearchQuery("");
+// Helper to create a mock Problem for the Topo component
+function createMockProblem(imageUri: string, linePixels: number[][]): Problem {
+  return {
+    id: "preview",
+    name: "Preview",
+    grade: "V0",
+    subarea: "",
+    colorStr: "red",
+    color: "#ff3333",
+    line: linePixels,
+    topo: imageUri,
   };
-
-  const handleClose = () => {
-    onClose();
-    setSearchQuery("");
-  };
-
-  return (
-    <Actionsheet isOpen={isOpen} onClose={handleClose}>
-      <ActionsheetBackdrop />
-      <ActionsheetContent className="max-h-[85%]" style={{ paddingBottom: insets.bottom }}>
-        <ActionsheetDragIndicatorWrapper>
-          <ActionsheetDragIndicator />
-        </ActionsheetDragIndicatorWrapper>
-
-        <VStack className="w-full px-4 pt-4" space="md">
-          <Heading size="lg" className="text-typography-900">
-            Use Existing Topo
-          </Heading>
-          <Text className="text-typography-600 -mt-2">
-            Search for an existing problem to use its topo image
-          </Text>
-
-          <FlatList
-            data={filteredProblems}
-            keyExtractor={item => `${item.properties?.name}-${item.properties?.subarea}`}
-            renderItem={({ item }) => (
-              <ProblemItem
-                problem={item}
-                isSelected={item.properties?.topo === currentTopo}
-                onSelect={handleSelect}
-              />
-            )}
-            ItemSeparatorComponent={() => <View className="h-2" />}
-            ListEmptyComponent={
-              <View className="py-8">
-                <Text className="text-center text-typography-500">
-                  No problems found matching "{searchQuery}"
-                </Text>
-              </View>
-            }
-            showsVerticalScrollIndicator={false}
-            style={{ maxHeight: 400 }}
-          />
-        </VStack>
-        <BottomSearchBar
-          placeholder="Search problems..."
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-        />
-      </ActionsheetContent>
-    </Actionsheet>
-  );
 }
 
-type ProblemItemProps = {
-  problem: ProblemFeature;
-  isSelected: boolean;
-  onSelect: (feature: ProblemFeature) => void;
-};
+export default function TopoPicker({ value, onChange, onOpenDrawingModal }: TopoPickerProps) {
+  const toast = useToast();
+  const [topoSource, setTopoSource] = useState<"existing" | "new">("new");
+  const [isProblemPickerOpen, setIsProblemPickerOpen] = useState(false);
 
-function ProblemItem({ problem, isSelected, onSelect }: ProblemItemProps) {
-  const handlePress = useCallback(() => {
-    onSelect(problem);
-  }, [problem, onSelect]);
+  const handleTopoSourceChange = (newSource: string) => {
+    setTopoSource(newSource as "existing" | "new");
+    // Clear all when switching
+    onChange({
+      selectedTopoKey: null,
+      selectedTopoUri: null,
+      pickedImage: null,
+      linePixels: [],
+    });
+  };
 
-  const hasTopoImage = hasTopo(problem);
+  const handleProblemSelect = async (topoKey: string | null, problemName: string) => {
+    setIsProblemPickerOpen(false);
+
+    // Check if problem has a topo
+    if (!topoKey) {
+      toast.show({
+        placement: "top",
+        render: ({ id }) => (
+          <Toast nativeID={`toast-${id}`} action="warning">
+            <ToastTitle>No Topo Available</ToastTitle>
+            <ToastDescription>
+              "{problemName}" doesn't have a topo image yet. Please upload a new photo instead.
+            </ToastDescription>
+          </Toast>
+        ),
+      });
+      return;
+    }
+
+    // Load the topo URI
+    try {
+      const uri = await getTopoUri(topoKey);
+      if (uri) {
+        onChange({
+          selectedTopoKey: topoKey,
+          selectedTopoUri: uri,
+          pickedImage: null,
+          linePixels: [],
+        });
+      }
+    } catch (e) {
+      toast.show({
+        placement: "top",
+        render: ({ id }) => (
+          <Toast nativeID={`toast-${id}`} action="error">
+            <ToastTitle>Error</ToastTitle>
+            <ToastDescription>Failed to load topo image.</ToastDescription>
+          </Toast>
+        ),
+      });
+    }
+  };
+
+  const handlePickImage = async () => {
+    try {
+      const img = await pickFromLibrary();
+      if (img) {
+        onChange({
+          selectedTopoKey: null,
+          selectedTopoUri: null,
+          pickedImage: img,
+          linePixels: [],
+        });
+      }
+    } catch (e) {
+      toast.show({
+        placement: "top",
+        render: ({ id }) => (
+          <Toast nativeID={`toast-${id}`} action="error">
+            <ToastTitle>Error</ToastTitle>
+            <ToastDescription>Failed to pick image. Please try again.</ToastDescription>
+          </Toast>
+        ),
+      });
+    }
+  };
+
+  const handleCaptureImage = async () => {
+    try {
+      const img = await captureFromCamera();
+      if (img) {
+        onChange({
+          selectedTopoKey: null,
+          selectedTopoUri: null,
+          pickedImage: img,
+          linePixels: [],
+        });
+      }
+    } catch (e) {
+      toast.show({
+        placement: "top",
+        render: ({ id }) => (
+          <Toast nativeID={`toast-${id}`} action="error">
+            <ToastTitle>Error</ToastTitle>
+            <ToastDescription>Failed to capture image. Please try again.</ToastDescription>
+          </Toast>
+        ),
+      });
+    }
+  };
 
   return (
-    <Pressable
-      onPress={handlePress}
-      className={`px-4 py-3 rounded-lg border ${
-        isSelected ? "bg-primary-100 border-primary-500" : "bg-background-0 border-outline-200"
-      }`}
-    >
-      <HStack className="items-center justify-between">
-        <VStack className="flex-1">
-          <Text
-            className={`font-semibold ${isSelected ? "text-primary-700" : "text-typography-900"}`}
-          >
-            {problem.properties?.name}
-          </Text>
-          <Text className="text-sm text-typography-600">
-            {problem.properties?.grade} • {problem.properties?.subarea}
-          </Text>
-        </VStack>
-        {!hasTopoImage && <Icon as={AlertCircle} size="sm" className="text-warning-500 ml-2" />}
-      </HStack>
-    </Pressable>
+    <>
+      <VStack space="lg" className="px-6">
+        <Text className="text-typography-700 font-semibold">Topo Image & Line (optional)</Text>
+        <Text className="text-typography-600">
+          Add a photo and draw the line to help others find this problem.
+        </Text>
+
+        <RadioGroup value={topoSource} onChange={handleTopoSourceChange}>
+          <VStack space="sm">
+            <Radio value="existing">
+              <RadioIndicator>
+                <RadioIcon as={CircleIcon} />
+              </RadioIndicator>
+              <RadioLabel>Use existing problem's topo</RadioLabel>
+            </Radio>
+            <Radio value="new">
+              <RadioIndicator>
+                <RadioIcon as={CircleIcon} />
+              </RadioIndicator>
+              <RadioLabel>Upload new photo</RadioLabel>
+            </Radio>
+          </VStack>
+        </RadioGroup>
+
+        {topoSource === "existing" ? (
+          <VStack space="md">
+            <Button onPress={() => setIsProblemPickerOpen(true)} variant="outline">
+              <ButtonIcon as={ImageIcon} />
+              <ButtonText>{value.selectedTopoKey ? "Change Problem" : "Select Problem"}</ButtonText>
+            </Button>
+            {value.selectedTopoUri && (
+              <VStack space="md">
+                <View>
+                  <Topo
+                    problem={createMockProblem(value.selectedTopoUri, value.linePixels)}
+                    imageUri={value.selectedTopoUri}
+                    hideCircuitButtons={true}
+                  />
+                </View>
+                <Button onPress={onOpenDrawingModal} action="primary" variant="outline">
+                  <ButtonIcon as={Pencil} />
+                  <ButtonText>{value.linePixels.length > 0 ? "Edit Line" : "Draw Line"}</ButtonText>
+                </Button>
+              </VStack>
+            )}
+          </VStack>
+        ) : (
+          <VStack space="md">
+            <HStack space="md">
+              <Button onPress={handlePickImage} variant="outline" className="flex-1">
+                <ButtonIcon as={ImageIcon} />
+                <ButtonText>Select Photo</ButtonText>
+              </Button>
+              <Button onPress={handleCaptureImage} variant="outline" className="flex-1">
+                <ButtonIcon as={Camera} />
+                <ButtonText>Camera</ButtonText>
+              </Button>
+            </HStack>
+            {value.pickedImage && (
+              <VStack space="md">
+                <View>
+                  <Topo
+                    problem={createMockProblem(value.pickedImage.uri, value.linePixels)}
+                    imageUri={value.pickedImage.uri}
+                    hideCircuitButtons={true}
+                  />
+                </View>
+                <Button onPress={onOpenDrawingModal} action="primary" variant="outline">
+                  <ButtonIcon as={Pencil} />
+                  <ButtonText>{value.linePixels.length > 0 ? "Edit Line" : "Draw Line"}</ButtonText>
+                </Button>
+              </VStack>
+            )}
+          </VStack>
+        )}
+      </VStack>
+
+      <ProblemPicker
+        isOpen={isProblemPickerOpen}
+        onClose={() => setIsProblemPickerOpen(false)}
+        onSelect={handleProblemSelect}
+        currentTopo={value.selectedTopoKey || undefined}
+      />
+    </>
   );
 }

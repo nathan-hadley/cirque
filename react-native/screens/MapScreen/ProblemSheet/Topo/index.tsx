@@ -12,6 +12,8 @@ import { TopoLine } from "./TopoLine";
 
 type TopoProps = {
   problem: Problem;
+  imageUri?: string; // Optional: use URI instead of asset lookup
+  hideCircuitButtons?: boolean; // Optional: hide circuit navigation
 };
 
 type ImageLayout = {
@@ -19,12 +21,12 @@ type ImageLayout = {
   height: number;
 } | null;
 
-export function Topo({ problem }: TopoProps) {
+export function Topo({ problem, imageUri, hideCircuitButtons = false }: TopoProps) {
   const [imageLayout, setImageLayout] = useState<ImageLayout>(null);
   const [originalImageSize, setOriginalImageSize] = useState<ImageLayout>(null);
   const [imageError, setImageError] = useState<boolean>(false);
 
-  const topoImage = getTopoImage(problem.topo);
+  const topoImage = imageUri ? { uri: imageUri } : getTopoImage(problem.topo);
 
   function handleImageLoad(event: ImageLoadEventData) {
     const { width, height } = event.source;
@@ -79,7 +81,7 @@ export function Topo({ problem }: TopoProps) {
         </Center>
       )}
 
-      {problem.order !== undefined && (
+      {!hideCircuitButtons && problem.order !== undefined && (
         <View className="absolute inset-0 justify-center">
           <CircuitNavButtons />
         </View>
