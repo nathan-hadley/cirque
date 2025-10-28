@@ -4,7 +4,6 @@ import { FlashList } from "@shopify/flash-list";
 import type { Feature, GeoJsonProperties, Point } from "geojson";
 import { AlertCircle } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { problemsData } from "@/assets/problems";
 import { getTopoImage } from "@/assets/topo-image";
 import BottomSearchBar from "@/components/BottomSearchBar";
 import {
@@ -19,22 +18,9 @@ import { HStack } from "@/components/ui/hstack";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
+import { useSearchProblems } from "@/hooks/useProblems";
 
 type ProblemFeature = Feature<Point, GeoJsonProperties>;
-
-/**
- * Search problems by name, grade, or area
- */
-function searchProblems(query: string): ProblemFeature[] {
-  if (!query.trim()) return problemsData.features;
-
-  const lowerQuery = query.toLowerCase();
-  return problemsData.features.filter(feature => {
-    const searchText =
-      `${feature.properties?.name} ${feature.properties?.grade} ${feature.properties?.subarea}`.toLowerCase();
-    return searchText.includes(lowerQuery);
-  });
-}
 
 /**
  * Check if a problem has a topo image
@@ -70,8 +56,7 @@ export default function ProblemPicker({
 }: ProblemPickerProps) {
   const insets = useSafeAreaInsets();
   const [searchQuery, setSearchQuery] = useState("");
-
-  const filteredProblems = searchProblems(searchQuery);
+  const filteredProblems = useSearchProblems(searchQuery);
 
   const handleSelect = (feature: ProblemFeature) => {
     const topoKey = feature.properties?.topo as string | undefined;
@@ -88,24 +73,25 @@ export default function ProblemPicker({
   };
 
   return (
-    <Actionsheet isOpen={isOpen} onClose={handleClose}>
+    <Actionsheet isOpen={isOpen} onClose={handleClose} snapPoints={[80]}>
       <ActionsheetBackdrop />
-      <ActionsheetContent className="max-h-[85%]" style={{ paddingBottom: insets.bottom }}>
+      <ActionsheetContent style={{ paddingBottom: insets.bottom }}>
         <ActionsheetDragIndicatorWrapper>
           <ActionsheetDragIndicator />
         </ActionsheetDragIndicatorWrapper>
 
-        <VStack className="w-full px-4 pt-4" space="md">
+        <VStack className="w-full px-4 pt-4 pb-2" space="md">
           <Heading size="lg" className="text-typography-900">
             Use Existing Topo
           </Heading>
           <Text className="text-typography-600 -mt-2">
             Search for an existing problem to use its topo image
           </Text>
+        </VStack>
 
+        <View className="flex-1 px-4 w-full">
           <FlashList
             data={filteredProblems}
-            keyExtractor={item => `${item.properties?.name}-${item.properties?.subarea}`}
             renderItem={({ item }) => (
               <ProblemItem
                 problem={item}
@@ -121,10 +107,10 @@ export default function ProblemPicker({
                 </Text>
               </View>
             }
-            showsVerticalScrollIndicator={false}
-            style={{ maxHeight: 400 }}
+            contentContainerStyle={{ paddingBottom: 16 }}
           />
-        </VStack>
+        </View>
+
         <BottomSearchBar
           placeholder="Search problems..."
           value={searchQuery}
