@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { View } from "react-native";
 import { Camera, CircleIcon, ImageIcon, Pencil } from "lucide-react-native";
+import { Topo } from "@/components/Topo";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
 import { HStack } from "@/components/ui/hstack";
 import { Radio, RadioGroup, RadioIcon, RadioIndicator, RadioLabel } from "@/components/ui/radio";
 import { Text } from "@/components/ui/text";
 import { Toast, ToastDescription, ToastTitle, useToast } from "@/components/ui/toast";
 import { VStack } from "@/components/ui/vstack";
-import { Problem } from "@/models/problems";
-import { Topo } from "@/screens/MapScreen/ProblemSheet/Topo";
 import { captureFromCamera, PickedImage, pickFromLibrary } from "@/services/imageService";
 import ProblemPicker, { getTopoUri } from "./ProblemPicker";
 
@@ -24,20 +23,6 @@ type TopoPickerProps = {
   onChange: (data: TopoData) => void;
   onOpenDrawingModal: () => void;
 };
-
-// Helper to create a mock Problem for the Topo component
-function createMockProblem(imageUri: string, linePixels: number[][]): Problem {
-  return {
-    id: "preview",
-    name: "Preview",
-    grade: "V0",
-    subarea: "",
-    colorStr: "red",
-    color: "#ff3333",
-    line: linePixels,
-    topo: imageUri,
-  };
-}
 
 export default function TopoPicker({ value, onChange, onOpenDrawingModal }: TopoPickerProps) {
   const toast = useToast();
@@ -146,6 +131,9 @@ export default function TopoPicker({ value, onChange, onOpenDrawingModal }: Topo
     }
   };
 
+  const currentImageUri =
+    topoSource === "existing" ? value.selectedTopoUri : value.pickedImage?.uri;
+
   return (
     <>
       <VStack space="lg" className="px-6">
@@ -172,54 +160,32 @@ export default function TopoPicker({ value, onChange, onOpenDrawingModal }: Topo
         </RadioGroup>
 
         {topoSource === "existing" ? (
-          <VStack space="md">
-            <Button onPress={() => setIsProblemPickerOpen(true)} variant="outline">
-              <ButtonIcon as={ImageIcon} />
-              <ButtonText>{value.selectedTopoKey ? "Change Problem" : "Select Problem"}</ButtonText>
-            </Button>
-            {value.selectedTopoUri && (
-              <VStack space="md">
-                <View>
-                  <Topo
-                    problem={createMockProblem(value.selectedTopoUri, value.linePixels)}
-                    imageUri={value.selectedTopoUri}
-                    hideCircuitButtons={true}
-                  />
-                </View>
-                <Button onPress={onOpenDrawingModal} action="primary" variant="outline">
-                  <ButtonIcon as={Pencil} />
-                  <ButtonText>{value.linePixels.length > 0 ? "Edit Line" : "Draw Line"}</ButtonText>
-                </Button>
-              </VStack>
-            )}
-          </VStack>
+          <Button onPress={() => setIsProblemPickerOpen(true)} variant="outline">
+            <ButtonIcon as={ImageIcon} />
+            <ButtonText>{value.selectedTopoKey ? "Change Problem" : "Select Problem"}</ButtonText>
+          </Button>
         ) : (
+          <HStack space="md">
+            <Button onPress={handlePickImage} variant="outline" className="flex-1">
+              <ButtonIcon as={ImageIcon} />
+              <ButtonText>Select Photo</ButtonText>
+            </Button>
+            <Button onPress={handleCaptureImage} variant="outline" className="flex-1">
+              <ButtonIcon as={Camera} />
+              <ButtonText>Camera</ButtonText>
+            </Button>
+          </HStack>
+        )}
+
+        {currentImageUri && (
           <VStack space="md">
-            <HStack space="md">
-              <Button onPress={handlePickImage} variant="outline" className="flex-1">
-                <ButtonIcon as={ImageIcon} />
-                <ButtonText>Select Photo</ButtonText>
-              </Button>
-              <Button onPress={handleCaptureImage} variant="outline" className="flex-1">
-                <ButtonIcon as={Camera} />
-                <ButtonText>Camera</ButtonText>
-              </Button>
-            </HStack>
-            {value.pickedImage && (
-              <VStack space="md">
-                <View>
-                  <Topo
-                    problem={createMockProblem(value.pickedImage.uri, value.linePixels)}
-                    imageUri={value.pickedImage.uri}
-                    hideCircuitButtons={true}
-                  />
-                </View>
-                <Button onPress={onOpenDrawingModal} action="primary" variant="outline">
-                  <ButtonIcon as={Pencil} />
-                  <ButtonText>{value.linePixels.length > 0 ? "Edit Line" : "Draw Line"}</ButtonText>
-                </Button>
-              </VStack>
-            )}
+            <View className="w-full aspect-[4/3] rounded-xl overflow-hidden bg-typography-300">
+              <Topo topo={currentImageUri} line={value.linePixels} />
+            </View>
+            <Button onPress={onOpenDrawingModal} action="primary" variant="outline">
+              <ButtonIcon as={Pencil} />
+              <ButtonText>{value.linePixels.length > 0 ? "Edit Line" : "Draw Line"}</ButtonText>
+            </Button>
           </VStack>
         )}
       </VStack>

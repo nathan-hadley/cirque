@@ -1,20 +1,18 @@
-import { Problem } from "@/models/problems";
-
 type GetScaledPointsParams = {
   originalImageSize: { width: number; height: number };
   displayedImageSize: { width: number; height: number };
-  problem: Problem;
+  line: number[][];
 };
 
 export function getScaledPoints({
   originalImageSize,
   displayedImageSize,
-  problem,
+  line,
 }: GetScaledPointsParams) {
   const scaleX = displayedImageSize.width / originalImageSize.width;
   const scaleY = displayedImageSize.height / originalImageSize.height;
 
-  return problem.line.map(([x, y]) => [x * scaleX, y * scaleY]);
+  return line.map(([x, y]) => [x * scaleX, y * scaleY]);
 }
 
 export function createPath(points: number[][]) {
