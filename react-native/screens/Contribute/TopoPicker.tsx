@@ -9,8 +9,8 @@ import { Text } from "@/components/ui/text";
 import { Toast, ToastDescription, ToastTitle, useToast } from "@/components/ui/toast";
 import { VStack } from "@/components/ui/vstack";
 import { captureFromCamera, PickedImage, pickFromLibrary } from "@/services/imageService";
-import { FieldError } from ".";
 import ProblemPicker, { getTopoUri } from "./ProblemPicker";
+import { FieldError } from "./validation";
 
 export type TopoData = {
   selectedTopoKey: string | null;
