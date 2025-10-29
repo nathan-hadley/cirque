@@ -1,28 +1,31 @@
 "use client";
+
 import React from "react";
-import { H4 } from "@expo/html-elements";
-import { createActionsheet } from "@gluestack-ui/actionsheet";
 import {
-  Pressable,
-  View,
-  Text,
-  ScrollView,
-  VirtualizedList,
   FlatList,
-  SectionList,
+  Pressable,
   PressableProps,
+  ScrollView,
+  SectionList,
+  Text,
+  View,
   ViewStyle,
+  VirtualizedList,
 } from "react-native";
-import { PrimitiveIcon, UIIcon } from "@gluestack-ui/icon";
-import { tva } from "@gluestack-ui/nativewind-utils/tva";
-import type { VariantProps } from "@gluestack-ui/nativewind-utils";
-import { cssInterop } from "nativewind";
+import { createActionsheet } from "@gluestack-ui/core/actionsheet/creator";
+import { PrimitiveIcon, UIIcon } from "@gluestack-ui/core/icon/creator";
+import type { VariantProps } from "@gluestack-ui/utils/nativewind-utils";
+import { tva } from "@gluestack-ui/utils/nativewind-utils";
+import { H4 } from "@expo/html-elements";
 import {
-  Motion,
   AnimatePresence,
   createMotionAnimatedComponent,
+  Motion,
   MotionComponentProps,
 } from "@legendapp/motion";
+import { X } from "lucide-react-native";
+import { cssInterop } from "nativewind";
+import { Icon } from "../icon";
 
 const ItemWrapper = React.forwardRef<React.ComponentRef<typeof Pressable>, PressableProps>(
   function ItemWrapper({ ...props }, ref) {
@@ -529,6 +532,34 @@ const ActionsheetIcon = React.forwardRef<
   );
 });
 
+type ActionsheetHeaderProps = {
+  title: string;
+  onClose?: () => void;
+  showCloseButton?: boolean;
+  className?: string;
+};
+
+const ActionsheetHeader = React.forwardRef<React.ComponentRef<typeof View>, ActionsheetHeaderProps>(
+  function ActionsheetHeader({ title, onClose, showCloseButton = true, className }, ref) {
+    return (
+      <ActionsheetDragIndicatorWrapper>
+        <ActionsheetDragIndicator />
+        <View
+          ref={ref}
+          className={`flex-row justify-between items-center w-full pb-4 ${className || ""}`}
+        >
+          <Text className="text-xl font-semibold text-typography-900">{title}</Text>
+          {showCloseButton && onClose && (
+            <Pressable onPress={onClose} className="p-1">
+              <Icon as={X} size="xl" />
+            </Pressable>
+          )}
+        </View>
+      </ActionsheetDragIndicatorWrapper>
+    );
+  }
+);
+
 export {
   Actionsheet,
   ActionsheetContent,
@@ -543,4 +574,5 @@ export {
   ActionsheetSectionList,
   ActionsheetSectionHeaderText,
   ActionsheetIcon,
+  ActionsheetHeader,
 };

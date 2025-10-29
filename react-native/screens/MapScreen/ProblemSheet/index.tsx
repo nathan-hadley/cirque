@@ -1,20 +1,21 @@
 import React from "react";
-import { Problem } from "@/models/problems";
-import { Topo } from "./Topo/index";
-import { VStack } from "@/components/ui/vstack";
+import { Platform, View } from "react-native";
+import { MapPinIcon } from "lucide-react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { CircuitNavButtons } from "@/components/buttons/CircuitNavButtons";
+import { Topo } from "@/components/Topo";
 import {
   Actionsheet,
   ActionsheetContent,
   ActionsheetDragIndicatorWrapper,
   ActionsheetScrollView,
 } from "@/components/ui/actionsheet";
-import { MapPinIcon } from "lucide-react-native";
-import { Platform, View } from "react-native";
-import { Icon } from "@/components/ui/icon";
 import { Heading } from "@/components/ui/heading";
 import { HStack } from "@/components/ui/hstack";
+import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { VStack } from "@/components/ui/vstack";
+import { Problem } from "@/models/problems";
 
 type ProblemSheetProps = React.ComponentProps<typeof Actionsheet> & {
   problem: Problem | null;
@@ -56,7 +57,14 @@ export function ProblemSheet({ problem, ...props }: ProblemSheetProps) {
     <Actionsheet className="gap-1" {...props}>
       <ActionsheetContent className="p-0">
         <ActionsheetDragIndicatorWrapper className="pt-0">
-          <Topo problem={problem} />
+          <View className="w-full aspect-[4/3] rounded-t-3xl overflow-hidden bg-typography-300 relative">
+            <Topo topo={problem.topo || ""} line={problem.line} color={problem.color} />
+            {problem.order !== undefined && (
+              <View className="absolute inset-0 justify-center">
+                <CircuitNavButtons />
+              </View>
+            )}
+          </View>
         </ActionsheetDragIndicatorWrapper>
         {/* The ScrollView doesn't work well on Android,
         so we are letting the Actionsheet resize itself. */}

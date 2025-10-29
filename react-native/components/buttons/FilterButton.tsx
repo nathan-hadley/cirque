@@ -1,30 +1,12 @@
 import { Filter } from "lucide-react-native";
-import { Button, ButtonIcon } from "../ui/button";
-import { useProblemStore } from "@/stores/problemStore";
-import React from "react";
+import { Button, ButtonIcon, IButtonProps } from "../ui/button";
 
-type FilterButtonProps = {
-  onFilterPress: () => void;
-  className?: string;
-  style?: object;
-};
-
-export function FilterButton({ onFilterPress, className, style }: FilterButtonProps) {
-  const { setViewProblem } = useProblemStore();
-
-  const handleFilterPress = () => {
-    // Close the problem actionsheet if it's open
-    setViewProblem(false);
-    // Open the filter overlay
-    onFilterPress();
-  };
-
+export function FilterButton({ className, ...props }: IButtonProps) {
   return (
     <Button
-      onPress={handleFilterPress}
-      className={`w-12 h-12 rounded-full shadow-md ${className}`}
-      style={style}
+      {...props}
       action="secondary"
+      className={`w-12 h-12 rounded-full shadow-md ${className || ""}`}
     >
       <ButtonIcon as={Filter} size="lg" />
     </Button>

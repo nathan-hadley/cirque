@@ -1,9 +1,9 @@
 import React from "react";
 import { Search } from "lucide-react-native";
-import { Text } from "@/components/ui/text";
+import { Center } from "@/components/ui/center";
 import { HStack } from "@/components/ui/hstack";
 import { Icon } from "@/components/ui/icon";
-import { Center } from "@/components/ui/center";
+import { Text } from "@/components/ui/text";
 
 type SearchEmptyProps = {
   searchQuery: string;

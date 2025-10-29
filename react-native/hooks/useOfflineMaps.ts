@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import Mapbox from "@rnmapbox/maps";
+import { useEffect, useState } from "react";
 import * as Network from "expo-network";
-import { TILEPACK_ID, STYLE_URI, BBOX_COORDS } from "@/constants/map";
+import Mapbox from "@rnmapbox/maps";
+import { BBOX_COORDS, STYLE_URI, TILEPACK_ID } from "@/constants/map";
 
 type OfflineMapsState = {
   loading: boolean;

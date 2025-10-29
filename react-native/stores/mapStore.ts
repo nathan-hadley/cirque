@@ -1,10 +1,10 @@
-import { create } from "zustand";
-import { Alert, Dimensions } from "react-native";
-import { MapView, Camera } from "@rnmapbox/maps";
-import { Feature, GeoJsonProperties, Point } from "geojson";
-import * as Location from "expo-location";
 import { RefObject } from "react";
-import { LAYER_IDS, USER_LOCATION_ZOOM, PROBLEM_ZOOM } from "@/constants/map";
+import { Alert, Dimensions } from "react-native";
+import * as Location from "expo-location";
+import { Camera, MapView } from "@rnmapbox/maps";
+import { Feature, GeoJsonProperties, Point } from "geojson";
+import { create } from "zustand";
+import { LAYER_IDS, PROBLEM_ZOOM, USER_LOCATION_ZOOM } from "@/constants/map";
 
 type MapState = {
   // State

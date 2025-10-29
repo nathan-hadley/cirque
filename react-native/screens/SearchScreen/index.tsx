@@ -1,18 +1,18 @@
 import React, { useState } from "react";
-import { View, TouchableOpacity, Keyboard, Platform, StatusBar } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useColorScheme } from "nativewind";
-import { X, Search } from "lucide-react-native";
-import { HStack } from "@/components/ui/hstack";
-import { Input, InputField, InputIcon } from "@/components/ui/input";
-import { useProblemStore } from "@/stores/problemStore";
-import { useMapStore } from "@/stores/mapStore";
-import { Problem } from "@/models/problems";
-import { SearchResultItem } from "./SearchResultItem";
-import { SearchEmpty } from "./SearchEmpty";
-import { Icon } from "@/components/ui/icon";
+import { Keyboard, Platform, StatusBar, TouchableOpacity, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
+import { Search, X } from "lucide-react-native";
+import { useColorScheme } from "nativewind";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { problemsData } from "@/assets/problems";
+import { HStack } from "@/components/ui/hstack";
+import { Icon } from "@/components/ui/icon";
+import { Input, InputField, InputIcon } from "@/components/ui/input";
+import { Problem } from "@/models/problems";
+import { useMapStore } from "@/stores/mapStore";
+import { useProblemStore } from "@/stores/problemStore";
+import { SearchEmpty } from "./SearchEmpty";
+import { SearchResultItem } from "./SearchResultItem";
 
 type SearchOverlayProps = {
   isVisible: boolean;

@@ -1,7 +1,7 @@
 import React from "react";
-import { Platform, View, Pressable } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Platform, Pressable, View } from "react-native";
 import { Search } from "lucide-react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Input, InputField, InputIcon } from "@/components/ui/input";
 import { useProblemStore } from "@/stores/problemStore";
 

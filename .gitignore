@@ -10,5 +10,6 @@
 .settings/
 *.sublime-project
 *.sublime-workspace
+*.code-workspace
 .vscode/*
 .DS_Store

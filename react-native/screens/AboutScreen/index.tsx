@@ -1,18 +1,19 @@
-import { View, ScrollView, Platform } from "react-native";
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import { Platform, ScrollView, View } from "react-native";
 import { router } from "expo-router";
-import { Text } from "@/components/ui/text";
-import { Heading } from "@/components/ui/heading";
-import { useOfflineMaps } from "@/hooks/useOfflineMaps";
-import { useToast, Toast, ToastTitle } from "@/components/ui/toast";
-import { VStack } from "@/components/ui/vstack";
-import { Divider } from "@/components/ui/divider";
-import { CircuitCard, DownloadStatusCard, ContributingSection } from "./components";
-import { Icon } from "@/components/ui/icon";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { CircleIcon } from "lucide-react-native";
-import { mapProblemService } from "@/services/mapProblemService";
-import { HStack } from "@/components/ui/hstack";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import BlurBackground from "@/components/BlurBackground";
+import { Divider } from "@/components/ui/divider";
+import { Heading } from "@/components/ui/heading";
+import { HStack } from "@/components/ui/hstack";
+import { Icon } from "@/components/ui/icon";
+import { Text } from "@/components/ui/text";
+import { Toast, ToastTitle, useToast } from "@/components/ui/toast";
+import { VStack } from "@/components/ui/vstack";
+import { useOfflineMaps } from "@/hooks/useOfflineMaps";
+import { mapProblemService } from "@/services/mapProblemService";
+import { CircuitCard, ContributingSection, DownloadStatusCard } from "./components";
 
 export default function AboutScreen() {
   const { loading, mapDownloaded, progress, updateMapData, deleteMapData } = useOfflineMaps();
@@ -101,78 +102,81 @@ export default function AboutScreen() {
   };
 
   return (
-    <ScrollView
-      className="flex-1 bg-background-0"
-      showsVerticalScrollIndicator={false}
-      style={{ paddingTop: insets.top }}
-    >
-      <View className="px-6 py-8 flex-1">
-        {/* Header Section */}
-        <VStack space="md" className="mb-8 items-center gap-2">
-          <HStack className="items-center gap-2">
-            <Heading size="2xl" className="text-center text-typography-900">
-              Cirque Leavy
-            </Heading>
-            <Icon as={CircleIcon} size="xl" className="text-blue-600" />
-          </HStack>
-          <Text className="text-center text-typography-600 text-lg">
-            Fontainebleau-style circuits in Leavenworth
-          </Text>
-        </VStack>
-
-        {/* Circuits Section */}
-        <VStack space="lg" className="mb-6">
-          <VStack space="sm">
-            <Heading size="xl" className="text-typography-900">
-              Available Circuits
-            </Heading>
-            <Text className="text-typography-600">
-              Inspired by our trip to Fontainebleau, France, these circuits bring structured
-              bouldering progression to Leavenworth's granite.
+    <View className="flex-1 bg-background-0">
+      <BlurBackground position="statusBar" />
+      <ScrollView
+        className="flex-1"
+        showsVerticalScrollIndicator={false}
+        style={{ paddingTop: insets.top, paddingBottom: insets.bottom + 16 }}
+      >
+        <View className="px-6 py-8 flex-1">
+          {/* Header Section */}
+          <VStack space="md" className="mb-8 items-center gap-2">
+            <HStack className="items-center gap-2">
+              <Heading size="2xl" className="text-center text-typography-900">
+                Cirque Leavy
+              </Heading>
+              <Icon as={CircleIcon} size="xl" className="text-blue-600" />
+            </HStack>
+            <Text className="text-center text-typography-600 text-lg">
+              Fontainebleau-style circuits in Leavenworth
             </Text>
           </VStack>
 
-          <VStack space="md">
-            {circuits.map((circuit, index) => (
-              <CircuitCard
-                key={index}
-                title={circuit.title}
-                difficulty={circuit.difficulty}
-                color={circuit.color}
-                onPress={() => handleCircuitPress(circuit)}
-              />
-            ))}
-          </VStack>
-        </VStack>
+          {/* Circuits Section */}
+          <VStack space="lg" className="mb-6">
+            <VStack space="sm">
+              <Heading size="xl" className="text-typography-900">
+                Available Circuits
+              </Heading>
+              <Text className="text-typography-600">
+                Inspired by our trip to Fontainebleau, France, these circuits bring structured
+                bouldering progression to Leavenworth's granite.
+              </Text>
+            </VStack>
 
-        <Divider className="my-6" />
-
-        {/* Download Section */}
-        <VStack space="lg" className="mb-6">
-          <VStack space="sm">
-            <Heading size="xl" className="text-typography-900">
-              Offline Access
-            </Heading>
-            <Text className="text-typography-600">
-              The app caches map data after viewing, but for guaranteed offline access to all
-              circuits, download the complete map package below.
-            </Text>
+            <VStack space="md">
+              {circuits.map((circuit, index) => (
+                <CircuitCard
+                  key={index}
+                  title={circuit.title}
+                  difficulty={circuit.difficulty}
+                  color={circuit.color}
+                  onPress={() => handleCircuitPress(circuit)}
+                />
+              ))}
+            </VStack>
           </VStack>
 
-          <DownloadStatusCard
-            loading={loading}
-            mapDownloaded={mapDownloaded}
-            progress={progress}
-            onUpdate={handleMapUpdate}
-            onDelete={handleMapDelete}
-          />
-        </VStack>
+          <Divider className="my-6" />
 
-        <Divider className="my-6" />
+          {/* Download Section */}
+          <VStack space="lg" className="mb-6">
+            <VStack space="sm">
+              <Heading size="xl" className="text-typography-900">
+                Offline Access
+              </Heading>
+              <Text className="text-typography-600">
+                The app caches map data after viewing, but for guaranteed offline access to all
+                circuits, download the complete map package below.
+              </Text>
+            </VStack>
 
-        <ContributingSection />
-      </View>
-      <View style={{ height: Platform.OS === "ios" ? tabBarHeight : 16 }} />
-    </ScrollView>
+            <DownloadStatusCard
+              loading={loading}
+              mapDownloaded={mapDownloaded}
+              progress={progress}
+              onUpdate={handleMapUpdate}
+              onDelete={handleMapDelete}
+            />
+          </VStack>
+
+          <Divider className="my-6" />
+
+          <ContributingSection />
+        </View>
+        <View style={{ height: Platform.OS === "ios" ? tabBarHeight : 16 }} />
+      </ScrollView>
+    </View>
   );
 }

@@ -1,20 +1,19 @@
-import React, { useState, useRef } from "react";
+import React, { useRef, useState } from "react";
 import { View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
   Actionsheet,
-  ActionsheetContent,
   ActionsheetBackdrop,
-  ActionsheetDragIndicatorWrapper,
+  ActionsheetContent,
+  ActionsheetHeader,
 } from "@/components/ui/actionsheet";
+import { Button, ButtonText } from "@/components/ui/button";
 import { HStack } from "@/components/ui/hstack";
-import { VStack } from "@/components/ui/vstack";
-import { Text } from "@/components/ui/text";
-import { useProblemStore } from "@/stores/problemStore";
-import { X } from "lucide-react-native";
-import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Slider, SliderThumb, SliderTrack } from "@/components/ui/slider";
+import { Text } from "@/components/ui/text";
+import { VStack } from "@/components/ui/vstack";
 import { MAX_GRADE, MIN_GRADE } from "@/models/problems";
+import { useProblemStore } from "@/stores/problemStore";
 
 const numberToGrade = (num: number): string => `V${num}`;
 
@@ -60,21 +59,12 @@ export default function GradeFilterSheet({ isOpen, onClose }: GradeFilterSheetPr
   return (
     <Actionsheet isOpen={isOpen} onClose={handleClose}>
       <ActionsheetBackdrop />
-      <ActionsheetContent className="p-0" style={{ paddingBottom: bottom + 16 }}>
+      <ActionsheetContent style={{ paddingBottom: bottom + 16 }}>
         <VStack className="w-full">
           {/* Header */}
-          <ActionsheetDragIndicatorWrapper className="p-6">
-            <HStack className="justify-between items-center w-full">
-              <Text size="xl" className="font-semibold text-typography-900">
-                Adjust grade range
-              </Text>
-              <Button onPress={handleClose} variant="link" className="p-1">
-                <ButtonIcon as={X} className="w-8 h-8" />
-              </Button>
-            </HStack>
-          </ActionsheetDragIndicatorWrapper>
+          <ActionsheetHeader title="Adjust grade range" onClose={handleClose} />
 
-          <VStack space="lg" className="px-6 pb-6">
+          <VStack space="lg" className="pb-6">
             <HStack className="justify-between items-center">
               <Text size="lg" className="font-semibold">
                 {numberToGrade(localMinGrade)} - {numberToGrade(localMaxGrade)}

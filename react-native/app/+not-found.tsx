@@ -1,8 +1,7 @@
-import { Link, Stack, usePathname } from "expo-router";
 import React from "react";
 import { ScrollView } from "react-native";
+import { Link, Stack, usePathname } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-
 import { Button, ButtonText } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";

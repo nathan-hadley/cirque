@@ -1,6 +1,6 @@
-import { problemsData } from "@/assets/problems";
 import { CircleLayer, ShapeSource, SymbolLayer } from "@rnmapbox/maps";
-import { PROBLEM_COLORS, LAYER_IDS, SOURCE_IDS } from "@/constants/map";
+import { problemsData } from "@/assets/problems";
+import { LAYER_IDS, PROBLEM_COLORS, SOURCE_IDS } from "@/constants/map";
 import { useProblemStore } from "@/stores/problemStore";
 
 export function ProblemsLayer() {

@@ -1,10 +1,10 @@
 import React from "react";
+import * as Haptics from "expo-haptics";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react-native";
+import { mapProblemService } from "@/services/mapProblemService";
+import { useProblemStore } from "@/stores/problemStore";
 import { Button, ButtonIcon } from "../ui/button";
 import { HStack } from "../ui/hstack";
-import { useProblemStore } from "@/stores/problemStore";
-import { mapProblemService } from "@/services/mapProblemService";
-import * as Haptics from "expo-haptics";
 
 export function CircuitNavButtons() {
   const { problem, getProblem } = useProblemStore();

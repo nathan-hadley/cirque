@@ -1,37 +1,46 @@
 import React, { useEffect } from "react";
 import { View } from "react-native";
-import Svg, { Path, Circle } from "react-native-svg";
 import Animated, {
-  useSharedValue,
   useAnimatedProps,
-  withTiming,
+  useSharedValue,
   withDelay,
+  withTiming,
 } from "react-native-reanimated";
-import { Problem } from "@/models/problems";
+import Svg, { Circle, Path } from "react-native-svg";
 import { createPath, estimatePathLength, getScaledPoints } from "./topoLineUtil";
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
 type TopoLineProps = {
-  problem: Problem;
+  line: number[][]; // Pixel coordinates (640×480)
+  color?: string;
   originalImageSize: { width: number; height: number };
   displayedImageSize: { width: number; height: number };
 };
 
-export function TopoLine({ problem, originalImageSize, displayedImageSize }: TopoLineProps) {
+export function TopoLine({
+  line,
+  color = "#ff3333",
+  originalImageSize,
+  displayedImageSize,
+}: TopoLineProps) {
   const progress = useSharedValue(0);
 
   useEffect(() => {
-    if (problem.line && problem.line.length > 0) {
+    if (line && line.length > 0) {
       progress.value = 0;
       progress.value = withDelay(500, withTiming(1, { duration: 500 }));
     }
-  }, [problem.id, progress, problem.line]);
+  }, [progress, line]);
 
   // Calculate values needed for animation (will be empty if no line)
   const scaledPoints =
-    problem.line && problem.line.length > 0
-      ? getScaledPoints({ originalImageSize, displayedImageSize, problem })
+    line && line.length > 0
+      ? getScaledPoints({
+          originalImageSize,
+          displayedImageSize,
+          line,
+        })
       : [];
   const pathData = scaledPoints.length > 0 ? createPath(scaledPoints) : "";
   const pathLength = scaledPoints.length > 0 ? estimatePathLength(scaledPoints) : 0;
@@ -44,14 +53,14 @@ export function TopoLine({ problem, originalImageSize, displayedImageSize }: Top
     };
   });
 
-  if (!problem.line || problem.line.length === 0) return null;
+  if (!line || line.length === 0) return null;
 
   return (
     <View className="absolute inset-0" pointerEvents="none">
       <Svg width={displayedImageSize.width} height={displayedImageSize.height}>
         <AnimatedPath
           d={pathData}
-          stroke={problem.color}
+          stroke={color}
           strokeWidth={3}
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -59,7 +68,7 @@ export function TopoLine({ problem, originalImageSize, displayedImageSize }: Top
           opacity={0.8}
           animatedProps={animatedPathProps}
         />
-        <Circle cx={startPoint[0]} cy={startPoint[1]} r={6} fill={problem.color} opacity={0.8} />
+        <Circle cx={startPoint[0]} cy={startPoint[1]} r={6} fill={color} opacity={0.8} />
       </Svg>
     </View>
   );

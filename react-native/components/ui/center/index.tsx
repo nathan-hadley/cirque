@@ -1,7 +1,7 @@
-import { View, ViewProps } from "react-native";
 import React from "react";
+import { View, ViewProps } from "react-native";
+import type { VariantProps } from "@gluestack-ui/utils/nativewind-utils";
 import { centerStyle } from "./styles";
-import type { VariantProps } from "@gluestack-ui/nativewind-utils";
 
 type ICenterProps = ViewProps & VariantProps<typeof centerStyle>;
 
