@@ -53,6 +53,8 @@ export class SubmitProblem extends OpenAPIRoute {
     const contact = submission.contact;
     const problem = submission.problem;
 
+    console.info({ submission });
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(contact.email)) {
       return errorResponse("Invalid email format");

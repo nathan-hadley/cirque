@@ -121,12 +121,10 @@ function buildGeoJsonFeature(submission: ProblemSubmission) {
       name: submission.problem.name,
       grade: submission.problem.grade,
       subarea: submission.problem.subarea,
-      ...(submission.problem.color && { color: submission.problem.color }),
-      ...(submission.problem.topo && { topo: submission.problem.topo }),
+      color: submission.problem.color ?? "",
+      topo: submission.problem.topo,
       line: JSON.stringify(submission.problem.line),
-      ...(submission.problem.description && {
-        description: submission.problem.description,
-      }),
+      description: submission.problem.description ?? "",
     },
     geometry: {
       type: "Point",
