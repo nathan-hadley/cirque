@@ -9,6 +9,7 @@ import { Text } from "@/components/ui/text";
 import { Toast, ToastDescription, ToastTitle, useToast } from "@/components/ui/toast";
 import { VStack } from "@/components/ui/vstack";
 import { captureFromCamera, PickedImage, pickFromLibrary } from "@/services/imageService";
+import { FieldError } from ".";
 import ProblemPicker, { getTopoUri } from "./ProblemPicker";
 
 export type TopoData = {
@@ -22,9 +23,15 @@ type TopoPickerProps = {
   value: TopoData;
   onChange: (data: TopoData) => void;
   onOpenDrawingModal: () => void;
+  error?: string;
 };
 
-export default function TopoPicker({ value, onChange, onOpenDrawingModal }: TopoPickerProps) {
+export default function TopoPicker({
+  value,
+  onChange,
+  onOpenDrawingModal,
+  error,
+}: TopoPickerProps) {
   const toast = useToast();
   const [topoSource, setTopoSource] = useState<"existing" | "new">("new");
   const [isProblemPickerOpen, setIsProblemPickerOpen] = useState(false);
@@ -137,10 +144,8 @@ export default function TopoPicker({ value, onChange, onOpenDrawingModal }: Topo
   return (
     <>
       <VStack space="lg" className="px-6">
-        <Text className="text-typography-700 font-semibold">Topo Image & Line (optional)</Text>
-        <Text className="text-typography-600">
-          Add a photo and draw the line to help others find this problem.
-        </Text>
+        <Text className="text-typography-700 font-semibold">Topo Image & Line</Text>
+        <Text className="text-typography-600">Add a photo and draw the route line.</Text>
 
         <RadioGroup value={topoSource} onChange={handleTopoSourceChange}>
           <VStack space="sm">
@@ -188,6 +193,7 @@ export default function TopoPicker({ value, onChange, onOpenDrawingModal }: Topo
             </Button>
           </VStack>
         )}
+        {error && <FieldError message={error} />}
       </VStack>
 
       <ProblemPicker

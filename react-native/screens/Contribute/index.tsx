@@ -28,6 +28,8 @@ type FieldErrors = {
   grade?: string;
   area?: string;
   coordinates?: string;
+  description?: string;
+  topo?: string;
 };
 
 type FieldName = keyof FieldErrors;
@@ -61,7 +63,18 @@ export default function ContributeScreen() {
   });
   const [isDrawingModalOpen, setIsDrawingModalOpen] = useState(false);
 
-  const errors = validateForm(contactName, contactEmail, name, grade, subarea, latitude, longitude);
+  const errors = validateForm({
+    contactName,
+    contactEmail,
+    name,
+    grade,
+    area: subarea,
+    latitude,
+    longitude,
+    description,
+    line: topoData.linePixels,
+    topo: topoData.selectedTopoKey,
+  });
   const visibleErrors = getVisibleErrors(errors, touched, submitAttempted);
   const isValid = Object.keys(errors).length === 0;
 
@@ -103,9 +116,9 @@ export default function ContributeScreen() {
       return;
     }
 
-    // Generate topo filename for new photos: area-problemname
+    // Generate topo filename for new photos: area-problem-name
     let topoFilename = topoData.selectedTopoKey;
-    if (!topoFilename && topoData.pickedImage?.base64) {
+    if (!topoFilename && topoData.pickedImage) {
       const slugifiedArea = subarea.toLowerCase().replace(/[^a-z0-9]+/g, "-");
       const slugifiedName = name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
       topoFilename = `${slugifiedArea}-${slugifiedName}`;
@@ -295,18 +308,24 @@ export default function ContributeScreen() {
             />
 
             <VStack space="md" className="px-6">
-              <Text className="text-typography-700">Description (optional)</Text>
+              <Text className="text-typography-700">Description</Text>
+              <Text size="sm" className="text-typography-600">
+                Describe the start holds. Include features, direction and nature of the climbing as
+                well.
+              </Text>
               <Input className="h-20">
                 <InputField
-                  placeholder="Short description"
+                  placeholder="Ex. 'Start matched on the chest-high crimp and climb up and right through slopers.'"
                   value={description}
                   onChangeText={setDescription}
+                  onBlur={() => markTouched("description")}
                   textAlignVertical="top"
                   multiline
                   accessibilityLabel="Problem description"
                   className="pt-2"
                 />
               </Input>
+              <FieldError message={visibleErrors.description} />
             </VStack>
 
             <Divider />
@@ -315,6 +334,7 @@ export default function ContributeScreen() {
               value={topoData}
               onChange={setTopoData}
               onOpenDrawingModal={handleOpenDrawingModal}
+              error={visibleErrors.topo}
             />
 
             <Divider />
@@ -355,20 +375,36 @@ export default function ContributeScreen() {
   );
 }
 
-function FieldError({ message }: { message?: string }) {
+export function FieldError({ message }: { message?: string }) {
   if (!message) return null;
   return <Text className="text-error-600">{message}</Text>;
 }
 
-function validateForm(
-  contactName: string,
-  contactEmail: string,
-  name: string,
-  grade: string | null,
-  area: string,
-  latitude: string,
-  longitude: string
-): FieldErrors {
+type ValidateFormProps = {
+  contactName: string;
+  contactEmail: string;
+  name: string;
+  grade: string | null;
+  area: string;
+  latitude: string;
+  longitude: string;
+  description: string;
+  topo: string | null;
+  line: number[][];
+};
+
+function validateForm({
+  contactName,
+  contactEmail,
+  name,
+  grade,
+  area,
+  latitude,
+  longitude,
+  description,
+  line,
+  topo,
+}: ValidateFormProps): FieldErrors {
   const errors: FieldErrors = {};
 
   if (!contactName.trim()) {
@@ -406,6 +442,20 @@ function validateForm(
 
   if (!isValidCoords) {
     errors.coordinates = "Enter valid lat and lng.";
+  }
+
+  if (!description.trim()) {
+    errors.description = "Please enter a description.";
+  }
+
+  const hasTopo = topo?.trim();
+
+  if (!hasTopo) {
+    errors.topo = "Please select or upload a topo image.";
+  }
+
+  if (hasTopo && !line.length) {
+    errors.topo = "Please draw the route line.";
   }
 
   return errors;

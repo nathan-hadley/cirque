@@ -138,16 +138,12 @@ function ProblemItem({ problem, isSelected, onSelect }: ProblemItemProps) {
     <Pressable
       onPress={handlePress}
       className={`px-4 py-3 rounded-lg border ${
-        isSelected ? "bg-primary-100 border-primary-500" : "bg-background-0 border-outline-200"
+        isSelected ? "bg-success-50 border-success-600" : "bg-background-0 border-outline-200"
       }`}
     >
       <HStack className="items-center justify-between">
         <VStack className="flex-1">
-          <Text
-            className={`font-semibold ${isSelected ? "text-primary-700" : "text-typography-900"}`}
-          >
-            {problem.properties?.name}
-          </Text>
+          <Text className={`font-semibold text-typography-900`}>{problem.properties?.name}</Text>
           <Text className="text-sm text-typography-600">
             {problem.properties?.grade} • {problem.properties?.subarea}
           </Text>

@@ -5,6 +5,7 @@ import { X } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
 import { HStack } from "@/components/ui/hstack";
+import { Text } from "@/components/ui/text";
 import {
   convertNormalizedToPixels,
   downsamplePoints,
@@ -68,7 +69,7 @@ export function ImageDrawingModal({
         </View>
 
         {/* Image and Canvas - 4:3 aspect ratio */}
-        <View className="flex-1 items-center justify-center">
+        <View className="flex-1 items-center justify-center gap-4">
           <View className="w-full" style={{ aspectRatio: 4 / 3 }}>
             <Image
               source={{ uri: imageUri }}
@@ -83,6 +84,10 @@ export function ImageDrawingModal({
               />
             </View>
           </View>
+          <Text className="text-typography-900 text-center">
+            Begin the route line at the approximate location of the start holds and end it at the
+            top of the boulder.
+          </Text>
         </View>
 
         {/* Footer Buttons */}
