@@ -20,17 +20,17 @@ export const ProblemSubmissionSchema = z.object({
     name: Str({ example: "The Physical" }),
     grade: Str({ example: "V4" }),
     subarea: Str({ example: "Forestland" }),
-    color: Str({ required: false, example: "black" }),
-    order: Num({ required: false, example: 1 }),
+    color: Str({ required: false, example: "black" }).optional(),
+    order: Num({ required: false, example: 1 }).optional(),
     description: Str({
       required: false,
       example: "Reach high off the slab and pull into compression.",
-    }),
+    }).optional(),
     lat: Num({ example: 47.54520973656 }),
     lng: Num({ example: -120.73245630919 }),
-    line: z.array(z.array(Num(), Num())),
-    topo: Str({ required: false, example: "forestland-physical" }),
-    imageBase64: Str({ required: false }),
+    line: z.array(z.tuple([z.number(), z.number()])).max(10),
+    topo: Str({ required: false, example: "forestland-physical" }).optional(),
+    imageBase64: Str({ required: false }).optional(),
   }),
 });
 
