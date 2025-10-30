@@ -12,18 +12,10 @@
       "distribution": "internal"
     },
     "preview": {
-      "distribution": "internal",
-      "env": {
-        "EXPO_PUBLIC_API_KEY": "",
-        "EXPO_PUBLIC_API_BASE_URL": ""
-      }
+      "distribution": "internal"
     },
     "production": {
-      "autoIncrement": true,
-      "env": {
-        "EXPO_PUBLIC_API_KEY": "",
-        "EXPO_PUBLIC_API_BASE_URL": ""
-      }
+      "autoIncrement": true
     }
   },
   "submit": {
