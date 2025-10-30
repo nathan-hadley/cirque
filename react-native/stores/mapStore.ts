@@ -106,7 +106,7 @@ export const useMapStore = create<MapState>((set, get) => ({
       const query = await mapRef.current.queryRenderedFeaturesAtPoint([point.x, point.y], {
         layerIds: [LAYER_IDS.problems],
         filter: ["!=", ["get", "color"], ""],
-      });
+      } as any);
 
       if (query && query.features && query.features.length > 0) {
         const feature = query.features[0] as Feature<Point, GeoJsonProperties>;

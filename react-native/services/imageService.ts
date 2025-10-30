@@ -7,7 +7,6 @@ export type PickedImage = {
   width: number;
   height: number;
   mimeType?: string;
-  fileSize?: number; // in bytes if available
 };
 
 export type NormalizedPoint = [number, number];
@@ -44,7 +43,7 @@ export async function pickFromLibrary(
   const constraints = { ...DEFAULT_CONSTRAINTS, ...(options ?? {}) };
 
   const result = await ImagePicker.launchImageLibraryAsync({
-    mediaTypes: ImagePicker.MediaTypeOptions.Images,
+    mediaTypes: ["images"],
     allowsEditing: false,
     quality: 1,
     base64: true,
@@ -61,7 +60,6 @@ export async function pickFromLibrary(
     width: asset.width ?? 0,
     height: asset.height ?? 0,
     mimeType: asset.mimeType,
-    fileSize: (asset as any).fileSize ?? undefined,
   };
 
   return ensureConstraints(picked, constraints);
@@ -89,7 +87,6 @@ export async function captureFromCamera(
     width: asset.width ?? 0,
     height: asset.height ?? 0,
     mimeType: asset.mimeType,
-    fileSize: (asset as any).fileSize ?? undefined,
   };
 
   return ensureConstraints(picked, constraints);
@@ -100,7 +97,7 @@ async function ensureConstraints(
   constraints: ImageConstraints
 ): Promise<PickedImage> {
   const TARGET_ASPECT = 4 / 3;
-  const actions: any[] = [];
+  const actions: ImageManipulator.Action[] = [];
 
   // First, crop to 4:3 aspect ratio if needed
   const currentAspect = image.width / image.height;
@@ -132,8 +129,10 @@ async function ensureConstraints(
   }
 
   // Then resize if needed
-  const effectiveWidth = actions.length > 0 ? actions[0].crop.width : image.width;
-  const effectiveHeight = actions.length > 0 ? actions[0].crop.height : image.height;
+  const effectiveWidth =
+    actions.length > 0 ? (actions[0] as ImageManipulator.ActionCrop).crop.width : image.width;
+  const effectiveHeight =
+    actions.length > 0 ? (actions[0] as ImageManipulator.ActionCrop).crop.height : image.height;
 
   if (effectiveWidth > constraints.maxWidth || effectiveHeight > constraints.maxHeight) {
     const scale = Math.min(

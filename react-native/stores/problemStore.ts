@@ -212,14 +212,7 @@ export const useProblemStore = create<ProblemState>((set, get) => {
             ? parseInt(properties.order.toString(), 10)
             : undefined;
 
-      let line: number[][] = [];
-      try {
-        if (properties.line && typeof properties.line === "string") {
-          line = JSON.parse(properties.line);
-        }
-      } catch (error) {
-        console.error("Failed to parse topo line coordinates:", error);
-      }
+      const line = parseLineCoordinates(properties.line?.toString());
 
       return {
         id: properties.id?.toString() || Date.now().toString(),
@@ -266,4 +259,29 @@ function getColorFromString(colorString?: string): string {
     default:
       return "#000000";
   }
+}
+
+/**
+ * Type guard to filter parsed line coordinates into valid [x, y] tuples
+ */
+function parseLineCoordinates(lineJson: string | undefined): [number, number][] {
+  let line: [number, number][] = [];
+  try {
+    if (lineJson && typeof lineJson === "string") {
+      const parsed = JSON.parse(lineJson);
+      // Ensure we have valid tuples
+      if (Array.isArray(parsed)) {
+        line = parsed.filter(
+          (point): point is [number, number] =>
+            Array.isArray(point) &&
+            point.length === 2 &&
+            typeof point[0] === "number" &&
+            typeof point[1] === "number"
+        );
+      }
+    }
+  } catch (error) {
+    console.error("Failed to parse topo line coordinates:", error);
+  }
+  return line;
 }

@@ -1,6 +1,13 @@
 import type { Context } from "hono";
 import { z } from "zod";
 
+// KVNamespace is a Cloudflare Workers type
+// Stub for environments that don't have Cloudflare Workers types
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+  interface KVNamespace {}
+}
+
 export interface Env {
   MAILERSEND_API_TOKEN: string;
   CIRQUE_EMAIL: string;
