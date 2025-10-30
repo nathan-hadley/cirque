@@ -46,38 +46,12 @@ export class SubmitProblem extends OpenAPIRoute {
   };
 
   async handle(c: AppContext) {
-    // Get validated data
+    // Get validated data (validation handled by Zod schema)
     const data = await this.getValidatedData<typeof this.schema>();
 
     const submission = data.body;
-    const contact = submission.contact;
-    const problem = submission.problem;
 
     console.info({ submission });
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(contact.email)) {
-      return errorResponse("Invalid email format");
-    }
-
-    if (problem.name.length > 100) {
-      return errorResponse("Invalid problem name (max 100 chars)");
-    }
-    if (problem.line.length > 10) {
-      return errorResponse("Line has too many points (max 10)");
-    }
-    for (const point of problem.line) {
-      if (point.length !== 2) {
-        return errorResponse(
-          "Invalid line point format (must be [x, y] numbers)"
-        );
-      }
-    }
-    if (problem.description !== undefined) {
-      if (problem.description.length > 300) {
-        return errorResponse("Invalid description (max 300 chars)");
-      }
-    }
 
     // Send email and wait for result
     const emailResult = await sendProblemSubmissionEmail(submission, c.env);
