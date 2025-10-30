@@ -6,13 +6,13 @@ import { authMiddleware, rateLimitMiddleware } from "./middleware";
 // Start a Hono app
 const app = new Hono<{ Bindings: Env }>();
 
-// Apply security middleware to all routes
-app.use("*", authMiddleware, rateLimitMiddleware);
-
 // Setup OpenAPI registry
 const openapi = fromHono(app, {
   docs_url: "/",
 });
+
+// Apply security middleware to API routes only (not docs)
+app.use("/v1/*", authMiddleware, rateLimitMiddleware);
 
 // Register OpenAPI endpoints
 openapi.post("/v1/problems", SubmitProblem);

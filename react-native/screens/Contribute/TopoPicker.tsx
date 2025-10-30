@@ -16,7 +16,7 @@ export type TopoData = {
   selectedTopoKey: string | null;
   selectedTopoUri: string | null;
   pickedImage: PickedImage | null;
-  linePixels: number[][]; // Pixel coordinates (already downsampled to max 10 points)
+  linePixels: [number, number][]; // Pixel coordinates as [x, y] tuples (already downsampled to max 10 points)
 };
 
 type TopoPickerProps = {

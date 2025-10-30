@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import type { ProblemSubmission } from "@cirque-api/types";
 import { ChevronDown, MapPin } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import BlurBackground from "@/components/BlurBackground";
@@ -19,7 +20,7 @@ import CoordinateInput from "./CoordinateInput";
 import GradePicker from "./GradePicker";
 import { ImageDrawingModal } from "./ImageDrawingModal";
 import TopoPicker, { TopoData } from "./TopoPicker";
-import { FieldError, FieldErrors, FieldName, getVisibleErrors, validateForm } from "./validation";
+import { FieldError, FieldName, getVisibleErrors, validateForm } from "./validation";
 
 export default function ContributeScreen() {
   const insets = useSafeAreaInsets();
@@ -59,8 +60,7 @@ export default function ContributeScreen() {
     latitude,
     longitude,
     description,
-    line: topoData.linePixels,
-    topo: topoData.selectedTopoKey,
+    topoData,
   });
   const visibleErrors = getVisibleErrors(errors, touched, submitAttempted);
   const isValid = Object.keys(errors).length === 0;
@@ -83,7 +83,7 @@ export default function ContributeScreen() {
     setIsDrawingModalOpen(false);
   };
 
-  const handleConfirmDrawing = (pixelPoints: number[][]) => {
+  const handleConfirmDrawing = (pixelPoints: [number, number][]) => {
     setTopoData((prev: TopoData) => ({ ...prev, linePixels: pixelPoints }));
     setIsDrawingModalOpen(false);
   };
@@ -111,70 +111,69 @@ export default function ContributeScreen() {
       topoFilename = `${slugifiedArea}-${slugifiedName}`;
     }
 
-    submitMutation.mutate(
-      {
-        contact: {
-          name: contactName,
-          email: contactEmail,
-        },
-        problem: {
-          name,
-          grade: grade!,
-          subarea,
-          ...(description.trim() && { description }),
-          lat: parseFloat(latitude),
-          lng: parseFloat(longitude),
-          line: topoData.linePixels,
-          ...(topoFilename && { topo: topoFilename }),
-          ...(topoData.pickedImage?.base64 && { imageBase64: topoData.pickedImage.base64 }),
-        },
-      } as any,
-      {
-        onSuccess: () => {
-          toast.show({
-            placement: "top",
-            render: ({ id }) => (
-              <Toast nativeID={`toast-${id}`} action="success">
-                <ToastTitle>Success</ToastTitle>
-                <ToastDescription>
-                  Problem submitted successfully! We'll review it shortly.
-                </ToastDescription>
-              </Toast>
-            ),
-          });
-          // Reset form
-          setContactName("");
-          setContactEmail("");
-          setName("");
-          setGrade(null);
-          setSubarea("");
-          setDescription("");
-          setLatitude("");
-          setLongitude("");
-          setTopoData({
-            selectedTopoKey: null,
-            selectedTopoUri: null,
-            pickedImage: null,
-            linePixels: [],
-          });
-          setTouched(new Set());
-          setSubmitAttempted(false);
-        },
-        onError: error => {
-          toast.show({
-            placement: "top",
-            render: ({ id }) => (
-              <Toast nativeID={`toast-${id}`} action="error">
-                <ToastTitle>Submission Failed</ToastTitle>
-                <ToastDescription>
-                  {error instanceof Error ? error.message : "Failed to submit problem"}
-                </ToastDescription>
-              </Toast>
-            ),
-          });
-        },
-      }
-    );
+    const submission: ProblemSubmission = {
+      contact: {
+        name: contactName,
+        email: contactEmail,
+      },
+      problem: {
+        name,
+        grade: grade!,
+        subarea,
+        description,
+        lat: parseFloat(latitude),
+        lng: parseFloat(longitude),
+        line: topoData.linePixels,
+        ...(topoFilename && { topo: topoFilename }),
+        ...(topoData.pickedImage?.base64 && { imageBase64: topoData.pickedImage.base64 }),
+      },
+    };
+
+    submitMutation.mutate(submission, {
+      onSuccess: () => {
+        toast.show({
+          placement: "top",
+          render: ({ id }) => (
+            <Toast nativeID={`toast-${id}`} action="success">
+              <ToastTitle>Success</ToastTitle>
+              <ToastDescription>
+                Problem submitted successfully! We'll review it shortly.
+              </ToastDescription>
+            </Toast>
+          ),
+        });
+        // Reset form
+        setContactName("");
+        setContactEmail("");
+        setName("");
+        setGrade(null);
+        setSubarea("");
+        setDescription("");
+        setLatitude("");
+        setLongitude("");
+        setTopoData({
+          selectedTopoKey: null,
+          selectedTopoUri: null,
+          pickedImage: null,
+          linePixels: [],
+        });
+        setTouched(new Set());
+        setSubmitAttempted(false);
+      },
+      onError: error => {
+        toast.show({
+          placement: "top",
+          render: ({ id }) => (
+            <Toast nativeID={`toast-${id}`} action="error">
+              <ToastTitle>Submission Failed</ToastTitle>
+              <ToastDescription>
+                {error instanceof Error ? error.message : "Failed to submit problem"}
+              </ToastDescription>
+            </Toast>
+          ),
+        });
+      },
+    });
   };
 
   return (

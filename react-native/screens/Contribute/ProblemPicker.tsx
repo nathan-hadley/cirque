@@ -35,8 +35,8 @@ function hasTopo(feature: ProblemFeature): boolean {
  */
 export async function getTopoUri(topoKey: string): Promise<string | null> {
   const imageSource = getTopoImage(topoKey);
-  if (!imageSource || typeof imageSource === "number") {
-    return Image.resolveAssetSource(imageSource as number).uri;
+  if (imageSource && typeof imageSource === "number") {
+    return Image.resolveAssetSource(imageSource).uri;
   }
   return null;
 }

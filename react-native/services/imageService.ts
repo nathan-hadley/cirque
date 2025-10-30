@@ -198,8 +198,8 @@ async function ensureConstraints(
  * Converts normalized points (0-1) to pixel coordinates (640×480)
  * for submission to the API and storage in GeoJSON format
  */
-export function convertNormalizedToPixels(normalizedPoints: NormalizedPoint[]): number[][] {
-  return normalizedPoints.map(([x, y]) => [
+export function convertNormalizedToPixels(normalizedPoints: NormalizedPoint[]): [number, number][] {
+  return normalizedPoints.map(([x, y]): [number, number] => [
     Math.round(x * DEFAULT_CONSTRAINTS.maxWidth),
     Math.round(y * DEFAULT_CONSTRAINTS.maxHeight),
   ]);

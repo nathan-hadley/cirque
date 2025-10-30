@@ -1,4 +1,4 @@
-import { Bool, Str, OpenAPIRoute } from "chanfana";
+import { OpenAPIRoute } from "chanfana";
 import { z } from "zod";
 import { type AppContext, ProblemSubmissionSchema } from "../types";
 import { sendProblemSubmissionEmail } from "../services/emailService";
@@ -22,9 +22,7 @@ export class SubmitProblem extends OpenAPIRoute {
         content: {
           "application/json": {
             schema: z.object({
-              series: z.object({
-                success: Bool(),
-              }),
+              success: z.boolean().describe("true"),
             }),
           },
         },
@@ -34,10 +32,8 @@ export class SubmitProblem extends OpenAPIRoute {
         content: {
           "application/json": {
             schema: z.object({
-              series: z.object({
-                success: Bool(),
-                error: Str(),
-              }),
+              success: z.boolean().describe("false"),
+              error: z.string().describe("Error message"),
             }),
           },
         },

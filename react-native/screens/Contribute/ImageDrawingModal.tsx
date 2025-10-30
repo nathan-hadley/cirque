@@ -17,7 +17,7 @@ type ImageDrawingModalProps = {
   isOpen: boolean;
   imageUri: string;
   onClose: () => void;
-  onConfirm: (pixelPoints: number[][]) => void; // Returns downsampled pixel coordinates (640x480)
+  onConfirm: (pixelPoints: [number, number][]) => void; // Returns downsampled pixel coordinates (640x480) as tuples
 };
 
 export function ImageDrawingModal({
