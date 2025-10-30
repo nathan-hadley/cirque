@@ -191,17 +191,17 @@ export default function ContributeScreen() {
           <VStack className="flex-1 py-6" space="xl">
             <VStack space="xs" className="px-6">
               <Heading size="2xl" className="text-typography-900">
-                Contribute a Problem
+                Contribute
               </Heading>
-              <Text className="text-typography-600">Share a new boulder problem.</Text>
+              <Text className="text-typography-600">Share problems not in the app</Text>
             </VStack>
 
             <Divider />
 
             <VStack space="lg" className="px-6">
-              <Text className="text-typography-700 font-semibold">Contact Information</Text>
+              <Text className="text-typography-700 font-semibold">Contact information</Text>
               <VStack space="md">
-                <Text className="text-typography-700">Your Name</Text>
+                <Text className="text-typography-700">Your name</Text>
                 <Input>
                   <InputField
                     placeholder="Your name"
@@ -235,7 +235,7 @@ export default function ContributeScreen() {
             <Divider />
 
             <VStack space="lg" className="px-6">
-              <Text className="text-typography-700 font-semibold">Problem Details</Text>
+              <Text className="text-typography-700 font-semibold">Problem details</Text>
               <VStack space="md">
                 <Text className="text-typography-700">Name</Text>
                 <Input>
