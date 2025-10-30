@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import type { ProblemSubmission } from "@cirque-api/types";
+import { VALIDATION_CONSTRAINTS } from "@cirque-api/types";
 import { ChevronDown, MapPin } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import BlurBackground from "@/components/BlurBackground";
@@ -212,6 +213,9 @@ export default function ContributeScreen() {
                     autoCapitalize="words"
                   />
                 </Input>
+                <Text size="sm" className="text-typography-600">
+                  {contactName.length}/{VALIDATION_CONSTRAINTS.NAME_MAX_LENGTH} characters
+                </Text>
                 <FieldError message={visibleErrors.contactName} />
               </VStack>
 
@@ -248,6 +252,9 @@ export default function ContributeScreen() {
                     autoCapitalize="words"
                   />
                 </Input>
+                <Text size="sm" className="text-typography-600">
+                  {name.length}/{VALIDATION_CONSTRAINTS.NAME_MAX_LENGTH} characters
+                </Text>
                 <FieldError message={visibleErrors.name} />
               </VStack>
             </VStack>
@@ -311,6 +318,9 @@ export default function ContributeScreen() {
                   className="pt-2"
                 />
               </Input>
+              <Text size="sm" className="text-typography-600">
+                {description.length}/{VALIDATION_CONSTRAINTS.DESCRIPTION_MAX_LENGTH} characters
+              </Text>
               <FieldError message={visibleErrors.description} />
             </VStack>
 

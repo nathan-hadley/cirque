@@ -1,10 +1,16 @@
 import type { ProblemSubmission } from "@cirque-api/types";
 import { API_ENDPOINTS, API_KEY } from "@/constants/api";
 
-export type SubmitProblemResponse = {
-  success: boolean;
-  error?: string;
+export type SubmitProblemSuccessResponse = {
+  success: true;
 };
+
+export type SubmitProblemErrorResponse = {
+  success: false;
+  error: string;
+};
+
+export type SubmitProblemResponse = SubmitProblemSuccessResponse | SubmitProblemErrorResponse;
 
 export async function submitProblem(submission: ProblemSubmission): Promise<SubmitProblemResponse> {
   if (!API_KEY) {
@@ -22,9 +28,13 @@ export async function submitProblem(submission: ProblemSubmission): Promise<Subm
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.error || `Server error: ${response.status}`);
+    const errorResponse: SubmitProblemErrorResponse = {
+      success: false,
+      error: errorData.error || `Server error: ${response.status}`,
+    };
+    throw new Error(errorResponse.error);
   }
 
   const data = await response.json();
-  return data;
+  return data as SubmitProblemResponse;
 }

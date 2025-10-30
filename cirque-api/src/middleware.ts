@@ -16,6 +16,8 @@ export const authMiddleware: MiddlewareHandler<{ Bindings: Env }> = async (
   await next();
 };
 
+const RATE_LIMIT = 50;
+
 /**
  * Rate limiting middleware
  * Returns 429 Too Many Requests if limit is exceeded
@@ -29,16 +31,25 @@ export const rateLimitMiddleware: MiddlewareHandler<{ Bindings: Env }> = async (
   const currentCount = await c.env.RATE_LIMIT_KV.get(rateLimitKey);
   const count = parseInt(currentCount || "0");
 
-  if (count >= 50) {
+  if (count >= RATE_LIMIT) {
+    console.warn({
+      event: "rate_limit_exceeded",
+      ip,
+      count,
+      timestamp: new Date().toISOString(),
+    });
     return c.json(
-      { success: false, error: "Rate limit exceeded. Try again later." },
+      {
+        success: false,
+        error: "Too many submissions. Please try again later.",
+      },
       429
     );
   }
 
   // Increment rate limit counter
   await c.env.RATE_LIMIT_KV.put(rateLimitKey, (count + 1).toString(), {
-    expirationTtl: 3600, // 1 hour
+    expirationTtl: 60 * 60 * 24, // 24 hours
   });
 
   await next();

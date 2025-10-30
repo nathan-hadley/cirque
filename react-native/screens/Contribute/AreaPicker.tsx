@@ -12,15 +12,7 @@ import {
 import { Divider } from "@/components/ui/divider";
 import { Radio, RadioGroup, RadioIcon, RadioIndicator, RadioLabel } from "@/components/ui/radio";
 import { Text } from "@/components/ui/text";
-
-const LEAVENWORTH_AREAS = [
-  "Barney's Rubble",
-  "Clamshell Cave",
-  "Forestland",
-  "Mad Meadows",
-  "Straightaways",
-  "Swiftwater",
-] as const;
+import { LEAVENWORTH_AREAS } from "@/constants/areas";
 
 type AreaPickerSheetProps = {
   isOpen: boolean;
