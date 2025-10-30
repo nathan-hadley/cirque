@@ -6,7 +6,7 @@ export type Problem = {
   colorStr: string;
   color: string;
   description?: string;
-  line: number[][];
+  line: [number, number][]; // Array of [x, y] coordinate tuples
   topo?: string;
   subarea?: string;
   coordinates?: [number, number]; // [longitude, latitude]
