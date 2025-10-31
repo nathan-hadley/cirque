@@ -6,7 +6,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: IS_DEV ? "Cirque Dev" : "Cirque",
   slug: "Cirque",
-  version: "1.4.1",
+  version: "1.4.2",
   orientation: "portrait",
   icon: "./assets/images/icon.png",
   scheme: "cirque",
