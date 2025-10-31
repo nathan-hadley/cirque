@@ -13,8 +13,8 @@ import { HStack } from "@/components/ui/hstack";
 import { Input, InputField } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import { Text } from "@/components/ui/text";
-import { Toast, ToastDescription, ToastTitle, useToast } from "@/components/ui/toast";
 import { VStack } from "@/components/ui/vstack";
+import { useSimpleToast } from "@/hooks/useSimpleToast";
 import { useSubmitProblem } from "@/hooks/useSubmitProblem";
 import AreaPicker from "./AreaPicker";
 import CoordinateInput from "./CoordinateInput";
@@ -26,7 +26,7 @@ import { FieldError, FieldName, getVisibleErrors, validateForm } from "./validat
 export default function ContributeScreen() {
   const insets = useSafeAreaInsets();
   const tabBarHeight = useBottomTabBarHeight();
-  const toast = useToast();
+  const showToast = useSimpleToast();
   const submitMutation = useSubmitProblem();
 
   const [contactName, setContactName] = useState("");
@@ -92,14 +92,9 @@ export default function ContributeScreen() {
   const handleSubmit = async () => {
     setSubmitAttempted(true);
     if (!isValid) {
-      toast.show({
-        placement: "top",
-        render: ({ id }) => (
-          <Toast nativeID={`toast-${id}`} action="error">
-            <ToastTitle>Validation Error</ToastTitle>
-            <ToastDescription>Please fill out all required fields correctly.</ToastDescription>
-          </Toast>
-        ),
+      showToast({
+        action: "error",
+        message: "Please fill out all required fields.",
       });
       return;
     }
@@ -132,16 +127,9 @@ export default function ContributeScreen() {
 
     submitMutation.mutate(submission, {
       onSuccess: () => {
-        toast.show({
-          placement: "top",
-          render: ({ id }) => (
-            <Toast nativeID={`toast-${id}`} action="success">
-              <ToastTitle>Success</ToastTitle>
-              <ToastDescription>
-                Problem submitted successfully! We'll review it shortly.
-              </ToastDescription>
-            </Toast>
-          ),
+        showToast({
+          action: "success",
+          message: "Problem submitted successfully! We'll review it shortly.",
         });
         // Reset form
         setContactName("");
@@ -162,16 +150,9 @@ export default function ContributeScreen() {
         setSubmitAttempted(false);
       },
       onError: error => {
-        toast.show({
-          placement: "top",
-          render: ({ id }) => (
-            <Toast nativeID={`toast-${id}`} action="error">
-              <ToastTitle>Submission Failed</ToastTitle>
-              <ToastDescription>
-                {error instanceof Error ? error.message : "Failed to submit problem"}
-              </ToastDescription>
-            </Toast>
-          ),
+        showToast({
+          action: "error",
+          message: error instanceof Error ? error.message : "Failed to submit problem",
         });
       },
     });

@@ -6,8 +6,8 @@ import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
 import { HStack } from "@/components/ui/hstack";
 import { Input, InputField } from "@/components/ui/input";
 import { Text } from "@/components/ui/text";
-import { Toast, ToastDescription, ToastTitle, useToast } from "@/components/ui/toast";
 import { VStack } from "@/components/ui/vstack";
+import { useSimpleToast } from "@/hooks/useSimpleToast";
 
 export type CoordinateInputProps = {
   latitude: string;
@@ -26,7 +26,7 @@ export default function CoordinateInput({
   onBlur,
   error,
 }: CoordinateInputProps) {
-  const toast = useToast();
+  const showToast = useSimpleToast();
 
   async function handleUseMyLocation() {
     try {
@@ -40,14 +40,9 @@ export default function CoordinateInput({
       onChangeLatitude(current.coords.latitude.toFixed(6));
       onChangeLongitude(current.coords.longitude.toFixed(6));
     } catch {
-      toast.show({
-        placement: "top",
-        render: ({ id }) => (
-          <Toast nativeID={`toast-${id}`} action="error" variant="solid">
-            <ToastTitle>Error</ToastTitle>
-            <ToastDescription>Unable to get your location. Please try again.</ToastDescription>
-          </Toast>
-        ),
+      showToast({
+        action: "error",
+        message: "Unable to get your location. Please try again.",
       });
     }
   }

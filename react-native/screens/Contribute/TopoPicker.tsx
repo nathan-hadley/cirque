@@ -6,8 +6,8 @@ import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
 import { HStack } from "@/components/ui/hstack";
 import { Radio, RadioGroup, RadioIcon, RadioIndicator, RadioLabel } from "@/components/ui/radio";
 import { Text } from "@/components/ui/text";
-import { Toast, ToastDescription, ToastTitle, useToast } from "@/components/ui/toast";
 import { VStack } from "@/components/ui/vstack";
+import { useSimpleToast } from "@/hooks/useSimpleToast";
 import { captureFromCamera, PickedImage, pickFromLibrary } from "@/services/imageService";
 import ProblemPicker, { getTopoUri } from "./ProblemPicker";
 import { FieldError } from "./validation";
@@ -32,7 +32,7 @@ export default function TopoPicker({
   onOpenDrawingModal,
   error,
 }: TopoPickerProps) {
-  const toast = useToast();
+  const showToast = useSimpleToast();
   const [topoSource, setTopoSource] = useState<"existing" | "new">("new");
   const [isProblemPickerOpen, setIsProblemPickerOpen] = useState(false);
 
@@ -52,16 +52,9 @@ export default function TopoPicker({
 
     // Check if problem has a topo
     if (!topoKey) {
-      toast.show({
-        placement: "top",
-        render: ({ id }) => (
-          <Toast nativeID={`toast-${id}`} action="warning">
-            <ToastTitle>No Topo Available</ToastTitle>
-            <ToastDescription>
-              "{problemName}" doesn't have a topo image yet. Please upload a new photo instead.
-            </ToastDescription>
-          </Toast>
-        ),
+      showToast({
+        action: "warning",
+        message: `"${problemName}" doesn't have a topo image yet. Please upload a new photo instead.`,
       });
       return;
     }
@@ -78,14 +71,9 @@ export default function TopoPicker({
         });
       }
     } catch (e) {
-      toast.show({
-        placement: "top",
-        render: ({ id }) => (
-          <Toast nativeID={`toast-${id}`} action="error">
-            <ToastTitle>Error</ToastTitle>
-            <ToastDescription>Failed to load topo image.</ToastDescription>
-          </Toast>
-        ),
+      showToast({
+        action: "error",
+        message: "Failed to load topo image.",
       });
     }
   };
@@ -102,14 +90,9 @@ export default function TopoPicker({
         });
       }
     } catch (e) {
-      toast.show({
-        placement: "top",
-        render: ({ id }) => (
-          <Toast nativeID={`toast-${id}`} action="error">
-            <ToastTitle>Error</ToastTitle>
-            <ToastDescription>Failed to pick image. Please try again.</ToastDescription>
-          </Toast>
-        ),
+      showToast({
+        action: "error",
+        message: "Failed to pick image. Please try again.",
       });
     }
   };
@@ -126,14 +109,9 @@ export default function TopoPicker({
         });
       }
     } catch (e) {
-      toast.show({
-        placement: "top",
-        render: ({ id }) => (
-          <Toast nativeID={`toast-${id}`} action="error">
-            <ToastTitle>Error</ToastTitle>
-            <ToastDescription>Failed to capture image. Please try again.</ToastDescription>
-          </Toast>
-        ),
+      showToast({
+        action: "error",
+        message: "Failed to capture image. Please try again.",
       });
     }
   };

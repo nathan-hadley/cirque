@@ -9,15 +9,15 @@ import { Heading } from "@/components/ui/heading";
 import { HStack } from "@/components/ui/hstack";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
-import { Toast, ToastTitle, useToast } from "@/components/ui/toast";
 import { VStack } from "@/components/ui/vstack";
 import { useOfflineMaps } from "@/hooks/useOfflineMaps";
+import { useSimpleToast } from "@/hooks/useSimpleToast";
 import { mapProblemService } from "@/services/mapProblemService";
 import { CircuitCard, ContributingSection, DownloadStatusCard } from "./components";
 
 export default function AboutScreen() {
   const { loading, mapDownloaded, progress, updateMapData, deleteMapData } = useOfflineMaps();
-  const toast = useToast();
+  const showToast = useSimpleToast();
   const insets = useSafeAreaInsets();
   const tabBarHeight = useBottomTabBarHeight();
 
@@ -59,32 +59,33 @@ export default function AboutScreen() {
     },
   ];
 
-  const showToast = (message: string, success: boolean = true) => {
-    toast.show({
-      placement: "top",
-      render: ({ id }) => (
-        <Toast nativeID={`toast-${id}`} action={success ? "success" : "error"} variant="solid">
-          <ToastTitle>{message}</ToastTitle>
-        </Toast>
-      ),
-    });
-  };
-
   const handleMapUpdate = async () => {
     try {
       const result = await updateMapData();
-      showToast(result.message, result.success);
+      showToast({
+        action: result.success ? "success" : "error",
+        message: result.message,
+      });
     } catch {
-      showToast("An unexpected error occurred", false);
+      showToast({
+        action: "error",
+        message: "An unexpected error occurred",
+      });
     }
   };
 
   const handleMapDelete = async () => {
     try {
       const result = await deleteMapData();
-      showToast(result.message, result.success);
+      showToast({
+        action: result.success ? "success" : "error",
+        message: result.message,
+      });
     } catch {
-      showToast("An unexpected error occurred", false);
+      showToast({
+        action: "error",
+        message: "An unexpected error occurred",
+      });
     }
   };
 

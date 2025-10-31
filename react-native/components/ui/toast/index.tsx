@@ -225,4 +225,4 @@ Toast.displayName = "Toast";
 ToastTitle.displayName = "ToastTitle";
 ToastDescription.displayName = "ToastDescription";
 
-export { useToast, Toast, ToastTitle, ToastDescription };
+export { useToast, Toast, ToastTitle, ToastDescription, type IToastProps };
