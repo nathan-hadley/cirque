@@ -1,4 +1,5 @@
 import type { ProblemSubmission } from "@cirque-api/types";
+import axios from "axios";
 import { API_ENDPOINTS, API_KEY } from "@/constants/api";
 
 export type SubmitProblemSuccessResponse = {
@@ -17,24 +18,30 @@ export async function submitProblem(submission: ProblemSubmission): Promise<Subm
     throw new Error("API key is not set");
   }
 
-  const response = await fetch(API_ENDPOINTS.submitProblem, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-API-Key": API_KEY,
-    },
-    body: JSON.stringify(submission),
-  });
-
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
-    const errorResponse: SubmitProblemErrorResponse = {
-      success: false,
-      error: errorData.error || `Server error: ${response.status}`,
-    };
-    throw new Error(errorResponse.error);
+  try {
+    const { data } = await axios.post<SubmitProblemResponse>(
+      API_ENDPOINTS.submitProblem,
+      submission,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "X-API-Key": API_KEY,
+        },
+        timeout: 15000, // 15 seconds
+      }
+    );
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      // For network errors, rethrow AxiosError so callers can detect by type
+      if (!error.response || error.code === "ERR_NETWORK") {
+        throw error;
+      }
+      // For HTTP errors, surface a helpful message
+      const status = error.response.status;
+      const message = (error.response.data as any)?.error || `Server error: ${status}`;
+      throw new Error(message);
+    }
+    throw error as Error;
   }
-
-  const data = await response.json();
-  return data as SubmitProblemResponse;
 }
