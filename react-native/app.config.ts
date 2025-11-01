@@ -60,6 +60,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       "expo-image-picker",
       {
         photosPermission: "Cirque requires accesses your photos to contribute boulders to the app.",
+        cameraPermission: "Cirque requires access to your camera to take photos of boulders.",
       },
     ],
     "expo-font",
