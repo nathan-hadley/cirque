@@ -102,12 +102,6 @@ class SyncManager {
    * Process the entire queue
    */
   private async processQueue(): Promise<void> {
-    const online = await this.isOnline();
-    if (!online) {
-      this.isSyncing = false;
-      return;
-    }
-
     const queue = await offlineQueueService.getQueue();
     this.queueCount = queue.length;
     this.callbacks.onQueueChange?.(this.queueCount);
@@ -116,12 +110,6 @@ class SyncManager {
       this.isSyncing = false;
       this.callbacks.onSyncComplete?.();
       return;
-    }
-
-    // Only set syncing and call onSyncStart if we're starting a new sync
-    if (!this.isSyncing) {
-      this.isSyncing = true;
-      this.callbacks.onSyncStart?.();
     }
 
     // Process first item in queue
@@ -146,18 +134,33 @@ class SyncManager {
    * Public method to start sync
    */
   async sync(): Promise<void> {
-    // Prevent concurrent syncs
+    // Prevent concurrent syncs with atomic check-and-set
     if (this.isSyncing) {
       return;
     }
+    this.isSyncing = true;
 
-    const online = await this.isOnline();
-    if (!online) {
-      return;
+    try {
+      const online = await this.isOnline();
+      if (!online) {
+        this.isSyncing = false;
+        return;
+      }
+
+      // Cancel any pending scheduled retries (new sync supersedes them)
+      if (this.syncTimeout) {
+        clearTimeout(this.syncTimeout);
+        this.syncTimeout = null;
+      }
+
+      this.callbacks.onSyncStart?.();
+      await this.processQueue();
+    } catch (error) {
+      // Ensure flag is reset on unexpected errors
+      this.isSyncing = false;
+      console.error("Sync error:", error);
+      this.callbacks.onSyncError?.(error instanceof Error ? error : new Error(String(error)));
     }
-
-    // processQueue will set isSyncing = true before processing
-    await this.processQueue();
   }
 
   /**

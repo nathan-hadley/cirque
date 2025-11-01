@@ -5,8 +5,8 @@ import axios from "axios";
 import { submitProblem } from "@/api/problems";
 import { syncManager } from "@/services/sync/syncManager";
 
-const QUEUED_MESSAGE = "Submission saved - will submit when online";
-const SUBMITTED_MESSAGE = "Submission submitted successfully - we'll review it shortly";
+const QUEUED_MESSAGE = "Problem saved - will submit when online";
+const SUBMITTED_MESSAGE = "Problem submitted successfully - we'll review it shortly";
 
 export type SubmissionResult = {
   success: boolean;
