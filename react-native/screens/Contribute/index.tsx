@@ -134,8 +134,6 @@ export default function ContributeScreen() {
           message: result.message,
         });
         // Reset form
-        setContactName("");
-        setContactEmail("");
         setName("");
         setGrade(null);
         setSubarea("");
