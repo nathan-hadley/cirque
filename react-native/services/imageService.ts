@@ -70,12 +70,18 @@ export async function captureFromCamera(
 ): Promise<PickedImage | null> {
   const constraints = { ...DEFAULT_CONSTRAINTS, ...(options ?? {}) };
 
-  const result = await ImagePicker.launchCameraAsync({
-    allowsEditing: false,
-    quality: 1,
-    base64: true,
-    exif: false,
-  });
+  let result: ImagePicker.ImagePickerResult;
+  try {
+    result = await ImagePicker.launchCameraAsync({
+      allowsEditing: false,
+      quality: 1,
+      base64: true,
+      exif: false,
+    });
+  } catch (error) {
+    console.error("Camera launch failed:", error);
+    throw error;
+  }
 
   if (result.canceled) return null;
   const asset = result.assets?.[0];

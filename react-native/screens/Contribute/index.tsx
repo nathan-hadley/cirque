@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import type { ProblemSubmission } from "@cirque-api/types";
@@ -16,6 +16,7 @@ import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import { useSimpleToast } from "@/hooks/useSimpleToast";
 import { useSubmitProblem } from "@/hooks/useSubmitProblem";
+import { useQueueStore } from "@/stores/queueStore";
 import AreaPicker from "./AreaPicker";
 import CoordinateInput from "./CoordinateInput";
 import GradePicker from "./GradePicker";
@@ -28,6 +29,7 @@ export default function ContributeScreen() {
   const tabBarHeight = useBottomTabBarHeight();
   const showToast = useSimpleToast();
   const submitMutation = useSubmitProblem();
+  const queueCount = useQueueStore(state => state.count);
 
   const [contactName, setContactName] = useState("");
   const [contactEmail, setContactEmail] = useState("");
@@ -126,14 +128,12 @@ export default function ContributeScreen() {
     };
 
     submitMutation.mutate(submission, {
-      onSuccess: () => {
+      onSuccess: result => {
         showToast({
           action: "success",
-          message: "Problem submitted successfully! We'll review it shortly.",
+          message: result.message,
         });
         // Reset form
-        setContactName("");
-        setContactEmail("");
         setName("");
         setGrade(null);
         setSubarea("");
@@ -172,10 +172,20 @@ export default function ContributeScreen() {
         >
           <VStack className="flex-1 py-6" space="xl">
             <VStack space="xs" className="px-6">
-              <Heading size="2xl" className="text-typography-900">
-                Contribute
-              </Heading>
-              <Text className="text-typography-600">Share problems not in the app</Text>
+              <HStack className="items-center justify-between">
+                <VStack space="xs">
+                  <Heading size="2xl" className="text-typography-900">
+                    Contribute
+                  </Heading>
+                  <Text className="text-typography-600">Share problems not in the app</Text>
+                </VStack>
+                {queueCount > 0 && (
+                  <VStack className="items-center">
+                    <Text className="text-typography-600 text-xs">Queued</Text>
+                    <Text className="text-typography-900 font-semibold">{queueCount}</Text>
+                  </VStack>
+                )}
+              </HStack>
             </VStack>
 
             <Divider />

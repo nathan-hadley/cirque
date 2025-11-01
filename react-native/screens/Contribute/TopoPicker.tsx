@@ -8,7 +8,13 @@ import { Radio, RadioGroup, RadioIcon, RadioIndicator, RadioLabel } from "@/comp
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import { useSimpleToast } from "@/hooks/useSimpleToast";
-import { captureFromCamera, PickedImage, pickFromLibrary } from "@/services/imageService";
+import {
+  captureFromCamera,
+  PickedImage,
+  pickFromLibrary,
+  requestCameraPermission,
+  requestMediaLibraryPermission,
+} from "@/services/imageService";
 import ProblemPicker, { getTopoUri } from "./ProblemPicker";
 import { FieldError } from "./validation";
 
@@ -80,6 +86,7 @@ export default function TopoPicker({
 
   const handlePickImage = async () => {
     try {
+      await requestMediaLibraryPermission();
       const img = await pickFromLibrary();
       if (img) {
         onChange({
@@ -99,6 +106,7 @@ export default function TopoPicker({
 
   const handleCaptureImage = async () => {
     try {
+      await requestCameraPermission();
       const img = await captureFromCamera();
       if (img) {
         onChange({
