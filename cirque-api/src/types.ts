@@ -103,8 +103,7 @@ export const ProblemSubmissionSchema = z.object({
     topo: z.string().optional().describe("forestland-physical"),
     imageBase64: z.string().optional().describe("Base64 encoded image"),
   }),
-  // Optional idempotency key for duplicate prevention (backward compatible)
-  idempotencyKey: z.string().optional().describe("1699123456789-abc123def456"),
+  id: z.string().optional().describe("1699123456789-abc123def456"),
 });
 
 export type ProblemSubmission = z.infer<typeof ProblemSubmissionSchema>;

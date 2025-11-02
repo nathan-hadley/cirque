@@ -11,21 +11,13 @@ export type QueuedSubmission = {
   lastRetryAt?: number;
 };
 
-/**
- * Generate a unique ID using timestamp and random number
- */
 function generateId(): string {
   return `${Date.now()}-${Math.random().toString(36).substring(2, 15)}`;
 }
 
 class OfflineQueueService {
-  /**
-   * Add a submission to the offline queue
-   * Uses the submission's idempotency key if available, otherwise generates a new one
-   */
   async addSubmission(submission: ProblemSubmission): Promise<string> {
-    // Use the submission's idempotency key if it exists, otherwise generate one
-    const id = submission.idempotencyKey || generateId();
+    const id = submission.id || generateId();
     const queuedSubmission: QueuedSubmission = {
       id,
       submission,
@@ -40,9 +32,6 @@ class OfflineQueueService {
     return id;
   }
 
-  /**
-   * Get all queued submissions
-   */
   async getQueue(): Promise<QueuedSubmission[]> {
     try {
       const data = await AsyncStorage.getItem(QUEUE_STORAGE_KEY);
@@ -56,18 +45,12 @@ class OfflineQueueService {
     }
   }
 
-  /**
-   * Remove a submission from the queue by ID
-   */
   async removeSubmission(id: string): Promise<void> {
     const queue = await this.getQueue();
     const filtered = queue.filter(item => item.id !== id);
     await AsyncStorage.setItem(QUEUE_STORAGE_KEY, JSON.stringify(filtered));
   }
 
-  /**
-   * Update a queued submission (e.g., increment retry count)
-   */
   async updateSubmission(id: string, updates: Partial<QueuedSubmission>): Promise<void> {
     const queue = await this.getQueue();
     const index = queue.findIndex(item => item.id === id);
@@ -77,16 +60,10 @@ class OfflineQueueService {
     }
   }
 
-  /**
-   * Clear all submissions from the queue
-   */
   async clearQueue(): Promise<void> {
     await AsyncStorage.removeItem(QUEUE_STORAGE_KEY);
   }
 
-  /**
-   * Get the count of queued submissions
-   */
   async getQueueCount(): Promise<number> {
     const queue = await this.getQueue();
     return queue.length;
