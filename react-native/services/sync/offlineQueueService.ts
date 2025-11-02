@@ -14,7 +14,7 @@ export type QueuedSubmission = {
 /**
  * Generate a unique ID using timestamp and random number
  */
-function generateId(): string {
+export function generateId(): string {
   return `${Date.now()}-${Math.random().toString(36).substring(2, 15)}`;
 }
 
@@ -23,9 +23,8 @@ class OfflineQueueService {
    * Add a submission to the offline queue
    */
   async addSubmission(submission: ProblemSubmission): Promise<string> {
-    const id = submission.id || generateId();
     const queuedSubmission: QueuedSubmission = {
-      id,
+      id: submission.id,
       submission,
       timestamp: Date.now(),
       retryCount: 0,

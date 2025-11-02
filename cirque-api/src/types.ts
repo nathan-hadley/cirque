@@ -30,6 +30,7 @@ export const VALIDATION_CONSTRAINTS = {
 } as const;
 
 export const ProblemSubmissionSchema = z.object({
+  id: z.string().describe("1699123456789-abc123def456"),
   contact: z.object({
     name: z
       .string({ required_error: "Name is required" })
@@ -103,7 +104,6 @@ export const ProblemSubmissionSchema = z.object({
     topo: z.string().optional().describe("forestland-physical"),
     imageBase64: z.string().optional().describe("Base64 encoded image"),
   }),
-  id: z.string().optional().describe("1699123456789-abc123def456"),
 });
 
 export type ProblemSubmission = z.infer<typeof ProblemSubmissionSchema>;

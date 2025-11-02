@@ -13,9 +13,7 @@ export type SubmitProblemErrorResponse = {
 
 export type SubmitProblemResponse = SubmitProblemSuccessResponse | SubmitProblemErrorResponse;
 
-export async function submitProblem(
-  submission: ProblemSubmission
-): Promise<SubmitProblemResponse> {
+export async function submitProblem(submission: ProblemSubmission): Promise<SubmitProblemResponse> {
   if (!API_KEY) {
     throw new Error("API key is not set");
   }

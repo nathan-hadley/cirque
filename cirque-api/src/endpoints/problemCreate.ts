@@ -54,12 +54,12 @@ export class SubmitProblem extends OpenAPIRoute {
       const existingSubmission = await c.env.RATE_LIMIT_KV.get(kvKey);
 
       if (existingSubmission) {
-        console.info(`Duplicate submission detected with idempotency key: ${idempotencyKey}`);
+        console.info(
+          `Duplicate submission detected with idempotency key: ${idempotencyKey}`
+        );
         return Response.json({ success: true });
       }
     }
-
-    console.info({ submission, idempotencyKey });
 
     // Send email and wait for result
     const emailResult = await sendProblemSubmissionEmail(submission, c.env);
@@ -76,9 +76,9 @@ export class SubmitProblem extends OpenAPIRoute {
       const kvKey = `idempotency:${idempotencyKey}`;
       await c.env.RATE_LIMIT_KV.put(
         kvKey,
-        JSON.stringify({ 
+        JSON.stringify({
           timestamp: Date.now(),
-          problemName: submission.problem.name 
+          problemName: submission.problem.name,
         }),
         { expirationTtl: 604800 } // 7 days
       );
