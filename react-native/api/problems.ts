@@ -26,6 +26,7 @@ export async function submitProblem(
       "X-API-Key": API_KEY,
     };
 
+    // Add idempotency key from submission if provided
     if (submission.id) {
       headers["Idempotency-Key"] = submission.id;
     }
@@ -35,7 +36,7 @@ export async function submitProblem(
       submission,
       {
         headers,
-        timeout: 15000,
+        timeout: 15000, // 15 seconds
       }
     );
     return data;

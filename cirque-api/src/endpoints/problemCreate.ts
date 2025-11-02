@@ -42,6 +42,7 @@ export class SubmitProblem extends OpenAPIRoute {
   };
 
   async handle(c: AppContext) {
+    // Get validated data (validation handled by Zod schema)
     const data = await this.getValidatedData<typeof this.schema>();
 
     const submission = data.body;
@@ -60,6 +61,7 @@ export class SubmitProblem extends OpenAPIRoute {
 
     console.info({ submission, idempotencyKey });
 
+    // Send email and wait for result
     const emailResult = await sendProblemSubmissionEmail(submission, c.env);
 
     if (!emailResult.success) {
@@ -68,6 +70,8 @@ export class SubmitProblem extends OpenAPIRoute {
       );
     }
 
+    // Store idempotency key after successful processing
+    // TTL: 7 days (604800 seconds) - enough time to prevent duplicates during retries
     if (idempotencyKey) {
       const kvKey = `idempotency:${idempotencyKey}`;
       await c.env.RATE_LIMIT_KV.put(
@@ -76,10 +80,11 @@ export class SubmitProblem extends OpenAPIRoute {
           timestamp: Date.now(),
           problemName: submission.problem.name 
         }),
-        { expirationTtl: 604800 }
+        { expirationTtl: 604800 } // 7 days
       );
     }
 
+    // Return success only if email was sent
     return Response.json({ success: true });
   }
 }

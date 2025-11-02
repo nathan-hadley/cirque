@@ -17,6 +17,7 @@ export type SubmissionResult = {
 export function useSubmitProblem() {
   return useMutation({
     mutationFn: async (submission: ProblemSubmission): Promise<SubmissionResult> => {
+      // Check network status at execution time, not at hook initialization
       let isOnline = true;
       try {
         const networkState = await Network.getNetworkStateAsync();
@@ -26,6 +27,7 @@ export function useSubmitProblem() {
         isOnline = false;
       }
 
+      // If offline, queue the submission
       if (!isOnline) {
         await syncManager.queueSubmission(submission);
         return {
@@ -35,6 +37,7 @@ export function useSubmitProblem() {
         };
       }
 
+      // If online, try to submit immediately
       try {
         await submitProblem(submission);
         return {
@@ -43,8 +46,10 @@ export function useSubmitProblem() {
           message: SUBMITTED_MESSAGE,
         };
       } catch (error) {
+        // If it's a network error (AxiosError with no response/ERR_NETWORK), queue it
         if (axios.isAxiosError(error) && (!error.response || error.code === "ERR_NETWORK")) {
           await syncManager.queueSubmission(submission);
+          // Trigger sync when network comes back
           syncManager.sync();
           return {
             success: true,
@@ -53,6 +58,7 @@ export function useSubmitProblem() {
           };
         }
 
+        // Re-throw non-network errors
         throw error;
       }
     },
