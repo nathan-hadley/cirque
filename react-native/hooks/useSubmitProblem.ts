@@ -8,6 +8,13 @@ import { syncManager } from "@/services/sync/syncManager";
 const QUEUED_MESSAGE = "Problem saved - will submit when online";
 const SUBMITTED_MESSAGE = "Problem submitted successfully - we'll review it shortly";
 
+/**
+ * Generate a unique idempotency key using timestamp and random number
+ */
+function generateIdempotencyKey(): string {
+  return `${Date.now()}-${Math.random().toString(36).substring(2, 15)}`;
+}
+
 export type SubmissionResult = {
   success: boolean;
   queued: boolean;
@@ -17,6 +24,9 @@ export type SubmissionResult = {
 export function useSubmitProblem() {
   return useMutation({
     mutationFn: async (submission: ProblemSubmission): Promise<SubmissionResult> => {
+      // Generate idempotency key upfront for ALL submissions
+      const idempotencyKey = generateIdempotencyKey();
+
       // Check network status at execution time, not at hook initialization
       let isOnline = true;
       try {
@@ -27,9 +37,9 @@ export function useSubmitProblem() {
         isOnline = false;
       }
 
-      // If offline, queue the submission
+      // If offline, queue the submission with the idempotency key
       if (!isOnline) {
-        await syncManager.queueSubmission(submission);
+        await syncManager.queueSubmission(submission, idempotencyKey);
         return {
           success: true,
           queued: true,
@@ -37,9 +47,9 @@ export function useSubmitProblem() {
         };
       }
 
-      // If online, try to submit immediately
+      // If online, try to submit immediately with idempotency key
       try {
-        await submitProblem(submission);
+        await submitProblem(submission, idempotencyKey);
         return {
           success: true,
           queued: false,
@@ -48,7 +58,7 @@ export function useSubmitProblem() {
       } catch (error) {
         // If it's a network error (AxiosError with no response/ERR_NETWORK), queue it
         if (axios.isAxiosError(error) && (!error.response || error.code === "ERR_NETWORK")) {
-          await syncManager.queueSubmission(submission);
+          await syncManager.queueSubmission(submission, idempotencyKey);
           // Trigger sync when network comes back
           syncManager.sync();
           return {

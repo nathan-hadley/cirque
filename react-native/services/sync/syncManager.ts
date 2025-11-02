@@ -51,7 +51,8 @@ class SyncManager {
    */
   private async processSubmission(queuedSubmission: QueuedSubmission): Promise<void> {
     try {
-      await submitProblem(queuedSubmission.submission);
+      // Use the queued submission's ID as the idempotency key
+      await submitProblem(queuedSubmission.submission, queuedSubmission.id);
 
       // Success - remove from queue
       await offlineQueueService.removeSubmission(queuedSubmission.id);
@@ -183,9 +184,10 @@ class SyncManager {
 
   /**
    * Queue a submission for later sync
+   * @param idempotencyKey Optional idempotency key to use. If not provided, a new one will be generated.
    */
-  async queueSubmission(submission: ProblemSubmission): Promise<string> {
-    const id = await offlineQueueService.addSubmission(submission);
+  async queueSubmission(submission: ProblemSubmission, idempotencyKey?: string): Promise<string> {
+    const id = await offlineQueueService.addSubmission(submission, idempotencyKey);
     this.queueCount++;
     this.callbacks.onQueueChange?.(this.queueCount);
     return id;

@@ -21,9 +21,10 @@ function generateId(): string {
 class OfflineQueueService {
   /**
    * Add a submission to the offline queue
+   * @param idempotencyKey Optional idempotency key. If not provided, a new one will be generated.
    */
-  async addSubmission(submission: ProblemSubmission): Promise<string> {
-    const id = generateId();
+  async addSubmission(submission: ProblemSubmission, idempotencyKey?: string): Promise<string> {
+    const id = idempotencyKey || generateId();
     const queuedSubmission: QueuedSubmission = {
       id,
       submission,
