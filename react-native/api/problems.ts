@@ -14,8 +14,7 @@ export type SubmitProblemErrorResponse = {
 export type SubmitProblemResponse = SubmitProblemSuccessResponse | SubmitProblemErrorResponse;
 
 export async function submitProblem(
-  submission: ProblemSubmission,
-  idempotencyKey?: string
+  submission: ProblemSubmission
 ): Promise<SubmitProblemResponse> {
   if (!API_KEY) {
     throw new Error("API key is not set");
@@ -27,9 +26,9 @@ export async function submitProblem(
       "X-API-Key": API_KEY,
     };
 
-    // Add idempotency key if provided
-    if (idempotencyKey) {
-      headers["Idempotency-Key"] = idempotencyKey;
+    // Add idempotency key from submission if provided
+    if (submission.idempotencyKey) {
+      headers["Idempotency-Key"] = submission.idempotencyKey;
     }
 
     const { data } = await axios.post<SubmitProblemResponse>(

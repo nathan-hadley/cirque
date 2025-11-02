@@ -109,6 +109,9 @@ export default function ContributeScreen() {
       topoFilename = `${slugifiedArea}-${slugifiedName}`;
     }
 
+    // Generate unique idempotency key for this submission
+    const idempotencyKey = `${Date.now()}-${Math.random().toString(36).substring(2, 15)}`;
+
     const submission: ProblemSubmission = {
       contact: {
         name: contactName,
@@ -125,6 +128,7 @@ export default function ContributeScreen() {
         ...(topoFilename && { topo: topoFilename }),
         ...(topoData.pickedImage?.base64 && { imageBase64: topoData.pickedImage.base64 }),
       },
+      idempotencyKey,
     };
 
     submitMutation.mutate(submission, {

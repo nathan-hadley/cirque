@@ -47,8 +47,8 @@ export class SubmitProblem extends OpenAPIRoute {
 
     const submission = data.body;
 
-    // Check for idempotency key in headers
-    const idempotencyKey = c.req.header("Idempotency-Key");
+    // Get idempotency key from submission body or fall back to header (for backward compatibility)
+    const idempotencyKey = submission.idempotencyKey || c.req.header("Idempotency-Key");
 
     // If idempotency key is provided, check if we've already processed this submission
     if (idempotencyKey) {
