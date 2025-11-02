@@ -30,6 +30,7 @@ export const VALIDATION_CONSTRAINTS = {
 } as const;
 
 export const ProblemSubmissionSchema = z.object({
+  id: z.string().describe("1699123456789-abc123def456"),
   contact: z.object({
     name: z
       .string({ required_error: "Name is required" })

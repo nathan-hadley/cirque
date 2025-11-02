@@ -19,14 +19,21 @@ export async function submitProblem(submission: ProblemSubmission): Promise<Subm
   }
 
   try {
+    const headers: Record<string, string> = {
+      "Content-Type": "application/json",
+      "X-API-Key": API_KEY,
+    };
+
+    // Add idempotency key from submission if provided
+    if (submission.id) {
+      headers["Idempotency-Key"] = submission.id;
+    }
+
     const { data } = await axios.post<SubmitProblemResponse>(
       API_ENDPOINTS.submitProblem,
       submission,
       {
-        headers: {
-          "Content-Type": "application/json",
-          "X-API-Key": API_KEY,
-        },
+        headers,
         timeout: 15000, // 15 seconds
       }
     );

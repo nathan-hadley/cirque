@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import type { ProblemSubmission } from "@cirque-api/types";
@@ -16,6 +16,7 @@ import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import { useSimpleToast } from "@/hooks/useSimpleToast";
 import { useSubmitProblem } from "@/hooks/useSubmitProblem";
+import { generateId } from "@/services/sync/offlineQueueService";
 import { useQueueStore } from "@/stores/queueStore";
 import AreaPicker from "./AreaPicker";
 import CoordinateInput from "./CoordinateInput";
@@ -109,7 +110,10 @@ export default function ContributeScreen() {
       topoFilename = `${slugifiedArea}-${slugifiedName}`;
     }
 
+    const id = generateId();
+
     const submission: ProblemSubmission = {
+      id,
       contact: {
         name: contactName,
         email: contactEmail,
