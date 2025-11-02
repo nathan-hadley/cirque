@@ -47,12 +47,38 @@ export class SubmitProblem extends OpenAPIRoute {
 
     const submission = data.body;
 
-    console.info({ submission });
+    // Check for idempotency key in headers
+    const idempotencyKey = c.req.header("Idempotency-Key");
+    
+    if (idempotencyKey) {
+      // Check if we've already processed this idempotency key
+      const idempotencyKeyPrefix = `idempotency:${idempotencyKey}`;
+      const existing = await c.env.RATE_LIMIT_KV.get(idempotencyKeyPrefix);
+      
+      if (existing) {
+        // This is a duplicate request - return success without processing
+        console.info(`Duplicate submission detected for idempotency key: ${idempotencyKey}`);
+        return Response.json({ success: true });
+      }
+      
+      // Store idempotency key IMMEDIATELY to prevent race conditions
+      // We'll delete it if processing fails, but keep it if successful
+      // Use a timestamp value to track when it was processed
+      await c.env.RATE_LIMIT_KV.put(idempotencyKeyPrefix, Date.now().toString(), {
+        expirationTtl: 86400, // 24 hours
+      });
+    }
+
+    console.info({ submission, idempotencyKey });
 
     // Send email and wait for result
     const emailResult = await sendProblemSubmissionEmail(submission, c.env);
 
     if (!emailResult.success) {
+      // If email failed, remove the idempotency key so it can be retried
+      if (idempotencyKey) {
+        await c.env.RATE_LIMIT_KV.delete(`idempotency:${idempotencyKey}`);
+      }
       return errorResponse(
         emailResult.error || "Failed to send submission email"
       );

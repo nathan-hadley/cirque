@@ -13,9 +13,22 @@ export type SubmitProblemErrorResponse = {
 
 export type SubmitProblemResponse = SubmitProblemSuccessResponse | SubmitProblemErrorResponse;
 
-export async function submitProblem(submission: ProblemSubmission): Promise<SubmitProblemResponse> {
+export async function submitProblem(
+  submission: ProblemSubmission,
+  idempotencyKey?: string
+): Promise<SubmitProblemResponse> {
   if (!API_KEY) {
     throw new Error("API key is not set");
+  }
+
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+    "X-API-Key": API_KEY,
+  };
+
+  // Add idempotency key header if provided
+  if (idempotencyKey) {
+    headers["Idempotency-Key"] = idempotencyKey;
   }
 
   try {
@@ -23,10 +36,7 @@ export async function submitProblem(submission: ProblemSubmission): Promise<Subm
       API_ENDPOINTS.submitProblem,
       submission,
       {
-        headers: {
-          "Content-Type": "application/json",
-          "X-API-Key": API_KEY,
-        },
+        headers,
         timeout: 15000, // 15 seconds
       }
     );

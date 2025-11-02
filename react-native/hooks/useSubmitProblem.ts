@@ -38,8 +38,11 @@ export function useSubmitProblem() {
       }
 
       // If online, try to submit immediately
+      // Generate idempotency key for immediate submission
+      // This ensures if the submission is queued due to network error, retries use the same key
+      const idempotencyKey = `${Date.now()}-${Math.random().toString(36).substring(2, 15)}`;
       try {
-        await submitProblem(submission);
+        await submitProblem(submission, idempotencyKey);
         return {
           success: true,
           queued: false,
@@ -47,8 +50,9 @@ export function useSubmitProblem() {
         };
       } catch (error) {
         // If it's a network error (AxiosError with no response/ERR_NETWORK), queue it
+        // Use the same idempotency key to prevent duplicates if the request actually succeeded
         if (axios.isAxiosError(error) && (!error.response || error.code === "ERR_NETWORK")) {
-          await syncManager.queueSubmission(submission);
+          await syncManager.queueSubmission(submission, idempotencyKey);
           // Trigger sync when network comes back
           syncManager.sync();
           return {
