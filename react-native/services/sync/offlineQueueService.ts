@@ -34,7 +34,7 @@ class OfflineQueueService {
     queue.push(queuedSubmission);
     await AsyncStorage.setItem(QUEUE_STORAGE_KEY, JSON.stringify(queue));
 
-    return id;
+    return submission.id;
   }
 
   /**
