@@ -50,21 +50,20 @@ class OfflineQueueService {
         return [];
       }
       const queue = JSON.parse(data) as QueuedSubmission[];
-      let needsSave = false;
       const normalizedQueue = queue.map(item => {
-        if (item.submission.clientSubmissionId && item.submission.clientSubmissionId.length > 0) {
+        const submissionWithId = ensureClientSubmissionId(item.submission);
+        if (submissionWithId === item.submission) {
           return item;
         }
 
-        needsSave = true;
-        const submissionWithId = ensureClientSubmissionId(item.submission);
         return {
           ...item,
           submission: submissionWithId,
         };
       });
 
-      if (needsSave) {
+      const hasChanges = normalizedQueue.some((item, index) => item !== queue[index]);
+      if (hasChanges) {
         await AsyncStorage.setItem(QUEUE_STORAGE_KEY, JSON.stringify(normalizedQueue));
       }
 
