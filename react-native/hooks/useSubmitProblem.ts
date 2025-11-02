@@ -4,6 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { submitProblem } from "@/api/problems";
 import { syncManager } from "@/services/sync/syncManager";
+import { ensureClientSubmissionId } from "@/services/sync/clientSubmissionId";
 
 const QUEUED_MESSAGE = "Problem saved - will submit when online";
 const SUBMITTED_MESSAGE = "Problem submitted successfully - we'll review it shortly";
@@ -17,6 +18,8 @@ export type SubmissionResult = {
 export function useSubmitProblem() {
   return useMutation({
     mutationFn: async (submission: ProblemSubmission): Promise<SubmissionResult> => {
+      const submissionWithId = ensureClientSubmissionId(submission);
+
       // Check network status at execution time, not at hook initialization
       let isOnline = true;
       try {
@@ -29,7 +32,7 @@ export function useSubmitProblem() {
 
       // If offline, queue the submission
       if (!isOnline) {
-        await syncManager.queueSubmission(submission);
+        await syncManager.queueSubmission(submissionWithId);
         return {
           success: true,
           queued: true,
@@ -39,7 +42,7 @@ export function useSubmitProblem() {
 
       // If online, try to submit immediately
       try {
-        await submitProblem(submission);
+        await submitProblem(submissionWithId);
         return {
           success: true,
           queued: false,
@@ -48,7 +51,7 @@ export function useSubmitProblem() {
       } catch (error) {
         // If it's a network error (AxiosError with no response/ERR_NETWORK), queue it
         if (axios.isAxiosError(error) && (!error.response || error.code === "ERR_NETWORK")) {
-          await syncManager.queueSubmission(submission);
+          await syncManager.queueSubmission(submissionWithId);
           // Trigger sync when network comes back
           syncManager.sync();
           return {

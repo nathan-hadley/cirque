@@ -1,5 +1,6 @@
 import type { ProblemSubmission } from "@cirque-api/types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ensureClientSubmissionId } from "./clientSubmissionId";
 
 const QUEUE_STORAGE_KEY = "@cirque/offline-submissions";
 
@@ -23,10 +24,11 @@ class OfflineQueueService {
    * Add a submission to the offline queue
    */
   async addSubmission(submission: ProblemSubmission): Promise<string> {
+    const submissionWithId = ensureClientSubmissionId(submission);
     const id = generateId();
     const queuedSubmission: QueuedSubmission = {
       id,
-      submission,
+      submission: submissionWithId,
       timestamp: Date.now(),
       retryCount: 0,
     };
@@ -47,7 +49,26 @@ class OfflineQueueService {
       if (!data) {
         return [];
       }
-      return JSON.parse(data) as QueuedSubmission[];
+      const queue = JSON.parse(data) as QueuedSubmission[];
+      let needsSave = false;
+      const normalizedQueue = queue.map(item => {
+        if (item.submission.clientSubmissionId && item.submission.clientSubmissionId.length > 0) {
+          return item;
+        }
+
+        needsSave = true;
+        const submissionWithId = ensureClientSubmissionId(item.submission);
+        return {
+          ...item,
+          submission: submissionWithId,
+        };
+      });
+
+      if (needsSave) {
+        await AsyncStorage.setItem(QUEUE_STORAGE_KEY, JSON.stringify(normalizedQueue));
+      }
+
+      return normalizedQueue;
     } catch (error) {
       console.error("Error reading queue from storage:", error);
       return [];

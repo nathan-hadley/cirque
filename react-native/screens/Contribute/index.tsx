@@ -17,6 +17,7 @@ import { VStack } from "@/components/ui/vstack";
 import { useSimpleToast } from "@/hooks/useSimpleToast";
 import { useSubmitProblem } from "@/hooks/useSubmitProblem";
 import { useQueueStore } from "@/stores/queueStore";
+import { generateClientSubmissionId } from "@/services/sync/clientSubmissionId";
 import AreaPicker from "./AreaPicker";
 import CoordinateInput from "./CoordinateInput";
 import GradePicker from "./GradePicker";
@@ -110,6 +111,7 @@ export default function ContributeScreen() {
     }
 
     const submission: ProblemSubmission = {
+      clientSubmissionId: generateClientSubmissionId(),
       contact: {
         name: contactName,
         email: contactEmail,

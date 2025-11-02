@@ -47,6 +47,17 @@ export class SubmitProblem extends OpenAPIRoute {
 
     const submission = data.body;
 
+    const dedupeKey = `submission:${submission.clientSubmissionId}`;
+
+    const alreadyProcessed = await c.env.RATE_LIMIT_KV.get(dedupeKey);
+    if (alreadyProcessed) {
+      console.info({
+        event: "duplicate_submission",
+        clientSubmissionId: submission.clientSubmissionId,
+      });
+      return Response.json({ success: true });
+    }
+
     console.info({ submission });
 
     // Send email and wait for result
@@ -57,6 +68,10 @@ export class SubmitProblem extends OpenAPIRoute {
         emailResult.error || "Failed to send submission email"
       );
     }
+
+    await c.env.RATE_LIMIT_KV.put(dedupeKey, "processed", {
+      expirationTtl: 60 * 60 * 24 * 7, // 7 days
+    });
 
     // Return success only if email was sent
     return Response.json({ success: true });

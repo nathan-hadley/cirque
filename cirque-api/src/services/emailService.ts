@@ -89,6 +89,8 @@ function formatEmailContent(submission: ProblemSubmission): string {
 New Problem Submission
 =====================
 
+Submission ID: ${submission.clientSubmissionId}
+
 Contact Information:
 - Name: ${submission.contact.name}
 - Email: ${submission.contact.email}
