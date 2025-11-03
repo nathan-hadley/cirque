@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
@@ -28,32 +28,26 @@ export default function GradeFilterSheet({ isOpen, onClose }: GradeFilterSheetPr
 
   const [localMinGrade, setLocalMinGrade] = useState(minGrade);
   const [localMaxGrade, setLocalMaxGrade] = useState(maxGrade);
-  const minGradeRef = useRef(minGrade);
-  const maxGradeRef = useRef(maxGrade);
 
   function handleMinGradeChange(value: number) {
     // Prevent min from exceeding max
     const newMin = Math.min(value, localMaxGrade - 1);
     setLocalMinGrade(newMin);
-    minGradeRef.current = newMin;
   }
 
   function handleMaxGradeChange(value: number) {
     // Prevent max from going below min
     const newMax = Math.max(value, localMinGrade + 1);
     setLocalMaxGrade(newMax);
-    maxGradeRef.current = newMax;
   }
 
   function handleReset() {
     setLocalMinGrade(MIN_GRADE);
     setLocalMaxGrade(MAX_GRADE);
-    minGradeRef.current = MIN_GRADE;
-    maxGradeRef.current = MAX_GRADE;
   }
 
   function handleClose() {
-    onClose(minGradeRef.current, maxGradeRef.current);
+    onClose(localMinGrade, localMaxGrade);
   }
 
   return (
