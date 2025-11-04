@@ -32,8 +32,21 @@ function syncAreas() {
     console.log('🏔️ Reading areas.geojson...');
     const areasData = readGeoJsonFile(areasGeojsonPath);
     
-    const timestamp = getTimestamp(isValidation);
+    // Generate content with placeholder timestamp first
+    const tempContent = generateTsContent({
+      sourceFile: 'cirque-data/areas/areas.geojson',
+      syncCommand: 'sync-areas',
+      dataName: 'areas',
+      description: 'area boundary',
+      geometryType: 'Point',
+      data: areasData,
+      timestamp: 'PLACEHOLDER'
+    });
     
+    // Get timestamp (preserves existing if content unchanged)
+    const timestamp = getTimestamp(isValidation, areasOutputPath, tempContent);
+    
+    // Generate final content with correct timestamp
     const areasTsContent = generateTsContent({
       sourceFile: 'cirque-data/areas/areas.geojson',
       syncCommand: 'sync-areas',
@@ -74,8 +87,21 @@ function syncSubareas() {
     console.log('🏔️ Reading subarea-centers.geojson...');
     const subareasData = readGeoJsonFile(subareasGeojsonPath);
     
-    const timestamp = getTimestamp(isValidation);
+    // Generate content with placeholder timestamp first
+    const tempContent = generateTsContent({
+      sourceFile: 'cirque-data/subareas/subarea-centers.geojson',
+      syncCommand: 'sync-areas',
+      dataName: 'subareas',
+      description: 'subarea label',
+      geometryType: 'Point',
+      data: subareasData,
+      timestamp: 'PLACEHOLDER'
+    });
     
+    // Get timestamp (preserves existing if content unchanged)
+    const timestamp = getTimestamp(isValidation, subareasOutputPath, tempContent);
+    
+    // Generate final content with correct timestamp
     const subareasTsContent = generateTsContent({
       sourceFile: 'cirque-data/subareas/subarea-centers.geojson',
       syncCommand: 'sync-areas',
@@ -116,8 +142,21 @@ function syncSubareaPolygons() {
     console.log('🏔️ Reading subareas.geojson...');
     const subareaPolygonsData = readGeoJsonFile(subareaPolygonsGeojsonPath);
     
-    const timestamp = getTimestamp(isValidation);
+    // Generate content with placeholder timestamp first
+    const tempContent = generateTsContent({
+      sourceFile: 'cirque-data/subareas/subareas.geojson',
+      syncCommand: 'sync-areas',
+      dataName: 'subareaPolygons',
+      description: 'subarea polygon boundary',
+      geometryType: 'LineString',
+      data: subareaPolygonsData,
+      timestamp: 'PLACEHOLDER'
+    });
     
+    // Get timestamp (preserves existing if content unchanged)
+    const timestamp = getTimestamp(isValidation, subareaPolygonsOutputPath, tempContent);
+    
+    // Generate final content with correct timestamp
     const subareaPolygonsTsContent = generateTsContent({
       sourceFile: 'cirque-data/subareas/subareas.geojson',
       syncCommand: 'sync-areas',

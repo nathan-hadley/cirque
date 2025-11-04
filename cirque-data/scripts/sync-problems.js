@@ -24,8 +24,21 @@ function syncProblems() {
     console.log('📋 Reading problems.geojson...');
     const problemsData = readGeoJsonFile(problemsGeojsonPath);
     
-    const timestamp = getTimestamp(isValidation);
+    // Generate content with placeholder timestamp first
+    const tempContent = generateTsContent({
+      sourceFile: 'cirque-data/problems/problems.geojson',
+      syncCommand: 'sync-problems',
+      dataName: 'problems',
+      description: 'climbing problems',
+      geometryType: 'Point',
+      data: problemsData,
+      timestamp: 'PLACEHOLDER'
+    });
     
+    // Get timestamp (preserves existing if content unchanged)
+    const timestamp = getTimestamp(isValidation, problemsOutputPath, tempContent);
+    
+    // Generate final content with correct timestamp
     const problemsTsContent = generateTsContent({
       sourceFile: 'cirque-data/problems/problems.geojson',
       syncCommand: 'sync-problems',

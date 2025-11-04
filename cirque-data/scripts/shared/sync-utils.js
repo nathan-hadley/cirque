@@ -122,12 +122,36 @@ function writeFile(outputPath, content) {
 }
 
 /**
- * Get timestamp for generation
+ * Get timestamp for generation, preserving existing if content hasn't changed
  * @param {boolean} isValidation - Whether this is a validation run
+ * @param {string} outputPath - Path to output file
+ * @param {string} newContent - New content to be written
  * @returns {string} Timestamp string
  */
-function getTimestamp(isValidation) {
-  return isValidation ? 'VALIDATION_RUN' : new Date().toISOString();
+function getTimestamp(isValidation, outputPath, newContent) {
+  if (isValidation) {
+    return 'VALIDATION_RUN';
+  }
+
+  // Check if file exists and extract existing timestamp
+  if (fs.existsSync(outputPath)) {
+    const existingContent = fs.readFileSync(outputPath, 'utf8');
+    const existingTimestamp = existingContent.match(/\* Generated: (.+)/)?.[1];
+    
+    if (existingTimestamp) {
+      // Compare content without timestamps
+      const existingWithoutTimestamp = existingContent.replace(/\* Generated: .+/, '* Generated: PLACEHOLDER');
+      const newWithoutTimestamp = newContent.replace(/\* Generated: .+/, '* Generated: PLACEHOLDER');
+      
+      // If content is identical (ignoring timestamp), preserve old timestamp
+      if (existingWithoutTimestamp === newWithoutTimestamp) {
+        return existingTimestamp;
+      }
+    }
+  }
+
+  // Content changed or no existing file, use new timestamp
+  return new Date().toISOString();
 }
 
 /**

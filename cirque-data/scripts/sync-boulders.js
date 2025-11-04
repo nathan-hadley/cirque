@@ -24,8 +24,21 @@ function syncBoulders() {
     console.log('🪨 Reading boulders.geojson...');
     const bouldersData = readGeoJsonFile(bouldersGeojsonPath);
     
-    const timestamp = getTimestamp(isValidation);
+    // Generate content with placeholder timestamp first
+    const tempContent = generateTsContent({
+      sourceFile: 'cirque-data/boulders/boulders.geojson',
+      syncCommand: 'sync-boulders',
+      dataName: 'boulders',
+      description: 'boulder outline',
+      geometryType: 'LineString',
+      data: bouldersData,
+      timestamp: 'PLACEHOLDER'
+    });
     
+    // Get timestamp (preserves existing if content unchanged)
+    const timestamp = getTimestamp(isValidation, bouldersOutputPath, tempContent);
+    
+    // Generate final content with correct timestamp
     const bouldersTsContent = generateTsContent({
       sourceFile: 'cirque-data/boulders/boulders.geojson',
       syncCommand: 'sync-boulders',
