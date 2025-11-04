@@ -3318,6 +3318,26 @@
                     47.656364
                 ]
             }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Pr Test",
+                "grade": "V3",
+                "subarea": "Forestland",
+                "color": "",
+                "order": "",
+                "topo": "forestland-pr-test",
+                "line": "[[155,394],[254,360],[408,263],[418,163],[289,71],[186,98],[167,199],[270,220],[313,190],[259,162]]",
+                "description": "Pr"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.658094,
+                    47.608987
+                ]
+            }
         }
     ]
 }
