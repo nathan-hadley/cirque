@@ -62,24 +62,27 @@ export class SubmitProblem extends OpenAPIRoute {
       }
     }
 
-    // Send email and wait for result
-    const emailResult = await sendProblemSubmissionEmail(submission, c.env);
-
-    if (!emailResult.success) {
-      return errorResponse(
-        emailResult.error || "Failed to send submission email"
-      );
-    }
-
-    // Create GitHub PR with the problem changes
+    // Create GitHub PR with the problem changes (critical path)
     const prResult = await createProblemPR(submission, c.env);
 
     if (!prResult.success) {
       console.error("Failed to create GitHub PR:", prResult.error);
-      // Don't fail the request if PR creation fails - email was sent successfully
-      // Log the error for manual follow-up
+      return errorResponse(
+        prResult.error || "Failed to create GitHub PR for submission"
+      );
+    }
+
+    console.info(`GitHub PR created successfully: ${prResult.prUrl}`);
+
+    // Send email notification (optional - don't fail if this fails)
+    const emailResult = await sendProblemSubmissionEmail(submission, c.env);
+
+    if (!emailResult.success) {
+      console.error("Failed to send notification email:", emailResult.error);
+      // Don't fail the request - PR was created successfully
+      // The problem is in the system, email is just a notification
     } else {
-      console.log(`GitHub PR created successfully: ${prResult.prUrl}`);
+      console.info("Notification email sent successfully");
     }
 
     // Store idempotency key after successful processing
@@ -97,7 +100,7 @@ export class SubmitProblem extends OpenAPIRoute {
       );
     }
 
-    // Return success only if email was sent
+    // Return success if PR was created (email failure is non-critical)
     return Response.json({ success: true });
   }
 }
