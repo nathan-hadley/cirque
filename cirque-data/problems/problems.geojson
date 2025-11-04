@@ -3318,6 +3318,26 @@
                     47.656364
                 ]
             }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Automation Test",
+                "grade": "V3",
+                "subarea": "Forestland",
+                "color": "",
+                "order": "",
+                "topo": "forestland-automation-test",
+                "line": "[[296,412],[296,304],[314,260],[306,217],[291,181],[306,150],[349,145],[411,152],[439,102],[402,47]]",
+                "description": "Test"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -120.658094,
+                    47.608987
+                ]
+            }
         }
     ]
 }
