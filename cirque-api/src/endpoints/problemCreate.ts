@@ -2,6 +2,7 @@ import { OpenAPIRoute } from "chanfana";
 import { z } from "zod";
 import { type AppContext, ProblemSubmissionSchema } from "../types";
 import { sendProblemSubmissionEmail } from "../services/emailService";
+import { createProblemPR } from "../services/githubService";
 
 export class SubmitProblem extends OpenAPIRoute {
   schema = {
@@ -70,6 +71,17 @@ export class SubmitProblem extends OpenAPIRoute {
       );
     }
 
+    // Create GitHub PR with the problem changes
+    const prResult = await createProblemPR(submission, c.env);
+
+    if (!prResult.success) {
+      console.error("Failed to create GitHub PR:", prResult.error);
+      // Don't fail the request if PR creation fails - email was sent successfully
+      // Log the error for manual follow-up
+    } else {
+      console.log(`GitHub PR created successfully: ${prResult.prUrl}`);
+    }
+
     // Store idempotency key after successful processing
     // TTL: 7 days (604800 seconds) - enough time to prevent duplicates during retries
     if (idempotencyKey) {
@@ -79,6 +91,7 @@ export class SubmitProblem extends OpenAPIRoute {
         JSON.stringify({
           timestamp: Date.now(),
           problemName: submission.problem.name,
+          prUrl: prResult.prUrl,
         }),
         { expirationTtl: 604800 } // 7 days
       );

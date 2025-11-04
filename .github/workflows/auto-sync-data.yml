@@ -1,0 +1,74 @@
+name: Auto Sync Data
+
+on:
+  pull_request:
+    paths:
+      - 'cirque-data/problems/problems.geojson'
+      - 'cirque-data/areas/areas.geojson'
+      - 'cirque-data/boulders/boulders.geojson'
+      - 'cirque-data/subareas/subareas.geojson'
+      - 'cirque-data/subareas/subarea-centers.geojson'
+
+jobs:
+  auto-sync:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+      pull-requests: write
+    
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8
+      
+      - name: Install dependencies
+        working-directory: ./react-native
+        run: pnpm install --frozen-lockfile
+      
+      - name: Run sync-data
+        working-directory: ./react-native
+        run: pnpm sync-data
+      
+      - name: Check for changes
+        id: check-changes
+        run: |
+          if git diff --quiet; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Commit synced data
+        if: steps.check-changes.outputs.has_changes == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add react-native/assets/*.ts
+          git commit -m "chore: auto-sync TypeScript data files"
+          git push
+      
+      - name: Comment on PR
+        if: steps.check-changes.outputs.has_changes == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '✅ Data sync completed automatically! TypeScript files have been updated.'
+            })
+

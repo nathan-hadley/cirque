@@ -1,0 +1,300 @@
+# GitHub PR Automation for Problem Submissions
+
+## Overview
+
+The Cirque API now automatically creates GitHub pull requests when new problems are submitted through the app. This document describes how the automation works and how to set it up.
+
+## Features
+
+When a user submits a new problem via the Contribute screen:
+
+1. Email is sent to the configured email address (existing functionality)
+2. GitHub PR is automatically created with:
+   - Problem added to `cirque-data/problems/problems.geojson`
+   - Topo image added to `react-native/assets/topos/` (if provided)
+   - `react-native/assets/topo-image.ts` updated (if image provided)
+3. GitHub Action automatically runs `pnpm sync-data` and commits TypeScript files
+4. PR is ready to review and merge!
+
+## Architecture
+
+### API Flow
+
+```
+User submits problem
+    ↓
+API validates submission
+    ↓
+Email sent (existing)
+    ↓
+GitHub PR created (NEW)
+    ├─ Create branch: add-problem-{name}-{timestamp}
+    ├─ Update problems.geojson
+    ├─ Add topo image (if present)
+    ├─ Update topo-image.ts (if image present)
+    └─ Create PR with details
+    ↓
+GitHub Action triggered (NEW)
+    ├─ Detects PR with 'add-problem-' prefix
+    ├─ Runs pnpm sync-data
+    ├─ Commits updated TypeScript files
+    └─ Comments on PR
+    ↓
+PR ready to merge!
+```
+
+### Files Modified
+
+#### API Changes
+
+1. **`cirque-api/src/types.ts`**
+
+   - Added `GITHUB_TOKEN` to `Env` interface
+
+2. **`cirque-api/src/services/githubService.ts`** (NEW)
+
+   - `createProblemPR()` - Main function to create PRs
+   - `addTopoImage()` - Adds topo images and updates topo-image.ts
+   - `buildGeoJsonFeature()` - Converts submission to GeoJSON format
+   - `createPRBody()` - Generates PR description
+
+3. **`cirque-api/src/endpoints/problemCreate.ts`**
+
+   - Calls `createProblemPR()` after email is sent
+   - Logs PR URL for tracking
+   - Stores PR URL in idempotency key data
+
+4. **`cirque-api/package.json`**
+   - Added `@octokit/rest` dependency for GitHub API
+
+#### GitHub Actions
+
+5. **`.github/workflows/auto-sync-data.yml`** (NEW)
+   - Triggers on ANY PR with changes to GeoJSON files
+   - Works for both API-generated and manual edits
+   - Automatically runs `pnpm sync-data`
+   - Commits and pushes TypeScript updates
+   - Comments on PR when complete
+
+#### Documentation
+
+6. **`cirque-api/README.md`**
+   - Added environment variables section
+   - Added GitHub token setup instructions
+   - Added local development guidance
+
+## Setup Instructions
+
+### 1. Create GitHub Personal Access Token
+
+1. Go to [GitHub Settings → Developer settings → Personal access tokens → Tokens (classic)](https://github.com/settings/tokens)
+2. Click "Generate new token (classic)"
+3. Give it a descriptive name: "Cirque API - Problem Submission PRs"
+4. Select scopes:
+   - ✅ `repo` - Full control of private repositories
+5. Click "Generate token"
+6. **Copy the token immediately** (you won't be able to see it again)
+
+### 2. Configure Cloudflare Worker Secret
+
+#### Production
+
+```bash
+cd cirque-api
+wrangler secret put GITHUB_TOKEN
+# Paste the token when prompted
+```
+
+#### Local Development
+
+Create or update `.dev.vars` in the `cirque-api` directory:
+
+```bash
+# cirque-api/.dev.vars
+MAILERSEND_API_TOKEN=your_token_here
+CIRQUE_EMAIL=your_email@example.com
+API_KEY=your_api_key_here
+GITHUB_TOKEN=ghp_your_github_token_here
+```
+
+**Important:** The `.dev.vars` file is already in `.gitignore` and should never be committed.
+
+### 3. Deploy the API
+
+```bash
+cd cirque-api
+pnpm install  # Install new @octokit/rest dependency
+wrangler deploy
+```
+
+### 4. Test the Integration
+
+#### Test Locally
+
+```bash
+cd cirque-api
+wrangler dev
+```
+
+Then submit a test problem through the app or via API call.
+
+#### Test in Production
+
+1. Submit a problem through the app's Contribute screen
+2. Check your email for the submission notification
+3. Check GitHub for the automatically created PR
+4. Verify the GitHub Action runs and commits the synced data
+5. Review and merge the PR
+
+## PR Format
+
+The automatically created PRs will have:
+
+### Title
+
+```
+Add problem: [Problem Name]
+```
+
+### Body
+
+```markdown
+## New Problem Submission
+
+**Submitted by:** [Name] ([Email])
+
+### Problem Details
+
+- **Name:** [Problem Name]
+- **Grade:** V4
+- **Subarea:** Forestland
+- **Color:** black
+- **Description:** [Description]
+- **Topo:** forestland-example
+- **Coordinates:** [lat], [lng]
+- **Line points:** 5 points
+- **Image:** ✅ Included / ❌ Not included
+
+### Changes Made
+
+- ✅ Added problem to `cirque-data/problems/problems.geojson`
+- ✅ Added topo image to `react-native/assets/topos/forestland-example.jpeg`
+- ✅ Updated `react-native/assets/topo-image.ts`
+
+### Next Steps
+
+✅ **Automated:** A GitHub Action will automatically run `pnpm sync-data` and commit the updated TypeScript files to this PR.
+
+Once the data sync is complete and all checks pass, this PR will be ready to merge!
+
+---
+
+_This PR was automatically generated by the Cirque API._
+```
+
+## Error Handling
+
+### API Behavior
+
+- If email sending fails → Request fails, no PR is created
+- If email succeeds but PR creation fails → Request succeeds, error is logged
+  - This ensures users don't see errors when the email was successfully sent
+  - Failed PR attempts can be reviewed in logs and created manually if needed
+
+### GitHub Action Behavior
+
+- Runs for ANY PR that modifies GeoJSON files (both API-generated and manual edits)
+- Skips if no changes are detected after running sync-data
+- Comments on PR when sync is complete
+- Makes it easy to manually edit GeoJSON files without having to remember to sync
+
+## Monitoring
+
+### Check PR Creation Success
+
+Look for logs in Cloudflare Workers dashboard:
+
+```
+GitHub PR created successfully: https://github.com/nathan-hadley/cirque/pull/123
+```
+
+### Check PR Creation Failures
+
+Look for logs in Cloudflare Workers dashboard:
+
+```
+Failed to create GitHub PR: [error message]
+```
+
+### Check GitHub Action Runs
+
+1. Go to the [Actions tab](https://github.com/nathan-hadley/cirque/actions)
+2. Filter by "Auto Sync Data" workflow
+3. Review recent runs for any failures
+
+## Security Notes
+
+- GitHub token is stored as a Cloudflare secret, never in code
+- Token has `repo` scope only (minimum required permissions)
+- `.dev.vars` is in `.gitignore` to prevent token leakage
+- API key authentication prevents unauthorized PR creation
+- Idempotency keys prevent duplicate submissions
+
+## Future Enhancements
+
+Potential improvements for the future:
+
+1. **Add reviewers to PRs** - Automatically assign reviewers
+2. **Add labels** - Tag PRs with "contribution", "new-problem", etc.
+3. **Validation checks** - Add status checks to verify problem data
+4. **Auto-merge** - For trusted contributors, auto-merge after checks pass
+5. **Rich PR comments** - Add preview images, maps, or other details
+6. **Notifications** - Notify contributors when their PR is merged
+
+## Troubleshooting
+
+### PR creation fails with "401 Unauthorized"
+
+- Check that `GITHUB_TOKEN` secret is set correctly
+- Verify the token hasn't expired
+- Regenerate token if needed
+
+### PR creation fails with "403 Forbidden"
+
+- Verify token has `repo` scope
+- Check if the repository exists and is accessible
+
+### GitHub Action doesn't run
+
+- Check that one of the GeoJSON files was modified in the PR
+- Verify the workflow file is on the base branch (usually `main`)
+- Review workflow logs in Actions tab for any errors
+
+### sync-data fails in GitHub Action
+
+- Check Node.js and pnpm versions in workflow
+- Verify `package.json` dependencies are correct
+- Review workflow logs for specific error messages
+
+## Rollback Plan
+
+If you need to disable the automation:
+
+1. **Disable PR creation** - Remove `GITHUB_TOKEN` secret:
+
+   ```bash
+   # This will cause PR creation to fail, but email will still work
+   wrangler secret delete GITHUB_TOKEN
+   ```
+
+2. **Disable auto-sync** - Disable the GitHub Action:
+
+   - Go to `.github/workflows/auto-sync-data.yml`
+   - Add `if: false` to the job
+   - Or delete the workflow file
+
+3. **Revert to manual process**:
+   - Receive problem submissions via email (continues to work)
+   - Manually add problems to `problems.geojson`
+   - Manually run `pnpm sync-data`
+   - Manually commit and push changes

@@ -12,6 +12,7 @@ export interface Env {
   MAILERSEND_API_TOKEN: string;
   CIRQUE_EMAIL: string;
   API_KEY: string;
+  GITHUB_TOKEN: string;
   RATE_LIMIT_KV: KVNamespace;
 }
 

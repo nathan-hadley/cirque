@@ -9,6 +9,7 @@
     "cf-typegen": "wrangler types"
   },
   "dependencies": {
+    "@octokit/rest": "^21.0.2",
     "chanfana": "^2.6.3",
     "hono": "^4.6.20",
     "mailersend": "^2.6.0",
