@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
-import type { ProblemSubmission } from "@cirque-api/types";
-import { VALIDATION_CONSTRAINTS } from "@cirque-api/types";
+import type { ProblemSubmission } from "@cirque-api/shared";
+import { VALIDATION_CONSTRAINTS } from "@cirque-api/shared";
 import { ChevronDown, MapPin } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import BlurBackground from "@/components/BlurBackground";

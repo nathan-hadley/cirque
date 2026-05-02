@@ -1,5 +1,5 @@
 import * as Network from "expo-network";
-import type { ProblemSubmission } from "@cirque-api/types";
+import type { ProblemSubmission } from "@cirque-api/shared";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { submitProblem } from "@/api/problems";

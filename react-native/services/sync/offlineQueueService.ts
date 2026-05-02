@@ -1,4 +1,4 @@
-import type { ProblemSubmission } from "@cirque-api/types";
+import type { ProblemSubmission } from "@cirque-api/shared";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const QUEUE_STORAGE_KEY = "@cirque/offline-submissions";
