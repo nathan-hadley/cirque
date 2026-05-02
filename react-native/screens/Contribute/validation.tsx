@@ -1,5 +1,5 @@
 import React from "react";
-import { VALIDATION_CONSTRAINTS } from "@cirque-api/shared";
+import { VALIDATION_CONSTRAINTS } from "@/types/problemSubmission";
 import { Text } from "@/components/ui/text";
 import { GRADES } from "@/models/problems";
 import type { TopoData } from "./TopoPicker";

@@ -1,5 +1,5 @@
 import * as Network from "expo-network";
-import type { ProblemSubmission } from "@cirque-api/shared";
+import type { ProblemSubmission } from "@/types/problemSubmission";
 import axios from "axios";
 import { submitProblem } from "@/api/problems";
 import { offlineQueueService, type QueuedSubmission } from "./offlineQueueService";

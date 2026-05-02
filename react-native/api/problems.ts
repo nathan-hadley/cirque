@@ -1,4 +1,4 @@
-import type { ProblemSubmission } from "@cirque-api/shared";
+import type { ProblemSubmission } from "@/types/problemSubmission";
 import axios from "axios";
 import { API_ENDPOINTS, API_KEY } from "@/constants/api";
 
