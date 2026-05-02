@@ -43,12 +43,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         backgroundColor: "#ffffff",
       },
     ],
-    [
-      "@rnmapbox/maps",
-      {
-        RNMapboxMapsDownloadToken: process.env.MAPBOX_ACCESS_TOKEN,
-      },
-    ],
+    ["@rnmapbox/maps", {}],
     [
       "expo-location",
       {
