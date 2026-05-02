@@ -5,8 +5,7 @@ export const PROBLEM_ZOOM = 19; // Zoom level when flying to a problem
 export const INITIAL_CENTER = [-120.713, 47.585]; // Note: [longitude, latitude] in React Native
 export const STYLE_URI = "mapbox://styles/mapbox/outdoors-v12";
 export const PROBLEMS_LAYER = "leavenworth-problems";
-export const MAPBOX_ACCESS_TOKEN =
-  "pk.eyJ1IjoibmF0aGFuaGFkbGV5IiwiYSI6ImNsdzdmdXAxdDIycmoyanA3cXVvbHFxenQifQ.1wcBxvOkH8eU-6ev7SoO8Q";
+export const MAPBOX_ACCESS_TOKEN = process.env.EXPO_PUBLIC_MAPBOX_ACCESS_TOKEN ?? "";
 
 // Offline maps constants
 export const TILEPACK_ID = "Leavenworth";
