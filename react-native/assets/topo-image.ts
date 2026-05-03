@@ -38,6 +38,7 @@ const topoImages = {
   "forestland-runner": require("@/assets/topos/forestland-runner.jpeg"),
   "forestland-scarecrow": require("@/assets/topos/forestland-scarecrow.jpeg"),
   "forestland-scram": require("@/assets/topos/forestland-scram.jpeg"),
+  "forestland-slice-of-cake": require("@/assets/topos/forestland-slice-of-cake.jpeg"),
   "forestland-slice-of-pie": require("@/assets/topos/forestland-slice-of-pie.jpeg"),
   "forestland-slice-of-tea": require("@/assets/topos/forestland-slice-of-tea.jpeg"),
   "forestland-squeezer": require("@/assets/topos/forestland-squeezer.jpeg"),

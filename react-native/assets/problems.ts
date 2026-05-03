@@ -11,8 +11,8 @@ import { FeatureCollection, Point, GeoJsonProperties } from 'geojson';
  *   2. Run: npm run sync-problems
  *   3. Commit both files
  *
- * Generated: 2025-10-14T20:56:42.809Z
- * Features: 170
+ * Generated: 2026-05-03T06:28:35.209Z
+ * Features: 171
  */
 
 export const problemsData: FeatureCollection<Point, GeoJsonProperties> = {
@@ -3332,6 +3332,25 @@ export const problemsData: FeatureCollection<Point, GeoJsonProperties> = {
         "coordinates": [
           -120.729457,
           47.656364
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Slice of Cake",
+        "grade": "V7",
+        "subarea": "Forestland",
+        "color": "",
+        "topo": "forestland-slice-of-cake",
+        "line": "[[176,233],[211,207],[235,186],[245,175],[256,166],[263,160],[272,150],[273,129],[263,108],[238,78]]",
+        "description": "Start on two high edges and make an initial hard move up and right on bad feet. Work up the seam and do a big pull to a flake."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.734875,
+          47.543329
         ]
       }
     }
