@@ -20,7 +20,6 @@ module.exports = function (api) {
 
           alias: {
             "@": "./",
-            "@cirque-api": "../cirque-api/src",
             "tailwind.config": "./tailwind.config.js",
           },
         },

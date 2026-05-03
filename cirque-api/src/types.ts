@@ -1,9 +1,5 @@
 import type { Context } from "hono";
 import { z } from "zod";
-import { VALIDATION_CONSTRAINTS } from "./shared";
-
-export { VALIDATION_CONSTRAINTS } from "./shared";
-export type { ProblemSubmission } from "./shared";
 
 // KVNamespace is a Cloudflare Workers type
 // Stub for environments that don't have Cloudflare Workers types
@@ -21,6 +17,17 @@ export interface Env {
 }
 
 export type AppContext = Context<{ Bindings: Env }>;
+
+export const VALIDATION_CONSTRAINTS = {
+  MIN_LENGTH: 1,
+  NAME_MAX_LENGTH: 100,
+  DESCRIPTION_MAX_LENGTH: 300,
+  LINE_MAX_POINTS: 10,
+  LAT_MIN: -90,
+  LAT_MAX: 90,
+  LNG_MIN: -180,
+  LNG_MAX: 180,
+} as const;
 
 export const ProblemSubmissionSchema = z.object({
   id: z.string().describe("1699123456789-abc123def456"),
@@ -99,3 +106,4 @@ export const ProblemSubmissionSchema = z.object({
   }),
 });
 
+export type ProblemSubmission = z.infer<typeof ProblemSubmissionSchema>;
