@@ -4,12 +4,6 @@
 - [Contributing Guidelines](Contributing.md)
 - [Privacy Policy](Privacy_Policy.md)
 
-## Backend and Ops Docs
-
-- [Online Setup (dashboards, DNS, secrets)](docs/online-setup.md)
-- [Cloudflare Worker Setup (Wrangler + deploy)](docs/cloudflare-worker-setup.md)
-- [MailerSend Setup and Usage](docs/mailersend-setup.md)
-
 ## Data Management
 
 ### Adding new topos
