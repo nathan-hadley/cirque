@@ -133,6 +133,7 @@ const topoImages = {
   "mad-meadows-the-undercling": require("@/assets/topos/mad-meadows-the-undercling.jpeg"),
   "mad-meadows-toprope-tough-guys": require("@/assets/topos/mad-meadows-toprope-tough-guys.jpeg"),
   "mad-meadows-trail-mix": require("@/assets/topos/mad-meadows-trail-mix.jpeg"),
+  "forestland-the-practitioner": require("@/assets/topos/forestland-the-practitioner.jpeg"),
 } as const;
 
 type TopoImageKey = keyof typeof topoImages;
