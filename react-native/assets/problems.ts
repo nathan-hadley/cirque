@@ -11,8 +11,8 @@ import { FeatureCollection, Point, GeoJsonProperties } from 'geojson';
  *   2. Run: npm run sync-problems
  *   3. Commit both files
  *
- * Generated: 2026-05-03T06:28:35.209Z
- * Features: 171
+ * Generated: 2026-07-02T15:19:13.765Z
+ * Features: 172
  */
 
 export const problemsData: FeatureCollection<Point, GeoJsonProperties> = {
@@ -3351,6 +3351,26 @@ export const problemsData: FeatureCollection<Point, GeoJsonProperties> = {
         "coordinates": [
           -120.734875,
           47.543329
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kobra Khan",
+        "grade": "V9",
+        "subarea": "Forestland",
+        "color": "",
+        "order": "",
+        "topo": "forestland-kobra-khan",
+        "line": "[[342,318],[324,282],[308,254],[290,235],[282,218],[274,192],[270,165],[270,147],[273,126],[278,108]]",
+        "description": "Start with a good left-hand sidepull and a high, poor right-hand edge."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.733488,
+          47.545503
         ]
       }
     }
