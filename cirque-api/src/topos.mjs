@@ -5,10 +5,15 @@ export const TOPO_VARIANTS = {
   thumb: { width: 320, height: 240 },
 };
 
+// D1 problems.topo_key stores this prefix; append /full.webp or /thumb.webp.
+export function topoPrefix(slug) {
+  return `topos/${slug}`;
+}
+
 export function topoKeys(slug) {
   return {
-    full: `topos/${slug}/full.webp`,
-    thumb: `topos/${slug}/thumb.webp`,
+    full: `${topoPrefix(slug)}/full.webp`,
+    thumb: `${topoPrefix(slug)}/thumb.webp`,
     original: `originals/${slug}.jpeg`,
   };
 }
