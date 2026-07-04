@@ -4,11 +4,11 @@ import { FlashList } from "@shopify/flash-list";
 import { Search, X } from "lucide-react-native";
 import { useColorScheme } from "nativewind";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { problemsData } from "@/assets/problems";
 import { HStack } from "@/components/ui/hstack";
 import { Icon } from "@/components/ui/icon";
 import { Input, InputField, InputIcon } from "@/components/ui/input";
 import { Problem } from "@/models/problems";
+import { useDataStore } from "@/stores/dataStore";
 import { useMapStore } from "@/stores/mapStore";
 import { useProblemStore } from "@/stores/problemStore";
 import { SearchEmpty } from "./SearchEmpty";
@@ -27,6 +27,7 @@ type SearchResult = {
 export function SearchOverlay({ isVisible, onClose }: SearchOverlayProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  const problemsData = useDataStore(s => s.data.problems);
   const { createProblemFromMapFeature, setProblem, setViewProblem, minGrade, maxGrade } =
     useProblemStore();
   const { flyToProblemCoordinates } = useMapStore();

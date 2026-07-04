@@ -15,6 +15,7 @@ import { HStack } from "@/components/ui/hstack";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
+import { topoImageUrl } from "@/constants/api";
 import { Problem } from "@/models/problems";
 
 type ProblemSheetProps = React.ComponentProps<typeof Actionsheet> & {
@@ -32,6 +33,11 @@ function ProblemDescription({ problem }: { problem: Problem }) {
         />
         <Heading size="lg">{problem.name || "Unnamed Problem"}</Heading>
         {problem.order && <Text className="text-typography-700">#{problem.order}</Text>}
+        {problem.status === "pending" && (
+          <View className="rounded-full bg-warning-100 border border-warning-300 px-2 py-0.5">
+            <Text className="text-warning-700 text-xs font-medium">Pending review</Text>
+          </View>
+        )}
       </HStack>
 
       <HStack className="items-center gap-2 pb-2">
@@ -58,7 +64,12 @@ export function ProblemSheet({ problem, ...props }: ProblemSheetProps) {
       <ActionsheetContent className="p-0">
         <ActionsheetDragIndicatorWrapper className="pt-0">
           <View className="w-full aspect-[4/3] rounded-t-3xl overflow-hidden bg-typography-300 relative">
-            <Topo topo={problem.topo || ""} line={problem.line} color={problem.color} />
+            <Topo
+              topo={problem.topo || ""}
+              remoteUri={topoImageUrl(problem.topoKey, "full")}
+              line={problem.line}
+              color={problem.color}
+            />
             {problem.order !== undefined && (
               <View className="absolute inset-0 justify-center">
                 <CircuitNavButtons />

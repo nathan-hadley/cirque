@@ -1,9 +1,9 @@
 import * as Network from "expo-network";
-import type { ProblemSubmission } from "@/types/problemSubmission";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { submitProblem } from "@/api/problems";
 import { syncManager } from "@/services/sync/syncManager";
+import type { ProblemSubmission } from "@/types/problemSubmission";
 
 const QUEUED_MESSAGE = "Problem saved - will submit when online";
 const SUBMITTED_MESSAGE = "Problem submitted successfully - we'll review it shortly";

@@ -1,7 +1,7 @@
 import React from "react";
-import { VALIDATION_CONSTRAINTS } from "@/types/problemSubmission";
 import { Text } from "@/components/ui/text";
 import { GRADES } from "@/models/problems";
+import { VALIDATION_CONSTRAINTS } from "@/types/problemSubmission";
 import type { TopoData } from "./TopoPicker";
 
 export type FieldErrors = {

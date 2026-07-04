@@ -8,6 +8,8 @@ export type Problem = {
   description?: string;
   line: [number, number][]; // Array of [x, y] coordinate tuples
   topo?: string;
+  topoKey?: string;
+  status?: string; // 'pending' renders a review badge
   subarea?: string;
   coordinates?: [number, number]; // [longitude, latitude]
 };

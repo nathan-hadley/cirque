@@ -1,6 +1,6 @@
-import type { ProblemSubmission } from "@/types/problemSubmission";
 import axios from "axios";
 import { API_ENDPOINTS, API_KEY } from "@/constants/api";
+import type { ProblemSubmission } from "@/types/problemSubmission";
 
 export type SubmitProblemSuccessResponse = {
   success: true;

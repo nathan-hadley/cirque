@@ -1,12 +1,13 @@
 import { CircleLayer, ShapeSource, SymbolLayer } from "@rnmapbox/maps";
-import { problemsData } from "@/assets/problems";
 import { LAYER_IDS, PROBLEM_COLORS, SOURCE_IDS } from "@/constants/map";
+import { useDataStore } from "@/stores/dataStore";
 import { useProblemStore } from "@/stores/problemStore";
 
 type MapboxFilter = ["in", ["get", string], ["literal", string[]]] | undefined;
 
 export function ProblemsLayer() {
   const { minGrade, maxGrade } = useProblemStore();
+  const problemsData = useDataStore(s => s.data.problems);
 
   const gradeFilter = (): MapboxFilter => {
     if (minGrade === 0 && maxGrade === 10) {
@@ -51,11 +52,15 @@ export function ProblemsLayer() {
           ],
           circleStrokeWidth: 0,
           circleOpacity: [
-            "step",
-            ["zoom"],
-            0, // hidden below zoom 16
-            16,
-            1, // visible at zoom 16+
+            "*",
+            ["case", ["==", ["get", "status"], "pending"], 0.55, 1],
+            [
+              "step",
+              ["zoom"],
+              0, // hidden below zoom 16
+              16,
+              1, // visible at zoom 16+
+            ],
           ],
         }}
       />

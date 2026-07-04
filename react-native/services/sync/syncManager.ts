@@ -1,7 +1,7 @@
 import * as Network from "expo-network";
-import type { ProblemSubmission } from "@/types/problemSubmission";
 import axios from "axios";
 import { submitProblem } from "@/api/problems";
+import type { ProblemSubmission } from "@/types/problemSubmission";
 import { offlineQueueService, type QueuedSubmission } from "./offlineQueueService";
 
 type SyncState = {

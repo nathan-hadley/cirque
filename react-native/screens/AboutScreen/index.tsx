@@ -12,11 +12,18 @@ import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import { useOfflineMaps } from "@/hooks/useOfflineMaps";
 import { useSimpleToast } from "@/hooks/useSimpleToast";
+import { useTopoDownload } from "@/hooks/useTopoDownload";
 import { mapProblemService } from "@/services/mapProblemService";
-import { CircuitCard, ContributingSection, DownloadStatusCard } from "./components";
+import {
+  CircuitCard,
+  ContributingSection,
+  DownloadStatusCard,
+  TopoDownloadCard,
+} from "./components";
 
 export default function AboutScreen() {
   const { loading, mapDownloaded, progress, updateMapData, deleteMapData } = useOfflineMaps();
+  const topoDownload = useTopoDownload();
   const showToast = useSimpleToast();
   const insets = useSafeAreaInsets();
   const tabBarHeight = useBottomTabBarHeight();
@@ -86,6 +93,21 @@ export default function AboutScreen() {
         action: "error",
         message: "An unexpected error occurred",
       });
+    }
+  };
+
+  const handleTopoDownload = async () => {
+    try {
+      const { ok, failed } = await topoDownload.downloadAllTopos();
+      showToast({
+        action: failed === 0 ? "success" : "error",
+        message:
+          failed === 0
+            ? `Downloaded ${ok} topo images for offline use`
+            : `Downloaded ${ok} topo images, ${failed} failed`,
+      });
+    } catch {
+      showToast({ action: "error", message: "Topo download failed" });
     }
   };
 
@@ -169,6 +191,13 @@ export default function AboutScreen() {
               progress={progress}
               onUpdate={handleMapUpdate}
               onDelete={handleMapDelete}
+            />
+
+            <TopoDownloadCard
+              downloading={topoDownload.downloading}
+              progress={topoDownload.progress}
+              done={topoDownload.done}
+              onDownload={handleTopoDownload}
             />
           </VStack>
 

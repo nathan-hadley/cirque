@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
-import type { ProblemSubmission } from "@/types/problemSubmission";
-import { VALIDATION_CONSTRAINTS } from "@/types/problemSubmission";
 import { ChevronDown, MapPin } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import BlurBackground from "@/components/BlurBackground";
@@ -18,6 +16,8 @@ import { useSimpleToast } from "@/hooks/useSimpleToast";
 import { useSubmitProblem } from "@/hooks/useSubmitProblem";
 import { generateId } from "@/services/sync/offlineQueueService";
 import { useQueueStore } from "@/stores/queueStore";
+import type { ProblemSubmission } from "@/types/problemSubmission";
+import { VALIDATION_CONSTRAINTS } from "@/types/problemSubmission";
 import AreaPicker from "./AreaPicker";
 import CoordinateInput from "./CoordinateInput";
 import GradePicker from "./GradePicker";

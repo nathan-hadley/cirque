@@ -1,8 +1,9 @@
 import { FillLayer, ShapeSource } from "@rnmapbox/maps";
-import subareaPolygonsData from "@/assets/subareas-polygons";
 import { LAYER_IDS, SOURCE_IDS, SUBAREA_COLORS } from "@/constants/map";
+import { useDataStore } from "@/stores/dataStore";
 
 export function SubareasLayer() {
+  const subareaPolygonsData = useDataStore(s => s.data.subareaPolygons);
   return (
     <ShapeSource id={SOURCE_IDS.subareas} shape={subareaPolygonsData}>
       <FillLayer

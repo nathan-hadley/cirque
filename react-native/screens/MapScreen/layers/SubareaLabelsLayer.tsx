@@ -1,8 +1,9 @@
 import { ShapeSource, SymbolLayer } from "@rnmapbox/maps";
-import subareasData from "@/assets/subareas";
 import { LAYER_IDS, PROBLEM_COLORS, SOURCE_IDS } from "@/constants/map";
+import { useDataStore } from "@/stores/dataStore";
 
 export function SubareaLabelsLayer() {
+  const subareasData = useDataStore(s => s.data.subareaCenters);
   return (
     <ShapeSource id={SOURCE_IDS.subareaLabels} shape={subareasData}>
       <SymbolLayer
