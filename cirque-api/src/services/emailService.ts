@@ -12,7 +12,8 @@ import { type ProblemSubmission, type Env } from "../types";
  */
 export async function sendProblemSubmissionEmail(
   submission: ProblemSubmission,
-  env: Env
+  env: Env,
+  adminUrl?: string
 ): Promise<{ success: boolean; error?: string }> {
   try {
     const mailerSend = new MailerSend({
@@ -26,7 +27,7 @@ export async function sendProblemSubmissionEmail(
       .setFrom(sentFrom)
       .setTo(recipients)
       .setSubject(`New problem submission: ${submission.problem.name}`)
-      .setText(formatEmailContent(submission))
+      .setText(formatEmailContent(submission, adminUrl))
       .setReplyTo(
         new Recipient(submission.contact.email, submission.contact.name)
       );
@@ -82,13 +83,13 @@ function createImageAttachment(
 /**
  * Formats the email content with problem details and GeoJSON feature
  */
-function formatEmailContent(submission: ProblemSubmission): string {
+function formatEmailContent(submission: ProblemSubmission, adminUrl?: string): string {
   const geoJsonFeature = buildGeoJsonFeature(submission);
 
   return `
 New Problem Submission
 =====================
-
+${adminUrl ? `\nReview it: ${adminUrl}\n` : ""}
 Contact Information:
 - Name: ${submission.contact.name}
 - Email: ${submission.contact.email}

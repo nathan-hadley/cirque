@@ -1,0 +1,8 @@
+# Local dev vars for wrangler dev
+API_KEY=dev-key
+ADMIN_DEV_BYPASS=true
+MAILERSEND_API_TOKEN=...
+CIRQUE_EMAIL=...
+# Production admin auth (secrets in dashboard):
+# ACCESS_TEAM_DOMAIN=<team>.cloudflareaccess.com
+# ACCESS_AUD=<access app aud tag>
