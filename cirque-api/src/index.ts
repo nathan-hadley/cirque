@@ -10,6 +10,7 @@ import {
   updateProblem,
 } from "./endpoints/admin";
 import { ADMIN_HTML } from "./admin/page";
+import { backupKeysToPrune, buildBackup } from "./backup.mjs";
 import {
   accessMiddleware,
   authMiddleware,
@@ -49,5 +50,19 @@ app.get("/v1/images/manifest", getImagesManifest);
 // Register OpenAPI endpoints
 openapi.post("/v1/problems", SubmitProblem);
 
-// Export the Hono app
-export default app;
+async function scheduled(_controller: ScheduledController, env: Env): Promise<void> {
+  const [problems, documents] = await env.DB.batch([
+    env.DB.prepare("SELECT * FROM problems"),
+    env.DB.prepare("SELECT * FROM documents"),
+  ]);
+  const now = new Date();
+  const { key, body } = buildBackup(problems.results, documents.results, now);
+  await env.IMAGES.put(key, body, { httpMetadata: { contentType: "application/json" } });
+
+  const existing = await env.IMAGES.list({ prefix: "backups/" });
+  const prune = backupKeysToPrune(existing.objects.map((o) => o.key), now);
+  if (prune.length) await env.IMAGES.delete(prune);
+  console.info({ event: "backup_complete", key, problems: problems.results.length, pruned: prune.length });
+}
+
+export default { fetch: app.fetch, scheduled };
