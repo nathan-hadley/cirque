@@ -51,18 +51,40 @@ app.get("/v1/images/manifest", getImagesManifest);
 openapi.post("/v1/problems", SubmitProblem);
 
 async function scheduled(_controller: ScheduledController, env: Env): Promise<void> {
-  const [problems, documents] = await env.DB.batch([
-    env.DB.prepare("SELECT * FROM problems"),
-    env.DB.prepare("SELECT * FROM documents"),
-  ]);
   const now = new Date();
-  const { key, body } = buildBackup(problems.results, documents.results, now);
-  await env.IMAGES.put(key, body, { httpMetadata: { contentType: "application/json" } });
-
-  const existing = await env.IMAGES.list({ prefix: "backups/" });
-  const prune = backupKeysToPrune(existing.objects.map((o) => o.key), now);
-  if (prune.length) await env.IMAGES.delete(prune);
-  console.info({ event: "backup_complete", key, problems: problems.results.length, pruned: prune.length });
+  let backup: { key: string; body: string };
+  let problemCount = 0;
+  try {
+    const [problems, documents] = await env.DB.batch([
+      env.DB.prepare("SELECT * FROM problems"),
+      env.DB.prepare("SELECT * FROM documents"),
+    ]);
+    problemCount = problems.results.length;
+    backup = buildBackup(problems.results, documents.results, now);
+  } catch (err) {
+    console.error({ event: "backup_query_failed", error: String(err) });
+    throw err;
+  }
+  try {
+    await env.IMAGES.put(backup.key, backup.body, {
+      httpMetadata: { contentType: "application/json" },
+    });
+  } catch (err) {
+    console.error({ event: "backup_upload_failed", key: backup.key, error: String(err) });
+    throw err;
+  }
+  // The snapshot is safely stored at this point; a prune failure is logged
+  // but must not mark the backup run as failed.
+  let pruned = 0;
+  try {
+    const existing = await env.IMAGES.list({ prefix: "backups/" });
+    const prune = backupKeysToPrune(existing.objects.map((o) => o.key), now);
+    if (prune.length) await env.IMAGES.delete(prune);
+    pruned = prune.length;
+  } catch (err) {
+    console.error({ event: "backup_prune_failed", error: String(err) });
+  }
+  console.info({ event: "backup_complete", key: backup.key, problems: problemCount, pruned });
 }
 
 export default { fetch: app.fetch, scheduled };
