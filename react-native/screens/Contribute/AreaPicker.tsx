@@ -12,7 +12,8 @@ import {
 import { Divider } from "@/components/ui/divider";
 import { Radio, RadioGroup, RadioIcon, RadioIndicator, RadioLabel } from "@/components/ui/radio";
 import { Text } from "@/components/ui/text";
-import { LEAVENWORTH_AREAS } from "@/constants/areas";
+import { leavenworthAreas } from "@/constants/areas";
+import { useDataStore } from "@/stores/dataStore";
 
 type AreaPickerSheetProps = {
   isOpen: boolean;
@@ -23,6 +24,7 @@ type AreaPickerSheetProps = {
 
 function AreaPickerSheet({ isOpen, onClose, onSelect, currentArea }: AreaPickerSheetProps) {
   const insets = useSafeAreaInsets();
+  const areas = useDataStore(s => leavenworthAreas(s.data));
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
@@ -32,8 +34,8 @@ function AreaPickerSheet({ isOpen, onClose, onSelect, currentArea }: AreaPickerS
   }, [isOpen]);
 
   const filteredAreas = searchTerm
-    ? LEAVENWORTH_AREAS.filter(area => area.toLowerCase().includes(searchTerm.toLowerCase()))
-    : LEAVENWORTH_AREAS;
+    ? areas.filter(area => area.toLowerCase().includes(searchTerm.toLowerCase()))
+    : areas;
 
   function handleAreaSelect(area: string) {
     onSelect(area);

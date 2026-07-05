@@ -27,20 +27,17 @@ export function Topo({ topo, remoteUri, line, color = "#ff3333" }: TopoProps) {
   const [imageLayout, setImageLayout] = useState<ImageLayout>(null);
   const [originalImageSize, setOriginalImageSize] = useState<ImageLayout>(null);
   const [imageError, setImageError] = useState<boolean>(false);
-  const [remoteFailed, setRemoteFailed] = useState<boolean>(false);
 
   // Topo is reused across problems (prev/next navigation) without remounting;
   // clear per-image state so one failure never sticks to the next problem.
   useEffect(() => {
-    setRemoteFailed(false);
     setImageError(false);
     setOriginalImageSize(null);
   }, [topo, remoteUri]);
 
-  // Prefer the R2 URL; fall back to a direct URI (picked image preview, cached
-  // file). Bundled topo assets were removed in ADR 0001 phase 5.
+  // The R2 URL, or a direct URI (picked-image preview, cached file).
   const localImage = topo.startsWith("http") || topo.startsWith("file") ? { uri: topo } : null;
-  const topoImage = remoteUri && !remoteFailed ? { uri: remoteUri } : localImage;
+  const topoImage = remoteUri ? { uri: remoteUri } : localImage;
 
   function handleImageLoad(event: ImageLoadEventData) {
     const { width, height } = event.source;
@@ -51,10 +48,6 @@ export function Topo({ topo, remoteUri, line, color = "#ff3333" }: TopoProps) {
   }
 
   function handleImageError() {
-    if (remoteUri && !remoteFailed && localImage) {
-      setRemoteFailed(true); // retry with the bundled asset
-      return;
-    }
     setImageError(true);
   }
 
