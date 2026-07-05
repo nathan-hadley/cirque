@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Image, Pressable, View } from "react-native";
+import { Pressable, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import type { Feature, GeoJsonProperties, Point } from "geojson";
 import { AlertCircle } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { getTopoImage } from "@/assets/topo-image";
 import BottomSearchBar from "@/components/BottomSearchBar";
+import { topoImageUrl } from "@/constants/api";
 import {
   Actionsheet,
   ActionsheetBackdrop,
@@ -31,14 +31,10 @@ function hasTopo(feature: ProblemFeature): boolean {
 }
 
 /**
- * Get URI from topo image for use with Image component
+ * Get the R2 URL for an existing problem's topo image
  */
-export async function getTopoUri(topoKey: string): Promise<string | null> {
-  const imageSource = getTopoImage(topoKey);
-  if (imageSource && typeof imageSource === "number") {
-    return Image.resolveAssetSource(imageSource).uri;
-  }
-  return null;
+export async function getTopoUri(topoSlug: string): Promise<string | null> {
+  return topoImageUrl(`topos/${topoSlug}`, "full") ?? null;
 }
 
 type ProblemPickerProps = {

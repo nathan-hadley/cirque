@@ -2,15 +2,14 @@ import React, { useState } from "react";
 import { LayoutChangeEvent } from "react-native";
 import { Image, ImageLoadEventData } from "expo-image";
 import { CameraOff } from "lucide-react-native";
-import { getTopoImage } from "@/assets/topo-image";
 import { Center } from "@/components/ui/center";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
 import { TopoLine } from "./TopoLine";
 
 type TopoProps = {
-  topo: string; // Topo key (e.g., "forestland-physical") or image URI
-  remoteUri?: string; // Preferred R2 URL; falls back to the bundled asset on error
+  topo: string; // Direct image URI (http/file), or "" when only remoteUri applies
+  remoteUri?: string; // Preferred R2 URL; falls back to `topo` URI on error
   line: number[][]; // Pixel coordinates (640×480)
   color?: string; // Line color (default: "#ff3333")
 };
@@ -30,12 +29,10 @@ export function Topo({ topo, remoteUri, line, color = "#ff3333" }: TopoProps) {
   const [imageError, setImageError] = useState<boolean>(false);
   const [remoteFailed, setRemoteFailed] = useState<boolean>(false);
 
-  // Prefer the R2 URL; on failure (e.g. offline, not yet downloaded) fall back
-  // to the bundled asset when one exists for this topo slug.
+  // Prefer the R2 URL; fall back to a direct URI (picked image preview, cached
+  // file). Bundled topo assets were removed in ADR 0001 phase 5.
   const localImage =
-    topo.startsWith("http") || topo.startsWith("file")
-      ? { uri: topo }
-      : getTopoImage(topo) || (topo ? { uri: topo } : null);
+    topo.startsWith("http") || topo.startsWith("file") ? { uri: topo } : null;
   const topoImage = remoteUri && !remoteFailed ? { uri: remoteUri } : localImage;
 
   function handleImageLoad(event: ImageLoadEventData) {
