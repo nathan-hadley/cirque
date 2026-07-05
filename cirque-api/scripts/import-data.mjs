@@ -34,6 +34,11 @@ const statements = [];
 const problems = JSON.parse(await readFile(path.join(dataRoot, "problems/problems.geojson"), "utf8"));
 for (const feature of problems.features) {
   const { subarea, name } = feature.properties;
+  // name/subarea form the deterministic id and name is NOT NULL in D1 —
+  // fail fast with a useful message instead of importing junk rows.
+  if (!name || !subarea) {
+    throw new Error(`Feature missing name/subarea: ${JSON.stringify(feature.properties)}`);
+  }
   const id = deterministicId(`${subarea}/${name}`);
   statements.push(insertSql("problems", featureToProblemRow(feature, { id, now, status: "approved" })));
 }
