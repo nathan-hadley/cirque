@@ -32,6 +32,7 @@ console.log(`Encoding ${files.length} topos from ${SRC}`);
 const uploads = [];
 const encodeFailures = [];
 for (const file of files) {
+  const uploadsStart = uploads.length;
   try {
     const slug = path.basename(file, ".jpeg");
     const keys = topoKeys(slug);
@@ -53,6 +54,7 @@ for (const file of files) {
     await copyFile(path.join(SRC, file), origPath);
     uploads.push([keys.original, origPath, "image/jpeg"]);
   } catch (err) {
+    uploads.length = uploadsStart; // drop partial variants of the failed file
     encodeFailures.push(file);
     console.error(`ENCODE FAILED ${file}: ${err.message}`);
   }
