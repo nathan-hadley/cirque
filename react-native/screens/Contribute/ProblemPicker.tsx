@@ -5,7 +5,6 @@ import type { Feature, GeoJsonProperties, Point } from "geojson";
 import { AlertCircle } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import BottomSearchBar from "@/components/BottomSearchBar";
-import { topoImageUrl } from "@/constants/api";
 import {
   Actionsheet,
   ActionsheetBackdrop,
@@ -18,6 +17,7 @@ import { HStack } from "@/components/ui/hstack";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
+import { topoImageUrl } from "@/constants/api";
 import { useSearchProblems } from "@/hooks/useProblems";
 
 type ProblemFeature = Feature<Point, GeoJsonProperties>;

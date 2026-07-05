@@ -39,8 +39,7 @@ export function Topo({ topo, remoteUri, line, color = "#ff3333" }: TopoProps) {
 
   // Prefer the R2 URL; fall back to a direct URI (picked image preview, cached
   // file). Bundled topo assets were removed in ADR 0001 phase 5.
-  const localImage =
-    topo.startsWith("http") || topo.startsWith("file") ? { uri: topo } : null;
+  const localImage = topo.startsWith("http") || topo.startsWith("file") ? { uri: topo } : null;
   const topoImage = remoteUri && !remoteFailed ? { uri: remoteUri } : localImage;
 
   function handleImageLoad(event: ImageLoadEventData) {
