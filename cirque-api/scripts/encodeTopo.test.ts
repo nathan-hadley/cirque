@@ -28,6 +28,15 @@ describe("encodeTopoVariants", () => {
     expect(thumbMeta.height).toBe(240);
   });
 
+  test("cover-crops non-4:3 input to exact variant dimensions", async () => {
+    const portrait = await makeJpeg(480, 640);
+    const { full, thumb } = await encodeTopoVariants(portrait);
+    const fullMeta = await sharp(full).metadata();
+    expect(`${fullMeta.width}x${fullMeta.height}`).toBe("640x480");
+    const thumbMeta = await sharp(thumb).metadata();
+    expect(`${thumbMeta.width}x${thumbMeta.height}`).toBe("320x240");
+  });
+
   test("output is dramatically smaller than a q100 jpeg input", async () => {
     const input = await makeJpeg(640, 480);
     const { full } = await encodeTopoVariants(input);

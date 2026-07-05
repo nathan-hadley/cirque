@@ -48,17 +48,9 @@ export class SubmitProblem extends OpenAPIRoute {
     const submission = data.body;
     const { problem, contact } = submission;
 
-    // The client-generated id is the idempotency key (primary key in D1).
-    const existing = await c.env.DB.prepare("SELECT 1 FROM problems WHERE id = ?")
-      .bind(submission.id)
-      .first();
-    if (existing) {
-      console.info(`Duplicate submission: ${submission.id}`);
-      return Response.json({ success: true });
-    }
-
     // New image → store under the problem id; otherwise reference an existing topo.
     let topoSlug = problem.topo ?? null;
+    const uploadedKeys: string[] = [];
     if (problem.imageBase64) {
       topoSlug = submission.id;
       let bytes: Uint8Array;
@@ -76,6 +68,7 @@ export class SubmitProblem extends OpenAPIRoute {
         c.env.IMAGES.put(keys.full, bytes, { httpMetadata: { contentType: "image/jpeg" } }),
         c.env.IMAGES.put(keys.thumb, bytes, { httpMetadata: { contentType: "image/jpeg" } }),
       ]);
+      uploadedKeys.push(keys.original, keys.full, keys.thumb);
     }
 
     const row = featureToProblemRow(
@@ -97,12 +90,26 @@ export class SubmitProblem extends OpenAPIRoute {
     row.submitted_by_name = contact.name;
     row.submitted_by_email = contact.email;
 
+    // The client-generated id is the primary key: ON CONFLICT DO NOTHING makes
+    // the insert the atomic idempotency check (no SELECT-then-INSERT race).
     const cols = Object.keys(row);
-    await c.env.DB.prepare(
-      `INSERT INTO problems (${cols.join(", ")}) VALUES (${cols.map(() => "?").join(", ")})`,
-    )
-      .bind(...cols.map((col) => row[col]))
-      .run();
+    let result;
+    try {
+      result = await c.env.DB.prepare(
+        `INSERT INTO problems (${cols.join(", ")}) VALUES (${cols.map(() => "?").join(", ")}) ` +
+          "ON CONFLICT(id) DO NOTHING",
+      )
+        .bind(...cols.map((col) => row[col]))
+        .run();
+    } catch (err) {
+      // Don't leave orphaned R2 objects visible in the image manifest.
+      if (uploadedKeys.length) await c.env.IMAGES.delete(uploadedKeys);
+      throw err;
+    }
+    if (result.meta.changes === 0) {
+      console.info(`Duplicate submission: ${submission.id}`);
+      return Response.json({ success: true });
+    }
 
     const adminUrl = `${new URL(c.req.url).origin}/admin`;
     const emailResult = await sendProblemSubmissionEmail(submission, c.env, adminUrl);

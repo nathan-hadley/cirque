@@ -25,6 +25,16 @@ export const authMiddleware: MiddlewareHandler<{ Bindings: Env }> = async (
 let jwksCache: { keys: object[] } | null = null;
 let jwksFetchedAt = 0;
 
+async function fetchJwks(teamDomain: string): Promise<{ keys: object[] } | null> {
+  try {
+    const res = await fetch(`https://${teamDomain}/cdn-cgi/access/certs`);
+    if (!res.ok) return null;
+    return await res.json();
+  } catch {
+    return null;
+  }
+}
+
 export const accessMiddleware: MiddlewareHandler<{ Bindings: Env }> = async (c, next) => {
   const { ACCESS_TEAM_DOMAIN, ACCESS_AUD, ADMIN_DEV_BYPASS } = c.env;
   if (!ACCESS_TEAM_DOMAIN || !ACCESS_AUD) {
@@ -39,17 +49,22 @@ export const accessMiddleware: MiddlewareHandler<{ Bindings: Env }> = async (c, 
   if (!token) return c.json({ success: false, error: "Forbidden" }, 403);
 
   if (!jwksCache || Date.now() - jwksFetchedAt > 60 * 60 * 1000) {
-    const res = await fetch(`https://${ACCESS_TEAM_DOMAIN}/cdn-cgi/access/certs`);
-    if (!res.ok) return c.json({ success: false, error: "Auth unavailable" }, 503);
-    jwksCache = await res.json();
+    const fresh = await fetchJwks(ACCESS_TEAM_DOMAIN);
+    if (!fresh) return c.json({ success: false, error: "Auth unavailable" }, 503);
+    jwksCache = fresh;
     jwksFetchedAt = Date.now();
   }
-  const identity = await verifyAccessJwt(
-    token,
-    jwksCache,
-    ACCESS_AUD,
-    `https://${ACCESS_TEAM_DOMAIN}`,
-  );
+  const issuer = `https://${ACCESS_TEAM_DOMAIN}`;
+  let identity = await verifyAccessJwt(token, jwksCache, ACCESS_AUD, issuer);
+  if (!identity && Date.now() - jwksFetchedAt > 5 * 60 * 1000) {
+    // Key rotation: refresh the JWKS once and retry before rejecting.
+    const fresh = await fetchJwks(ACCESS_TEAM_DOMAIN);
+    if (fresh) {
+      jwksCache = fresh;
+      jwksFetchedAt = Date.now();
+      identity = await verifyAccessJwt(token, jwksCache, ACCESS_AUD, issuer);
+    }
+  }
   if (!identity) return c.json({ success: false, error: "Forbidden" }, 403);
   await next();
 };
@@ -57,6 +72,8 @@ export const accessMiddleware: MiddlewareHandler<{ Bindings: Env }> = async (c, 
 /**
  * Rate limiting middleware factory (per IP, 24h KV window).
  * Returns 429 Too Many Requests if the limit is exceeded.
+ * Best-effort by design: KV get/put is non-atomic and eventually consistent,
+ * so concurrent bursts can exceed the limit. Acceptable at these thresholds.
  */
 function makeRateLimiter(limit: number, prefix: string): MiddlewareHandler<{ Bindings: Env }> {
   return async (c, next) => {
