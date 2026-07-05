@@ -19,19 +19,33 @@ export function loadCachedData(): void {
     if (!file.exists) return;
     const cached = JSON.parse(file.textSync());
     const data = normalizePayload(cached.payload);
-    if (data) useDataStore.getState().setData(data, cached.etag ?? null);
+    if (data) {
+      useDataStore.getState().setData(data, cached.etag ?? null);
+    } else {
+      console.warn("Cached data file is malformed; using bundled seed");
+    }
   } catch (error) {
     console.warn("Failed to load cached data, using bundled seed:", error);
   }
 }
 
 export async function refreshData(): Promise<void> {
-  if (!API_KEY) return;
+  if (!API_KEY) {
+    console.warn("EXPO_PUBLIC_API_KEY is not set; skipping data refresh");
+    return;
+  }
   const { etag } = useDataStore.getState();
   const headers: Record<string, string> = apiHeaders();
   if (etag) headers["If-None-Match"] = etag;
 
-  const res = await fetch(API_ENDPOINTS.data, { headers });
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15000);
+  let res: Response;
+  try {
+    res = await fetch(API_ENDPOINTS.data, { headers, signal: controller.signal });
+  } finally {
+    clearTimeout(timeout);
+  }
   if (res.status === 304) return;
   if (!res.ok) throw new Error(`GET /v1/data → ${res.status}`);
 

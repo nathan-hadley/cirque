@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { LayoutChangeEvent } from "react-native";
 import { Image, ImageLoadEventData } from "expo-image";
 import { CameraOff } from "lucide-react-native";
@@ -28,6 +28,14 @@ export function Topo({ topo, remoteUri, line, color = "#ff3333" }: TopoProps) {
   const [originalImageSize, setOriginalImageSize] = useState<ImageLayout>(null);
   const [imageError, setImageError] = useState<boolean>(false);
   const [remoteFailed, setRemoteFailed] = useState<boolean>(false);
+
+  // Topo is reused across problems (prev/next navigation) without remounting;
+  // clear per-image state so one failure never sticks to the next problem.
+  useEffect(() => {
+    setRemoteFailed(false);
+    setImageError(false);
+    setOriginalImageSize(null);
+  }, [topo, remoteUri]);
 
   // Prefer the R2 URL; fall back to a direct URI (picked image preview, cached
   // file). Bundled topo assets were removed in ADR 0001 phase 5.

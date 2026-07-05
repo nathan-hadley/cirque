@@ -105,13 +105,21 @@ function edit(id) {
 
 async function save(id) {
   const body = {};
+  let invalid = null;
   document.querySelectorAll("#editor input").forEach(i => {
     let v = i.value === "" ? null : i.value;
-    if (["sort_order", "lat", "lng"].includes(i.name) && v !== null) v = Number(v);
+    if (["sort_order", "lat", "lng"].includes(i.name) && v !== null) {
+      v = Number(v);
+      if (Number.isNaN(v)) invalid = i.name + " must be a number";
+    }
+    if (["name", "lat", "lng"].includes(i.name) && v === null) invalid = i.name + " is required";
     body[i.name] = v;
   });
-  await api("/v1/admin/problems/" + id, { method: "PUT", body: JSON.stringify(body) });
-  await load();
+  if (invalid) { alert(invalid); return; }
+  try {
+    await api("/v1/admin/problems/" + id, { method: "PUT", body: JSON.stringify(body) });
+    await load();
+  } catch (e) { alert(e.message); }
 }
 
 async function review(id, status) {
@@ -130,14 +138,18 @@ document.querySelectorAll(".filters button").forEach(b =>
   b.addEventListener("click", () => { filter = b.dataset.f; render(); }));
 
 document.getElementById("docLoad").addEventListener("click", async () => {
-  const doc = await api("/v1/admin/documents/" + document.getElementById("docName").value);
-  document.getElementById("docBody").value = JSON.stringify(JSON.parse(doc.geojson), null, 2);
+  try {
+    const doc = await api("/v1/admin/documents/" + document.getElementById("docName").value);
+    document.getElementById("docBody").value = JSON.stringify(JSON.parse(doc.geojson), null, 2);
+  } catch (e) { alert(e.message); }
 });
 document.getElementById("docSave").addEventListener("click", async () => {
-  await api("/v1/admin/documents/" + document.getElementById("docName").value, {
-    method: "PUT", body: document.getElementById("docBody").value,
-  });
-  alert("Saved");
+  try {
+    await api("/v1/admin/documents/" + document.getElementById("docName").value, {
+      method: "PUT", body: document.getElementById("docBody").value,
+    });
+    alert("Saved");
+  } catch (e) { alert(e.message); }
 });
 
 load().catch(e => document.body.insertAdjacentHTML("afterbegin", "<p style='color:red'>" + esc(e.message) + "</p>"));

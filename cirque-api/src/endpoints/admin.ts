@@ -2,10 +2,14 @@ import type { AppContext } from "../types";
 
 // All handlers here sit behind accessMiddleware (Cloudflare Access).
 
+// `status` is deliberately NOT here: transitions go through reviewProblem,
+// which stamps reviewed_at/review_note alongside the change.
 const EDITABLE_COLS = [
   "name", "grade", "subarea", "color", "sort_order", "description",
-  "lat", "lng", "line", "topo_key", "status",
+  "lat", "lng", "line", "topo_key",
 ] as const;
+
+export const DOCUMENT_NAMES = ["areas", "boulders", "subareas", "subarea-centers"] as const;
 
 export async function listProblems(c: AppContext) {
   const { results } = await c.env.DB.prepare(
@@ -26,9 +30,6 @@ export async function updateProblem(c: AppContext) {
   const nonScalar = cols.find((col) => body[col] !== null && typeof body[col] === "object");
   if (nonScalar) {
     return c.json({ success: false, error: `Field ${nonScalar} must be a scalar` }, 400);
-  }
-  if (body.status && !["pending", "approved", "rejected"].includes(body.status)) {
-    return c.json({ success: false, error: "Invalid status" }, 400);
   }
   const sets = cols.map((col) => `${col} = ?`).join(", ");
   const result = await c.env.DB.prepare(
@@ -66,10 +67,14 @@ export async function getDocument(c: AppContext) {
 
 export async function putDocument(c: AppContext) {
   const name = c.req.param("name");
+  if (!(DOCUMENT_NAMES as readonly string[]).includes(name)) {
+    return c.json({ success: false, error: `Unknown document: ${name}` }, 400);
+  }
   const text = await c.req.text();
   try {
     const parsed = JSON.parse(text);
     if (parsed?.type !== "FeatureCollection") throw new Error("not a FeatureCollection");
+    if (!Array.isArray(parsed.features)) throw new Error("features must be an array");
   } catch (e) {
     return c.json({ success: false, error: `Invalid GeoJSON: ${(e as Error).message}` }, 400);
   }
