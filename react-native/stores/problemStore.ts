@@ -1,7 +1,7 @@
 import { Alert } from "react-native";
 import { Feature, FeatureCollection, GeoJsonProperties, LineString, Point } from "geojson";
 import { create } from "zustand";
-import { MAX_GRADE, MIN_GRADE, Problem } from "@/models/problems";
+import { MAX_GRADE, MIN_GRADE, Problem, ProblemStatus } from "@/models/problems";
 import { useDataStore } from "@/stores/dataStore";
 
 type GetProblemParams = {
@@ -227,7 +227,7 @@ export const useProblemStore = create<ProblemState>((set, get) => {
         line,
         topo,
         topoKey: properties.topoKey?.toString(),
-        status: properties.status?.toString(),
+        status: parseStatus(properties.status),
         subarea,
         coordinates,
       };
@@ -245,6 +245,10 @@ export const useProblemStore = create<ProblemState>((set, get) => {
     },
   };
 });
+
+function parseStatus(value: unknown): ProblemStatus | undefined {
+  return value === "pending" || value === "approved" || value === "rejected" ? value : undefined;
+}
 
 function getColorFromString(colorString?: string): string {
   switch (colorString) {

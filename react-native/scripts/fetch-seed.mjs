@@ -11,7 +11,20 @@ if (!base || !key) throw new Error("Set EXPO_PUBLIC_API_BASE_URL and EXPO_PUBLIC
 const res = await fetch(`${base}/v1/data`, { headers: { "X-API-Key": key } });
 if (!res.ok) throw new Error(`GET /v1/data -> ${res.status}`);
 const payload = await res.json();
-if (payload?.problems?.type !== "FeatureCollection") throw new Error("Malformed payload");
+// Mirror the app's normalizePayload requirements: every collection must be valid
+// or the bundled seed would brick first launch.
+const collections = [
+  payload?.problems,
+  payload?.documents?.areas,
+  payload?.documents?.boulders,
+  payload?.documents?.subareas,
+  payload?.documents?.["subarea-centers"],
+];
+for (const fc of collections) {
+  if (fc?.type !== "FeatureCollection" || !Array.isArray(fc.features)) {
+    throw new Error("Malformed payload: every collection must be a FeatureCollection");
+  }
+}
 
 const out = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../assets/seed.json");
 await writeFile(out, JSON.stringify(payload));

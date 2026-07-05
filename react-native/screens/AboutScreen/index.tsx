@@ -98,16 +98,21 @@ export default function AboutScreen() {
 
   const handleTopoDownload = async () => {
     try {
-      const { ok, failed } = await topoDownload.downloadAllTopos();
+      const { ok, failed, total } = await topoDownload.downloadAllTopos();
       showToast({
-        action: failed === 0 ? "success" : "error",
+        action: failed === 0 && total > 0 ? "success" : "error",
         message:
-          failed === 0
-            ? `Downloaded ${ok} topo images for offline use`
-            : `Downloaded ${ok} topo images, ${failed} failed`,
+          total === 0
+            ? "No topo images available to download"
+            : failed === 0
+              ? `Downloaded ${ok} topo images for offline use`
+              : `Downloaded ${ok} topo images, ${failed} failed`,
       });
-    } catch {
-      showToast({ action: "error", message: "Topo download failed" });
+    } catch (error) {
+      showToast({
+        action: "error",
+        message: error instanceof Error ? error.message : "Topo download failed",
+      });
     }
   };
 

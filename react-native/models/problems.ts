@@ -1,3 +1,5 @@
+export type ProblemStatus = "pending" | "approved" | "rejected";
+
 export type Problem = {
   id: string;
   name?: string;
@@ -9,7 +11,7 @@ export type Problem = {
   line: [number, number][]; // Array of [x, y] coordinate tuples
   topo?: string;
   topoKey?: string;
-  status?: string; // 'pending' renders a review badge
+  status?: ProblemStatus; // 'pending' renders a review badge
   subarea?: string;
   coordinates?: [number, number]; // [longitude, latitude]
 };
