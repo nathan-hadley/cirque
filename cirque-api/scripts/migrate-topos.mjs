@@ -30,26 +30,35 @@ if (skipped.length) console.warn(`WARNING: skipping non-.jpeg files: ${skipped.j
 console.log(`Encoding ${files.length} topos from ${SRC}`);
 
 const uploads = [];
+const encodeFailures = [];
 for (const file of files) {
-  const slug = path.basename(file, ".jpeg");
-  const keys = topoKeys(slug);
-  const input = await readFile(path.join(SRC, file));
-  const { full, thumb } = await encodeTopoVariants(input);
+  try {
+    const slug = path.basename(file, ".jpeg");
+    const keys = topoKeys(slug);
+    const input = await readFile(path.join(SRC, file));
+    const { full, thumb } = await encodeTopoVariants(input);
 
-  for (const [key, data] of [
-    [keys.full, full],
-    [keys.thumb, thumb],
-  ]) {
-    const outPath = path.join(OUT, key);
-    await mkdir(path.dirname(outPath), { recursive: true });
-    await writeFile(outPath, data);
-    uploads.push([key, outPath, "image/webp"]);
+    for (const [key, data] of [
+      [keys.full, full],
+      [keys.thumb, thumb],
+    ]) {
+      const outPath = path.join(OUT, key);
+      await mkdir(path.dirname(outPath), { recursive: true });
+      await writeFile(outPath, data);
+      uploads.push([key, outPath, "image/webp"]);
+    }
+
+    const origPath = path.join(OUT, keys.original);
+    await mkdir(path.dirname(origPath), { recursive: true });
+    await copyFile(path.join(SRC, file), origPath);
+    uploads.push([keys.original, origPath, "image/jpeg"]);
+  } catch (err) {
+    encodeFailures.push(file);
+    console.error(`ENCODE FAILED ${file}: ${err.message}`);
   }
-
-  const origPath = path.join(OUT, keys.original);
-  await mkdir(path.dirname(origPath), { recursive: true });
-  await copyFile(path.join(SRC, file), origPath);
-  uploads.push([keys.original, origPath, "image/jpeg"]);
+}
+if (encodeFailures.length) {
+  console.error(`\n${encodeFailures.length} files failed to encode: ${encodeFailures.join(", ")}`);
 }
 
 const totalMB = (dir) =>
