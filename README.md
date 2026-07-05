@@ -12,30 +12,24 @@
   - JPEG quality: Medium
   - Size: Medium
 
-### Problems Data Sync
+### App Data (ADR 0001)
 
-The app uses a single source of truth for problems data: `cirque-data/problems/problems.geojson`.
+All app data (problems, boulders, areas, subareas) and topo images live in the
+cloud: Cloudflare D1 + R2, served by `cirque-api` (see
+[ADR 0001](docs/adr/0001-cloud-source-of-truth.md)).
 
-**Problem Submission Workflow:**
+**Problem submission workflow:**
 
-1. **Automatic (via app)**: Users submit problems through the Contribute screen
+1. Users submit problems through the Contribute screen
+2. `POST /v1/problems` stores a `pending` row in D1 (image in R2) — it appears
+   on the map for everyone immediately, badged as pending
+3. An admin reviews it at `/admin` (approve / reject / edit)
 
-   - API automatically creates a GitHub PR with the new problem
-   - GitHub Action automatically runs `pnpm sync-data` and commits TypeScript files
-   - PR is ready to review and merge!
-   - See [GitHub PR Automation](docs/github-pr-automation.md) for details
+**Admin edits** to boulders/areas/subareas happen on the `/admin` page and are
+live for all clients on their next refresh.
 
-2. **Manual (via PR)**: Edit `cirque-data/problems/problems.geojson` in a PR
-   - GitHub Action automatically runs `pnpm sync-data` and commits TypeScript files
-   - No need to manually sync!
+**Bundled seed:** the app ships a snapshot of `GET /v1/data`
+(`react-native/assets/seed.json`) as a first-launch/offline fallback. Regenerate
+with `node react-native/scripts/fetch-seed.mjs` before a release.
 
-3. **Manual (local)**: Edit `cirque-data/problems/problems.geojson` locally
-   - Run sync command: `cd react-native && pnpm run sync-problems`
-   - Commit both files: `problems.geojson` and `react-native/assets/problems.ts`
-
-**Available commands:**
-
-- `pnpm run sync-problems` - Generate TypeScript from GeoJSON
-- `pnpm run validate-problems` - Check if files are in sync
-
-The GitHub workflow automatically validates data sync on pull requests.
+`cirque-data/` is archived — kept for history, no longer authoritative.

@@ -68,4 +68,3 @@ When working on an active PR:
 - `pnpm lint` - ESLint checks
 - `pnpm typecheck` - TypeScript compilation check
 - `pnpm format` - Prettier formatting
-- `pnpm validate-data` - Data synchronization validation
