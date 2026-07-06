@@ -1,7 +1,21 @@
 import { fromHono } from "chanfana";
 import { Hono } from "hono";
 import { SubmitProblem } from "./endpoints/problemCreate";
-import { authMiddleware, rateLimitMiddleware } from "./middleware";
+import { getData, getImage, getImagesManifest } from "./endpoints/data";
+import {
+  getDocument,
+  listProblems,
+  putDocument,
+  reviewProblem,
+  updateProblem,
+} from "./endpoints/admin";
+import { ADMIN_HTML } from "./admin/page";
+import {
+  accessMiddleware,
+  authMiddleware,
+  rateLimitMiddleware,
+  readRateLimitMiddleware,
+} from "./middleware";
 
 // Start a Hono app
 const app = new Hono<{ Bindings: Env }>();
@@ -11,14 +25,29 @@ const openapi = fromHono(app, {
   docs_url: "/",
 });
 
-// Apply security middleware to API routes only (not docs)
-app.use("/v1/*", authMiddleware, rateLimitMiddleware);
+// Public images (no API key: loaded directly by <img>/expo-image)
+app.get("/images/*", getImage);
+
+// Admin (Cloudflare Access; no API key)
+app.use("/admin", accessMiddleware);
+app.use("/v1/admin/*", accessMiddleware);
+app.get("/admin", (c) => c.html(ADMIN_HTML));
+app.get("/v1/admin/problems", listProblems);
+app.put("/v1/admin/problems/:id", updateProblem);
+app.post("/v1/admin/problems/:id/approve", reviewProblem("approved"));
+app.post("/v1/admin/problems/:id/reject", reviewProblem("rejected"));
+app.get("/v1/admin/documents/:name", getDocument);
+app.put("/v1/admin/documents/:name", putDocument);
+
+// Public API (API key + rate limits: 50/day writes, 1000/day reads)
+app.use("/v1/data", authMiddleware, readRateLimitMiddleware);
+app.use("/v1/images/manifest", authMiddleware, readRateLimitMiddleware);
+app.use("/v1/problems", authMiddleware, rateLimitMiddleware);
+app.get("/v1/data", getData);
+app.get("/v1/images/manifest", getImagesManifest);
 
 // Register OpenAPI endpoints
 openapi.post("/v1/problems", SubmitProblem);
-
-// You may also register routes for non OpenAPI directly on Hono
-// app.get('/test', (c) => c.text('Hono!'))
 
 // Export the Hono app
 export default app;

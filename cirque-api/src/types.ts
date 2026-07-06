@@ -12,8 +12,13 @@ export interface Env {
   MAILERSEND_API_TOKEN: string;
   CIRQUE_EMAIL: string;
   API_KEY: string;
-  GITHUB_TOKEN: string;
   RATE_LIMIT_KV: KVNamespace;
+  DB: D1Database;
+  IMAGES: R2Bucket;
+  // Cloudflare Access (admin). Unset + ADMIN_DEV_BYPASS!=="true" → admin routes 403.
+  ACCESS_TEAM_DOMAIN?: string; // e.g. "myteam.cloudflareaccess.com"
+  ACCESS_AUD?: string;
+  ADMIN_DEV_BYPASS?: string;
 }
 
 export type AppContext = Context<{ Bindings: Env }>;
@@ -30,7 +35,11 @@ export const VALIDATION_CONSTRAINTS = {
 } as const;
 
 export const ProblemSubmissionSchema = z.object({
-  id: z.string().describe("1699123456789-abc123def456"),
+  // Also used as the D1 primary key and R2 key segment — keep it strict.
+  id: z
+    .string()
+    .regex(/^[A-Za-z0-9_-]{8,64}$/, "Invalid id format")
+    .describe("1699123456789-abc123def456"),
   contact: z.object({
     name: z
       .string({ required_error: "Name is required" })
@@ -102,7 +111,12 @@ export const ProblemSubmissionSchema = z.object({
       )
       .describe("Array of [x, y] pixel coordinate pairs"),
     topo: z.string().optional().describe("forestland-physical"),
-    imageBase64: z.string().optional().describe("Base64 encoded image"),
+    // Client pipeline produces ≤200KB JPEGs; 400K chars ≈ 300KB decoded.
+    imageBase64: z
+      .string()
+      .max(400_000, "Image too large")
+      .optional()
+      .describe("Base64 encoded image"),
   }),
 });
 
