@@ -3341,12 +3341,12 @@
         {
             "type": "Feature",
             "properties": {
-                "name": "Teacup",
+                "name": "Coffee Cup",
                 "grade": "V9",
                 "subarea": "Forestland",
                 "color": "",
                 "order": "",
-                "topo": "forestland-teacup",
+                "topo": "forestland-coffee-cup",
                 "line": "[[355,263],[356,243],[357,225],[357,204],[354,189],[349,165],[345,145],[340,121],[339,99],[338,88]]",
                 "description": "Start matched on the right side of the rail."
             },

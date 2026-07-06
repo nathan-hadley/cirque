@@ -11,7 +11,7 @@ import { FeatureCollection, Point, GeoJsonProperties } from 'geojson';
  *   2. Run: npm run sync-problems
  *   3. Commit both files
  *
- * Generated: 2026-07-02T15:16:58.238Z
+ * Generated: 2026-07-06T13:39:39.490Z
  * Features: 172
  */
 
@@ -3357,12 +3357,12 @@ export const problemsData: FeatureCollection<Point, GeoJsonProperties> = {
     {
       "type": "Feature",
       "properties": {
-        "name": "Teacup",
+        "name": "Coffee Cup",
         "grade": "V9",
         "subarea": "Forestland",
         "color": "",
         "order": "",
-        "topo": "forestland-teacup",
+        "topo": "forestland-coffee-cup",
         "line": "[[355,263],[356,243],[357,225],[357,204],[354,189],[349,165],[345,145],[340,121],[339,99],[338,88]]",
         "description": "Start matched on the right side of the rail."
       },
