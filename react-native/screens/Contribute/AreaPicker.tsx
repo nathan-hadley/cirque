@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { CircleIcon } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import BottomSearchBar from "@/components/BottomSearchBar";
@@ -24,7 +24,10 @@ type AreaPickerSheetProps = {
 
 function AreaPickerSheet({ isOpen, onClose, onSelect, currentArea }: AreaPickerSheetProps) {
   const insets = useSafeAreaInsets();
-  const areas = useDataStore(s => leavenworthAreas(s.data));
+  // Select the stable `data` reference; deriving the array inside the selector
+  // returns a new snapshot every read, which loops useSyncExternalStore.
+  const data = useDataStore(s => s.data);
+  const areas = useMemo(() => leavenworthAreas(data), [data]);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
