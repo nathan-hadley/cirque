@@ -19,6 +19,13 @@
       "binding": "RATE_LIMIT_KV",
       "id": "0378b8d333db47d198ca87fe94d7032f"
     }
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "cirque-db",
+      "database_id": "a3909423-bbe6-4957-b32a-c202592f937c"
+    }
   ]
   /**
    * Smart Placement
