@@ -237,3 +237,29 @@ bundle until step 4 ships.
   can still be done by exporting, editing, and re-importing via admin endpoints
   if ever needed.
 - **User accounts now:** deferred (see §5).
+
+## Implementation notes (2026-07-04/05)
+
+Where the implementation deliberately deviates from the sketches above:
+
+- **R2 keys are slug-based** (`topos/{slug}/…`), not `topos/{id}` — topo photos
+  are shared across problems (125 images ← 167 problems) and the back catalog
+  had no ids. `topo_key` absorbs this; new submissions use the id as the slug.
+- **Problem ids for the back catalog** were generated deterministically
+  (UUIDv5-style sha1 of `subarea/name`) so the bootstrap import is idempotent.
+- **The Worker does no image processing.** New-submission JPEGs are stored as-is
+  under the `.webp` variant keys (correct Content-Type; decoders sniff bytes) —
+  `scripts/reencode-submitted-topos.mjs` rewrites them as real WebP after review.
+- **Read endpoints get their own rate limit** (1000/day/IP vs 50/day for
+  writes) — the shared budget would have starved app launches.
+- **ETag covers rejected rows and hard deletes** (max `updated_at` over *all*
+  problems + visible count), since a rejection removes a row from the payload
+  without bumping anything left inside it.
+- **Cloud document naming:** `subareas` = polygons, `subarea-centers` = label
+  points, matching the source geojson files. The legacy app assets had those
+  names swapped; the app normalizes once in `stores/dataStore.ts`.
+- **Cloudflare Access** protects `/admin` + `/v1/admin` via a path-scoped
+  self-hosted app (not the Worker "Restricted" toggle, which would wall off the
+  public API). The Worker independently verifies the Access JWT, fail-closed.
+- **Backups are pruned after 30 days** (the ADR left retention unspecified);
+  they hold PII, so unbounded retention was rejected.
