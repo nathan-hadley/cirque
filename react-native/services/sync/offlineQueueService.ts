@@ -1,5 +1,5 @@
-import type { ProblemSubmission } from "@/types/problemSubmission";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import type { ProblemSubmission } from "@/types/problemSubmission";
 
 const QUEUE_STORAGE_KEY = "@cirque/offline-submissions";
 
