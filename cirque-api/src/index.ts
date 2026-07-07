@@ -10,6 +10,7 @@ import {
   updateProblem,
 } from "./endpoints/admin";
 import { ADMIN_HTML } from "./admin/page";
+import { backupKeysToPrune, buildBackup } from "./backup.mjs";
 import {
   accessMiddleware,
   authMiddleware,
@@ -49,5 +50,41 @@ app.get("/v1/images/manifest", getImagesManifest);
 // Register OpenAPI endpoints
 openapi.post("/v1/problems", SubmitProblem);
 
-// Export the Hono app
-export default app;
+async function scheduled(_controller: ScheduledController, env: Env): Promise<void> {
+  const now = new Date();
+  let backup: { key: string; body: string };
+  let problemCount = 0;
+  try {
+    const [problems, documents] = await env.DB.batch([
+      env.DB.prepare("SELECT * FROM problems"),
+      env.DB.prepare("SELECT * FROM documents"),
+    ]);
+    problemCount = problems.results.length;
+    backup = buildBackup(problems.results, documents.results, now);
+  } catch (err) {
+    console.error({ event: "backup_query_failed", error: String(err) });
+    throw err;
+  }
+  try {
+    await env.IMAGES.put(backup.key, backup.body, {
+      httpMetadata: { contentType: "application/json" },
+    });
+  } catch (err) {
+    console.error({ event: "backup_upload_failed", key: backup.key, error: String(err) });
+    throw err;
+  }
+  // The snapshot is safely stored at this point; a prune failure is logged
+  // but must not mark the backup run as failed.
+  let pruned = 0;
+  try {
+    const existing = await env.IMAGES.list({ prefix: "backups/" });
+    const prune = backupKeysToPrune(existing.objects.map((o) => o.key), now);
+    if (prune.length) await env.IMAGES.delete(prune);
+    pruned = prune.length;
+  } catch (err) {
+    console.error({ event: "backup_prune_failed", error: String(err) });
+  }
+  console.info({ event: "backup_complete", key: backup.key, problems: problemCount, pruned });
+}
+
+export default { fetch: app.fetch, scheduled };

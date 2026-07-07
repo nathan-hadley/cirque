@@ -32,7 +32,10 @@
       "binding": "IMAGES",
       "bucket_name": "cirque-images"
     }
-  ]
+  ],
+  "triggers": {
+    "crons": ["0 9 * * *"]
+  }
   /**
    * Smart Placement
    * Docs: https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
