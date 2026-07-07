@@ -14,10 +14,6 @@ Env (`.env.local`): `EXPO_PUBLIC_API_BASE_URL`, `EXPO_PUBLIC_API_KEY`,
 ## Release checklist
 
 1. **Regenerate the bundled seed** so first-launch offline data is fresh:
-   ```sh
-   EXPO_PUBLIC_API_BASE_URL=... EXPO_PUBLIC_API_KEY=... node scripts/fetch-seed.mjs
-   ```
-   Commit the updated `assets/seed.json`.
 2. `pnpm typecheck && pnpm lint && pnpm test`
 3. Build via EAS as usual.
 
