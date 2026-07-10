@@ -51,14 +51,12 @@ export function ProblemsLayer() {
             PROBLEM_COLORS.default,
           ],
           circleStrokeWidth: 0,
-          // ["zoom"] must stay top-level in a step expression, so the pending
-          // muting lives in the step's zoomed-in output branch.
           circleOpacity: [
             "step",
             ["zoom"],
             0, // hidden below zoom 16
             16,
-            ["case", ["==", ["get", "status"], "pending"], 0.55, 1], // muted when pending
+            1, // visible at zoom 16+
           ],
         }}
       />
