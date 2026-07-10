@@ -31,6 +31,39 @@ describe("normalizePayload", () => {
     expect(data!.boulders.type).toBe("FeatureCollection");
   });
 
+  it("converts closed LineString rings to Polygons for fill layers", () => {
+    const ring = [
+      [0, 0],
+      [1, 0],
+      [1, 1],
+      [0, 0],
+    ];
+    const openLine = [
+      [0, 0],
+      [1, 1],
+    ];
+    const data = normalizePayload({
+      ...payload,
+      documents: {
+        ...payload.documents,
+        boulders: {
+          type: "FeatureCollection",
+          features: [
+            { type: "Feature", properties: {}, geometry: { type: "LineString", coordinates: ring } },
+            {
+              type: "Feature",
+              properties: {},
+              geometry: { type: "LineString", coordinates: openLine },
+            },
+          ],
+        },
+      },
+    });
+    expect(data!.boulders.features[0].geometry.type).toBe("Polygon");
+    expect((data!.boulders.features[0].geometry as GeoJSON.Polygon).coordinates).toEqual([ring]);
+    expect(data!.boulders.features[1].geometry.type).toBe("LineString");
+  });
+
   it("rejects malformed payloads", () => {
     expect(normalizePayload(null)).toBeNull();
     expect(normalizePayload({})).toBeNull();
