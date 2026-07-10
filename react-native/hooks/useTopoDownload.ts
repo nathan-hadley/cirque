@@ -1,16 +1,12 @@
 import { useState } from "react";
 import { Image } from "expo-image";
-import { API_ENDPOINTS, apiHeaders } from "@/constants/api";
+import { API_ENDPOINTS, apiHeaders, FETCH_TIMEOUT_MS } from "@/constants/api";
 import { useNetworkStatus } from "@/hooks/useNetworkStatus";
 
 type ManifestEntry = { topoKey: string; fullUrl: string; thumbUrl: string; bytes: number };
 
 export type TopoDownloadResult = { ok: number; failed: number; total: number };
 
-/**
- * "Download topo images" (ADR 0001): walk the manifest and prefetch every
- * variant into expo-image's disk cache so topos render offline.
- */
 export function useTopoDownload() {
   const { isOnline } = useNetworkStatus();
   const [downloading, setDownloading] = useState(false);
@@ -24,7 +20,7 @@ export function useTopoDownload() {
     setDone(false);
     try {
       const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 15000);
+      const timeout = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
       let res: Response;
       try {
         res = await fetch(API_ENDPOINTS.imagesManifest, {

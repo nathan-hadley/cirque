@@ -1,4 +1,4 @@
-import { topoImageUrl } from "../api";
+import { topoImageUrl } from "./api";
 
 describe("topoImageUrl", () => {
   it("builds variant urls from a topo key", () => {

@@ -1,5 +1,5 @@
 import { File, Paths } from "expo-file-system";
-import { API_ENDPOINTS, API_KEY, apiHeaders } from "@/constants/api";
+import { API_ENDPOINTS, API_KEY, apiHeaders, FETCH_TIMEOUT_MS } from "@/constants/api";
 import { normalizePayload, useDataStore } from "@/stores/dataStore";
 
 /**
@@ -39,7 +39,7 @@ export async function refreshData(): Promise<void> {
   if (etag) headers["If-None-Match"] = etag;
 
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 15000);
+  const timeout = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
   let res: Response;
   try {
     res = await fetch(API_ENDPOINTS.data, { headers, signal: controller.signal });

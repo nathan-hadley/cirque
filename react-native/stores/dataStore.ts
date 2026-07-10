@@ -2,11 +2,7 @@ import { FeatureCollection, Point } from "geojson";
 import { create } from "zustand";
 import seed from "@/assets/seed.json";
 
-/**
- * All app data from GET /v1/data (ADR 0001), normalized to app-side names.
- * Cloud document naming follows the geojson files: `subareas` = polygons,
- * `subarea-centers` = label points — the opposite of the legacy asset names.
- */
+/** All app data from GET /v1/data (ADR 0001), normalized to app-side names. */
 export type CirqueData = {
   problems: FeatureCollection<Point>;
   areas: FeatureCollection;
@@ -15,18 +11,27 @@ export type CirqueData = {
   subareaCenters: FeatureCollection;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function normalizePayload(payload: any): CirqueData | null {
-  const docs = payload?.documents;
+function isFeatureCollection(fc: unknown): fc is FeatureCollection {
+  return (
+    typeof fc === "object" &&
+    fc !== null &&
+    (fc as FeatureCollection).type === "FeatureCollection" &&
+    Array.isArray((fc as FeatureCollection).features)
+  );
+}
+
+export function normalizePayload(payload: unknown): CirqueData | null {
+  const root = payload as { problems?: unknown; documents?: Record<string, unknown> } | null;
+  const docs = root?.documents;
   const collections = {
-    problems: payload?.problems,
+    problems: root?.problems,
     areas: docs?.areas,
     boulders: docs?.boulders,
     subareaPolygons: docs?.subareas,
     subareaCenters: docs?.["subarea-centers"],
   };
   for (const fc of Object.values(collections)) {
-    if (fc?.type !== "FeatureCollection" || !Array.isArray(fc.features)) return null;
+    if (!isFeatureCollection(fc)) return null;
   }
   return collections as CirqueData;
 }
