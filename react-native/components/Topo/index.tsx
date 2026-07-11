@@ -9,7 +9,7 @@ import { TopoLine } from "./TopoLine";
 
 type TopoProps = {
   topo: string; // Direct image URI (http/file), or "" when only remoteUri applies
-  remoteUri?: string; // Preferred R2 URL; falls back to `topo` URI on error
+  remoteUri?: string; // Preferred R2 URL
   line: number[][]; // Pixel coordinates (640×480)
   color?: string; // Line color (default: "#ff3333")
 };

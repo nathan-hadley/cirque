@@ -6,7 +6,6 @@ type ProblemFeature = Feature<Point, GeoJsonProperties>;
 
 /**
  * Hook that returns all problems sorted alphabetically by name
- * Computed once on mount to avoid flickering
  */
 export function useProblems() {
   const problemsData = useDataStore(s => s.data.problems);

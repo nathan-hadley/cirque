@@ -76,7 +76,7 @@ export default function TopoPicker({
           linePixels: [],
         });
       }
-    } catch (e) {
+    } catch {
       showToast({
         action: "error",
         message: "Failed to load topo image.",
@@ -96,7 +96,7 @@ export default function TopoPicker({
           linePixels: [],
         });
       }
-    } catch (e) {
+    } catch {
       showToast({
         action: "error",
         message: "Failed to pick image. Please try again.",
@@ -116,7 +116,7 @@ export default function TopoPicker({
           linePixels: [],
         });
       }
-    } catch (e) {
+    } catch {
       showToast({
         action: "error",
         message: "Failed to capture image. Please try again.",
