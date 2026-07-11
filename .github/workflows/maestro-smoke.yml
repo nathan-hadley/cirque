@@ -64,14 +64,6 @@ jobs:
         env:
           NODE_ENV: production
           EXPO_PUBLIC_MAPBOX_ACCESS_TOKEN: ${{ secrets.EXPO_PUBLIC_MAPBOX_ACCESS_TOKEN }}
-          # Point the contribute API at an unreachable local address so a real
-          # submit fails at the network layer and deterministically falls back
-          # to the offline queue ("Problem saved - will submit when online"),
-          # which the contribute smoke flow asserts. Avoids hitting (and
-          # polluting) the real backend from CI. A non-empty key is required to
-          # get past the client-side key guard before the request is attempted.
-          EXPO_PUBLIC_API_BASE_URL: http://127.0.0.1:9
-          EXPO_PUBLIC_API_KEY: ci-smoke-offline-queue
 
       - name: Install Maestro
         run: |
@@ -96,7 +88,20 @@ jobs:
           working-directory: react-native
           script: |
             adb install -r android/app/build/outputs/apk/release/app-release.apk
-            maestro test .maestro
+            # Flows 01-04 need connectivity (Mapbox tiles) and run online.
+            maestro test \
+              .maestro/01-launch-and-tabs.yml \
+              .maestro/02-search.yml \
+              .maestro/03-map-and-circuit.yml \
+              .maestro/04-grade-filter.yml
+            # Contribute submit: force the device offline so the submission
+            # deterministically falls back to the offline queue ("Problem saved
+            # - will submit when online") rather than depending on a real
+            # backend. adb (and therefore Maestro) is unaffected by toggling the
+            # device's own radios.
+            adb shell svc wifi disable || true
+            adb shell svc data disable || true
+            maestro test .maestro/05-contribute.yml
 
       - name: Upload Maestro diagnostics
         if: failure()
