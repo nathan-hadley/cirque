@@ -31,7 +31,12 @@ export function MapSearchBar({ onPress }: MapSearchBarProps) {
         elevation: Platform.OS === "android" ? 8 : undefined,
       }}
     >
-      <Pressable onPress={handlePress} className="flex-1">
+      <Pressable
+        onPress={handlePress}
+        testID="open-problem-search"
+        accessibilityLabel="Open problem search"
+        className="flex-1"
+      >
         <Input className="bg-typography-100" variant="rounded" size="lg" pointerEvents="none">
           <InputIcon as={Search} className="ml-3" />
           <InputField

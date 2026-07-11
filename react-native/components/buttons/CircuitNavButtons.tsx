@@ -41,6 +41,8 @@ export function CircuitNavButtons() {
       {showPreviousButton() && (
         <Button
           onPress={handlePreviousProblem}
+          testID="circuit-previous-problem"
+          accessibilityLabel="Previous circuit problem"
           action="secondary"
           className="bg-typography-0/50 rounded-full w-12 h-12"
         >
@@ -51,6 +53,8 @@ export function CircuitNavButtons() {
       {showNextButton() && (
         <Button
           onPress={handleNextProblem}
+          testID="circuit-next-problem"
+          accessibilityLabel="Next circuit problem"
           action="secondary"
           className="bg-typography-0/50 rounded-full w-12 h-12"
         >

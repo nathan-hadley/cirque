@@ -121,6 +121,8 @@ export function SearchOverlay({ isVisible, onClose }: SearchOverlayProps) {
             <Input className="flex-1 bg-typography-100" variant="rounded" size="lg">
               <InputIcon as={Search} className="ml-3" />
               <InputField
+                testID="problem-search-input"
+                accessibilityLabel="Problem search"
                 value={searchQuery}
                 onChangeText={handleSetSearchQuery}
                 placeholder="Search problems..."

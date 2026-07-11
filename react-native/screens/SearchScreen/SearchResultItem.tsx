@@ -33,6 +33,8 @@ export function SearchResultItem({ result, onPress }: SearchResultItemProps) {
   return (
     <TouchableOpacity
       onPress={() => onPress(result)}
+      testID={`problem-search-result-${problem.id}`}
+      accessibilityLabel={`Select ${problem.name || "unnamed problem"}`}
       className="px-4 py-3 border-b border-typography-300"
     >
       <VStack space="xs">

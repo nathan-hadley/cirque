@@ -76,6 +76,8 @@ export function MapScreen() {
     <View className="flex-1">
       <RNMapboxMapView
         ref={mapRef}
+        testID="problem-map"
+        accessibilityLabel="Problem map"
         styleURL={STYLE_URI}
         scaleBarEnabled={false}
         compassEnabled={false}

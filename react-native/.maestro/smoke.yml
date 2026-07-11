@@ -1,0 +1,56 @@
+appId: com.nathanhadley.Cirque
+name: Core navigation smoke test
+---
+- launchApp:
+    clearState: true
+
+- assertVisible: "Search problems..."
+- assertVisible: "Map"
+
+- tapOn:
+    id: "open-problem-search"
+- tapOn:
+    id: "problem-search-input"
+- inputText: "The Shallow"
+- tapOn:
+    id: "problem-search-result-80faa6a3-b46a-5bff-8c77-1887c4712264"
+- assertVisible: "The Shallow"
+
+# Dismiss the sheet, then tap the problem at the camera center. Search selection
+# centers it in the sheet-aware camera viewport at zoom 18, making this a
+# deterministic map-feature tap.
+- swipe:
+    start: "50%, 65%"
+    end: "50%, 95%"
+    duration: 500
+- assertNotVisible: "The Shallow"
+- tapOn:
+    point: "50%, 24%"
+- assertVisible: "The Shallow"
+
+- tapOn:
+    id: "circuit-next-problem"
+- assertVisible: "Cube Crack"
+- tapOn:
+    id: "circuit-next-problem"
+- assertVisible: "The Cube"
+- tapOn:
+    id: "circuit-previous-problem"
+- assertVisible: "Cube Crack"
+
+# Dismiss the problem sheet before navigating tabs.
+- swipe:
+    start: "50%, 65%"
+    end: "50%, 95%"
+    duration: 500
+
+- tapOn: "About"
+- assertVisible: "Cirque Leavy"
+- assertVisible: "Available Circuits"
+
+- tapOn: "Contribute"
+- assertVisible: "Share problems not in the app"
+- assertVisible: "Your name"
+
+- tapOn: "Map"
+- assertVisible: "Search problems..."
