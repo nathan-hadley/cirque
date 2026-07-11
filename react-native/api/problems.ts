@@ -39,14 +39,14 @@ export async function submitProblem(submission: ProblemSubmission): Promise<Subm
     );
     return data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
+    if (axios.isAxiosError<SubmitProblemErrorResponse>(error)) {
       // For network errors, rethrow AxiosError so callers can detect by type
       if (!error.response || error.code === "ERR_NETWORK") {
         throw error;
       }
       // For HTTP errors, surface a helpful message
       const status = error.response.status;
-      const message = (error.response.data as any)?.error || `Server error: ${status}`;
+      const message = error.response.data?.error || `Server error: ${status}`;
       throw new Error(message);
     }
     throw error as Error;
