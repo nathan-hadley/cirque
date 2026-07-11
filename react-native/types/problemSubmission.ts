@@ -9,7 +9,7 @@ export const VALIDATION_CONSTRAINTS = {
   LNG_MAX: 180,
 } as const;
 
-export interface ProblemSubmission {
+export type ProblemSubmission = {
   id: string;
   contact: {
     name: string;
@@ -28,4 +28,4 @@ export interface ProblemSubmission {
     topo?: string;
     imageBase64?: string;
   };
-}
+};

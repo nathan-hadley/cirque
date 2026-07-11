@@ -32,11 +32,9 @@ describe("handleMapTap", () => {
     // the filter slot ({ layerIds: [...] } as any), which made every tap query
     // return empty and left problem circles untappable. The signature is
     // (point, filter?, layerIds?).
-    expect(mapRef.current.queryRenderedFeaturesAtPoint).toHaveBeenCalledWith(
-      [10, 20],
-      undefined,
-      [LAYER_IDS.problems]
-    );
+    expect(mapRef.current.queryRenderedFeaturesAtPoint).toHaveBeenCalledWith([10, 20], undefined, [
+      LAYER_IDS.problems,
+    ]);
     expect(result).toBe(feature);
   });
 

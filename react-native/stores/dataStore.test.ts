@@ -49,7 +49,11 @@ describe("normalizePayload", () => {
         boulders: {
           type: "FeatureCollection",
           features: [
-            { type: "Feature", properties: {}, geometry: { type: "LineString", coordinates: ring } },
+            {
+              type: "Feature",
+              properties: {},
+              geometry: { type: "LineString", coordinates: ring },
+            },
             {
               type: "Feature",
               properties: {},
