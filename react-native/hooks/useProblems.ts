@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import type { Feature, GeoJsonProperties, Point } from "geojson";
 import { useDataStore } from "@/stores/dataStore";
 
@@ -8,11 +9,15 @@ type ProblemFeature = Feature<Point, GeoJsonProperties>;
  */
 export function useProblems() {
   const problemsData = useDataStore(s => s.data.problems);
-  return [...problemsData.features].sort((a, b) => {
-    const nameA = (a.properties?.name || "").toLowerCase();
-    const nameB = (b.properties?.name || "").toLowerCase();
-    return nameA.localeCompare(nameB);
-  });
+  const sortedProblems = useMemo(() => {
+    return [...problemsData.features].sort((a, b) => {
+      const nameA = (a.properties?.name || "").toLowerCase();
+      const nameB = (b.properties?.name || "").toLowerCase();
+      return nameA.localeCompare(nameB);
+    });
+  }, [problemsData]);
+
+  return sortedProblems;
 }
 
 /**

@@ -7,6 +7,10 @@ type ManifestEntry = { topoKey: string; fullUrl: string; thumbUrl: string; bytes
 
 export type TopoDownloadResult = { ok: number; failed: number; total: number };
 
+/**
+ * "Download topo images" (ADR 0001): walk the manifest and prefetch every
+ * variant into expo-image's disk cache so topos render offline.
+ */
 export function useTopoDownload() {
   const { isOnline } = useNetworkStatus();
   const [downloading, setDownloading] = useState(false);

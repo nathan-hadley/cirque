@@ -2,7 +2,11 @@ import { FeatureCollection, Point } from "geojson";
 import { create } from "zustand";
 import seed from "@/assets/seed.json";
 
-/** All app data from GET /v1/data (ADR 0001), normalized to app-side names. */
+/**
+ * All app data from GET /v1/data (ADR 0001), normalized to app-side names.
+ * Cloud document naming follows the geojson files: `subareas` = polygons,
+ * `subarea-centers` = label points — the opposite of the legacy asset names.
+ */
 export type CirqueData = {
   problems: FeatureCollection<Point>;
   areas: FeatureCollection;

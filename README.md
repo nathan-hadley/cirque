@@ -31,11 +31,6 @@ edit problems, and edit the map documents.
   - JPEG quality: Medium
   - Size: Medium
 
-### Bundled seed
-
-`react-native/assets/seed.json` is the first-launch data snapshot. Refresh it
-occasionally from production:
-
-```sh
-cd react-native && node scripts/fetch-seed.mjs
-```
+**Bundled seed:** the app ships a snapshot of `GET /v1/data`
+(`react-native/assets/seed.json`) as a first-launch/offline fallback. Regenerate
+with `node react-native/scripts/fetch-seed.mjs` before a release.

@@ -1,10 +1,12 @@
-// Leavenworth climbing areas
-// Derived from subareas GeoJSON data
-import { subareasData } from "@/assets/subareas";
+// Leavenworth climbing areas, derived from the subarea label points
+// (cloud document "subarea-centers") in the current dataset.
+import { CirqueData } from "@/stores/dataStore";
 
-export const LEAVENWORTH_AREAS = subareasData.features
-  .map(f => f.properties?.name)
-  .filter((name): name is string => typeof name === "string")
-  .sort() as readonly string[];
+export function leavenworthAreas(data: CirqueData): string[] {
+  return data.subareaCenters.features
+    .map(f => f.properties?.name)
+    .filter((name): name is string => typeof name === "string")
+    .sort();
+}
 
-export type LeavenworthArea = (typeof LEAVENWORTH_AREAS)[number];
+export type LeavenworthArea = string;
