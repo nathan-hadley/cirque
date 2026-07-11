@@ -1,23 +1,18 @@
-import { useState } from "react";
 import type { Feature, GeoJsonProperties, Point } from "geojson";
-import { problemsData } from "@/assets/problems";
+import { useDataStore } from "@/stores/dataStore";
 
 type ProblemFeature = Feature<Point, GeoJsonProperties>;
 
 /**
  * Hook that returns all problems sorted alphabetically by name
- * Computed once on mount to avoid flickering
  */
 export function useProblems() {
-  const [sortedProblems] = useState(() => {
-    return [...problemsData.features].sort((a, b) => {
-      const nameA = (a.properties?.name || "").toLowerCase();
-      const nameB = (b.properties?.name || "").toLowerCase();
-      return nameA.localeCompare(nameB);
-    });
+  const problemsData = useDataStore(s => s.data.problems);
+  return [...problemsData.features].sort((a, b) => {
+    const nameA = (a.properties?.name || "").toLowerCase();
+    const nameB = (b.properties?.name || "").toLowerCase();
+    return nameA.localeCompare(nameB);
   });
-
-  return sortedProblems;
 }
 
 /**

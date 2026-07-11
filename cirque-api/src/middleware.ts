@@ -24,6 +24,7 @@ export const authMiddleware: MiddlewareHandler<{ Bindings: Env }> = async (
  */
 let jwksCache: { keys: object[] } | null = null;
 let jwksFetchedAt = 0;
+let jwksRetryAt = 0; // throttles failure-triggered refreshes, separate from cache age
 
 async function fetchJwks(teamDomain: string): Promise<{ keys: object[] } | null> {
   try {
@@ -56,8 +57,12 @@ export const accessMiddleware: MiddlewareHandler<{ Bindings: Env }> = async (c, 
   }
   const issuer = `https://${ACCESS_TEAM_DOMAIN}`;
   let identity = await verifyAccessJwt(token, jwksCache, ACCESS_AUD, issuer);
-  if (!identity && Date.now() - jwksFetchedAt > 5 * 60 * 1000) {
-    // Key rotation: refresh the JWKS once and retry before rejecting.
+  if (!identity && Date.now() > jwksRetryAt) {
+    // Key rotation: a failed verification may mean the cached JWKS is stale,
+    // regardless of its age. Refresh and retry once, throttled to one
+    // failure-triggered refresh per minute so junk tokens can't make this
+    // Worker hammer the JWKS endpoint.
+    jwksRetryAt = Date.now() + 60 * 1000;
     const fresh = await fetchJwks(ACCESS_TEAM_DOMAIN);
     if (fresh) {
       jwksCache = fresh;

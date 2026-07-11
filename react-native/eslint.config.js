@@ -36,6 +36,8 @@ module.exports = defineConfig([
       "@typescript-eslint/no-unused-vars": "error",
       "@typescript-eslint/consistent-type-definitions": ["error", "type"],
       "import/no-unresolved": "off",
+      // False-positives on native modules like @rnmapbox/maps (offlineManager)
+      "import/namespace": "off",
       "no-console": [
         "warn",
         {
@@ -69,6 +71,30 @@ module.exports = defineConfig([
           message: "Merge conflict marker detected. Resolve conflicts before committing.",
         },
       ],
+    },
+  },
+  {
+    // TypeScript already errors on unknown identifiers; no-undef duplicates
+    // that and false-positives on runtime globals (setTimeout, Response, jest).
+    files: ["**/*.ts", "**/*.tsx"],
+    rules: {
+      "no-undef": "off",
+    },
+  },
+  {
+    // Node scripts and config files
+    files: ["scripts/**", "*.config.js", "eslint.config.js"],
+    languageOptions: {
+      globals: {
+        __dirname: "readonly",
+        console: "readonly",
+        module: "writable",
+        process: "readonly",
+        require: "readonly",
+      },
+    },
+    rules: {
+      "no-console": "off",
     },
   },
   {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { LayoutChangeEvent } from "react-native";
 import { Image, ImageLoadEventData } from "expo-image";
 import { CameraOff } from "lucide-react-native";
@@ -10,6 +10,7 @@ import { TopoLine } from "./TopoLine";
 
 type TopoProps = {
   topo: string; // Topo key (e.g., "forestland-physical") or image URI
+  remoteUri?: string; // Preferred R2 URL; falls back to the bundled asset on error
   line: number[][]; // Pixel coordinates (640×480)
   color?: string; // Line color (default: "#ff3333")
 };
@@ -23,16 +24,27 @@ type ImageLayout = {
  * Topo component - displays a topo image with an animated line overlay
  * Used in both ProblemSheet and Contribute screens
  */
-export function Topo({ topo, line, color = "#ff3333" }: TopoProps) {
+export function Topo({ topo, remoteUri, line, color = "#ff3333" }: TopoProps) {
   const [imageLayout, setImageLayout] = useState<ImageLayout>(null);
   const [originalImageSize, setOriginalImageSize] = useState<ImageLayout>(null);
   const [imageError, setImageError] = useState<boolean>(false);
+  const [remoteFailed, setRemoteFailed] = useState<boolean>(false);
 
-  // Try to load as asset first, fall back to URI
-  const topoImage =
+  // Topo is reused across problems (prev/next navigation) without remounting;
+  // clear per-image state so one failure never sticks to the next problem.
+  useEffect(() => {
+    setRemoteFailed(false);
+    setImageError(false);
+    setOriginalImageSize(null);
+  }, [topo, remoteUri]);
+
+  // Prefer the R2 URL; on failure (e.g. offline, not yet downloaded) fall back
+  // to the bundled asset when one exists for this topo slug.
+  const localImage =
     topo.startsWith("http") || topo.startsWith("file")
       ? { uri: topo }
-      : getTopoImage(topo) || { uri: topo };
+      : getTopoImage(topo) || (topo ? { uri: topo } : null);
+  const topoImage = remoteUri && !remoteFailed ? { uri: remoteUri } : localImage;
 
   function handleImageLoad(event: ImageLoadEventData) {
     const { width, height } = event.source;
@@ -43,6 +55,10 @@ export function Topo({ topo, line, color = "#ff3333" }: TopoProps) {
   }
 
   function handleImageError() {
+    if (remoteUri && !remoteFailed && localImage) {
+      setRemoteFailed(true); // retry with the bundled asset
+      return;
+    }
     setImageError(true);
   }
 

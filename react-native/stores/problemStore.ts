@@ -1,8 +1,8 @@
 import { Alert } from "react-native";
 import { Feature, FeatureCollection, GeoJsonProperties, LineString, Point } from "geojson";
 import { create } from "zustand";
-import { problemsData } from "@/assets/problems";
-import { MAX_GRADE, MIN_GRADE, Problem } from "@/models/problems";
+import { MAX_GRADE, MIN_GRADE, Problem, ProblemStatus } from "@/models/problems";
+import { useDataStore } from "@/stores/dataStore";
 
 type GetProblemParams = {
   circuitColor: string;
@@ -39,6 +39,7 @@ const gradeToNumber = (grade: string): number => {
 export const useProblemStore = create<ProblemState>((set, get) => {
   // Internal helper methods
   const getAllProblemsInCircuit = (circuitColor: string, subarea: string): Problem[] => {
+    const problemsData = useDataStore.getState().data.problems;
     if (!problemsData) return [];
 
     return problemsData.features
@@ -114,6 +115,7 @@ export const useProblemStore = create<ProblemState>((set, get) => {
 
     getProblem: (params: GetProblemParams): Problem | null => {
       const { createProblemFromMapFeature } = get();
+      const problemsData = useDataStore.getState().data.problems;
       if (!problemsData) return null;
 
       const feature =
@@ -224,6 +226,8 @@ export const useProblemStore = create<ProblemState>((set, get) => {
         description: properties.description?.toString(),
         line,
         topo,
+        topoKey: properties.topoKey?.toString(),
+        status: parseStatus(properties.status),
         subarea,
         coordinates,
       };
@@ -241,6 +245,10 @@ export const useProblemStore = create<ProblemState>((set, get) => {
     },
   };
 });
+
+function parseStatus(value: unknown): ProblemStatus | undefined {
+  return value === "pending" || value === "approved" || value === "rejected" ? value : undefined;
+}
 
 function getColorFromString(colorString?: string): string {
   switch (colorString) {

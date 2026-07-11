@@ -1,8 +1,9 @@
 import { FillLayer, LineLayer, ShapeSource } from "@rnmapbox/maps";
-import bouldersData from "@/assets/boulders";
 import { BOULDER_COLORS, LAYER_IDS, SOURCE_IDS } from "@/constants/map";
+import { useDataStore } from "@/stores/dataStore";
 
 export function BouldersLayer() {
+  const bouldersData = useDataStore(s => s.data.boulders);
   return (
     <ShapeSource id={SOURCE_IDS.boulders} shape={bouldersData}>
       <FillLayer
