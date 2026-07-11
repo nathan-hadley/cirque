@@ -103,9 +103,6 @@ export const useMapStore = create<MapState>((set, get) => ({
     if (!mapRef?.current) return null;
 
     try {
-      // Signature is (point, filter?, layerIds?) — layer restriction is the third
-      // argument, not an options object. The problems layer only contains problem
-      // features, so no extra filter is needed.
       const query = await mapRef.current.queryRenderedFeaturesAtPoint(
         [point.x, point.y],
         undefined,
