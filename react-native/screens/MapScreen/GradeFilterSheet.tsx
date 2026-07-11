@@ -56,7 +56,11 @@ export default function GradeFilterSheet({ isOpen, onClose }: GradeFilterSheetPr
       <ActionsheetContent style={{ paddingBottom: bottom + 16 }}>
         <VStack className="w-full">
           {/* Header */}
-          <ActionsheetHeader title="Adjust grade range" onClose={handleClose} />
+          <ActionsheetHeader
+            title="Adjust grade range"
+            onClose={handleClose}
+            closeButtonTestID="close-grade-filter"
+          />
 
           <VStack space="lg" className="pb-6">
             <HStack className="justify-between items-center">

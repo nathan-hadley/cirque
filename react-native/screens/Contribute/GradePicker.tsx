@@ -46,7 +46,11 @@ export default function GradePicker({ isOpen, onClose, currentGrade }: GradePick
     <Actionsheet isOpen={isOpen} onClose={handleClose}>
       <ActionsheetBackdrop />
       <ActionsheetContent>
-        <ActionsheetHeader title="Select grade" onClose={handleClose} />
+        <ActionsheetHeader
+          title="Select grade"
+          onClose={handleClose}
+          closeButtonTestID="close-grade-picker"
+        />
         <View className="pb-6">
           <WheelPicker
             selectedIndex={selectedIndex}

@@ -54,6 +54,7 @@ export default function CoordinateInput({
         <View className="flex-1">
           <Input>
             <InputField
+              testID="latitude-input"
               keyboardType="numeric"
               placeholder="Latitude"
               value={latitude}
@@ -66,6 +67,7 @@ export default function CoordinateInput({
         <View className="flex-1">
           <Input>
             <InputField
+              testID="longitude-input"
               keyboardType="numeric"
               placeholder="Longitude"
               value={longitude}

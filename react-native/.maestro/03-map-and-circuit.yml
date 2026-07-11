@@ -1,0 +1,32 @@
+appId: com.nathanhadley.Cirque
+name: Reopen map problem and navigate its circuit
+---
+- launchApp:
+    clearState: true
+- tapOn:
+    id: open-problem-search
+- tapOn:
+    id: problem-search-input
+- inputText: "The Shallow"
+- tapOn:
+    id: problem-search-result-80faa6a3-b46a-5bff-8c77-1887c4712264
+- assertVisible: "The Shallow"
+# The selected feature is centered in the sheet-aware camera viewport. After the
+# sheet is dismissed, its map location is at the horizontal center, 24% down.
+- swipe:
+    start: "50%, 65%"
+    end: "50%, 95%"
+    duration: 500
+- assertNotVisible: "The Shallow"
+- tapOn:
+    point: "50%, 24%"
+- assertVisible: "The Shallow"
+- tapOn:
+    id: circuit-next-problem
+- assertVisible: "Cube Crack"
+- tapOn:
+    id: circuit-next-problem
+- assertVisible: "The Cube"
+- tapOn:
+    id: circuit-previous-problem
+- assertVisible: "Cube Crack"

@@ -200,6 +200,7 @@ export default function ContributeScreen() {
                 <Text className="text-typography-700">Your name</Text>
                 <Input>
                   <InputField
+                    testID="contact-name-input"
                     placeholder="Your name"
                     value={contactName}
                     onChangeText={setContactName}
@@ -218,6 +219,7 @@ export default function ContributeScreen() {
                 <Text className="text-typography-700">Email</Text>
                 <Input>
                   <InputField
+                    testID="contact-email-input"
                     placeholder="your.email@example.com"
                     value={contactEmail}
                     onChangeText={setContactEmail}
@@ -239,6 +241,7 @@ export default function ContributeScreen() {
                 <Text className="text-typography-700">Name</Text>
                 <Input>
                   <InputField
+                    testID="problem-name-input"
                     placeholder="Problem name"
                     value={name}
                     onChangeText={setName}
@@ -256,7 +259,11 @@ export default function ContributeScreen() {
 
             <VStack space="md" className="px-6">
               <Text className="text-typography-700">Grade</Text>
-              <Button variant="outline" onPress={() => setIsGradeOpen(true)}>
+              <Button
+                testID="open-grade-picker"
+                variant="outline"
+                onPress={() => setIsGradeOpen(true)}
+              >
                 <HStack className="items-center" space="sm">
                   <ButtonText>{grade || "Select grade"}</ButtonText>
                   <ChevronDown />
@@ -269,6 +276,7 @@ export default function ContributeScreen() {
               <Text className="text-typography-700">Area</Text>
               <Input>
                 <InputField
+                  testID="area-input"
                   placeholder="Area"
                   value={subarea}
                   onChangeText={setSubarea}
@@ -277,7 +285,11 @@ export default function ContributeScreen() {
                   autoCapitalize="words"
                 />
               </Input>
-              <Button variant="outline" onPress={() => setIsAreaOpen(true)}>
+              <Button
+                testID="open-area-picker"
+                variant="outline"
+                onPress={() => setIsAreaOpen(true)}
+              >
                 <HStack className="items-center" space="sm">
                   <ButtonIcon as={MapPin} size="sm" />
                   <ButtonText>Browse areas</ButtonText>
@@ -303,6 +315,7 @@ export default function ContributeScreen() {
               </Text>
               <Input className="h-20">
                 <InputField
+                  testID="problem-description-input"
                   placeholder="Ex. 'Start matched on the chest-high crimp and climb up and right through slopers.'"
                   value={description}
                   onChangeText={setDescription}
@@ -331,6 +344,7 @@ export default function ContributeScreen() {
             <Divider />
 
             <Button
+              testID="submit-problem"
               action="positive"
               onPress={handleSubmit}
               isDisabled={submitMutation.isPending}

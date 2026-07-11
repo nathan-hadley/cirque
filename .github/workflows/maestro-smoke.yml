@@ -1,0 +1,104 @@
+name: Maestro smoke test
+
+on:
+  pull_request:
+    paths:
+      - "react-native/**"
+      - ".github/workflows/maestro-smoke.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: maestro-smoke-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  android:
+    name: Android
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: react-native
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+          cache-dependency-path: react-native/pnpm-lock.yaml
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check map credentials
+        env:
+          EXPO_PUBLIC_MAPBOX_ACCESS_TOKEN: ${{ secrets.EXPO_PUBLIC_MAPBOX_ACCESS_TOKEN }}
+        run: test -n "$EXPO_PUBLIC_MAPBOX_ACCESS_TOKEN"
+
+      - name: Prebuild Android project
+        run: pnpm expo prebuild --platform android --no-install
+        env:
+          EXPO_PUBLIC_MAPBOX_ACCESS_TOKEN: ${{ secrets.EXPO_PUBLIC_MAPBOX_ACCESS_TOKEN }}
+
+      - name: Build release APK
+        run: >-
+          ./android/gradlew --no-daemon -p android assembleRelease
+          -PreactNativeArchitectures=x86_64 -x lintVitalRelease
+        env:
+          NODE_ENV: production
+          EXPO_PUBLIC_MAPBOX_ACCESS_TOKEN: ${{ secrets.EXPO_PUBLIC_MAPBOX_ACCESS_TOKEN }}
+
+      - name: Install Maestro
+        run: |
+          curl -fsSL "https://get.maestro.mobile.dev" | MAESTRO_VERSION=2.6.1 bash
+          echo "$HOME/.maestro/bin" >> "$GITHUB_PATH"
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' \
+            | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+        working-directory: .
+
+      - name: Run smoke test
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          arch: x86_64
+          profile: pixel_6
+          disable-animations: true
+          working-directory: react-native
+          script: |
+            adb install -r android/app/build/outputs/apk/release/app-release.apk
+            maestro test .maestro/01-launch-and-tabs.yml .maestro/02-search.yml .maestro/03-map-and-circuit.yml .maestro/04-grade-filter.yml
+            # Force offline so the contribute submit takes the offline-queue path deterministically (adb/Maestro are unaffected).
+            adb shell svc wifi disable || true
+            adb shell svc data disable || true
+            maestro test .maestro/05-contribute.yml
+
+      - name: Upload Maestro diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: maestro-android-diagnostics
+          path: ~/.maestro/tests
+          if-no-files-found: ignore
+          retention-days: 7

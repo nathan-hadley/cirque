@@ -1,0 +1,15 @@
+appId: com.nathanhadley.Cirque
+name: Launch and tab navigation
+---
+- launchApp:
+    clearState: true
+- assertVisible: "Search problems..."
+- assertVisible: "Map"
+- tapOn: "About"
+- assertVisible: "Cirque Leavy"
+- assertVisible: "Available Circuits"
+- tapOn: "Contribute"
+- assertVisible: "Share problems not in the app"
+- assertVisible: "Your name"
+- tapOn: "Map"
+- assertVisible: "Search problems..."

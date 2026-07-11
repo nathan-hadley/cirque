@@ -1,0 +1,74 @@
+appId: com.nathanhadley.Cirque
+name: Validate and submit a contributed problem
+---
+- launchApp:
+    clearState: true
+- tapOn: "Contribute"
+- scrollUntilVisible:
+    element:
+      id: submit-problem
+    direction: DOWN
+- tapOn:
+    id: submit-problem
+- assertVisible: "Please fill out all required fields."
+
+- scrollUntilVisible:
+    element:
+      id: contact-name-input
+    direction: UP
+- tapOn:
+    id: contact-name-input
+- inputText: "Maestro Tester"
+- hideKeyboard
+- tapOn:
+    id: contact-email-input
+- inputText: "maestro@example.com"
+- hideKeyboard
+- scrollUntilVisible:
+    element:
+      id: problem-name-input
+    direction: DOWN
+- tapOn:
+    id: problem-name-input
+- inputText: "Maestro Test Problem"
+- hideKeyboard
+- tapOn:
+    id: open-grade-picker
+- assertVisible: "Select grade"
+# The picker defaults to V3; closing confirms that valid default selection.
+- tapOn:
+    id: close-grade-picker
+- tapOn:
+    id: open-area-picker
+- assertVisible: "Select area"
+- tapOn:
+    id: area-option-forestland
+- tapOn:
+    id: close-area-picker
+- scrollUntilVisible:
+    element:
+      id: latitude-input
+    direction: DOWN
+- tapOn:
+    id: latitude-input
+- inputText: "47.596"
+- hideKeyboard
+- tapOn:
+    id: longitude-input
+- inputText: "-120.661"
+- hideKeyboard
+- scrollUntilVisible:
+    element:
+      id: problem-description-input
+    direction: DOWN
+- tapOn:
+    id: problem-description-input
+- inputText: "Start on the low rail and climb straight to the top."
+- hideKeyboard
+- scrollUntilVisible:
+    element:
+      id: submit-problem
+    direction: DOWN
+- tapOn:
+    id: submit-problem
+- assertVisible: "Problem (submitted successfully|saved).*"
