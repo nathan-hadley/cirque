@@ -88,17 +88,8 @@ jobs:
           working-directory: react-native
           script: |
             adb install -r android/app/build/outputs/apk/release/app-release.apk
-            # Flows 01-04 need connectivity (Mapbox tiles) and run online.
-            maestro test \
-              .maestro/01-launch-and-tabs.yml \
-              .maestro/02-search.yml \
-              .maestro/03-map-and-circuit.yml \
-              .maestro/04-grade-filter.yml
-            # Contribute submit: force the device offline so the submission
-            # deterministically falls back to the offline queue ("Problem saved
-            # - will submit when online") rather than depending on a real
-            # backend. adb (and therefore Maestro) is unaffected by toggling the
-            # device's own radios.
+            maestro test .maestro/01-launch-and-tabs.yml .maestro/02-search.yml .maestro/03-map-and-circuit.yml .maestro/04-grade-filter.yml
+            # Force offline so the contribute submit takes the offline-queue path deterministically (adb/Maestro are unaffected).
             adb shell svc wifi disable || true
             adb shell svc data disable || true
             maestro test .maestro/05-contribute.yml
