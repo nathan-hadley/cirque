@@ -48,7 +48,12 @@ function AreaPickerSheet({ isOpen, onClose, onSelect, currentArea }: AreaPickerS
     <Actionsheet isOpen={isOpen} onClose={onClose}>
       <ActionsheetBackdrop />
       <ActionsheetContent className="px-0" style={{ paddingBottom: insets.bottom }}>
-        <ActionsheetHeader title="Select area" onClose={onClose} className="px-6" />
+        <ActionsheetHeader
+          title="Select area"
+          onClose={onClose}
+          closeButtonTestID="close-area-picker"
+          className="px-6"
+        />
         <Divider />
         <ActionsheetScrollView
           className="h-[60vh] pt-4 pl-6 pr-7"
@@ -56,7 +61,12 @@ function AreaPickerSheet({ isOpen, onClose, onSelect, currentArea }: AreaPickerS
         >
           <RadioGroup value={currentArea} className="gap-6 py-2" onChange={handleAreaSelect}>
             {filteredAreas.map(area => (
-              <Radio key={area} value={area} className="justify-between">
+              <Radio
+                key={area}
+                testID={`area-option-${area.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+                value={area}
+                className="justify-between"
+              >
                 <RadioLabel>
                   <Text className="text-typography-900">{area}</Text>
                 </RadioLabel>

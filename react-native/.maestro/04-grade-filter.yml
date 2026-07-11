@@ -1,0 +1,12 @@
+appId: com.nathanhadley.Cirque
+name: Reset and close the grade filter
+---
+- launchApp:
+    clearState: true
+- tapOn:
+    id: open-grade-filter
+- assertVisible: "Adjust grade range"
+- tapOn: "Reset"
+- tapOn:
+    id: close-grade-filter
+- assertVisible: "Search problems..."

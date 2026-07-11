@@ -536,11 +536,23 @@ type ActionsheetHeaderProps = {
   title: string;
   onClose?: () => void;
   showCloseButton?: boolean;
+  closeButtonTestID?: string;
+  closeButtonAccessibilityLabel?: string;
   className?: string;
 };
 
 const ActionsheetHeader = React.forwardRef<React.ComponentRef<typeof View>, ActionsheetHeaderProps>(
-  function ActionsheetHeader({ title, onClose, showCloseButton = true, className }, ref) {
+  function ActionsheetHeader(
+    {
+      title,
+      onClose,
+      showCloseButton = true,
+      closeButtonTestID,
+      closeButtonAccessibilityLabel,
+      className,
+    },
+    ref
+  ) {
     return (
       <ActionsheetDragIndicatorWrapper>
         <ActionsheetDragIndicator />
@@ -550,7 +562,12 @@ const ActionsheetHeader = React.forwardRef<React.ComponentRef<typeof View>, Acti
         >
           <Text className="text-xl font-semibold text-typography-900">{title}</Text>
           {showCloseButton && onClose && (
-            <Pressable onPress={onClose} className="p-1">
+            <Pressable
+              testID={closeButtonTestID}
+              accessibilityLabel={closeButtonAccessibilityLabel || `Close ${title}`}
+              onPress={onClose}
+              className="p-1"
+            >
               <Icon as={X} size="xl" />
             </Pressable>
           )}

@@ -1,0 +1,15 @@
+appId: com.nathanhadley.Cirque
+name: Search and open a problem
+---
+- launchApp:
+    clearState: true
+- tapOn:
+    id: open-problem-search
+- tapOn:
+    id: problem-search-input
+- inputText: "The Shallow"
+- tapOn:
+    id: problem-search-result-80faa6a3-b46a-5bff-8c77-1887c4712264
+- assertVisible: "The Shallow"
+- assertVisible: "V0"
+- assertVisible: "#1"

@@ -99,10 +99,7 @@ export function validateForm({
   // Topo validation
   const hasTopo = topoData.selectedTopoKey?.trim() || topoData.pickedImage;
 
-  if (!hasTopo) {
-    errors.topo = "Please select or upload a topo image.";
-  }
-
+  // Topos are optional. A route line is required only when a topo image is provided.
   if (hasTopo && topoData.linePixels.length === 0) {
     errors.topo = "Please draw the route line.";
   }
