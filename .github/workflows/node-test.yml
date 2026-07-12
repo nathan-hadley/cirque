@@ -21,6 +21,11 @@ jobs:
     with:
       command: typecheck
 
+  test:
+    uses: ./.github/workflows/node-template.yml
+    with:
+      command: test
+
   build:
     needs: typecheck
     uses: ./.github/workflows/node-template.yml
