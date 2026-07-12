@@ -19,10 +19,18 @@ content is the failure mode Apple's HIG explicitly warns against.
 ## Current state
 
 - Expo SDK 54, RN 0.81.5, expo-router 6, `newArchEnabled: true`, CNG (no `ios/`/`android/` dirs).
-- Sheets are all gluestack `Actionsheet` (JS `Modal` + Reanimated):
-  `ProblemSheet`, `GradeFilterSheet`, `AreaPicker`, `GradePicker`, `TopoPicker`, `ProblemPicker`.
+- Sheets are gluestack `Actionsheet` (JS `Modal` + Reanimated) in exactly five files:
+  `screens/MapScreen/ProblemSheet/index.tsx`, `screens/MapScreen/GradeFilterSheet.tsx`,
+  `screens/Contribute/AreaPicker.tsx`, `screens/Contribute/GradePicker.tsx`,
+  `screens/Contribute/ProblemPicker.tsx`.
+  - `TopoPicker` is **not** a sheet (inline form UI) — out of scope.
+  - `ImageDrawingModal` is a **full-screen RN `Modal`**, not a bottom sheet — out of scope.
 - Tab bar is expo-router JS `Tabs` with a hand-rolled `BlurBackground`
   (expo-blur on iOS, flat `View` + border on Android) and `HapticTab`.
+- `BlurBackground` has **two** call sites beyond the tab bar: `position="statusBar"` in
+  `screens/Contribute/index.tsx:171` and `screens/AboutScreen/index.tsx:134`. It therefore
+  cannot be deleted along with the tab bar — `GlassSurface` must absorb the status-bar
+  variant first.
 - Floating map chrome: `MapSearchBar`, `FilterButton`, `LocateMeButton`.
 
 Known symptoms of the JS-modal approach:
@@ -44,8 +52,9 @@ tab-bar minimize behavior for free — none of which the JS tab bar can do. On A
 renders a Material 3 `BottomNavigationView` (ripple, state layers, correct elevation).
 
 - Icons become **SF Symbols** on iOS (`map`, `info.circle`, `plus.circle`), Lucide on Android.
-- `components/BlurBackground.tsx` and `components/HapticTab.tsx` are **deleted** —
-  native tabs already do platform-correct blur and press feedback.
+- `components/HapticTab.tsx` is **deleted** — native tabs do platform-correct press feedback.
+- `components/BlurBackground.tsx` is deleted **only after** its two `position="statusBar"`
+  call sites (Contribute, About) move to `GlassSurface`.
 
 **Risk:** `NativeTabs` is `unstable_` in expo-router 6 and its API has churned.
 **Fallback if it fights us:** keep JS `Tabs` and put `GlassSurface` in `tabBarBackground`.
@@ -61,12 +70,24 @@ New component `components/ui/sheet/index.tsx` wraps `TrueSheet` with app convent
 grabber, corner radius, glass/blur background on iOS, Material surface on Android,
 safe-area-aware footer. Every sheet migrates to it. gluestack `actionsheet` is removed.
 
+**Verified v3 API** (read from the published package, not assumed):
+
+- Detents are `detents={['auto' | 'peek' | number]}` (max 3), **not** `sizes`.
+- `dimmed`, `dimmedDetentIndex`, `grabber`, `cornerRadius`, `scrollable`, `header`, `footer`,
+  `backgroundColor`, `backgroundBlur`.
+- Imperative control via ref: `present(index?)`, `dismiss()`, `resize(index)`.
+
+**Liquid Glass is opt-out, not opt-in.** Per the TrueSheet docs: *"By default, TrueSheet
+enables Liquid Glass on iOS 26+ when no `backgroundColor` or `backgroundBlur` is provided."*
+Setting either prop **silently disables glass**. The `Sheet` wrapper must therefore leave
+both unset on iOS 26 — this is the single easiest thing to get wrong in this whole project.
+
 `ProblemSheet` is the sheet that motivates this choice. It gets:
 
-- `sizes={["medium", "large"]}` — native detents with real rubber-banding.
+- `detents={[0.5, 1]}` — native detents with real rubber-banding.
 - `dimmed={false}` — **the map stays fully interactive behind it**.
-- `blurTint` — glass background on iOS.
-- Its Android `ScrollView` workaround is deleted; the native sheet scrolls correctly.
+- No `backgroundColor` / `backgroundBlur` on iOS → Liquid Glass.
+- Its Android `ScrollView` workaround is deleted; `scrollable` handles it natively.
 
 **Alternative considered and rejected:** `react-native-screens` `presentation: "formSheet"`.
 Same native iOS API underneath and no new dependency, but it forces every sheet to become
