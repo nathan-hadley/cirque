@@ -85,6 +85,19 @@ describe("useProblemStore", () => {
     expect(useProblemStore.getState().problem?.id).toBe("one");
   });
 
+  it("does not navigate when the active problem is excluded by the grade filter", () => {
+    const store = useProblemStore.getState();
+    const two = store.getProblem({ circuitColor: "blue", subarea: "Wall", order: 2 })!;
+    store.setProblem(two);
+    store.setMinGrade(2);
+    store.setMaxGrade(3);
+
+    store.showNextProblem();
+    expect(useProblemStore.getState().problem?.id).toBe("two");
+    useProblemStore.getState().showPreviousProblem();
+    expect(useProblemStore.getState().problem?.id).toBe("two");
+  });
+
   it("finds a problem by circuit, subarea, and order", () => {
     const store = useProblemStore.getState();
     expect(store.getProblem({ circuitColor: "blue", subarea: "Wall", order: 2 })?.id).toBe("two");

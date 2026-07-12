@@ -46,6 +46,12 @@ describe("searchProblems", () => {
     ).toEqual(["grade"]);
   });
 
+  it("excludes gradeless problems when a grade filter is active", () => {
+    const gradeless = problem({ id: "gradeless", name: "Moon Walk", subarea: "Cave" });
+
+    expect(searchProblems([gradeless], "moon", { minGrade: 1, maxGrade: 5 })).toEqual([]);
+  });
+
   it("caps results at 50", () => {
     const many = Array.from({ length: 51 }, (_, i) => problem({ id: `${i}`, name: "match" }));
     expect(searchProblems(many, "match", { minGrade: 0, maxGrade: 10 })).toHaveLength(50);

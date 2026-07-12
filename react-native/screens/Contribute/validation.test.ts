@@ -29,6 +29,12 @@ describe("validateForm", () => {
 
   it("checks maximum lengths and email format", () => {
     expect(
+      validateForm({
+        ...validForm,
+        contactName: "a".repeat(VALIDATION_CONSTRAINTS.NAME_MAX_LENGTH + 1),
+      }).contactName
+    ).toBe(`Name must be ${VALIDATION_CONSTRAINTS.NAME_MAX_LENGTH} characters or less.`);
+    expect(
       validateForm({ ...validForm, name: "a".repeat(VALIDATION_CONSTRAINTS.NAME_MAX_LENGTH + 1) })
         .name
     ).toBe(`Problem name must be ${VALIDATION_CONSTRAINTS.NAME_MAX_LENGTH} characters or less.`);
@@ -66,6 +72,33 @@ describe("validateForm", () => {
         topoData: { ...validForm.topoData, selectedTopoKey: "topo-key" },
       }).topo
     ).toBe("Please draw the route line.");
+  });
+
+  it("requires a route line when a picked topo image is present", () => {
+    expect(
+      validateForm({
+        ...validForm,
+        topoData: {
+          ...validForm.topoData,
+          pickedImage: { uri: "file:///topo.jpg", width: 1, height: 1 },
+        },
+      }).topo
+    ).toBe("Please draw the route line.");
+  });
+
+  it("rejects route lines with too many points", () => {
+    expect(
+      validateForm({
+        ...validForm,
+        topoData: {
+          ...validForm.topoData,
+          linePixels: Array.from(
+            { length: VALIDATION_CONSTRAINTS.LINE_MAX_POINTS + 1 },
+            () => [0, 0] as [number, number]
+          ),
+        },
+      }).topo
+    ).toBe(`Line must have ${VALIDATION_CONSTRAINTS.LINE_MAX_POINTS} points or fewer.`);
   });
 });
 

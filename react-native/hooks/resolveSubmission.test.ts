@@ -1,5 +1,5 @@
 import * as Network from "expo-network";
-import axios from "axios";
+import axios, { type AxiosResponse } from "axios";
 import { submitProblem } from "@/api/problems";
 import { syncManager } from "@/services/sync/syncManager";
 import { ProblemSubmission } from "@/types/problemSubmission";
@@ -56,6 +56,21 @@ describe("resolveSubmission", () => {
     expect(mockQueue).toHaveBeenCalledWith(submission);
   });
 
+  it("queues when the network connectivity check fails", async () => {
+    const networkCheckError = new Error("Network check unavailable");
+    const consoleError = jest.spyOn(console, "error").mockImplementation();
+    mockNetwork.mockRejectedValue(networkCheckError);
+
+    await expect(resolveSubmission(submission)).resolves.toEqual({
+      success: true,
+      queued: true,
+      message: QUEUED_MESSAGE,
+    });
+    expect(mockSubmit).not.toHaveBeenCalled();
+    expect(mockQueue).toHaveBeenCalledWith(submission);
+    consoleError.mockRestore();
+  });
+
   it("queues Axios network errors", async () => {
     const networkError = new axios.AxiosError("Network Error");
     mockNetwork.mockResolvedValue({ isInternetReachable: true });
@@ -67,6 +82,19 @@ describe("resolveSubmission", () => {
     });
     expect(mockQueue).toHaveBeenCalledWith(submission);
     expect(mockSync).toHaveBeenCalled();
+  });
+
+  it("queues ERR_NETWORK errors even when they include a response", async () => {
+    const networkError = new axios.AxiosError("Network Error", "ERR_NETWORK");
+    networkError.response = { status: 503 } as AxiosResponse;
+    mockNetwork.mockResolvedValue({ isInternetReachable: true });
+    mockSubmit.mockRejectedValue(networkError);
+
+    await expect(resolveSubmission(submission)).resolves.toMatchObject({
+      queued: true,
+      message: QUEUED_MESSAGE,
+    });
+    expect(mockQueue).toHaveBeenCalledWith(submission);
   });
 
   it("rethrows non-network submission errors", async () => {
