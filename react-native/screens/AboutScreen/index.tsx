@@ -170,6 +170,7 @@ export default function AboutScreen() {
                   title={circuit.title}
                   difficulty={circuit.difficulty}
                   color={circuit.color}
+                  testID={`circuit-card-${circuit.subarea.toLowerCase().replace(/\s+/g, "-")}-${circuit.circuitColor}`}
                   onPress={() => handleCircuitPress(circuit)}
                 />
               ))}

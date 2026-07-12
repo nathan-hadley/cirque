@@ -1,5 +1,21 @@
 import { normalizePayload, useDataStore } from "./dataStore";
 
+jest.mock("@/assets/seed.json", () => ({
+  problems: {
+    type: "FeatureCollection",
+    features: [{ type: "Feature", properties: { name: "Seed problem" } }],
+  },
+  documents: {
+    areas: { type: "FeatureCollection", features: [] },
+    boulders: { type: "FeatureCollection", features: [] },
+    subareas: { type: "FeatureCollection", features: [{ type: "Feature", properties: {} }] },
+    "subarea-centers": {
+      type: "FeatureCollection",
+      features: [{ type: "Feature", properties: {} }],
+    },
+  },
+}));
+
 const payload = {
   problems: {
     type: "FeatureCollection",
@@ -77,11 +93,11 @@ describe("normalizePayload", () => {
 });
 
 describe("useDataStore", () => {
-  it("initializes from the bundled seed", () => {
+  it("initializes from the bundled data payload", () => {
     const { data } = useDataStore.getState();
-    expect(data.problems.features.length).toBeGreaterThan(100);
-    expect(data.subareaPolygons.features.length).toBeGreaterThan(0);
-    expect(data.subareaCenters.features.length).toBeGreaterThan(0);
+    expect(data.problems.features).toHaveLength(1);
+    expect(data.subareaPolygons.features).toHaveLength(1);
+    expect(data.subareaCenters.features).toHaveLength(1);
   });
 
   it("setData replaces data and records the etag", () => {
