@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Platform, View } from "react-native";
+import { View } from "react-native";
 import Mapbox, { Camera, MapView as RNMapboxMapView, UserLocation } from "@rnmapbox/maps";
 import { Feature, GeoJsonProperties, Geometry } from "geojson";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -123,8 +123,6 @@ export function MapScreen() {
         problem={problem}
         isOpen={viewProblem && problem !== null}
         onClose={() => setViewProblem(false)}
-        closeOnOverlayClick={false}
-        snapPoints={Platform.OS === "ios" ? [50] : undefined}
       />
 
       <SearchOverlay isVisible={isSearchVisible} onClose={() => setIsSearchVisible(false)} />

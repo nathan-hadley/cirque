@@ -1,25 +1,22 @@
-import React from "react";
-import { Platform, View } from "react-native";
+import { useEffect, useRef } from "react";
+import { View } from "react-native";
 import { MapPinIcon } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { CircuitNavButtons } from "@/components/buttons/CircuitNavButtons";
 import { Topo } from "@/components/Topo";
-import {
-  Actionsheet,
-  ActionsheetContent,
-  ActionsheetDragIndicatorWrapper,
-  ActionsheetScrollView,
-} from "@/components/ui/actionsheet";
 import { Heading } from "@/components/ui/heading";
 import { HStack } from "@/components/ui/hstack";
 import { Icon } from "@/components/ui/icon";
+import { Sheet, type SheetRef } from "@/components/ui/sheet";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import { topoImageUrl } from "@/constants/api";
 import { Problem } from "@/models/problems";
 
-type ProblemSheetProps = React.ComponentProps<typeof Actionsheet> & {
+type ProblemSheetProps = {
   problem: Problem | null;
+  isOpen: boolean;
+  onClose: () => void;
 };
 
 function ProblemDescription({ problem }: { problem: Problem }) {
@@ -56,37 +53,35 @@ function ProblemDescription({ problem }: { problem: Problem }) {
   );
 }
 
-export function ProblemSheet({ problem, ...props }: ProblemSheetProps) {
+export function ProblemSheet({ problem, isOpen, onClose }: ProblemSheetProps) {
+  const sheet = useRef<SheetRef>(null);
+
+  useEffect(() => {
+    if (isOpen && problem) {
+      sheet.current?.present().catch((e: unknown) => console.error("Sheet present failed", e));
+    } else {
+      sheet.current?.dismiss().catch((e: unknown) => console.error("Sheet dismiss failed", e));
+    }
+  }, [isOpen, problem]);
+
   if (!problem) return null;
 
   return (
-    <Actionsheet className="gap-1" {...props}>
-      <ActionsheetContent className="p-0">
-        <ActionsheetDragIndicatorWrapper className="pt-0">
-          <View className="w-full aspect-[4/3] rounded-t-3xl overflow-hidden bg-typography-300 relative">
-            <Topo
-              topo={problem.topo || ""}
-              remoteUri={topoImageUrl(problem.topoKey, "full")}
-              line={problem.line}
-              color={problem.color}
-            />
-            {problem.order !== undefined && (
-              <View className="absolute inset-0 justify-center">
-                <CircuitNavButtons />
-              </View>
-            )}
+    <Sheet ref={sheet} detents={[0.5, 1]} dimmed={false} scrollable onDidDismiss={onClose}>
+      <View className="w-full aspect-[4/3] overflow-hidden bg-typography-300 relative">
+        <Topo
+          topo={problem.topo || ""}
+          remoteUri={topoImageUrl(problem.topoKey, "full")}
+          line={problem.line}
+          color={problem.color}
+        />
+        {problem.order !== undefined && (
+          <View className="absolute inset-0 justify-center">
+            <CircuitNavButtons />
           </View>
-        </ActionsheetDragIndicatorWrapper>
-        {/* The ScrollView doesn't work well on Android,
-        so we are letting the Actionsheet resize itself. */}
-        {Platform.OS === "ios" ? (
-          <ActionsheetScrollView showsVerticalScrollIndicator={true}>
-            <ProblemDescription problem={problem} />
-          </ActionsheetScrollView>
-        ) : (
-          <ProblemDescription problem={problem} />
         )}
-      </ActionsheetContent>
-    </Actionsheet>
+      </View>
+      <ProblemDescription problem={problem} />
+    </Sheet>
   );
 }
