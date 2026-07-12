@@ -322,18 +322,34 @@ export default function TabLayout() {
 The labels `Map`, `About`, `Contribute` are Maestro-asserted (Global Constraint 6) — keep
 them exactly.
 
-- [ ] **Step 2: Replace the now-broken `useBottomTabBarHeight()` in Contribute**
+- [ ] **Step 2: Replace EVERY `useBottomTabBarHeight()` call — both of them, in this task**
 
-`screens/Contribute/index.tsx:31` uses it for bottom padding. Native tabs don't provide it.
-Use the safe-area inset instead — the native tab bar reports its height through insets:
+`useBottomTabBarHeight()` comes from the Bottom Tab Navigator. The moment `NativeTabs`
+replaces it, every call **throws** ("Couldn't find the bottom tab bar height"), and the app
+renders a red screen instead of tabs. Both call sites must die in the same commit as the tab
+swap — you cannot defer one to a later task or the app is broken in between:
+
+- `screens/Contribute/index.tsx:31`
+- `screens/MapScreen/index.tsx:43`
+
+In both, drop the import and the hook, and use the safe-area inset instead — under
+edge-to-edge, the native tab bar reports its height through the bottom inset:
 
 ```tsx
 // Remove: import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 // Remove: const tabBarHeight = useBottomTabBarHeight();
-// The existing `insets` from useSafeAreaInsets() now covers the tab bar.
+const insets = useSafeAreaInsets();
 ```
 
-Then replace every `tabBarHeight` reference in that file with `insets.bottom`. Read the file
+Then replace every `tabBarHeight` reference with `insets.bottom`. In `MapScreen` this also
+kills the `bottomOffset` line:
+
+```tsx
+// Remove: const bottomOffset = Platform.OS === "ios" ? tabBarHeight : 0;
+```
+
+That `: 0` was always wrong on Android under edge-to-edge; `insets.bottom` is correct on
+both platforms. Use it directly for the floating buttons' `bottom` offsets. Read each file
 and fix each usage — do not guess at line numbers.
 
 - [ ] **Step 3: Delete the dead components**
@@ -811,20 +827,7 @@ import { GlassContainer, isLiquidGlassAvailable } from "expo-glass-effect";
 Each button's internals become a `GlassSurface variant="control"` circle instead of a
 gluestack `Button` with `shadow-md`.
 
-- [ ] **Step 3: Fix the Android bottom offset (dead code from Task 2)**
-
-`screens/MapScreen/index.tsx:43-44` still has:
-
-```tsx
-const tabBarHeight = useBottomTabBarHeight();
-const bottomOffset = Platform.OS === "ios" ? tabBarHeight : 0;
-```
-
-`useBottomTabBarHeight()` no longer works under `NativeTabs`, and the hardcoded `0` on
-Android was always wrong under edge-to-edge. Replace both with `useSafeAreaInsets().bottom`
-and use it on **both** platforms.
-
-- [ ] **Step 4: Verify in the simulator**
+- [ ] **Step 3: Verify in the simulator**
 
 Screenshot the map screen in **light and dark** mode. Then pan the map so dark terrain sits
 under the controls, and screenshot again.
@@ -833,7 +836,7 @@ Expected: the search bar and buttons are visibly translucent and **refract the m
 underneath them** — the tell that it's real glass rather than a grey fill. On iOS 26 the two
 round buttons should read as a merged glass group. Both still tap through to their sheets.
 
-- [ ] **Step 5: Gate and commit**
+- [ ] **Step 4: Gate and commit**
 
 ```bash
 pnpm check-all && pnpm test
