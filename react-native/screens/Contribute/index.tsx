@@ -3,9 +3,9 @@ import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { ChevronDown, MapPin } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import BlurBackground from "@/components/BlurBackground";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
 import { Divider } from "@/components/ui/divider";
+import { GlassSurface } from "@/components/ui/GlassSurface";
 import { Heading } from "@/components/ui/heading";
 import { HStack } from "@/components/ui/hstack";
 import { Input, InputField } from "@/components/ui/input";
@@ -168,7 +168,17 @@ export default function ContributeScreen() {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         className="flex-1"
       >
-        <BlurBackground position="statusBar" />
+        <GlassSurface
+          variant="statusBar"
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            height: insets.top + 1,
+            zIndex: 1,
+          }}
+        />
         <ScrollView
           className="flex-1"
           showsVerticalScrollIndicator={false}

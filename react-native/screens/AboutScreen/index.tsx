@@ -3,8 +3,8 @@ import { router } from "expo-router";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { CircleIcon } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import BlurBackground from "@/components/BlurBackground";
 import { Divider } from "@/components/ui/divider";
+import { GlassSurface } from "@/components/ui/GlassSurface";
 import { Heading } from "@/components/ui/heading";
 import { HStack } from "@/components/ui/hstack";
 import { Icon } from "@/components/ui/icon";
@@ -131,7 +131,17 @@ export default function AboutScreen() {
 
   return (
     <View className="flex-1 bg-background-0">
-      <BlurBackground position="statusBar" />
+      <GlassSurface
+        variant="statusBar"
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: insets.top + 1,
+          zIndex: 1,
+        }}
+      />
       <ScrollView
         className="flex-1"
         showsVerticalScrollIndicator={false}
