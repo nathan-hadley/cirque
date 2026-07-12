@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Platform, View } from "react-native";
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import Mapbox, { Camera, MapView as RNMapboxMapView, UserLocation } from "@rnmapbox/maps";
 import { Feature, GeoJsonProperties, Geometry } from "geojson";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { FilterButton } from "@/components/buttons/FilterButton";
 import { INITIAL_CENTER, INITIAL_ZOOM, MAPBOX_ACCESS_TOKEN, STYLE_URI } from "@/constants/map";
 import { mapProblemService } from "@/services/mapProblemService";
@@ -41,9 +41,7 @@ export function MapScreen() {
 
   const mapRef = useRef<RNMapboxMapView>(null);
   const cameraRef = useRef<Camera>(null);
-
-  const tabBarHeight = useBottomTabBarHeight();
-  const bottomOffset = Platform.OS === "ios" ? tabBarHeight : 0;
+  const insets = useSafeAreaInsets();
 
   // Set refs in the store when they're created
   useEffect(() => {
@@ -112,13 +110,13 @@ export function MapScreen() {
         accessibilityLabel="Adjust grade filter"
         onPress={() => setIsFilterVisible(true)}
         className="absolute right-4"
-        style={{ bottom: bottomOffset + 72 }}
+        style={{ bottom: insets.bottom + 72 }}
       />
 
       <LocateMeButton
         onPress={centerToUserLocation}
         className="absolute right-4"
-        style={{ bottom: bottomOffset + 16 }}
+        style={{ bottom: insets.bottom + 16 }}
       />
 
       <ProblemSheet

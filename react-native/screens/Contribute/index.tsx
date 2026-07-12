@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { ChevronDown, MapPin } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
@@ -27,7 +26,6 @@ import { FieldError, FieldName, getVisibleErrors, validateForm } from "./validat
 
 export default function ContributeScreen() {
   const insets = useSafeAreaInsets();
-  const tabBarHeight = useBottomTabBarHeight();
   const showToast = useSimpleToast();
   const submitMutation = useSubmitProblem();
   const queueCount = useQueueStore(state => state.count);
@@ -163,22 +161,12 @@ export default function ContributeScreen() {
   };
 
   return (
-    <View className="flex-1 bg-background-0">
+    <View collapsable={false} className="flex-1 bg-background-0">
       <KeyboardAvoidingView
+        collapsable={false}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         className="flex-1"
       >
-        <GlassSurface
-          variant="statusBar"
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            height: insets.top + 1,
-            zIndex: 1,
-          }}
-        />
         <ScrollView
           className="flex-1"
           showsVerticalScrollIndicator={false}
@@ -367,9 +355,20 @@ export default function ContributeScreen() {
               )}
             </Button>
           </VStack>
-          <View style={{ height: Platform.OS === "ios" ? tabBarHeight : 16 }} />
+          <View style={{ height: insets.bottom }} />
         </ScrollView>
       </KeyboardAvoidingView>
+      <GlassSurface
+        variant="statusBar"
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: insets.top + 1,
+          zIndex: 1,
+        }}
+      />
 
       <GradePicker isOpen={isGradeOpen} onClose={handleGradeSelect} currentGrade={grade} />
       <AreaPicker

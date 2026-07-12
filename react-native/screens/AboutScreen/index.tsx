@@ -1,6 +1,5 @@
-import { Platform, ScrollView, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { router } from "expo-router";
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { CircleIcon } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Divider } from "@/components/ui/divider";
@@ -26,7 +25,6 @@ export default function AboutScreen() {
   const topoDownload = useTopoDownload();
   const showToast = useSimpleToast();
   const insets = useSafeAreaInsets();
-  const tabBarHeight = useBottomTabBarHeight();
 
   const circuits = [
     {
@@ -130,18 +128,7 @@ export default function AboutScreen() {
   };
 
   return (
-    <View className="flex-1 bg-background-0">
-      <GlassSurface
-        variant="statusBar"
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          height: insets.top + 1,
-          zIndex: 1,
-        }}
-      />
+    <View collapsable={false} className="flex-1 bg-background-0">
       <ScrollView
         className="flex-1"
         showsVerticalScrollIndicator={false}
@@ -220,8 +207,19 @@ export default function AboutScreen() {
 
           <ContributingSection />
         </View>
-        <View style={{ height: Platform.OS === "ios" ? tabBarHeight : 16 }} />
+        <View style={{ height: insets.bottom }} />
       </ScrollView>
+      <GlassSurface
+        variant="statusBar"
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: insets.top + 1,
+          zIndex: 1,
+        }}
+      />
     </View>
   );
 }
