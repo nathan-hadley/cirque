@@ -56,6 +56,7 @@ export default function AboutScreen() {
       color: "border-typography-300 bg-typography-200",
       circuitColor: "black",
       subarea: "Forestland",
+      testID: "circuit-card-forestland-black",
     },
     {
       title: "Straightaways White Circuit",
@@ -170,6 +171,7 @@ export default function AboutScreen() {
                   title={circuit.title}
                   difficulty={circuit.difficulty}
                   color={circuit.color}
+                  testID={circuit.testID}
                   onPress={() => handleCircuitPress(circuit)}
                 />
               ))}
