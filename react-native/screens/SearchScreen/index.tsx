@@ -7,21 +7,16 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { HStack } from "@/components/ui/hstack";
 import { Icon } from "@/components/ui/icon";
 import { Input, InputField, InputIcon } from "@/components/ui/input";
-import { Problem } from "@/models/problems";
 import { useDataStore } from "@/stores/dataStore";
 import { useMapStore } from "@/stores/mapStore";
 import { useProblemStore } from "@/stores/problemStore";
 import { SearchEmpty } from "./SearchEmpty";
+import { searchProblems, SearchResult } from "./searchProblems";
 import { SearchResultItem } from "./SearchResultItem";
 
 type SearchOverlayProps = {
   isVisible: boolean;
   onClose: () => void;
-};
-
-type SearchResult = {
-  problem: Problem;
-  matchType: "name" | "grade" | "subarea";
 };
 
 export function SearchOverlay({ isVisible, onClose }: SearchOverlayProps) {
@@ -41,46 +36,10 @@ export function SearchOverlay({ isVisible, onClose }: SearchOverlayProps) {
       return;
     }
 
-    const searchTerm = query.toLowerCase().trim();
-    const results: SearchResult[] = [];
-
-    problemsData.features.forEach(feature => {
-      const problem = createProblemFromMapFeature(feature);
-      if (!problem) return;
-
-      // Apply grade filter if grades are filtered (not at full range)
-      if (minGrade > 0 || maxGrade < 10) {
-        if (!problem.grade) return;
-
-        const problemGradeNum = parseInt(problem.grade.replace("V", ""), 10);
-        if (problemGradeNum < minGrade || problemGradeNum > maxGrade) {
-          return;
-        }
-      }
-
-      if (problem.name?.toLowerCase().includes(searchTerm)) {
-        results.push({ problem, matchType: "name" });
-        return;
-      }
-
-      if (problem.grade?.toLowerCase().includes(searchTerm)) {
-        results.push({ problem, matchType: "grade" });
-        return;
-      }
-
-      if (problem.subarea?.toLowerCase().includes(searchTerm)) {
-        results.push({ problem, matchType: "subarea" });
-        return;
-      }
-    });
-
-    // Sort results: name matches first, then grade, then subarea
-    results.sort((a, b) => {
-      const order = { name: 0, grade: 1, subarea: 2 };
-      return order[a.matchType] - order[b.matchType];
-    });
-
-    setSearchResults(results.slice(0, 50)); // Limit to 50 results
+    const problems = problemsData.features
+      .map(createProblemFromMapFeature)
+      .filter(problem => problem !== null);
+    setSearchResults(searchProblems(problems, query, { minGrade, maxGrade }));
   };
 
   const handleSelectResult = (result: SearchResult) => {
