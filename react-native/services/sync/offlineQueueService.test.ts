@@ -1,5 +1,5 @@
 import { ProblemSubmission } from "@/types/problemSubmission";
-import { generateId, offlineQueueService } from "../offlineQueueService";
+import { generateId, offlineQueueService } from "./offlineQueueService";
 
 const mockStorage = new Map<string, string>();
 

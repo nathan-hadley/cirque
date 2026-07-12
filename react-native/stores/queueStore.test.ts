@@ -1,4 +1,4 @@
-import { useQueueStore } from "../queueStore";
+import { useQueueStore } from "./queueStore";
 
 describe("useQueueStore", () => {
   beforeEach(() => useQueueStore.getState().setCount(0));

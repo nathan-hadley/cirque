@@ -3,7 +3,7 @@ import axios from "axios";
 import { submitProblem } from "@/api/problems";
 import { syncManager } from "@/services/sync/syncManager";
 import { ProblemSubmission } from "@/types/problemSubmission";
-import { QUEUED_MESSAGE, resolveSubmission, SUBMITTED_MESSAGE } from "../useSubmitProblem";
+import { QUEUED_MESSAGE, resolveSubmission, SUBMITTED_MESSAGE } from "./useSubmitProblem";
 
 jest.mock("expo-network", () => ({ getNetworkStateAsync: jest.fn() }));
 jest.mock("@/api/problems", () => ({ submitProblem: jest.fn() }));

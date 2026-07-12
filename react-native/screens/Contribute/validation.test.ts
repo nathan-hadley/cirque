@@ -1,5 +1,5 @@
 import { VALIDATION_CONSTRAINTS } from "@/types/problemSubmission";
-import { FieldName, getVisibleErrors, validateForm } from "../validation";
+import { FieldName, getVisibleErrors, validateForm } from "./validation";
 
 jest.mock("@/components/ui/text", () => ({ Text: "Text" }));
 

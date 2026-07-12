@@ -1,4 +1,4 @@
-import { normalizePayload, useDataStore } from "../dataStore";
+import { normalizePayload, useDataStore } from "./dataStore";
 
 jest.mock("@/assets/seed.json", () => ({
   problems: {

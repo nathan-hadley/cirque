@@ -1,6 +1,6 @@
 import { Feature, Point } from "geojson";
-import { CirqueData, useDataStore } from "../dataStore";
-import { useProblemStore } from "../problemStore";
+import { CirqueData, useDataStore } from "./dataStore";
+import { useProblemStore } from "./problemStore";
 
 const feature = (
   properties: Record<string, unknown>,

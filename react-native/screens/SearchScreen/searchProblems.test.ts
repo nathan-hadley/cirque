@@ -1,5 +1,5 @@
 import { Problem } from "@/models/problems";
-import { searchProblems } from "../searchProblems";
+import { searchProblems } from "./searchProblems";
 
 const problem = (overrides: Partial<Problem>): Problem => ({
   id: overrides.id ?? "id",

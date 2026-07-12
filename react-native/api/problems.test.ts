@@ -1,6 +1,6 @@
 import axios from "axios";
 import { ProblemSubmission } from "@/types/problemSubmission";
-import { submitProblem } from "../problems";
+import { submitProblem } from "./problems";
 
 let mockApiKey = "test-key";
 

@@ -1,5 +1,5 @@
 import { CirqueData } from "@/stores/dataStore";
-import { leavenworthAreas } from "../areas";
+import { leavenworthAreas } from "./areas";
 
 const data: CirqueData = {
   problems: { type: "FeatureCollection", features: [] },
