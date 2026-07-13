@@ -37,65 +37,6 @@ const gradeToNumber = (grade: string): number => {
 };
 
 export const useProblemStore = create<ProblemState>((set, get) => {
-  // Internal helper methods
-  const getAllProblemsInCircuit = (circuitColor: string, subarea: string): Problem[] => {
-    const problemsData = useDataStore.getState().data.problems;
-    if (!problemsData) return [];
-
-    return problemsData.features
-      .filter(feature => {
-        const props = feature.properties;
-        return (
-          props?.color === circuitColor &&
-          props?.subarea === subarea &&
-          typeof props.order !== "undefined" &&
-          props.order !== ""
-        );
-      })
-      .map(feature => get().createProblemFromMapFeature(feature))
-      .filter((problem): problem is Problem => problem !== null)
-      .sort((a, b) => (a.order || 0) - (b.order || 0));
-  };
-
-  const generateCircuitLineFromProblems = (
-    problems: Problem[],
-    circuitColor: string,
-    subarea: string
-  ): FeatureCollection<LineString, GeoJsonProperties> | null => {
-    if (problems.length < 2) return null; // Need at least 2 points to make a line
-
-    // Extract coordinates from problems, ensuring they're sorted by order
-    const coordinates = problems
-      .sort((a, b) => (a.order || 0) - (b.order || 0))
-      .map(problem => problem.coordinates)
-      .filter((coord): coord is [number, number] => coord !== undefined && coord.length >= 2);
-
-    if (coordinates.length < 2) return null;
-
-    // Create LineString feature
-    const lineFeature: Feature<LineString, GeoJsonProperties> = {
-      type: "Feature",
-      properties: {
-        color: circuitColor,
-        subarea,
-      },
-      geometry: {
-        type: "LineString",
-        coordinates,
-      },
-    };
-
-    return {
-      type: "FeatureCollection",
-      features: [lineFeature],
-    };
-  };
-
-  const gradeFilterApplied = () => {
-    const { minGrade, maxGrade } = get();
-    return minGrade !== MIN_GRADE || maxGrade !== MAX_GRADE;
-  };
-
   return {
     // Initial state
     problem: null,
@@ -182,69 +123,170 @@ export const useProblemStore = create<ProblemState>((set, get) => {
 
     getVisibleProblemsInCircuit: (circuitColor: string, subarea: string): Problem[] => {
       const { minGrade, maxGrade } = get();
-
-      const allProblems = getAllProblemsInCircuit(circuitColor, subarea);
-
-      if (!gradeFilterApplied()) return allProblems;
-
-      return allProblems.filter(problem => {
-        if (!problem.grade) return false;
-        const problemGradeNum = gradeToNumber(problem.grade);
-        return problemGradeNum >= minGrade && problemGradeNum <= maxGrade;
-      });
-    },
-
-    createProblemFromMapFeature: (feature: Feature<Point, GeoJsonProperties>): Problem | null => {
-      const properties = feature.properties || {};
-      const name = properties.name?.toString();
-      const topo = properties.topo?.toString();
-      const subarea = properties.subarea?.toString();
-      const grade = properties.grade?.toString();
-
-      // TODO: we need a way to identify problems vs other map features
-      // Name, subarea, and grade should be unique to problems
-      if (!name || !subarea || !grade) return null;
-
-      const coordinates = feature.geometry?.coordinates?.slice(0, 2) as [number, number];
-
-      const order =
-        typeof properties.order === "number"
-          ? properties.order
-          : properties.order
-            ? parseInt(properties.order.toString(), 10)
-            : undefined;
-
-      const line = parseLineCoordinates(properties.line?.toString());
-
-      return {
-        id: properties.id?.toString() || Date.now().toString(),
-        name,
-        grade: properties.grade?.toString(),
-        order,
-        colorStr: properties.color?.toString() || "",
-        color: getColorFromString(properties.color?.toString()),
-        description: properties.description?.toString(),
-        line,
-        topo,
-        topoKey: properties.topoKey?.toString(),
-        status: parseStatus(properties.status),
+      return visibleProblemsInCircuit(
+        useDataStore.getState().data.problems,
+        circuitColor,
         subarea,
-        coordinates,
-      };
+        minGrade,
+        maxGrade
+      );
     },
+
+    createProblemFromMapFeature: (feature: Feature<Point, GeoJsonProperties>): Problem | null =>
+      problemFromMapFeature(feature),
 
     getCircuitLine: (): FeatureCollection<LineString, GeoJsonProperties> | null => {
-      const { problem, getVisibleProblemsInCircuit } = get();
-      if (!problem || !problem.colorStr || !problem.subarea) return null;
-
-      const problems = gradeFilterApplied()
-        ? getVisibleProblemsInCircuit(problem.colorStr, problem.subarea)
-        : getAllProblemsInCircuit(problem.colorStr, problem.subarea);
-
-      return generateCircuitLineFromProblems(problems, problem.colorStr, problem.subarea);
+      const { problem, minGrade, maxGrade } = get();
+      return selectCircuitLine(useDataStore.getState().data.problems, problem, minGrade, maxGrade);
     },
   };
 });
+
+function isGradeFilterApplied(minGrade: number, maxGrade: number): boolean {
+  return minGrade !== MIN_GRADE || maxGrade !== MAX_GRADE;
+}
+
+function problemFromMapFeature(feature: Feature<Point, GeoJsonProperties>): Problem | null {
+  const properties = feature.properties || {};
+  const name = properties.name?.toString();
+  const topo = properties.topo?.toString();
+  const subarea = properties.subarea?.toString();
+  const grade = properties.grade?.toString();
+
+  // TODO: we need a way to identify problems vs other map features
+  // Name, subarea, and grade should be unique to problems
+  if (!name || !subarea || !grade) return null;
+
+  const coordinates = feature.geometry?.coordinates?.slice(0, 2) as [number, number];
+
+  const order =
+    typeof properties.order === "number"
+      ? properties.order
+      : properties.order
+        ? parseInt(properties.order.toString(), 10)
+        : undefined;
+
+  const line = parseLineCoordinates(properties.line?.toString());
+
+  return {
+    id: properties.id?.toString() || Date.now().toString(),
+    name,
+    grade: properties.grade?.toString(),
+    order,
+    colorStr: properties.color?.toString() || "",
+    color: getColorFromString(properties.color?.toString()),
+    description: properties.description?.toString(),
+    line,
+    topo,
+    topoKey: properties.topoKey?.toString(),
+    status: parseStatus(properties.status),
+    subarea,
+    coordinates,
+  };
+}
+
+function allProblemsInCircuit(
+  problemsData: FeatureCollection<Point, GeoJsonProperties> | undefined,
+  circuitColor: string,
+  subarea: string
+): Problem[] {
+  if (!problemsData) return [];
+
+  return problemsData.features
+    .filter(feature => {
+      const props = feature.properties;
+      return (
+        props?.color === circuitColor &&
+        props?.subarea === subarea &&
+        typeof props.order !== "undefined" &&
+        props.order !== ""
+      );
+    })
+    .map(feature => problemFromMapFeature(feature))
+    .filter((problem): problem is Problem => problem !== null)
+    .sort((a, b) => (a.order || 0) - (b.order || 0));
+}
+
+function visibleProblemsInCircuit(
+  problemsData: FeatureCollection<Point, GeoJsonProperties> | undefined,
+  circuitColor: string,
+  subarea: string,
+  minGrade: number,
+  maxGrade: number
+): Problem[] {
+  const allProblems = allProblemsInCircuit(problemsData, circuitColor, subarea);
+
+  if (!isGradeFilterApplied(minGrade, maxGrade)) return allProblems;
+
+  return allProblems.filter(problem => {
+    if (!problem.grade) return false;
+    const problemGradeNum = gradeToNumber(problem.grade);
+    return problemGradeNum >= minGrade && problemGradeNum <= maxGrade;
+  });
+}
+
+function generateCircuitLineFromProblems(
+  problems: Problem[],
+  circuitColor: string,
+  subarea: string
+): FeatureCollection<LineString, GeoJsonProperties> | null {
+  if (problems.length < 2) return null; // Need at least 2 points to make a line
+
+  // Extract coordinates from problems, ensuring they're sorted by order
+  const coordinates = problems
+    .sort((a, b) => (a.order || 0) - (b.order || 0))
+    .map(problem => problem.coordinates)
+    .filter((coord): coord is [number, number] => coord !== undefined && coord.length >= 2);
+
+  if (coordinates.length < 2) return null;
+
+  // Create LineString feature
+  const lineFeature: Feature<LineString, GeoJsonProperties> = {
+    type: "Feature",
+    properties: {
+      color: circuitColor,
+      subarea,
+    },
+    geometry: {
+      type: "LineString",
+      coordinates,
+    },
+  };
+
+  return {
+    type: "FeatureCollection",
+    features: [lineFeature],
+  };
+}
+
+/**
+ * Derives the circuit line for the selected problem.
+ *
+ * Pure on purpose: MapScreen derives the circuit line during render, and React Compiler
+ * (app.config.ts -> experiments.reactCompiler) infers a memo block's dependencies from the
+ * values the expression reads. Calling a zero-argument store action here would give the
+ * compiler nothing reactive to key on -- the action's identity never changes -- so it would
+ * cache the first render's `null` forever and the line would never appear. Taking the state
+ * as arguments lets the compiler see it and invalidate correctly.
+ */
+export function selectCircuitLine(
+  problemsData: FeatureCollection<Point, GeoJsonProperties> | undefined,
+  problem: Problem | null,
+  minGrade: number,
+  maxGrade: number
+): FeatureCollection<LineString, GeoJsonProperties> | null {
+  if (!problem || !problem.colorStr || !problem.subarea) return null;
+
+  const problems = visibleProblemsInCircuit(
+    problemsData,
+    problem.colorStr,
+    problem.subarea,
+    minGrade,
+    maxGrade
+  );
+
+  return generateCircuitLineFromProblems(problems, problem.colorStr, problem.subarea);
+}
 
 function parseStatus(value: unknown): ProblemStatus | undefined {
   return value === "pending" || value === "approved" || value === "rejected" ? value : undefined;
