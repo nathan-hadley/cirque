@@ -9,8 +9,9 @@ import { isLiquidGlassAvailable } from "@/components/ui/GlassSurface";
 import { TAB_BAR_HEIGHT } from "@/constants/layout";
 import { INITIAL_CENTER, INITIAL_ZOOM, MAPBOX_ACCESS_TOKEN, STYLE_URI } from "@/constants/map";
 import { mapProblemService } from "@/services/mapProblemService";
+import { useDataStore } from "@/stores/dataStore";
 import { useMapStore } from "@/stores/mapStore";
-import { useProblemStore } from "@/stores/problemStore";
+import { selectCircuitLine, useProblemStore } from "@/stores/problemStore";
 import { LocateMeButton } from "../../components/buttons/LocateMeButton";
 import { MapSearchBar } from "../../components/MapSearchBar";
 import { SearchOverlay } from "../SearchScreen";
@@ -37,10 +38,13 @@ export function MapScreen() {
   const { centerToUserLocation, setMapRef, setCameraRef } = useMapStore();
 
   // Problem store for problem-specific state
-  const { problem, viewProblem, setViewProblem, getCircuitLine, setMinGrade, setMaxGrade } =
+  const { problem, viewProblem, setViewProblem, minGrade, maxGrade, setMinGrade, setMaxGrade } =
     useProblemStore();
+  const problemsData = useDataStore(state => state.data.problems);
 
-  const currentCircuitLine = getCircuitLine();
+  // Derived from reactive state rather than a store getter, so React Compiler can see the
+  // inputs this depends on and recompute the line when the problem or filter changes.
+  const currentCircuitLine = selectCircuitLine(problemsData, problem, minGrade, maxGrade);
 
   const mapRef = useRef<RNMapboxMapView>(null);
   const cameraRef = useRef<Camera>(null);
