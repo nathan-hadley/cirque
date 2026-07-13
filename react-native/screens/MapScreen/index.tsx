@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View } from "react-native";
+import { Platform, View } from "react-native";
 import { GlassContainer } from "expo-glass-effect";
 import Mapbox, { Camera, MapView as RNMapboxMapView, UserLocation } from "@rnmapbox/maps";
 import { Feature, GeoJsonProperties, Geometry } from "geojson";
@@ -107,7 +107,10 @@ export function MapScreen() {
 
       <MapSearchBar onPress={() => setIsSearchVisible(true)} />
 
-      <View className="absolute right-4" style={{ bottom: insets.bottom + 16 }}>
+      <View
+        className="absolute right-4"
+        style={{ bottom: insets.bottom + (Platform.OS === "android" ? 96 : 16) }}
+      >
         {isLiquidGlassAvailable() ? (
           <GlassContainer spacing={12} style={{ gap: 12 }}>
             <FilterButton onPress={() => setIsFilterVisible(true)} />
