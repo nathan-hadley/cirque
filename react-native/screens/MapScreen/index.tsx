@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
+import { GlassContainer } from "expo-glass-effect";
 import Mapbox, { Camera, MapView as RNMapboxMapView, UserLocation } from "@rnmapbox/maps";
 import { Feature, GeoJsonProperties, Geometry } from "geojson";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { FilterButton } from "@/components/buttons/FilterButton";
+import { isLiquidGlassAvailable } from "@/components/ui/GlassSurface";
 import { INITIAL_CENTER, INITIAL_ZOOM, MAPBOX_ACCESS_TOKEN, STYLE_URI } from "@/constants/map";
 import { mapProblemService } from "@/services/mapProblemService";
 import { useMapStore } from "@/stores/mapStore";
@@ -105,19 +107,19 @@ export function MapScreen() {
 
       <MapSearchBar onPress={() => setIsSearchVisible(true)} />
 
-      <FilterButton
-        testID="open-grade-filter"
-        accessibilityLabel="Adjust grade filter"
-        onPress={() => setIsFilterVisible(true)}
-        className="absolute right-4"
-        style={{ bottom: insets.bottom + 72 }}
-      />
-
-      <LocateMeButton
-        onPress={centerToUserLocation}
-        className="absolute right-4"
-        style={{ bottom: insets.bottom + 16 }}
-      />
+      <View className="absolute right-4" style={{ bottom: insets.bottom + 16 }}>
+        {isLiquidGlassAvailable() ? (
+          <GlassContainer spacing={12} style={{ gap: 12 }}>
+            <FilterButton onPress={() => setIsFilterVisible(true)} />
+            <LocateMeButton onPress={centerToUserLocation} />
+          </GlassContainer>
+        ) : (
+          <View style={{ gap: 12 }}>
+            <FilterButton onPress={() => setIsFilterVisible(true)} />
+            <LocateMeButton onPress={centerToUserLocation} />
+          </View>
+        )}
+      </View>
 
       <ProblemSheet
         problem={problem}
