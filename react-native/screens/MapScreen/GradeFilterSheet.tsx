@@ -21,14 +21,17 @@ export default function GradeFilterSheet({ isOpen, onClose }: GradeFilterSheetPr
   const { minGrade, maxGrade } = useProblemStore();
   const { bottom } = useSafeAreaInsets();
   const sheet = useRef<SheetRef>(null);
+  const wasOpen = useRef(false);
 
   const [localMinGrade, setLocalMinGrade] = useState(minGrade);
   const [localMaxGrade, setLocalMaxGrade] = useState(maxGrade);
 
   useEffect(() => {
     if (isOpen) {
+      wasOpen.current = true;
       sheet.current?.present().catch((e: unknown) => console.error("Sheet present failed", e));
-    } else {
+    } else if (wasOpen.current) {
+      wasOpen.current = false;
       sheet.current?.dismiss().catch((e: unknown) => console.error("Sheet dismiss failed", e));
     }
   }, [isOpen]);
@@ -54,8 +57,13 @@ export default function GradeFilterSheet({ isOpen, onClose }: GradeFilterSheetPr
     onClose(localMinGrade, localMaxGrade);
   }
 
+  function handleDidDismiss() {
+    wasOpen.current = false;
+    handleClose();
+  }
+
   return (
-    <Sheet ref={sheet} detents={["auto"]} onDidDismiss={handleClose}>
+    <Sheet ref={sheet} detents={["auto"]} onDidDismiss={handleDidDismiss}>
       <VStack className="w-full" style={{ paddingBottom: bottom + 16 }}>
         <SheetHeader
           title="Adjust grade range"

@@ -1,20 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Pressable, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import type { Feature, GeoJsonProperties, Point } from "geojson";
 import { AlertCircle } from "lucide-react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import BottomSearchBar from "@/components/BottomSearchBar";
-import {
-  Actionsheet,
-  ActionsheetBackdrop,
-  ActionsheetContent,
-  ActionsheetDragIndicator,
-  ActionsheetDragIndicatorWrapper,
-} from "@/components/ui/actionsheet";
 import { Heading } from "@/components/ui/heading";
 import { HStack } from "@/components/ui/hstack";
 import { Icon } from "@/components/ui/icon";
+import { Sheet, type SheetRef } from "@/components/ui/sheet";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import { topoImageUrl } from "@/constants/api";
@@ -50,9 +43,20 @@ export default function ProblemPicker({
   onSelect,
   currentTopo,
 }: ProblemPickerProps) {
-  const insets = useSafeAreaInsets();
   const [searchQuery, setSearchQuery] = useState("");
+  const sheet = useRef<SheetRef>(null);
+  const wasOpen = useRef(false);
   const filteredProblems = useSearchProblems(searchQuery);
+
+  useEffect(() => {
+    if (isOpen) {
+      wasOpen.current = true;
+      sheet.current?.present().catch((e: unknown) => console.error("Sheet present failed", e));
+    } else if (wasOpen.current) {
+      wasOpen.current = false;
+      sheet.current?.dismiss().catch((e: unknown) => console.error("Sheet dismiss failed", e));
+    }
+  }, [isOpen]);
 
   const handleSelect = (feature: ProblemFeature) => {
     const topoKey = feature.properties?.topo as string | undefined;
@@ -68,52 +72,57 @@ export default function ProblemPicker({
     setSearchQuery("");
   };
 
+  const handleDidDismiss = () => {
+    wasOpen.current = false;
+    handleClose();
+  };
+
   return (
-    <Actionsheet isOpen={isOpen} onClose={handleClose} snapPoints={[80]}>
-      <ActionsheetBackdrop />
-      <ActionsheetContent style={{ paddingBottom: insets.bottom }}>
-        <ActionsheetDragIndicatorWrapper>
-          <ActionsheetDragIndicator />
-        </ActionsheetDragIndicatorWrapper>
-
-        <VStack className="w-full px-4 pt-4 pb-2" space="md">
-          <Heading size="lg" className="text-typography-900">
-            Use Existing Topo
-          </Heading>
-          <Text className="text-typography-600 -mt-2">
-            Search for an existing problem to use its topo image
-          </Text>
-        </VStack>
-
-        <View className="flex-1 px-4 w-full">
-          <FlashList
-            data={filteredProblems}
-            renderItem={({ item }) => (
-              <ProblemItem
-                problem={item}
-                isSelected={item.properties?.topo === currentTopo}
-                onSelect={handleSelect}
-              />
-            )}
-            ItemSeparatorComponent={() => <View className="h-2" />}
-            ListEmptyComponent={
-              <View className="py-8">
-                <Text className="text-center text-typography-500">
-                  No problems found matching "{searchQuery}"
-                </Text>
-              </View>
-            }
-            contentContainerStyle={{ paddingBottom: 16 }}
-          />
-        </View>
-
+    <Sheet
+      ref={sheet}
+      detents={[0.8]}
+      scrollable
+      scrollableOptions={{ scrollingExpandsSheet: false }}
+      onDidDismiss={handleDidDismiss}
+      footer={
         <BottomSearchBar
           placeholder="Search problems..."
           value={searchQuery}
           onChangeText={setSearchQuery}
         />
-      </ActionsheetContent>
-    </Actionsheet>
+      }
+    >
+      <VStack className="w-full px-4 pt-4 pb-2" space="md">
+        <Heading size="lg" className="text-typography-900">
+          Use Existing Topo
+        </Heading>
+        <Text className="text-typography-600 -mt-2">
+          Search for an existing problem to use its topo image
+        </Text>
+      </VStack>
+
+      <View className="flex-1 px-4 w-full">
+        <FlashList
+          data={filteredProblems}
+          renderItem={({ item }) => (
+            <ProblemItem
+              problem={item}
+              isSelected={item.properties?.topo === currentTopo}
+              onSelect={handleSelect}
+            />
+          )}
+          ItemSeparatorComponent={() => <View className="h-2" />}
+          ListEmptyComponent={
+            <View className="py-8">
+              <Text className="text-center text-typography-500">
+                No problems found matching "{searchQuery}"
+              </Text>
+            </View>
+          }
+          contentContainerStyle={{ paddingBottom: 16 }}
+        />
+      </View>
+    </Sheet>
   );
 }
 

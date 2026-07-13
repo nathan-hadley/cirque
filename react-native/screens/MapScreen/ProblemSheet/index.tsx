@@ -55,19 +55,27 @@ function ProblemDescription({ problem }: { problem: Problem }) {
 
 export function ProblemSheet({ problem, isOpen, onClose }: ProblemSheetProps) {
   const sheet = useRef<SheetRef>(null);
+  const wasOpen = useRef(false);
 
   useEffect(() => {
     if (isOpen && problem) {
+      wasOpen.current = true;
       sheet.current?.present().catch((e: unknown) => console.error("Sheet present failed", e));
-    } else {
+    } else if (wasOpen.current) {
+      wasOpen.current = false;
       sheet.current?.dismiss().catch((e: unknown) => console.error("Sheet dismiss failed", e));
     }
   }, [isOpen, problem]);
 
+  function handleDidDismiss() {
+    wasOpen.current = false;
+    onClose();
+  }
+
   if (!problem) return null;
 
   return (
-    <Sheet ref={sheet} detents={[0.5, 1]} dimmed={false} scrollable onDidDismiss={onClose}>
+    <Sheet ref={sheet} detents={[0.5, 1]} dimmed={false} scrollable onDidDismiss={handleDidDismiss}>
       <View className="w-full aspect-[4/3] overflow-hidden bg-typography-300 relative">
         <Topo
           topo={problem.topo || ""}
