@@ -1,9 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Button, ButtonText } from "@/components/ui/button";
 import { HStack } from "@/components/ui/hstack";
-import { Sheet, SheetHeader, type SheetRef } from "@/components/ui/sheet";
+import { Sheet, SheetHeader } from "@/components/ui/sheet";
 import { Slider, SliderThumb, SliderTrack } from "@/components/ui/slider";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
@@ -19,22 +18,8 @@ type GradeFilterSheetProps = {
 
 export default function GradeFilterSheet({ isOpen, onClose }: GradeFilterSheetProps) {
   const { minGrade, maxGrade } = useProblemStore();
-  const { bottom } = useSafeAreaInsets();
-  const sheet = useRef<SheetRef>(null);
-  const wasOpen = useRef(false);
-
   const [localMinGrade, setLocalMinGrade] = useState(minGrade);
   const [localMaxGrade, setLocalMaxGrade] = useState(maxGrade);
-
-  useEffect(() => {
-    if (isOpen) {
-      wasOpen.current = true;
-      sheet.current?.present().catch((e: unknown) => console.error("Sheet present failed", e));
-    } else if (wasOpen.current) {
-      wasOpen.current = false;
-      sheet.current?.dismiss().catch((e: unknown) => console.error("Sheet dismiss failed", e));
-    }
-  }, [isOpen]);
 
   function handleMinGradeChange(value: number) {
     // Prevent min from exceeding max
@@ -57,14 +42,9 @@ export default function GradeFilterSheet({ isOpen, onClose }: GradeFilterSheetPr
     onClose(localMinGrade, localMaxGrade);
   }
 
-  function handleDidDismiss() {
-    wasOpen.current = false;
-    handleClose();
-  }
-
   return (
-    <Sheet ref={sheet} detents={["auto"]} onDidDismiss={handleDidDismiss}>
-      <VStack className="w-full" style={{ paddingBottom: bottom + 16 }}>
+    <Sheet isOpen={isOpen} onClose={handleClose} detents={["auto"]}>
+      <VStack className="w-full pb-4">
         <SheetHeader
           title="Adjust grade range"
           onClose={handleClose}

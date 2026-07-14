@@ -1,10 +1,10 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { ScrollView } from "react-native";
 import { CircleIcon } from "lucide-react-native";
 import BottomSearchBar from "@/components/BottomSearchBar";
 import { Divider } from "@/components/ui/divider";
 import { Radio, RadioGroup, RadioIcon, RadioIndicator, RadioLabel } from "@/components/ui/radio";
-import { Sheet, SheetHeader, type SheetRef } from "@/components/ui/sheet";
+import { Sheet, SheetHeader } from "@/components/ui/sheet";
 import { Text } from "@/components/ui/text";
 import { leavenworthAreas } from "@/constants/areas";
 import { useDataStore } from "@/stores/dataStore";
@@ -22,18 +22,9 @@ function AreaPickerSheet({ isOpen, onClose, onSelect, currentArea }: AreaPickerS
   const data = useDataStore(s => s.data);
   const areas = useMemo(() => leavenworthAreas(data), [data]);
   const [searchTerm, setSearchTerm] = useState("");
-  const sheet = useRef<SheetRef>(null);
-  const wasOpen = useRef(false);
 
   useEffect(() => {
-    if (isOpen) {
-      setSearchTerm("");
-      wasOpen.current = true;
-      sheet.current?.present().catch((e: unknown) => console.error("Sheet present failed", e));
-    } else if (wasOpen.current) {
-      wasOpen.current = false;
-      sheet.current?.dismiss().catch((e: unknown) => console.error("Sheet dismiss failed", e));
-    }
+    if (isOpen) setSearchTerm("");
   }, [isOpen]);
 
   const filteredAreas = searchTerm
@@ -44,17 +35,12 @@ function AreaPickerSheet({ isOpen, onClose, onSelect, currentArea }: AreaPickerS
     onSelect(area);
   }
 
-  function handleDidDismiss() {
-    wasOpen.current = false;
-    onClose();
-  }
-
   return (
     <Sheet
-      ref={sheet}
+      isOpen={isOpen}
+      onClose={onClose}
       detents={[0.6, 1]}
       scrollable
-      onDidDismiss={handleDidDismiss}
       footer={
         <BottomSearchBar
           placeholder="Search areas..."
@@ -65,7 +51,7 @@ function AreaPickerSheet({ isOpen, onClose, onSelect, currentArea }: AreaPickerS
     >
       <SheetHeader title="Select area" onClose={onClose} closeButtonTestID="close-area-picker" />
       <Divider />
-      <ScrollView className="pt-4 pl-6 pr-7" showsVerticalScrollIndicator={false}>
+      <ScrollView className="flex-1 pt-4 pl-6 pr-7" showsVerticalScrollIndicator={false}>
         <RadioGroup value={currentArea} className="gap-6 py-2" onChange={handleAreaSelect}>
           {filteredAreas.map(area => (
             <Radio

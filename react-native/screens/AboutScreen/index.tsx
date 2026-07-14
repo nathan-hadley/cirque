@@ -9,6 +9,7 @@ import { HStack } from "@/components/ui/hstack";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
+import { TAB_BAR_HEIGHT } from "@/constants/layout";
 import { useOfflineMaps } from "@/hooks/useOfflineMaps";
 import { useSimpleToast } from "@/hooks/useSimpleToast";
 import { useTopoDownload } from "@/hooks/useTopoDownload";
@@ -128,7 +129,7 @@ export default function AboutScreen() {
   };
 
   return (
-    <View collapsable={false} className="flex-1 bg-background-0">
+    <View className="flex-1 bg-background-0">
       <ScrollView
         className="flex-1"
         showsVerticalScrollIndicator={false}
@@ -207,10 +208,9 @@ export default function AboutScreen() {
 
           <ContributingSection />
         </View>
-        <View style={{ height: insets.bottom }} />
+        <View style={{ height: insets.bottom + TAB_BAR_HEIGHT }} />
       </ScrollView>
       <GlassSurface
-        variant="statusBar"
         style={{
           position: "absolute",
           top: 0,

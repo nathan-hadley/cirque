@@ -10,7 +10,7 @@ type FilterButtonProps = {
 export function FilterButton({ onPress }: FilterButtonProps) {
   return (
     <GlassSurface
-      variant="control"
+      interactive
       style={{ width: 48, height: 48, borderRadius: 24, overflow: "hidden" }}
     >
       <Pressable

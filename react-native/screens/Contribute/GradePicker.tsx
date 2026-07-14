@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 import { useColorScheme } from "nativewind";
 import WheelPicker from "react-native-wheely";
-import { Sheet, SheetHeader, type SheetRef } from "@/components/ui/sheet";
+import { Sheet, SheetHeader } from "@/components/ui/sheet";
 import { GRADES } from "@/models/problems";
 
 type GradePickerProps = {
@@ -17,23 +17,13 @@ export default function GradePicker({ isOpen, onClose, currentGrade }: GradePick
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const { colorScheme } = useColorScheme();
   const gradeRef = useRef<number>(DEFAULT_INDEX);
-  const sheet = useRef<SheetRef>(null);
-  const wasOpen = useRef(false);
 
   useEffect(() => {
-    if (isOpen) {
-      if (currentGrade) {
-        const index = GRADES.indexOf(currentGrade);
-        if (index >= 0) {
-          setSelectedIndex(index);
-          gradeRef.current = index;
-        }
-      }
-      wasOpen.current = true;
-      sheet.current?.present().catch((e: unknown) => console.error("Sheet present failed", e));
-    } else if (wasOpen.current) {
-      wasOpen.current = false;
-      sheet.current?.dismiss().catch((e: unknown) => console.error("Sheet dismiss failed", e));
+    if (!isOpen || !currentGrade) return;
+    const index = GRADES.indexOf(currentGrade);
+    if (index >= 0) {
+      setSelectedIndex(index);
+      gradeRef.current = index;
     }
   }, [isOpen, currentGrade]);
 
@@ -46,18 +36,8 @@ export default function GradePicker({ isOpen, onClose, currentGrade }: GradePick
     onClose(GRADES[gradeRef.current]);
   }
 
-  function handleDidDismiss() {
-    wasOpen.current = false;
-    handleClose();
-  }
-
   return (
-    <Sheet
-      ref={sheet}
-      detents={["auto"]}
-      scrollableOptions={{ scrollingExpandsSheet: false }}
-      onDidDismiss={handleDidDismiss}
-    >
+    <Sheet isOpen={isOpen} onClose={handleClose} detents={["auto"]}>
       <SheetHeader
         title="Select grade"
         onClose={handleClose}

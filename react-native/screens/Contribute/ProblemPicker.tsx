@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { Pressable, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import type { Feature, GeoJsonProperties, Point } from "geojson";
@@ -7,7 +7,7 @@ import BottomSearchBar from "@/components/BottomSearchBar";
 import { Heading } from "@/components/ui/heading";
 import { HStack } from "@/components/ui/hstack";
 import { Icon } from "@/components/ui/icon";
-import { Sheet, type SheetRef } from "@/components/ui/sheet";
+import { Sheet } from "@/components/ui/sheet";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import { topoImageUrl } from "@/constants/api";
@@ -44,19 +44,7 @@ export default function ProblemPicker({
   currentTopo,
 }: ProblemPickerProps) {
   const [searchQuery, setSearchQuery] = useState("");
-  const sheet = useRef<SheetRef>(null);
-  const wasOpen = useRef(false);
   const filteredProblems = useSearchProblems(searchQuery);
-
-  useEffect(() => {
-    if (isOpen) {
-      wasOpen.current = true;
-      sheet.current?.present().catch((e: unknown) => console.error("Sheet present failed", e));
-    } else if (wasOpen.current) {
-      wasOpen.current = false;
-      sheet.current?.dismiss().catch((e: unknown) => console.error("Sheet dismiss failed", e));
-    }
-  }, [isOpen]);
 
   const handleSelect = (feature: ProblemFeature) => {
     const topoKey = feature.properties?.topo as string | undefined;
@@ -72,18 +60,12 @@ export default function ProblemPicker({
     setSearchQuery("");
   };
 
-  const handleDidDismiss = () => {
-    wasOpen.current = false;
-    handleClose();
-  };
-
   return (
     <Sheet
-      ref={sheet}
+      isOpen={isOpen}
+      onClose={handleClose}
       detents={[0.8]}
       scrollable
-      scrollableOptions={{ scrollingExpandsSheet: false }}
-      onDidDismiss={handleDidDismiss}
       footer={
         <BottomSearchBar
           placeholder="Search problems..."

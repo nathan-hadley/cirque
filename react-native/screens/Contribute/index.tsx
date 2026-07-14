@@ -162,9 +162,8 @@ export default function ContributeScreen() {
   };
 
   return (
-    <View collapsable={false} className="flex-1 bg-background-0">
+    <View className="flex-1 bg-background-0">
       <KeyboardAvoidingView
-        collapsable={false}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         className="flex-1"
       >
@@ -360,7 +359,6 @@ export default function ContributeScreen() {
         </ScrollView>
       </KeyboardAvoidingView>
       <GlassSurface
-        variant="statusBar"
         style={{
           position: "absolute",
           top: 0,

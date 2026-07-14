@@ -7,23 +7,18 @@ import { useColorScheme } from "nativewind";
 export { isLiquidGlassAvailable };
 
 type GlassSurfaceProps = {
-  variant?: "chrome" | "statusBar" | "control";
+  /** Floating controls react to touch and sit higher than passive backdrops. */
+  interactive?: boolean;
   style?: StyleProp<ViewStyle>;
-  className?: string;
   children?: ReactNode;
 };
 
-export function GlassSurface({
-  variant = "chrome",
-  style,
-  className,
-  children,
-}: GlassSurfaceProps) {
+export function GlassSurface({ interactive = false, style, children }: GlassSurfaceProps) {
   const { colorScheme } = useColorScheme();
 
   if (isLiquidGlassAvailable()) {
     return (
-      <GlassView style={style} glassEffectStyle="regular" isInteractive={variant === "control"}>
+      <GlassView style={style} glassEffectStyle="regular" isInteractive={interactive}>
         {children}
       </GlassView>
     );
@@ -42,10 +37,7 @@ export function GlassSurface({
   }
 
   return (
-    <View
-      className={`bg-background-0 ${className ?? ""}`}
-      style={[{ elevation: variant === "control" ? 6 : 3 }, style]}
-    >
+    <View className="bg-background-0" style={[{ elevation: interactive ? 6 : 3 }, style]}>
       {children}
     </View>
   );

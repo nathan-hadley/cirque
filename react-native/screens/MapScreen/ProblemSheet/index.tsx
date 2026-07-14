@@ -1,5 +1,4 @@
-import { useEffect, useRef } from "react";
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { MapPinIcon } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { CircuitNavButtons } from "@/components/buttons/CircuitNavButtons";
@@ -7,7 +6,7 @@ import { Topo } from "@/components/Topo";
 import { Heading } from "@/components/ui/heading";
 import { HStack } from "@/components/ui/hstack";
 import { Icon } from "@/components/ui/icon";
-import { Sheet, type SheetRef } from "@/components/ui/sheet";
+import { Sheet } from "@/components/ui/sheet";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import { topoImageUrl } from "@/constants/api";
@@ -54,42 +53,26 @@ function ProblemDescription({ problem }: { problem: Problem }) {
 }
 
 export function ProblemSheet({ problem, isOpen, onClose }: ProblemSheetProps) {
-  const sheet = useRef<SheetRef>(null);
-  const wasOpen = useRef(false);
-
-  useEffect(() => {
-    if (isOpen && problem) {
-      wasOpen.current = true;
-      sheet.current?.present().catch((e: unknown) => console.error("Sheet present failed", e));
-    } else if (wasOpen.current) {
-      wasOpen.current = false;
-      sheet.current?.dismiss().catch((e: unknown) => console.error("Sheet dismiss failed", e));
-    }
-  }, [isOpen, problem]);
-
-  function handleDidDismiss() {
-    wasOpen.current = false;
-    onClose();
-  }
-
   if (!problem) return null;
 
   return (
-    <Sheet ref={sheet} detents={[0.5, 1]} dimmed={false} scrollable onDidDismiss={handleDidDismiss}>
-      <View className="w-full aspect-[4/3] overflow-hidden bg-typography-300 relative">
-        <Topo
-          topo={problem.topo || ""}
-          remoteUri={topoImageUrl(problem.topoKey, "full")}
-          line={problem.line}
-          color={problem.color}
-        />
-        {problem.order !== undefined && (
-          <View className="absolute inset-0 justify-center">
-            <CircuitNavButtons />
-          </View>
-        )}
-      </View>
-      <ProblemDescription problem={problem} />
+    <Sheet isOpen={isOpen} onClose={onClose} detents={[0.5, 1]} dimmed={false} scrollable>
+      <ScrollView>
+        <View className="w-full aspect-[4/3] overflow-hidden bg-typography-300 relative">
+          <Topo
+            topo={problem.topo || ""}
+            remoteUri={topoImageUrl(problem.topoKey, "full")}
+            line={problem.line}
+            color={problem.color}
+          />
+          {problem.order !== undefined && (
+            <View className="absolute inset-0 justify-center">
+              <CircuitNavButtons />
+            </View>
+          )}
+        </View>
+        <ProblemDescription problem={problem} />
+      </ScrollView>
     </Sheet>
   );
 }

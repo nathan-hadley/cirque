@@ -32,7 +32,7 @@ export function MapSearchBar({ onPress }: MapSearchBarProps) {
         elevation: Platform.OS === "android" ? 8 : undefined,
       }}
     >
-      <GlassSurface variant="control" style={{ borderRadius: 999, overflow: "hidden" }}>
+      <GlassSurface interactive style={{ borderRadius: 999, overflow: "hidden" }}>
         <Pressable
           onPress={handlePress}
           testID="open-problem-search"

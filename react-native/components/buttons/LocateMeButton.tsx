@@ -11,7 +11,7 @@ type LocateMeButtonProps = {
 export function LocateMeButton({ onPress }: LocateMeButtonProps) {
   return (
     <GlassSurface
-      variant="control"
+      interactive
       style={{ width: 48, height: 48, borderRadius: 24, overflow: "hidden" }}
     >
       <Pressable
