@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Platform, View } from "react-native";
+import { View } from "react-native";
 import { GlassContainer } from "expo-glass-effect";
 import Mapbox, { Camera, MapView as RNMapboxMapView, UserLocation } from "@rnmapbox/maps";
 import { Feature, GeoJsonProperties, Geometry } from "geojson";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { FilterButton } from "@/components/buttons/FilterButton";
 import { isLiquidGlassAvailable } from "@/components/ui/GlassSurface";
+import { TAB_BAR_HEIGHT } from "@/constants/layout";
 import { INITIAL_CENTER, INITIAL_ZOOM, MAPBOX_ACCESS_TOKEN, STYLE_URI } from "@/constants/map";
 import { mapProblemService } from "@/services/mapProblemService";
 import { useMapStore } from "@/stores/mapStore";
@@ -107,10 +108,7 @@ export function MapScreen() {
 
       <MapSearchBar onPress={() => setIsSearchVisible(true)} />
 
-      <View
-        className="absolute right-4"
-        style={{ bottom: insets.bottom + (Platform.OS === "android" ? 96 : 16) }}
-      >
+      <View className="absolute right-4" style={{ bottom: insets.bottom + TAB_BAR_HEIGHT + 16 }}>
         {isLiquidGlassAvailable() ? (
           <GlassContainer spacing={12} style={{ gap: 12 }}>
             <FilterButton onPress={() => setIsFilterVisible(true)} />

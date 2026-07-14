@@ -11,6 +11,7 @@ import { Input, InputField } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
+import { TAB_BAR_HEIGHT } from "@/constants/layout";
 import { useSimpleToast } from "@/hooks/useSimpleToast";
 import { useSubmitProblem } from "@/hooks/useSubmitProblem";
 import { generateId } from "@/services/sync/offlineQueueService";
@@ -355,7 +356,7 @@ export default function ContributeScreen() {
               )}
             </Button>
           </VStack>
-          <View style={{ height: insets.bottom }} />
+          <View style={{ height: insets.bottom + TAB_BAR_HEIGHT }} />
         </ScrollView>
       </KeyboardAvoidingView>
       <GlassSurface
