@@ -33,8 +33,11 @@ name: Circuit entry, navigation, and map tap
 - extendedWaitUntil:
     notVisible: "Cube Crack"
     timeout: 8000
+# Reopen by tapping the marker. flyToProblemCoordinates centers the selected
+# problem with paddingBottom = 40% of screen height, which lands its marker at
+# ~30% down (not 24%).
 - tapOn:
-    point: "50%, 24%"
+    point: "50%, 30%"
 - extendedWaitUntil:
     visible: "Cube Crack"
     timeout: 8000
