@@ -3,8 +3,7 @@
 import { CirqueData } from "@/stores/dataStore";
 
 export function leavenworthAreas(data: CirqueData): string[] {
-  return data.subareaCenters.features
-    .map(f => f.properties?.name)
+  return [...new Set(data.subareaCenters.features.map(f => f.properties?.name))]
     .filter((name): name is string => typeof name === "string")
     .sort();
 }

@@ -7,12 +7,13 @@ type CircuitCardProps = {
   title: string;
   difficulty: string;
   color: string;
+  testID?: string;
   onPress?: () => void;
 };
 
-export function CircuitCard({ title, difficulty, color, onPress }: CircuitCardProps) {
+export function CircuitCard({ title, difficulty, color, testID, onPress }: CircuitCardProps) {
   return (
-    <Pressable onPress={onPress}>
+    <Pressable testID={testID} onPress={onPress}>
       <VStack className={`p-4 rounded-xl border-2 ${color}`} space="xs">
         <Text className="font-semibold text-typography-900">{title}</Text>
         <Text className="text-sm text-typography-600">{difficulty}</Text>
