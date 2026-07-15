@@ -1,4 +1,4 @@
-import { ScrollView, View } from "react-native";
+import { View } from "react-native";
 import { MapPinIcon } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { CircuitNavButtons } from "@/components/buttons/CircuitNavButtons";
@@ -55,24 +55,26 @@ function ProblemDescription({ problem }: { problem: Problem }) {
 export function ProblemSheet({ problem, isOpen, onClose }: ProblemSheetProps) {
   if (!problem) return null;
 
+  // Content is intentionally not scrollable: a scroll view inside the sheet
+  // eats the downward drag-to-dismiss when the topo image has loaded (tall
+  // content), so dismissal becomes dependent on image load state. The `large`
+  // detent gives descriptions room; the old app likewise did not scroll them.
   return (
-    <Sheet isOpen={isOpen} onClose={onClose} detents={[0.5, 1]} dimmed={false} scrollable>
-      <ScrollView>
-        <View className="w-full aspect-[4/3] overflow-hidden bg-typography-300 relative">
-          <Topo
-            topo={problem.topo || ""}
-            remoteUri={topoImageUrl(problem.topoKey, "full")}
-            line={problem.line}
-            color={problem.color}
-          />
-          {problem.order !== undefined && (
-            <View className="absolute inset-0 justify-center">
-              <CircuitNavButtons />
-            </View>
-          )}
-        </View>
-        <ProblemDescription problem={problem} />
-      </ScrollView>
+    <Sheet isOpen={isOpen} onClose={onClose} detents={[0.5, 1]} dimmed={false}>
+      <View className="w-full aspect-[4/3] overflow-hidden bg-typography-300 relative">
+        <Topo
+          topo={problem.topo || ""}
+          remoteUri={topoImageUrl(problem.topoKey, "full")}
+          line={problem.line}
+          color={problem.color}
+        />
+        {problem.order !== undefined && (
+          <View className="absolute inset-0 justify-center">
+            <CircuitNavButtons />
+          </View>
+        )}
+      </View>
+      <ProblemDescription problem={problem} />
     </Sheet>
   );
 }

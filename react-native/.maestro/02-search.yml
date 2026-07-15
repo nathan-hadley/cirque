@@ -10,6 +10,10 @@ name: Search and open a problem
 - inputText: "The Shallow"
 - tapOn:
     id: problem-search-result-80faa6a3-b46a-5bff-8c77-1887c4712264
-- assertVisible: "The Shallow"
+# The problem detail is a native sheet; allow its present animation to finish
+# before asserting rather than racing it.
+- extendedWaitUntil:
+    visible: "The Shallow"
+    timeout: 10000
 - assertVisible: "V0"
 - assertVisible: "#1"
