@@ -51,7 +51,7 @@ export default function GradeFilterSheet({ isOpen, onClose }: GradeFilterSheetPr
           closeButtonTestID="close-grade-filter"
         />
 
-        <VStack space="lg" className="pb-6">
+        <VStack space="lg" className="px-6 pb-6">
           <HStack className="justify-between items-center">
             <Text size="lg" className="font-semibold">
               {numberToGrade(localMinGrade)} - {numberToGrade(localMaxGrade)}
