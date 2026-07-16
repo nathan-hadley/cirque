@@ -52,6 +52,11 @@ Two-tier search system:
 - TypeScript with strict typing
 - Functional components with hooks
 - File paths use @ alias for absolute imports
+- **A fix that needs a paragraph to justify itself is the wrong fix.** If a
+  change requires a long comment explaining why it's safe or necessary, that's a
+  signal it's a workaround papering over a root cause. Find the fix that's
+  self-evident and delete the explanation. A one-line note on a genuine
+  constraint is fine; a paragraph defending a timing hack is not.
 
 ## Pull Request Workflow
 
