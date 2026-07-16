@@ -1,14 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import {
-  Actionsheet,
-  ActionsheetBackdrop,
-  ActionsheetContent,
-  ActionsheetHeader,
-} from "@/components/ui/actionsheet";
 import { Button, ButtonText } from "@/components/ui/button";
 import { HStack } from "@/components/ui/hstack";
+import { Sheet, SheetHeader } from "@/components/ui/sheet";
 import { Slider, SliderThumb, SliderTrack } from "@/components/ui/slider";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
@@ -24,8 +18,6 @@ type GradeFilterSheetProps = {
 
 export default function GradeFilterSheet({ isOpen, onClose }: GradeFilterSheetProps) {
   const { minGrade, maxGrade } = useProblemStore();
-  const { bottom } = useSafeAreaInsets();
-
   const [localMinGrade, setLocalMinGrade] = useState(minGrade);
   const [localMaxGrade, setLocalMaxGrade] = useState(maxGrade);
 
@@ -51,65 +43,61 @@ export default function GradeFilterSheet({ isOpen, onClose }: GradeFilterSheetPr
   }
 
   return (
-    <Actionsheet isOpen={isOpen} onClose={handleClose}>
-      <ActionsheetBackdrop />
-      <ActionsheetContent style={{ paddingBottom: bottom + 16 }}>
-        <VStack className="w-full">
-          {/* Header */}
-          <ActionsheetHeader
-            title="Adjust grade range"
-            onClose={handleClose}
-            closeButtonTestID="close-grade-filter"
-          />
+    <Sheet isOpen={isOpen} onClose={handleClose} detents={["auto"]}>
+      <VStack className="w-full pb-4">
+        <SheetHeader
+          title="Adjust grade range"
+          onClose={handleClose}
+          closeButtonTestID="close-grade-filter"
+        />
 
-          <VStack space="lg" className="pb-6">
-            <HStack className="justify-between items-center">
-              <Text size="lg" className="font-semibold">
-                {numberToGrade(localMinGrade)} - {numberToGrade(localMaxGrade)}
-              </Text>
-              <Button onPress={handleReset} variant="outline" size="sm">
-                <ButtonText>Reset</ButtonText>
-              </Button>
-            </HStack>
+        <VStack space="lg" className="px-6 pb-6">
+          <HStack className="justify-between items-center">
+            <Text size="lg" className="font-semibold">
+              {numberToGrade(localMinGrade)} - {numberToGrade(localMaxGrade)}
+            </Text>
+            <Button onPress={handleReset} variant="outline" size="sm">
+              <ButtonText>Reset</ButtonText>
+            </Button>
+          </HStack>
 
-            <HStack space="2xl" className="items-center">
-              <Text size="lg">V0</Text>
-              <View className="flex-1 relative h-8">
-                {/* Min slider */}
-                <View className="absolute inset-0">
-                  <Slider
-                    value={localMinGrade}
-                    onChange={handleMinGradeChange}
-                    minValue={0}
-                    maxValue={10}
-                    size="lg"
-                    className="flex-1"
-                  >
-                    <SliderTrack />
-                    <SliderThumb hitSlop={15} />
-                  </Slider>
-                </View>
-
-                {/* Max slider - transparent track */}
-                <View className="absolute inset-0">
-                  <Slider
-                    value={localMaxGrade}
-                    onChange={handleMaxGradeChange}
-                    minValue={0}
-                    maxValue={10}
-                    size="lg"
-                    className="flex-1"
-                  >
-                    <SliderTrack className="bg-transparent" />
-                    <SliderThumb hitSlop={15} />
-                  </Slider>
-                </View>
+          <HStack space="2xl" className="items-center">
+            <Text size="lg">V0</Text>
+            <View className="flex-1 relative h-8">
+              {/* Min slider */}
+              <View className="absolute inset-0">
+                <Slider
+                  value={localMinGrade}
+                  onChange={handleMinGradeChange}
+                  minValue={0}
+                  maxValue={10}
+                  size="lg"
+                  className="flex-1"
+                >
+                  <SliderTrack />
+                  <SliderThumb hitSlop={15} />
+                </Slider>
               </View>
-              <Text size="lg">V10</Text>
-            </HStack>
-          </VStack>
+
+              {/* Max slider - transparent track */}
+              <View className="absolute inset-0">
+                <Slider
+                  value={localMaxGrade}
+                  onChange={handleMaxGradeChange}
+                  minValue={0}
+                  maxValue={10}
+                  size="lg"
+                  className="flex-1"
+                >
+                  <SliderTrack className="bg-transparent" />
+                  <SliderThumb hitSlop={15} />
+                </Slider>
+              </View>
+            </View>
+            <Text size="lg">V10</Text>
+          </HStack>
         </VStack>
-      </ActionsheetContent>
-    </Actionsheet>
+      </VStack>
+    </Sheet>
   );
 }

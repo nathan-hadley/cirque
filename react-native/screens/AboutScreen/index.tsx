@@ -1,15 +1,15 @@
-import { Platform, ScrollView, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { router } from "expo-router";
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { CircleIcon } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import BlurBackground from "@/components/BlurBackground";
 import { Divider } from "@/components/ui/divider";
+import { GlassSurface } from "@/components/ui/GlassSurface";
 import { Heading } from "@/components/ui/heading";
 import { HStack } from "@/components/ui/hstack";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
+import { TAB_BAR_HEIGHT } from "@/constants/layout";
 import { useOfflineMaps } from "@/hooks/useOfflineMaps";
 import { useSimpleToast } from "@/hooks/useSimpleToast";
 import { useTopoDownload } from "@/hooks/useTopoDownload";
@@ -26,7 +26,6 @@ export default function AboutScreen() {
   const topoDownload = useTopoDownload();
   const showToast = useSimpleToast();
   const insets = useSafeAreaInsets();
-  const tabBarHeight = useBottomTabBarHeight();
 
   const circuits = [
     {
@@ -131,7 +130,6 @@ export default function AboutScreen() {
 
   return (
     <View className="flex-1 bg-background-0">
-      <BlurBackground position="statusBar" />
       <ScrollView
         className="flex-1"
         showsVerticalScrollIndicator={false}
@@ -211,8 +209,18 @@ export default function AboutScreen() {
 
           <ContributingSection />
         </View>
-        <View style={{ height: Platform.OS === "ios" ? tabBarHeight : 16 }} />
+        <View style={{ height: insets.bottom + TAB_BAR_HEIGHT }} />
       </ScrollView>
+      <GlassSurface
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: insets.top + 1,
+          zIndex: 1,
+        }}
+      />
     </View>
   );
 }

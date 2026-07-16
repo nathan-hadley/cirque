@@ -1,25 +1,21 @@
-import React from "react";
-import { Platform, View } from "react-native";
+import { View } from "react-native";
 import { MapPinIcon } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { CircuitNavButtons } from "@/components/buttons/CircuitNavButtons";
 import { Topo } from "@/components/Topo";
-import {
-  Actionsheet,
-  ActionsheetContent,
-  ActionsheetDragIndicatorWrapper,
-  ActionsheetScrollView,
-} from "@/components/ui/actionsheet";
 import { Heading } from "@/components/ui/heading";
 import { HStack } from "@/components/ui/hstack";
 import { Icon } from "@/components/ui/icon";
+import { Sheet } from "@/components/ui/sheet";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import { topoImageUrl } from "@/constants/api";
 import { Problem } from "@/models/problems";
 
-type ProblemSheetProps = React.ComponentProps<typeof Actionsheet> & {
+type ProblemSheetProps = {
   problem: Problem | null;
+  isOpen: boolean;
+  onClose: () => void;
 };
 
 function ProblemDescription({ problem }: { problem: Problem }) {
@@ -56,14 +52,14 @@ function ProblemDescription({ problem }: { problem: Problem }) {
   );
 }
 
-export function ProblemSheet({ problem, ...props }: ProblemSheetProps) {
-  if (!problem) return null;
-
+export function ProblemSheet({ problem, isOpen, onClose }: ProblemSheetProps) {
+  // Stay mounted (returning null remounts + presents before layout). No
+  // ScrollView here: it captures the drag-to-dismiss gesture.
   return (
-    <Actionsheet className="gap-1" {...props}>
-      <ActionsheetContent className="p-0">
-        <ActionsheetDragIndicatorWrapper className="pt-0">
-          <View className="w-full aspect-[4/3] rounded-t-3xl overflow-hidden bg-typography-300 relative">
+    <Sheet isOpen={isOpen} onClose={onClose} detents={[0.5, 1]} dimmed={false}>
+      {problem && (
+        <>
+          <View className="w-full aspect-[4/3] overflow-hidden bg-typography-300 relative">
             <Topo
               topo={problem.topo || ""}
               remoteUri={topoImageUrl(problem.topoKey, "full")}
@@ -76,17 +72,9 @@ export function ProblemSheet({ problem, ...props }: ProblemSheetProps) {
               </View>
             )}
           </View>
-        </ActionsheetDragIndicatorWrapper>
-        {/* The ScrollView doesn't work well on Android,
-        so we are letting the Actionsheet resize itself. */}
-        {Platform.OS === "ios" ? (
-          <ActionsheetScrollView showsVerticalScrollIndicator={true}>
-            <ProblemDescription problem={problem} />
-          </ActionsheetScrollView>
-        ) : (
           <ProblemDescription problem={problem} />
-        )}
-      </ActionsheetContent>
-    </Actionsheet>
+        </>
+      )}
+    </Sheet>
   );
 }

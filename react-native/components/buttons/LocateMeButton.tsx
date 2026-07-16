@@ -1,22 +1,29 @@
 import React from "react";
+import { Pressable } from "react-native";
 import { CompassIcon } from "lucide-react-native";
-import { Button, ButtonIcon } from "../ui/button";
+import { GlassSurface } from "@/components/ui/GlassSurface";
+import { Icon } from "../ui/icon";
 
 type LocateMeButtonProps = {
   onPress: () => void;
-  className?: string;
-  style?: object;
 };
 
-export function LocateMeButton({ onPress, className, style }: LocateMeButtonProps) {
+export function LocateMeButton({ onPress }: LocateMeButtonProps) {
   return (
-    <Button
-      onPress={onPress}
-      className={`w-12 h-12 rounded-full shadow-md ${className}`}
-      style={style}
-      action="secondary"
+    <GlassSurface
+      interactive
+      style={{ width: 48, height: 48, borderRadius: 24, overflow: "hidden" }}
     >
-      <ButtonIcon as={CompassIcon} size="lg" />
-    </Button>
+      <Pressable
+        onPress={onPress}
+        android_ripple={{ borderless: true, radius: 24 }}
+        testID="locate-me"
+        accessibilityRole="button"
+        accessibilityLabel="Center map on my location"
+        className="flex-1 items-center justify-center"
+      >
+        <Icon as={CompassIcon} size="xl" />
+      </Pressable>
+    </GlassSurface>
   );
 }

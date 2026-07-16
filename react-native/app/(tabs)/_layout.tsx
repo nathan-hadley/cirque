@@ -1,57 +1,32 @@
-import React from "react";
-import { Platform } from "react-native";
-import { Tabs } from "expo-router";
-import { Info, Map, PlusCircle } from "lucide-react-native";
-import BlurBackground from "@/components/BlurBackground";
-import { HapticTab } from "@/components/HapticTab";
-import { Icon } from "@/components/ui/icon";
+import { Icon, Label, NativeTabs, VectorIcon } from "expo-router/unstable-native-tabs";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 export default function TabLayout() {
   return (
-    <Tabs
-      screenOptions={{
-        headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: () => <BlurBackground position="tabBar" />,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: "absolute",
-          },
-          default: {},
-        }),
-      }}
-    >
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: "Map",
-          tabBarIcon: ({ focused }) => (
-            <Icon className={`${focused ? "text-blue-500" : "text-typography-500"}`} as={Map} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="about"
-        options={{
-          title: "About",
-          tabBarIcon: ({ focused }) => (
-            <Icon className={`${focused ? "text-blue-500" : "text-typography-500"}`} as={Info} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="contribute"
-        options={{
-          title: "Contribute",
-          tabBarIcon: ({ focused }) => (
-            <Icon
-              className={`${focused ? "text-blue-500" : "text-typography-500"}`}
-              as={PlusCircle}
-            />
-          ),
-        }}
-      />
-    </Tabs>
+    <NativeTabs minimizeBehavior="onScrollDown">
+      <NativeTabs.Trigger name="index">
+        <Icon
+          sf={{ default: "map", selected: "map.fill" }}
+          androidSrc={<VectorIcon family={MaterialIcons} name="map" />}
+        />
+        <Label>Map</Label>
+      </NativeTabs.Trigger>
+
+      <NativeTabs.Trigger name="about">
+        <Icon
+          sf={{ default: "info.circle", selected: "info.circle.fill" }}
+          androidSrc={<VectorIcon family={MaterialIcons} name="info" />}
+        />
+        <Label>About</Label>
+      </NativeTabs.Trigger>
+
+      <NativeTabs.Trigger name="contribute">
+        <Icon
+          sf={{ default: "plus.circle", selected: "plus.circle.fill" }}
+          androidSrc={<VectorIcon family={MaterialIcons} name="add-circle" />}
+        />
+        <Label>Contribute</Label>
+      </NativeTabs.Trigger>
+    </NativeTabs>
   );
 }

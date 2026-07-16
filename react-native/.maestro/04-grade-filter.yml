@@ -3,6 +3,11 @@ name: Reset and close the grade filter
 ---
 - launchApp:
     clearState: true
+# clearState forces a cold cloud-data reload; wait for the map chrome to be
+# ready before the first interaction instead of racing it.
+- extendedWaitUntil:
+    visible: "Search problems..."
+    timeout: 120000
 - tapOn:
     id: open-grade-filter
 - assertVisible: "Adjust grade range"

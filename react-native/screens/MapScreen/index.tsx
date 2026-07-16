@@ -1,9 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Platform, View } from "react-native";
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import { View } from "react-native";
+import { GlassContainer } from "expo-glass-effect";
 import Mapbox, { Camera, MapView as RNMapboxMapView, UserLocation } from "@rnmapbox/maps";
 import { Feature, GeoJsonProperties, Geometry } from "geojson";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { FilterButton } from "@/components/buttons/FilterButton";
+import { isLiquidGlassAvailable } from "@/components/ui/GlassSurface";
+import { TAB_BAR_HEIGHT } from "@/constants/layout";
 import { INITIAL_CENTER, INITIAL_ZOOM, MAPBOX_ACCESS_TOKEN, STYLE_URI } from "@/constants/map";
 import { mapProblemService } from "@/services/mapProblemService";
 import { useMapStore } from "@/stores/mapStore";
@@ -41,9 +44,7 @@ export function MapScreen() {
 
   const mapRef = useRef<RNMapboxMapView>(null);
   const cameraRef = useRef<Camera>(null);
-
-  const tabBarHeight = useBottomTabBarHeight();
-  const bottomOffset = Platform.OS === "ios" ? tabBarHeight : 0;
+  const insets = useSafeAreaInsets();
 
   // Set refs in the store when they're created
   useEffect(() => {
@@ -107,26 +108,24 @@ export function MapScreen() {
 
       <MapSearchBar onPress={() => setIsSearchVisible(true)} />
 
-      <FilterButton
-        testID="open-grade-filter"
-        accessibilityLabel="Adjust grade filter"
-        onPress={() => setIsFilterVisible(true)}
-        className="absolute right-4"
-        style={{ bottom: bottomOffset + 72 }}
-      />
-
-      <LocateMeButton
-        onPress={centerToUserLocation}
-        className="absolute right-4"
-        style={{ bottom: bottomOffset + 16 }}
-      />
+      <View className="absolute right-4" style={{ bottom: insets.bottom + TAB_BAR_HEIGHT + 16 }}>
+        {isLiquidGlassAvailable() ? (
+          <GlassContainer spacing={12} style={{ gap: 12 }}>
+            <FilterButton onPress={() => setIsFilterVisible(true)} />
+            <LocateMeButton onPress={centerToUserLocation} />
+          </GlassContainer>
+        ) : (
+          <View style={{ gap: 12 }}>
+            <FilterButton onPress={() => setIsFilterVisible(true)} />
+            <LocateMeButton onPress={centerToUserLocation} />
+          </View>
+        )}
+      </View>
 
       <ProblemSheet
         problem={problem}
         isOpen={viewProblem && problem !== null}
         onClose={() => setViewProblem(false)}
-        closeOnOverlayClick={false}
-        snapPoints={Platform.OS === "ios" ? [50] : undefined}
       />
 
       <SearchOverlay isVisible={isSearchVisible} onClose={() => setIsSearchVisible(false)} />

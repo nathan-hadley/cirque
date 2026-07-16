@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { ChevronDown, MapPin } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import BlurBackground from "@/components/BlurBackground";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
 import { Divider } from "@/components/ui/divider";
+import { GlassSurface } from "@/components/ui/GlassSurface";
 import { Heading } from "@/components/ui/heading";
 import { HStack } from "@/components/ui/hstack";
 import { Input, InputField } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
+import { TAB_BAR_HEIGHT } from "@/constants/layout";
 import { useSimpleToast } from "@/hooks/useSimpleToast";
 import { useSubmitProblem } from "@/hooks/useSubmitProblem";
 import { generateId } from "@/services/sync/offlineQueueService";
@@ -27,7 +27,6 @@ import { FieldError, FieldName, getVisibleErrors, validateForm } from "./validat
 
 export default function ContributeScreen() {
   const insets = useSafeAreaInsets();
-  const tabBarHeight = useBottomTabBarHeight();
   const showToast = useSimpleToast();
   const submitMutation = useSubmitProblem();
   const queueCount = useQueueStore(state => state.count);
@@ -168,7 +167,6 @@ export default function ContributeScreen() {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         className="flex-1"
       >
-        <BlurBackground position="statusBar" />
         <ScrollView
           className="flex-1"
           showsVerticalScrollIndicator={false}
@@ -357,9 +355,19 @@ export default function ContributeScreen() {
               )}
             </Button>
           </VStack>
-          <View style={{ height: Platform.OS === "ios" ? tabBarHeight : 16 }} />
+          <View style={{ height: insets.bottom + TAB_BAR_HEIGHT }} />
         </ScrollView>
       </KeyboardAvoidingView>
+      <GlassSurface
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: insets.top + 1,
+          zIndex: 1,
+        }}
+      />
 
       <GradePicker isOpen={isGradeOpen} onClose={handleGradeSelect} currentGrade={grade} />
       <AreaPicker

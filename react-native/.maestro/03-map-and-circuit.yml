@@ -6,7 +6,10 @@ name: Circuit entry, navigation, and map tap
 - tapOn: "About"
 - tapOn:
     id: circuit-card-forestland-black
-- assertVisible: "The Shallow"
+# The problem detail is a native sheet; allow its present animation to finish.
+- extendedWaitUntil:
+    visible: "The Shallow"
+    timeout: 10000
 # Circuit navigation via the prev/next buttons
 - tapOn:
     id: circuit-next-problem
@@ -19,11 +22,22 @@ name: Circuit entry, navigation, and map tap
 - assertVisible: "Cube Crack"
 # Navigate by tapping the map instead of the buttons: dismiss the sheet, then
 # tap the centered problem's marker to reopen it. Cube Crack is centered here.
+#
+# The sheet is a native bottom sheet dismissed by dragging its body below the
+# smallest detent. Wait for the dismiss animation rather than asserting
+# immediately.
 - swipe:
-    start: "50%, 65%"
-    end: "50%, 95%"
-    duration: 500
-- assertNotVisible: "Cube Crack"
+    start: "50%, 60%"
+    end: "50%, 98%"
+    duration: 300
+- extendedWaitUntil:
+    notVisible: "Cube Crack"
+    timeout: 8000
+# Reopen by tapping the marker. flyToProblemCoordinates centers the selected
+# problem with paddingBottom = 40% of screen height, which lands its marker at
+# ~30% down (not 24%).
 - tapOn:
-    point: "50%, 24%"
-- assertVisible: "Cube Crack"
+    point: "50%, 30%"
+- extendedWaitUntil:
+    visible: "Cube Crack"
+    timeout: 8000

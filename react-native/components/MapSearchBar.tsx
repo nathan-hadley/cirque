@@ -2,6 +2,7 @@ import React from "react";
 import { Platform, Pressable, View } from "react-native";
 import { Search } from "lucide-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { GlassSurface } from "@/components/ui/GlassSurface";
 import { Input, InputField, InputIcon } from "@/components/ui/input";
 import { useProblemStore } from "@/stores/problemStore";
 
@@ -31,22 +32,24 @@ export function MapSearchBar({ onPress }: MapSearchBarProps) {
         elevation: Platform.OS === "android" ? 8 : undefined,
       }}
     >
-      <Pressable
-        onPress={handlePress}
-        testID="open-problem-search"
-        accessibilityLabel="Open problem search"
-        className="flex-1"
-      >
-        <Input className="bg-typography-100" variant="rounded" size="lg" pointerEvents="none">
-          <InputIcon as={Search} className="ml-3" />
-          <InputField
-            placeholder="Search problems..."
-            editable={false}
-            className="text-typography-600"
-            pointerEvents="none"
-          />
-        </Input>
-      </Pressable>
+      <GlassSurface interactive style={{ borderRadius: 999, overflow: "hidden" }}>
+        <Pressable
+          onPress={handlePress}
+          testID="open-problem-search"
+          accessibilityLabel="Open problem search"
+          className="flex-1"
+        >
+          <Input variant="rounded" size="lg" pointerEvents="none">
+            <InputIcon as={Search} className="ml-3" />
+            <InputField
+              placeholder="Search problems..."
+              editable={false}
+              className="text-typography-600"
+              pointerEvents="none"
+            />
+          </Input>
+        </Pressable>
+      </GlassSurface>
     </View>
   );
 }

@@ -2,12 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 import { useColorScheme } from "nativewind";
 import WheelPicker from "react-native-wheely";
-import {
-  Actionsheet,
-  ActionsheetBackdrop,
-  ActionsheetContent,
-  ActionsheetHeader,
-} from "@/components/ui/actionsheet";
+import { Sheet, SheetHeader } from "@/components/ui/sheet";
 import { GRADES } from "@/models/problems";
 
 type GradePickerProps = {
@@ -24,12 +19,11 @@ export default function GradePicker({ isOpen, onClose, currentGrade }: GradePick
   const gradeRef = useRef<number>(DEFAULT_INDEX);
 
   useEffect(() => {
-    if (isOpen && currentGrade) {
-      const index = GRADES.indexOf(currentGrade);
-      if (index >= 0) {
-        setSelectedIndex(index);
-        gradeRef.current = index;
-      }
+    if (!isOpen || !currentGrade) return;
+    const index = GRADES.indexOf(currentGrade);
+    if (index >= 0) {
+      setSelectedIndex(index);
+      gradeRef.current = index;
     }
   }, [isOpen, currentGrade]);
 
@@ -43,27 +37,24 @@ export default function GradePicker({ isOpen, onClose, currentGrade }: GradePick
   }
 
   return (
-    <Actionsheet isOpen={isOpen} onClose={handleClose}>
-      <ActionsheetBackdrop />
-      <ActionsheetContent>
-        <ActionsheetHeader
-          title="Select grade"
-          onClose={handleClose}
-          closeButtonTestID="close-grade-picker"
+    <Sheet isOpen={isOpen} onClose={handleClose} detents={["auto"]}>
+      <SheetHeader
+        title="Select grade"
+        onClose={handleClose}
+        closeButtonTestID="close-grade-picker"
+      />
+      <View className="pb-6">
+        <WheelPicker
+          selectedIndex={selectedIndex}
+          options={GRADES}
+          onChange={handleSelect}
+          itemHeight={40}
+          itemTextStyle={{ color: colorScheme === "dark" ? "#FFFFFF" : undefined }}
+          selectedIndicatorStyle={{
+            backgroundColor: colorScheme === "dark" ? "#374151" : undefined,
+          }}
         />
-        <View className="pb-6">
-          <WheelPicker
-            selectedIndex={selectedIndex}
-            options={GRADES}
-            onChange={handleSelect}
-            itemHeight={40}
-            itemTextStyle={{ color: colorScheme === "dark" ? "#FFFFFF" : undefined }}
-            selectedIndicatorStyle={{
-              backgroundColor: colorScheme === "dark" ? "#374151" : undefined,
-            }}
-          />
-        </View>
-      </ActionsheetContent>
-    </Actionsheet>
+      </View>
+    </Sheet>
   );
 }
