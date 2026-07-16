@@ -21,7 +21,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   android: {
     softwareKeyboardLayoutMode: "pan",
-    predictiveBackGestureEnabled: true,
     package: IS_DEV ? "com.nathanhadley.Cirque.dev" : "com.nathanhadley.Cirque",
     adaptiveIcon: {
       foregroundImage: "./assets/images/icon.png",

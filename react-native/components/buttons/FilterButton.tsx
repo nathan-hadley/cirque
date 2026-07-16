@@ -17,6 +17,7 @@ export function FilterButton({ onPress }: FilterButtonProps) {
         onPress={onPress}
         android_ripple={{ borderless: true, radius: 24 }}
         testID="open-grade-filter"
+        accessibilityRole="button"
         accessibilityLabel="Adjust grade filter"
         className="flex-1 items-center justify-center"
       >

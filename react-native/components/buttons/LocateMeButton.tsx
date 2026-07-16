@@ -17,6 +17,9 @@ export function LocateMeButton({ onPress }: LocateMeButtonProps) {
       <Pressable
         onPress={onPress}
         android_ripple={{ borderless: true, radius: 24 }}
+        testID="locate-me"
+        accessibilityRole="button"
+        accessibilityLabel="Center map on my location"
         className="flex-1 items-center justify-center"
       >
         <Icon as={CompassIcon} size="xl" />

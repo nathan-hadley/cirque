@@ -15,3 +15,6 @@
 .DS_Store
 .wrangler/
 node_modules/
+
+# Local scratch (design docs, notes) — not committed
+.tmp/

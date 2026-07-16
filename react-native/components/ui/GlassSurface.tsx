@@ -37,7 +37,7 @@ export function GlassSurface({ interactive = false, style, children }: GlassSurf
   }
 
   return (
-    <View className="bg-background-0" style={[{ elevation: interactive ? 6 : 3 }, style]}>
+    <View className="bg-background-0" style={[{ elevation: interactive ? 6 : 0 }, style]}>
       {children}
     </View>
   );

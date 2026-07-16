@@ -53,9 +53,8 @@ function ProblemDescription({ problem }: { problem: Problem }) {
 }
 
 export function ProblemSheet({ problem, isOpen, onClose }: ProblemSheetProps) {
-  // Stay mounted and drive open/close via isOpen; returning null would remount
-  // the sheet on every selection and present it before its content lays out.
-  // No ScrollView: it would capture the drag-to-dismiss gesture.
+  // Stay mounted (returning null remounts + presents before layout). No
+  // ScrollView here: it captures the drag-to-dismiss gesture.
   return (
     <Sheet isOpen={isOpen} onClose={onClose} detents={[0.5, 1]} dimmed={false}>
       {problem && (
