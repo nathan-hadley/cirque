@@ -15,7 +15,7 @@ describe("bundled seed.json", () => {
 
   it("keeps every numeric V grade within the shared filter range", () => {
     const numericGrades = seed.problems.features.flatMap(feature => {
-      const match = feature.properties.grade.match(/^V(\d+)$/);
+      const match = feature.properties.grade?.match(/^V(\d+)$/);
       return match ? [Number(match[1])] : [];
     });
 
