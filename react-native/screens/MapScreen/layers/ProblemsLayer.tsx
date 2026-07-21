@@ -1,5 +1,6 @@
 import { CircleLayer, ShapeSource, SymbolLayer } from "@rnmapbox/maps";
 import { LAYER_IDS, PROBLEM_COLORS, SOURCE_IDS } from "@/constants/map";
+import { MAX_GRADE, MIN_GRADE } from "@/models/problems";
 import { useDataStore } from "@/stores/dataStore";
 import { useProblemStore } from "@/stores/problemStore";
 
@@ -10,7 +11,7 @@ export function ProblemsLayer() {
   const problemsData = useDataStore(s => s.data.problems);
 
   const gradeFilter = (): MapboxFilter => {
-    if (minGrade === 0 && maxGrade === 10) {
+    if (minGrade === MIN_GRADE && maxGrade === MAX_GRADE) {
       return undefined;
     }
 
@@ -25,7 +26,9 @@ export function ProblemsLayer() {
   if (!problemsData) return null;
 
   const layerKey =
-    minGrade === 0 && maxGrade === 10 ? "all-grades" : `filtered-${minGrade}-${maxGrade}`;
+    minGrade === MIN_GRADE && maxGrade === MAX_GRADE
+      ? "all-grades"
+      : `filtered-${minGrade}-${maxGrade}`;
 
   return (
     <ShapeSource key={layerKey} id={`${SOURCE_IDS.problems}-${layerKey}`} shape={problemsData}>
