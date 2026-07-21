@@ -62,15 +62,15 @@ export default function GradeFilterSheet({ isOpen, onClose }: GradeFilterSheetPr
           </HStack>
 
           <HStack space="2xl" className="items-center">
-            <Text size="lg">V0</Text>
+            <Text size="lg">{numberToGrade(MIN_GRADE)}</Text>
             <View className="flex-1 relative h-8">
               {/* Min slider */}
               <View className="absolute inset-0">
                 <Slider
                   value={localMinGrade}
                   onChange={handleMinGradeChange}
-                  minValue={0}
-                  maxValue={10}
+                  minValue={MIN_GRADE}
+                  maxValue={MAX_GRADE}
                   size="lg"
                   className="flex-1"
                 >
@@ -84,8 +84,8 @@ export default function GradeFilterSheet({ isOpen, onClose }: GradeFilterSheetPr
                 <Slider
                   value={localMaxGrade}
                   onChange={handleMaxGradeChange}
-                  minValue={0}
-                  maxValue={10}
+                  minValue={MIN_GRADE}
+                  maxValue={MAX_GRADE}
                   size="lg"
                   className="flex-1"
                 >
@@ -94,7 +94,7 @@ export default function GradeFilterSheet({ isOpen, onClose }: GradeFilterSheetPr
                 </Slider>
               </View>
             </View>
-            <Text size="lg">V10</Text>
+            <Text size="lg">{numberToGrade(MAX_GRADE)}</Text>
           </HStack>
         </VStack>
       </VStack>

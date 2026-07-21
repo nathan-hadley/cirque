@@ -1,4 +1,4 @@
-import { Problem } from "@/models/problems";
+import { MAX_GRADE, MIN_GRADE, Problem } from "@/models/problems";
 
 export type SearchResult = {
   problem: Problem;
@@ -21,7 +21,7 @@ export function searchProblems(
 
   const results: SearchResult[] = [];
   for (const problem of problems) {
-    if (minGrade > 0 || maxGrade < 10) {
+    if (minGrade > MIN_GRADE || maxGrade < MAX_GRADE) {
       if (!problem.grade) continue;
 
       const problemGradeNum = parseInt(problem.grade.replace("V", ""), 10);

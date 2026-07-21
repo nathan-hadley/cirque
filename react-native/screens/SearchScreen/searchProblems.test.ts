@@ -1,4 +1,4 @@
-import { Problem } from "@/models/problems";
+import { MAX_GRADE, Problem } from "@/models/problems";
 import { searchProblems } from "./searchProblems";
 
 const problem = (overrides: Partial<Problem>): Problem => ({
@@ -17,17 +17,17 @@ describe("searchProblems", () => {
   ];
 
   it("returns no results for empty, whitespace-only, or unmatched queries", () => {
-    expect(searchProblems(problems, "", { minGrade: 0, maxGrade: 10 })).toEqual([]);
-    expect(searchProblems(problems, "  ", { minGrade: 0, maxGrade: 10 })).toEqual([]);
-    expect(searchProblems(problems, "missing", { minGrade: 0, maxGrade: 10 })).toEqual([]);
+    expect(searchProblems(problems, "", { minGrade: 0, maxGrade: MAX_GRADE })).toEqual([]);
+    expect(searchProblems(problems, "  ", { minGrade: 0, maxGrade: MAX_GRADE })).toEqual([]);
+    expect(searchProblems(problems, "missing", { minGrade: 0, maxGrade: MAX_GRADE })).toEqual([]);
   });
 
   it("matches case-insensitively by name, then grade, then subarea", () => {
-    expect(searchProblems(problems, " moon ", { minGrade: 0, maxGrade: 10 })).toEqual([
+    expect(searchProblems(problems, " moon ", { minGrade: 0, maxGrade: MAX_GRADE })).toEqual([
       { problem: problems[0], matchType: "name" },
       { problem: problems[2], matchType: "subarea" },
     ]);
-    expect(searchProblems(problems, "v5", { minGrade: 0, maxGrade: 10 })).toEqual([
+    expect(searchProblems(problems, "v5", { minGrade: 0, maxGrade: MAX_GRADE })).toEqual([
       { problem: problems[1], matchType: "grade" },
     ]);
   });
@@ -39,7 +39,7 @@ describe("searchProblems", () => {
       problem({ id: "name", name: "target Three", grade: "V4", subarea: "Elsewhere" }),
     ];
     expect(
-      searchProblems(ranked, "TARGET", { minGrade: 0, maxGrade: 10 }).map(r => r.matchType)
+      searchProblems(ranked, "TARGET", { minGrade: 0, maxGrade: MAX_GRADE }).map(r => r.matchType)
     ).toEqual(["name", "grade", "subarea"]);
     expect(
       searchProblems(problems, "o", { minGrade: 5, maxGrade: 5 }).map(r => r.problem.id)
@@ -52,8 +52,16 @@ describe("searchProblems", () => {
     expect(searchProblems([gradeless], "moon", { minGrade: 1, maxGrade: 5 })).toEqual([]);
   });
 
+  it("keeps V11 problems visible when the upper end of the grade range is selected", () => {
+    const v11 = problem({ id: "v11", name: "The Practitioner", grade: "V11" });
+
+    expect(searchProblems([v11], "practitioner", { minGrade: 1, maxGrade: MAX_GRADE })).toEqual([
+      { problem: v11, matchType: "name" },
+    ]);
+  });
+
   it("caps results at 50", () => {
     const many = Array.from({ length: 51 }, (_, i) => problem({ id: `${i}`, name: "match" }));
-    expect(searchProblems(many, "match", { minGrade: 0, maxGrade: 10 })).toHaveLength(50);
+    expect(searchProblems(many, "match", { minGrade: 0, maxGrade: MAX_GRADE })).toHaveLength(50);
   });
 });
