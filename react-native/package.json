@@ -20,7 +20,11 @@
     "open-problems-excel": "node ../cirque-data/problems/open-problems-excel.js"
   },
   "jest": {
-    "preset": "jest-expo"
+    "preset": "jest-expo",
+    "transformIgnorePatterns": [
+      "/node_modules/(?!(.pnpm|react-native|@react-native|@react-native-community|expo|@expo|@expo-google-fonts|react-navigation|@react-navigation|@sentry/react-native|native-base|p-limit|yocto-queue))",
+      "/node_modules/react-native-reanimated/plugin/"
+    ]
   },
   "dependencies": {
     "@babel/runtime": "^7.28.4",
@@ -60,6 +64,7 @@
     "expo-web-browser": "~15.0.8",
     "lucide-react-native": "^0.510.0",
     "nativewind": "^4.2.1",
+    "p-limit": "^7.3.1",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-native": "0.81.5",
