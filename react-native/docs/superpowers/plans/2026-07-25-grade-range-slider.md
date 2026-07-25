@@ -25,10 +25,12 @@
 All geometry and thumb-selection logic, isolated from React Native so it can be unit-tested with plain Jest (no RN gesture/reanimated mocks needed).
 
 **Files:**
+
 - Create: `react-native/components/rangeSliderMath.ts`
 - Test: `react-native/components/rangeSliderMath.test.ts`
 
 **Interfaces:**
+
 - Consumes: nothing.
 - Produces:
   - `type ThumbKey = "low" | "high"`
@@ -97,9 +99,9 @@ describe("nearestThumb", () => {
 
 describe("resolveActiveThumb", () => {
   it("picks the nearest thumb when the thumbs are apart", () => {
-    expect(
-      resolveActiveThumb({ touchX: 190, lowX: 0, highX: 200, low: 0, high: 10, dx: 0 })
-    ).toBe("high");
+    expect(resolveActiveThumb({ touchX: 190, lowX: 0, highX: 200, low: 0, high: 10, dx: 0 })).toBe(
+      "high"
+    );
   });
   it("is undecided at touch-down when the thumbs overlap", () => {
     expect(
@@ -107,9 +109,9 @@ describe("resolveActiveThumb", () => {
     ).toBeNull();
   });
   it("moves high when overlapped and dragging right", () => {
-    expect(
-      resolveActiveThumb({ touchX: 100, lowX: 100, highX: 100, low: 5, high: 5, dx: 8 })
-    ).toBe("high");
+    expect(resolveActiveThumb({ touchX: 100, lowX: 100, highX: 100, low: 5, high: 5, dx: 8 })).toBe(
+      "high"
+    );
   });
   it("moves low when overlapped and dragging left", () => {
     expect(
@@ -120,28 +122,28 @@ describe("resolveActiveThumb", () => {
 
 describe("applyThumbValue", () => {
   it("moves low but clamps it to not exceed high", () => {
-    expect(applyThumbValue({ active: "low", rawValue: 3, low: 1, high: 6, min: 0, max: 10 })).toEqual(
-      { low: 3, high: 6 }
-    );
-    expect(applyThumbValue({ active: "low", rawValue: 9, low: 1, high: 6, min: 0, max: 10 })).toEqual(
-      { low: 6, high: 6 }
-    );
+    expect(
+      applyThumbValue({ active: "low", rawValue: 3, low: 1, high: 6, min: 0, max: 10 })
+    ).toEqual({ low: 3, high: 6 });
+    expect(
+      applyThumbValue({ active: "low", rawValue: 9, low: 1, high: 6, min: 0, max: 10 })
+    ).toEqual({ low: 6, high: 6 });
   });
   it("moves high but clamps it to not go below low", () => {
-    expect(applyThumbValue({ active: "high", rawValue: 8, low: 2, high: 6, min: 0, max: 10 })).toEqual(
-      { low: 2, high: 8 }
-    );
-    expect(applyThumbValue({ active: "high", rawValue: 1, low: 2, high: 6, min: 0, max: 10 })).toEqual(
-      { low: 2, high: 2 }
-    );
+    expect(
+      applyThumbValue({ active: "high", rawValue: 8, low: 2, high: 6, min: 0, max: 10 })
+    ).toEqual({ low: 2, high: 8 });
+    expect(
+      applyThumbValue({ active: "high", rawValue: 1, low: 2, high: 6, min: 0, max: 10 })
+    ).toEqual({ low: 2, high: 2 });
   });
   it("clamps to the global bounds", () => {
-    expect(applyThumbValue({ active: "low", rawValue: -5, low: 3, high: 6, min: 0, max: 10 })).toEqual(
-      { low: 0, high: 6 }
-    );
-    expect(applyThumbValue({ active: "high", rawValue: 99, low: 3, high: 6, min: 0, max: 10 })).toEqual(
-      { low: 3, high: 10 }
-    );
+    expect(
+      applyThumbValue({ active: "low", rawValue: -5, low: 3, high: 6, min: 0, max: 10 })
+    ).toEqual({ low: 0, high: 6 });
+    expect(
+      applyThumbValue({ active: "high", rawValue: 99, low: 3, high: 6, min: 0, max: 10 })
+    ).toEqual({ low: 3, high: 10 });
   });
 });
 ```
@@ -256,9 +258,11 @@ Expected: `pnpm typecheck` prints no errors.
 Wires the Task 1 helpers to a Pan gesture and renders a track, filled segment, and two thumbs.
 
 **Files:**
+
 - Create: `react-native/components/RangeSlider.tsx`
 
 **Interfaces:**
+
 - Consumes (from Task 1): `positionToValue`, `valueToPosition`, `resolveActiveThumb`, `applyThumbValue`, `ThumbKey`.
 - Produces:
   - Default export `RangeSlider` with props
@@ -393,6 +397,7 @@ export default function RangeSlider({
 ```
 
 Notes for the implementer:
+
 - `e.x` is the touch position relative to the `GestureDetector`'s view (the track container), which is exactly the coordinate space `positionToValue` expects. `e.translationX` is the signed drag delta used for the overlap tie-break.
 - `activeThumb` is a `useRef` (not state) so updating it mid-gesture never triggers a re-render or resets the decision.
 - The thumbs render at their true value positions on every `onChange`-driven re-render; there is no separate animated position to keep in sync.
@@ -421,9 +426,11 @@ git commit -m "feat: dual-thumb RangeSlider component (#68)"
 Swap the two stacked sliders for one `RangeSlider`, drop the forced-gap logic, and collapse the label to a single grade when the thumbs meet.
 
 **Files:**
+
 - Modify: `react-native/screens/MapScreen/GradeFilterSheet.tsx`
 
 **Interfaces:**
+
 - Consumes (from Task 2): default export `RangeSlider`.
 - Produces: unchanged `onClose(minGrade: number, maxGrade: number)` contract to `MapScreen`.
 
@@ -433,12 +440,12 @@ Rewrite `react-native/screens/MapScreen/GradeFilterSheet.tsx` to:
 
 ```tsx
 import { useState } from "react";
+import RangeSlider from "@/components/RangeSlider";
 import { Button, ButtonText } from "@/components/ui/button";
 import { HStack } from "@/components/ui/hstack";
 import { Sheet, SheetHeader } from "@/components/ui/sheet";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
-import RangeSlider from "@/components/RangeSlider";
 import { MAX_GRADE, MIN_GRADE } from "@/models/problems";
 import { useProblemStore } from "@/stores/problemStore";
 
@@ -511,6 +518,7 @@ export default function GradeFilterSheet({ isOpen, onClose }: GradeFilterSheetPr
 ```
 
 Key changes from the original:
+
 - Removed `View` and gluestack `Slider`/`SliderTrack`/`SliderThumb` imports and the two absolutely-positioned stacked sliders.
 - Removed `handleMinGradeChange` / `handleMaxGradeChange` and their `±1` forced-gap clamps.
 - Added `formatRange` so a single grade shows as `V4` rather than `V4 - V4`.
@@ -553,7 +561,8 @@ Expected: all pass.
 - [ ] **Step 2: Launch the app and exercise the filter**
 
 Use the `run` skill (or `pnpm start`) to open the app on a simulator. Open the grade filter (the filter button, `open-grade-filter`) and verify:
-- Dragging near either thumb grabs *that* thumb, even when the thumbs are close together.
+
+- Dragging near either thumb grabs _that_ thumb, even when the thumbs are close together.
 - The thumbs can be dragged to the same grade; the label collapses to a single `V{n}` (e.g. `V4`).
 - From that overlapped state, dragging right raises the upper bound and dragging left lowers the lower bound.
 - The thumbs never cross.
@@ -569,6 +578,7 @@ The strings/testIDs the `04-grade-filter.yml` flow depends on (`open-grade-filte
 ## Self-Review
 
 **Spec coverage:**
+
 - Nearest-thumb grab → Task 1 `nearestThumb`/`resolveActiveThumb` + Task 2 `update`. ✓
 - Overlap allowed / single grade → Task 1 `applyThumbValue` (no forced gap) + Task 3 removal of `±1` clamps + `formatRange`. ✓
 - Tie-break by first drag direction → Task 1 `resolveActiveThumb` + Task 2 `activeThumb` ref. ✓

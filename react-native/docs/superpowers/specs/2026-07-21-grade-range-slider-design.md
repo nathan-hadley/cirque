@@ -60,11 +60,11 @@ and this is a bespoke component.
 
 ```ts
 type RangeSliderProps = {
-  min: number;                             // e.g. 0
-  max: number;                             // e.g. 10
-  low: number;                             // current lower grade (controlled)
-  high: number;                            // current upper grade (controlled)
-  step?: number;                           // default 1
+  min: number; // e.g. 0
+  max: number; // e.g. 10
+  low: number; // current lower grade (controlled)
+  high: number; // current upper grade (controlled)
+  step?: number; // default 1
   onChange: (low: number, high: number) => void;
   testID?: string;
 };
@@ -106,8 +106,8 @@ gesture state (which thumb is active, live drag position) internally.
 - Remove the two stacked `<Slider>`/`<SliderTrack>`/`<SliderThumb>` blocks and
   the wrapping `View`s.
 - Render a single `<RangeSlider min={0} max={10} low={localMinGrade}
-  high={localMaxGrade} onChange={(low, high) => { setLocalMinGrade(low);
-  setLocalMaxGrade(high); }} />`.
+high={localMaxGrade} onChange={(low, high) => { setLocalMinGrade(low);
+setLocalMaxGrade(high); }} />`.
 - Delete the `±1` cross-clamp logic in `handleMinGradeChange` /
   `handleMaxGradeChange` (clamping now lives in `RangeSlider`).
 - Label: `V{localMinGrade} - V{localMaxGrade}`, collapsing to a single
@@ -115,7 +115,7 @@ gesture state (which thumb is active, live drag position) internally.
 - Keep unchanged: `Sheet` wrapper and `detents`, `SheetHeader` title
   "Adjust grade range", `closeButtonTestID="close-grade-filter"`, the "Reset"
   button and `handleReset`, the `handleClose` → `onClose(localMinGrade,
-  localMaxGrade)` contract, and the V0 / V10 end labels.
+localMaxGrade)` contract, and the V0 / V10 end labels.
 
 ### Unchanged
 

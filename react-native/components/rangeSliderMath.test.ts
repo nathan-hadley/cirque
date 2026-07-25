@@ -51,9 +51,9 @@ describe("nearestThumb", () => {
 
 describe("resolveActiveThumb", () => {
   it("picks the nearest thumb when the thumbs are apart", () => {
-    expect(
-      resolveActiveThumb({ touchX: 190, lowX: 0, highX: 200, low: 0, high: 10, dx: 0 })
-    ).toBe("high");
+    expect(resolveActiveThumb({ touchX: 190, lowX: 0, highX: 200, low: 0, high: 10, dx: 0 })).toBe(
+      "high"
+    );
   });
   it("is undecided at touch-down when the thumbs overlap", () => {
     expect(
@@ -61,9 +61,9 @@ describe("resolveActiveThumb", () => {
     ).toBeNull();
   });
   it("moves high when overlapped and dragging right", () => {
-    expect(
-      resolveActiveThumb({ touchX: 100, lowX: 100, highX: 100, low: 5, high: 5, dx: 8 })
-    ).toBe("high");
+    expect(resolveActiveThumb({ touchX: 100, lowX: 100, highX: 100, low: 5, high: 5, dx: 8 })).toBe(
+      "high"
+    );
   });
   it("moves low when overlapped and dragging left", () => {
     expect(
@@ -74,27 +74,27 @@ describe("resolveActiveThumb", () => {
 
 describe("applyThumbValue", () => {
   it("moves low but clamps it to not exceed high", () => {
-    expect(applyThumbValue({ active: "low", rawValue: 3, low: 1, high: 6, min: 0, max: 10 })).toEqual(
-      { low: 3, high: 6 }
-    );
-    expect(applyThumbValue({ active: "low", rawValue: 9, low: 1, high: 6, min: 0, max: 10 })).toEqual(
-      { low: 6, high: 6 }
-    );
+    expect(
+      applyThumbValue({ active: "low", rawValue: 3, low: 1, high: 6, min: 0, max: 10 })
+    ).toEqual({ low: 3, high: 6 });
+    expect(
+      applyThumbValue({ active: "low", rawValue: 9, low: 1, high: 6, min: 0, max: 10 })
+    ).toEqual({ low: 6, high: 6 });
   });
   it("moves high but clamps it to not go below low", () => {
-    expect(applyThumbValue({ active: "high", rawValue: 8, low: 2, high: 6, min: 0, max: 10 })).toEqual(
-      { low: 2, high: 8 }
-    );
-    expect(applyThumbValue({ active: "high", rawValue: 1, low: 2, high: 6, min: 0, max: 10 })).toEqual(
-      { low: 2, high: 2 }
-    );
+    expect(
+      applyThumbValue({ active: "high", rawValue: 8, low: 2, high: 6, min: 0, max: 10 })
+    ).toEqual({ low: 2, high: 8 });
+    expect(
+      applyThumbValue({ active: "high", rawValue: 1, low: 2, high: 6, min: 0, max: 10 })
+    ).toEqual({ low: 2, high: 2 });
   });
   it("clamps to the global bounds", () => {
-    expect(applyThumbValue({ active: "low", rawValue: -5, low: 3, high: 6, min: 0, max: 10 })).toEqual(
-      { low: 0, high: 6 }
-    );
-    expect(applyThumbValue({ active: "high", rawValue: 99, low: 3, high: 6, min: 0, max: 10 })).toEqual(
-      { low: 3, high: 10 }
-    );
+    expect(
+      applyThumbValue({ active: "low", rawValue: -5, low: 3, high: 6, min: 0, max: 10 })
+    ).toEqual({ low: 0, high: 6 });
+    expect(
+      applyThumbValue({ active: "high", rawValue: 99, low: 3, high: 6, min: 0, max: 10 })
+    ).toEqual({ low: 3, high: 10 });
   });
 });
