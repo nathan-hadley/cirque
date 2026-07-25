@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { LayoutChangeEvent, View } from "react-native";
-import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import { Gesture, GestureDetector, GestureHandlerRootView } from "react-native-gesture-handler";
 import { runOnJS } from "react-native-reanimated";
 import {
   applyThumbValue,
@@ -79,43 +79,56 @@ export default function RangeSlider({
       runOnJS(update)(e.x, e.translationX);
     });
 
+  // A pure tap never activates Pan (no movement past its threshold), so it needs
+  // its own gesture. dx = 0 means resolveActiveThumb picks the nearest thumb.
+  const tap = Gesture.Tap().onEnd(e => {
+    runOnJS(update)(e.x, 0);
+  });
+
+  const gesture = Gesture.Race(pan, tap);
+
   const lowX = valueToPosition(low, trackWidth, min, max);
   const highX = valueToPosition(high, trackWidth, min, max);
 
+  // GestureHandlerRootView is required for gestures to fire: this slider renders
+  // inside a native TrueSheet, a separate view hierarchy not covered by any root
+  // gesture handler. flex-1 lets it fill the space between the V0/V10 labels.
   return (
-    <GestureDetector gesture={pan}>
-      <View
-        testID={testID}
-        onLayout={handleLayout}
-        className="justify-center h-8 w-full"
-        collapsable={false}
-      >
-        {/* Background track */}
-        <View className="h-1.5 w-full rounded-lg bg-background-300" />
-        {/* Filled segment between the thumbs */}
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <GestureDetector gesture={gesture}>
         <View
-          className="absolute h-1.5 rounded-lg bg-primary-500"
-          style={{ left: lowX, width: Math.max(0, highX - lowX) }}
-        />
-        {/* Low thumb */}
-        <View
-          className="absolute rounded-full bg-primary-500 shadow-hard-1"
-          style={{
-            width: THUMB_SIZE,
-            height: THUMB_SIZE,
-            left: lowX - THUMB_SIZE / 2,
-          }}
-        />
-        {/* High thumb */}
-        <View
-          className="absolute rounded-full bg-primary-500 shadow-hard-1"
-          style={{
-            width: THUMB_SIZE,
-            height: THUMB_SIZE,
-            left: highX - THUMB_SIZE / 2,
-          }}
-        />
-      </View>
-    </GestureDetector>
+          testID={testID}
+          onLayout={handleLayout}
+          className="justify-center h-8 w-full"
+          collapsable={false}
+        >
+          {/* Background track */}
+          <View className="h-1.5 w-full rounded-lg bg-background-300" />
+          {/* Filled segment between the thumbs */}
+          <View
+            className="absolute h-1.5 rounded-lg bg-primary-500"
+            style={{ left: lowX, width: Math.max(0, highX - lowX) }}
+          />
+          {/* Low thumb */}
+          <View
+            className="absolute rounded-full bg-primary-500 shadow-hard-1"
+            style={{
+              width: THUMB_SIZE,
+              height: THUMB_SIZE,
+              left: lowX - THUMB_SIZE / 2,
+            }}
+          />
+          {/* High thumb */}
+          <View
+            className="absolute rounded-full bg-primary-500 shadow-hard-1"
+            style={{
+              width: THUMB_SIZE,
+              height: THUMB_SIZE,
+              left: highX - THUMB_SIZE / 2,
+            }}
+          />
+        </View>
+      </GestureDetector>
+    </GestureHandlerRootView>
   );
 }
