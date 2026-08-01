@@ -47,15 +47,23 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     [
       "expo-location",
       {
-        locationAlwaysAndWhenInUsePermission:
-          "Cirque requires your location to enable GPS navigation between boulder problems. For example, you will be able to see your location on the map and how close you are to a boulder.",
+        locationWhenInUsePermission:
+          "Cirque uses your location while you have the app open to show where you are on the boulder map. For example, tapping the locate button centers the map on you so you can see which boulders are closest, and tapping “Use my location” fills in the coordinates when you add a new boulder.",
+        // Cirque only reads location in the foreground, so the background/always
+        // keys are removed rather than shipped with Expo's generic defaults.
+        locationAlwaysAndWhenInUsePermission: false,
+        locationAlwaysPermission: false,
       },
     ],
     [
       "expo-image-picker",
       {
-        photosPermission: "Cirque requires accesses your photos to contribute boulders to the app.",
-        cameraPermission: "Cirque requires access to your camera to take photos of boulders.",
+        photosPermission:
+          "Cirque uses your photo library so you can attach photos to boulders you contribute. For example, you can pick a photo of a boulder from your library to upload with the problem you're adding.",
+        cameraPermission:
+          "Cirque uses your camera so you can take a photo of a boulder while contributing it. For example, you can snap a picture of the boulder in front of you and attach it to the problem you're adding.",
+        // Cirque never records audio or video, so no microphone key is shipped.
+        microphonePermission: false,
       },
     ],
     "expo-font",
