@@ -27,6 +27,10 @@ requests skip this secret-dependent job; maintainers can run it after bringing
 the change onto a repository branch. Problem data comes from the bundled seed,
 so the assertions do not depend on the Cirque API.
 
+## PR previews on iPhone
+
+Comment `/preview` on a same-repository PR. The `pr-preview` EAS workflow fingerprints the dev variant, reuses a matching iOS development build or starts a new one, publishes the JS to the `pr-<number>` update branch, and replies with an "Open on iPhone" link. That link goes to `cirque-api`'s `/preview` page, which opens the update in Cirque Dev. When the PR changed native code, the page asks you to install the new build first.
+
 ## Release checklist
 
 1. **Regenerate the bundled seed** so first-launch offline data is fresh:
