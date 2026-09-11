@@ -1,18 +1,15 @@
 import { useState } from "react";
-import RangeSlider from "@/components/RangeSlider";
+import { View } from "react-native";
 import { Button, ButtonText } from "@/components/ui/button";
 import { HStack } from "@/components/ui/hstack";
 import { Sheet, SheetHeader } from "@/components/ui/sheet";
+import { Slider, SliderThumb, SliderTrack } from "@/components/ui/slider";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import { MAX_GRADE, MIN_GRADE } from "@/models/problems";
 import { useProblemStore } from "@/stores/problemStore";
 
 const numberToGrade = (num: number): string => `V${num}`;
-
-function formatRange(min: number, max: number): string {
-  return min === max ? numberToGrade(min) : `${numberToGrade(min)} - ${numberToGrade(max)}`;
-}
 
 type GradeFilterSheetProps = {
   isOpen: boolean;
@@ -24,9 +21,16 @@ export default function GradeFilterSheet({ isOpen, onClose }: GradeFilterSheetPr
   const [localMinGrade, setLocalMinGrade] = useState(minGrade);
   const [localMaxGrade, setLocalMaxGrade] = useState(maxGrade);
 
-  function handleRangeChange(low: number, high: number) {
-    setLocalMinGrade(low);
-    setLocalMaxGrade(high);
+  function handleMinGradeChange(value: number) {
+    // Prevent min from exceeding max
+    const newMin = Math.min(value, localMaxGrade - 1);
+    setLocalMinGrade(newMin);
+  }
+
+  function handleMaxGradeChange(value: number) {
+    // Prevent max from going below min
+    const newMax = Math.max(value, localMinGrade + 1);
+    setLocalMaxGrade(newMax);
   }
 
   function handleReset() {
@@ -50,7 +54,7 @@ export default function GradeFilterSheet({ isOpen, onClose }: GradeFilterSheetPr
         <VStack space="lg" className="px-6 pb-6">
           <HStack className="justify-between items-center">
             <Text size="lg" className="font-semibold">
-              {formatRange(localMinGrade, localMaxGrade)}
+              {numberToGrade(localMinGrade)} - {numberToGrade(localMaxGrade)}
             </Text>
             <Button onPress={handleReset} variant="outline" size="sm">
               <ButtonText>Reset</ButtonText>
@@ -58,16 +62,39 @@ export default function GradeFilterSheet({ isOpen, onClose }: GradeFilterSheetPr
           </HStack>
 
           <HStack space="2xl" className="items-center">
-            <Text size="lg">V{MIN_GRADE}</Text>
-            <RangeSlider
-              min={MIN_GRADE}
-              max={MAX_GRADE}
-              low={localMinGrade}
-              high={localMaxGrade}
-              onChange={handleRangeChange}
-              testID="grade-range-slider"
-            />
-            <Text size="lg">V{MAX_GRADE}</Text>
+            <Text size="lg">{numberToGrade(MIN_GRADE)}</Text>
+            <View className="flex-1 relative h-8">
+              {/* Min slider */}
+              <View className="absolute inset-0">
+                <Slider
+                  value={localMinGrade}
+                  onChange={handleMinGradeChange}
+                  minValue={MIN_GRADE}
+                  maxValue={MAX_GRADE}
+                  size="lg"
+                  className="flex-1"
+                >
+                  <SliderTrack />
+                  <SliderThumb hitSlop={15} />
+                </Slider>
+              </View>
+
+              {/* Max slider - transparent track */}
+              <View className="absolute inset-0">
+                <Slider
+                  value={localMaxGrade}
+                  onChange={handleMaxGradeChange}
+                  minValue={MIN_GRADE}
+                  maxValue={MAX_GRADE}
+                  size="lg"
+                  className="flex-1"
+                >
+                  <SliderTrack className="bg-transparent" />
+                  <SliderThumb hitSlop={15} />
+                </Slider>
+              </View>
+            </View>
+            <Text size="lg">{numberToGrade(MAX_GRADE)}</Text>
           </HStack>
         </VStack>
       </VStack>
