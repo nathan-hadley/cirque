@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Platform, View } from "react-native";
-import { Picker } from "@react-native-picker/picker";
+import { View } from "react-native";
 import { useColorScheme } from "nativewind";
+import WheelPicker from "react-native-wheely";
 import { Sheet, SheetHeader } from "@/components/ui/sheet";
 import { GRADES } from "@/models/problems";
 
@@ -11,31 +11,30 @@ type GradePickerProps = {
   currentGrade: string | null;
 };
 
-const DEFAULT_GRADE = "V3";
+const DEFAULT_INDEX = 3; // V3
 
 export default function GradePicker({ isOpen, onClose, currentGrade }: GradePickerProps) {
-  const [selectedGrade, setSelectedGrade] = useState<string>(DEFAULT_GRADE);
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const { colorScheme } = useColorScheme();
-  const gradeRef = useRef<string>(DEFAULT_GRADE);
+  const gradeRef = useRef<number>(DEFAULT_INDEX);
 
   useEffect(() => {
     if (!isOpen || !currentGrade) return;
-    if (GRADES.includes(currentGrade)) {
-      setSelectedGrade(currentGrade);
-      gradeRef.current = currentGrade;
+    const index = GRADES.indexOf(currentGrade);
+    if (index >= 0) {
+      setSelectedIndex(index);
+      gradeRef.current = index;
     }
   }, [isOpen, currentGrade]);
 
-  function handleSelect(grade: string) {
-    setSelectedGrade(grade);
-    gradeRef.current = grade;
+  function handleSelect(index: number) {
+    setSelectedIndex(index);
+    gradeRef.current = index;
   }
 
   function handleClose() {
-    onClose(gradeRef.current);
+    onClose(GRADES[gradeRef.current]);
   }
-
-  const textColor = colorScheme === "dark" ? "#FFFFFF" : "#000000";
 
   return (
     <Sheet isOpen={isOpen} onClose={handleClose} detents={["auto"]}>
@@ -44,18 +43,17 @@ export default function GradePicker({ isOpen, onClose, currentGrade }: GradePick
         onClose={handleClose}
         closeButtonTestID="close-grade-picker"
       />
-      <View className="pb-6" style={{ height: Platform.OS === "ios" ? 216 : undefined }}>
-        <Picker
-          selectedValue={selectedGrade}
-          onValueChange={value => handleSelect(String(value))}
-          itemStyle={{ color: textColor }}
-          dropdownIconColor={textColor}
-          style={{ color: textColor }}
-        >
-          {GRADES.map(grade => (
-            <Picker.Item key={grade} label={grade} value={grade} color={textColor} />
-          ))}
-        </Picker>
+      <View className="pb-6">
+        <WheelPicker
+          selectedIndex={selectedIndex}
+          options={GRADES}
+          onChange={handleSelect}
+          itemHeight={40}
+          itemTextStyle={{ color: colorScheme === "dark" ? "#FFFFFF" : undefined }}
+          selectedIndicatorStyle={{
+            backgroundColor: colorScheme === "dark" ? "#374151" : undefined,
+          }}
+        />
       </View>
     </Sheet>
   );
