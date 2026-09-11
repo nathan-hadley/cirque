@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
+import WheelPicker from "@quidone/react-native-wheel-picker";
 import { useColorScheme } from "nativewind";
-import WheelPicker from "react-native-wheely";
 import { Sheet, SheetHeader } from "@/components/ui/sheet";
 import { GRADES } from "@/models/problems";
 
@@ -11,30 +11,32 @@ type GradePickerProps = {
   currentGrade: string | null;
 };
 
-const DEFAULT_INDEX = 3; // V3
+const DEFAULT_GRADE = "V3";
+const GRADE_ITEMS = GRADES.map(grade => ({ value: grade, label: grade }));
 
 export default function GradePicker({ isOpen, onClose, currentGrade }: GradePickerProps) {
-  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const [selectedGrade, setSelectedGrade] = useState<string>(DEFAULT_GRADE);
   const { colorScheme } = useColorScheme();
-  const gradeRef = useRef<number>(DEFAULT_INDEX);
+  const gradeRef = useRef<string>(DEFAULT_GRADE);
 
   useEffect(() => {
     if (!isOpen || !currentGrade) return;
-    const index = GRADES.indexOf(currentGrade);
-    if (index >= 0) {
-      setSelectedIndex(index);
-      gradeRef.current = index;
+    if (GRADES.includes(currentGrade)) {
+      setSelectedGrade(currentGrade);
+      gradeRef.current = currentGrade;
     }
   }, [isOpen, currentGrade]);
 
-  function handleSelect(index: number) {
-    setSelectedIndex(index);
-    gradeRef.current = index;
+  function handleSelect(grade: string) {
+    setSelectedGrade(grade);
+    gradeRef.current = grade;
   }
 
   function handleClose() {
-    onClose(GRADES[gradeRef.current]);
+    onClose(gradeRef.current);
   }
+
+  const isDark = colorScheme === "dark";
 
   return (
     <Sheet isOpen={isOpen} onClose={handleClose} detents={["auto"]}>
@@ -45,14 +47,14 @@ export default function GradePicker({ isOpen, onClose, currentGrade }: GradePick
       />
       <View className="pb-6">
         <WheelPicker
-          selectedIndex={selectedIndex}
-          options={GRADES}
-          onChange={handleSelect}
-          itemHeight={40}
-          itemTextStyle={{ color: colorScheme === "dark" ? "#FFFFFF" : undefined }}
-          selectedIndicatorStyle={{
-            backgroundColor: colorScheme === "dark" ? "#374151" : undefined,
-          }}
+          data={GRADE_ITEMS}
+          value={selectedGrade}
+          onValueChanged={({ item }) => handleSelect(item.value)}
+          itemHeight={36}
+          visibleItemCount={7}
+          enableScrollByTapOnItem
+          itemTextStyle={{ color: isDark ? "#FFFFFF" : "#000000" }}
+          overlayItemStyle={isDark ? { backgroundColor: "#374151" } : undefined}
         />
       </View>
     </Sheet>
