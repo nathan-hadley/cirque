@@ -1,8 +1,7 @@
 appId: com.nathanhadley.Cirque
 name: Circuit entry, navigation, and map tap
 ---
-- launchApp:
-    clearState: true
+- runFlow: subflows/launch.yml
 - tapOn: "About"
 - tapOn:
     id: circuit-card-forestland-black

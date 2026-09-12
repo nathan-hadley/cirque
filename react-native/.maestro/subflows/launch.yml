@@ -1,0 +1,13 @@
+appId: com.nathanhadley.Cirque
+---
+# After clearState the app sometimes never reaches the foreground and the
+# launcher stays on screen. Relaunch instead of failing the flow; a healthy
+# launch shows the map search bar within a few seconds.
+- retry:
+    maxRetries: 2
+    commands:
+      - launchApp:
+          clearState: true
+      - extendedWaitUntil:
+          visible: "Search problems..."
+          timeout: 30000

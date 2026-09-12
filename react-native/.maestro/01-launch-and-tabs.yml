@@ -1,9 +1,7 @@
 appId: com.nathanhadley.Cirque
 name: Launch and tab navigation
 ---
-- launchApp:
-    clearState: true
-- assertVisible: "Search problems..."
+- runFlow: subflows/launch.yml
 - assertVisible: "Map"
 - tapOn: "About"
 - assertVisible: "Cirque Leavy"
