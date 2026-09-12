@@ -87,12 +87,16 @@ jobs:
           disable-animations: true
           working-directory: react-native
           script: |
+            # Suppress ANR dialogs so a slow system app can't cover the app under test.
+            adb shell settings put global hide_error_dialogs 1
             adb install -r android/app/build/outputs/apk/release/app-release.apk
-            maestro test .maestro/01-launch-and-tabs.yml .maestro/02-search.yml .maestro/03-map-and-circuit.yml .maestro/04-grade-filter.yml
+            mkdir -p ~/.maestro/tests
+            # The runner executes each line separately, so logcat capture has to share the maestro line.
+            maestro test .maestro/01-launch-and-tabs.yml .maestro/02-search.yml .maestro/03-map-and-circuit.yml .maestro/04-grade-filter.yml || { adb logcat -d -b main,system,crash > ~/.maestro/tests/logcat.txt; exit 1; }
             # Force offline so the contribute submit takes the offline-queue path deterministically (adb/Maestro are unaffected).
             adb shell svc wifi disable || true
             adb shell svc data disable || true
-            maestro test .maestro/05-contribute.yml
+            maestro test .maestro/05-contribute.yml || { adb logcat -d -b main,system,crash > ~/.maestro/tests/logcat.txt; exit 1; }
 
       - name: Upload Maestro diagnostics
         if: failure()
