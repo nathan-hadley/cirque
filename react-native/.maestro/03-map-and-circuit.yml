@@ -22,13 +22,10 @@ name: Circuit entry, navigation, and map tap
 # Navigate by tapping the map instead of the buttons: dismiss the sheet, then
 # tap the centered problem's marker to reopen it. Cube Crack is centered here.
 #
-# The sheet is a native bottom sheet dismissed by dragging its body below the
-# smallest detent. Wait for the dismiss animation rather than asserting
-# immediately.
-- swipe:
-    start: "50%, 60%"
-    end: "50%, 98%"
-    duration: 300
+# Dismiss with back rather than a drag, which sometimes leaves the sheet at
+# its detent on CI. TrueSheet handles back while presented, so this never
+# leaves the map tab.
+- pressKey: back
 - extendedWaitUntil:
     notVisible: "Cube Crack"
     timeout: 8000
