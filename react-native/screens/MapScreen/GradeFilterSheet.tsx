@@ -65,6 +65,9 @@ export default function GradeFilterSheet({ isOpen, onClose }: GradeFilterSheetPr
               low={localMinGrade}
               high={localMaxGrade}
               onChange={handleRangeChange}
+              lowLabel="Minimum grade"
+              highLabel="Maximum grade"
+              formatValue={numberToGrade}
               testID="grade-range-slider"
             />
             <Text size="lg">V{MAX_GRADE}</Text>

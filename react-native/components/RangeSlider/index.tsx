@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { LayoutChangeEvent, View } from "react-native";
+import { AccessibilityActionEvent, LayoutChangeEvent, View } from "react-native";
 import { Gesture, GestureDetector, GestureHandlerRootView } from "react-native-gesture-handler";
 import { runOnJS } from "react-native-reanimated";
 import {
@@ -12,6 +12,41 @@ import {
 
 const THUMB_SIZE = 24;
 
+const ADJUST_ACTIONS = [
+  { name: "increment", label: "increase" },
+  { name: "decrement", label: "decrease" },
+];
+
+type ThumbProps = {
+  x: number;
+  label: string;
+  value: number;
+  valueText: string;
+  min: number;
+  max: number;
+  onAdjust: (delta: number) => void;
+  step: number;
+};
+
+function Thumb({ x, label, value, valueText, min, max, onAdjust, step }: ThumbProps) {
+  function handleAction(e: AccessibilityActionEvent) {
+    onAdjust(e.nativeEvent.actionName === "increment" ? step : -step);
+  }
+
+  return (
+    <View
+      accessible
+      accessibilityRole="adjustable"
+      accessibilityLabel={label}
+      accessibilityValue={{ min, max, now: value, text: valueText }}
+      accessibilityActions={ADJUST_ACTIONS}
+      onAccessibilityAction={handleAction}
+      className="absolute rounded-full bg-primary-500 shadow-hard-1"
+      style={{ width: THUMB_SIZE, height: THUMB_SIZE, left: x - THUMB_SIZE / 2 }}
+    />
+  );
+}
+
 type RangeSliderProps = {
   min: number;
   max: number;
@@ -19,6 +54,9 @@ type RangeSliderProps = {
   high: number;
   step?: number;
   onChange: (low: number, high: number) => void;
+  lowLabel?: string;
+  highLabel?: string;
+  formatValue?: (value: number) => string;
   testID?: string;
 };
 
@@ -29,6 +67,9 @@ export default function RangeSlider({
   high,
   step = 1,
   onChange,
+  lowLabel = "Minimum",
+  highLabel = "Maximum",
+  formatValue = String,
   testID,
 }: RangeSliderProps) {
   const [trackWidth, setTrackWidth] = useState(0);
@@ -41,6 +82,13 @@ export default function RangeSlider({
 
   function begin() {
     activeThumb.current = null;
+  }
+
+  function commit(active: ThumbKey, rawValue: number) {
+    const next = applyThumbValue({ active, rawValue, low, high, min, max });
+    if (next.low !== low || next.high !== high) {
+      onChange(next.low, next.high);
+    }
   }
 
   function update(touchX: number, dx: number) {
@@ -57,18 +105,11 @@ export default function RangeSlider({
       });
     }
     if (activeThumb.current === null) return; // overlapped, no direction yet
-    const rawValue = positionToValue(touchX, trackWidth, min, max, step);
-    const next = applyThumbValue({
-      active: activeThumb.current,
-      rawValue,
-      low,
-      high,
-      min,
-      max,
-    });
-    if (next.low !== low || next.high !== high) {
-      onChange(next.low, next.high);
-    }
+    commit(activeThumb.current, positionToValue(touchX, trackWidth, min, max, step));
+  }
+
+  function adjust(active: ThumbKey, delta: number) {
+    commit(active, (active === "low" ? low : high) + delta);
   }
 
   const pan = Gesture.Pan()
@@ -79,16 +120,19 @@ export default function RangeSlider({
       runOnJS(update)(e.x, e.translationX);
     });
 
+  const lowX = valueToPosition(low, trackWidth, min, max);
+  const highX = valueToPosition(high, trackWidth, min, max);
+
   // A pure tap never activates Pan (no movement past its threshold), so it needs
-  // its own gesture. dx = 0 means resolveActiveThumb picks the nearest thumb.
-  const tap = Gesture.Tap().onEnd(e => {
-    runOnJS(update)(e.x, 0);
+  // its own gesture. Its offset from the thumbs stands in for drag direction, so
+  // tapping either side of overlapped thumbs still moves the one facing the tap.
+  const tap = Gesture.Tap().onEnd((e, success) => {
+    if (!success) return;
+    runOnJS(begin)();
+    runOnJS(update)(e.x, e.x - lowX);
   });
 
   const gesture = Gesture.Race(pan, tap);
-
-  const lowX = valueToPosition(low, trackWidth, min, max);
-  const highX = valueToPosition(high, trackWidth, min, max);
 
   // GestureHandlerRootView is required for gestures to fire: this slider renders
   // inside a native TrueSheet, a separate view hierarchy not covered by any root
@@ -109,23 +153,25 @@ export default function RangeSlider({
             className="absolute h-1.5 rounded-lg bg-primary-500"
             style={{ left: lowX, width: Math.max(0, highX - lowX) }}
           />
-          {/* Low thumb */}
-          <View
-            className="absolute rounded-full bg-primary-500 shadow-hard-1"
-            style={{
-              width: THUMB_SIZE,
-              height: THUMB_SIZE,
-              left: lowX - THUMB_SIZE / 2,
-            }}
+          <Thumb
+            x={lowX}
+            label={lowLabel}
+            value={low}
+            valueText={formatValue(low)}
+            min={min}
+            max={high}
+            onAdjust={delta => adjust("low", delta)}
+            step={step}
           />
-          {/* High thumb */}
-          <View
-            className="absolute rounded-full bg-primary-500 shadow-hard-1"
-            style={{
-              width: THUMB_SIZE,
-              height: THUMB_SIZE,
-              left: highX - THUMB_SIZE / 2,
-            }}
+          <Thumb
+            x={highX}
+            label={highLabel}
+            value={high}
+            valueText={formatValue(high)}
+            min={low}
+            max={max}
+            onAdjust={delta => adjust("high", delta)}
+            step={step}
           />
         </View>
       </GestureDetector>
