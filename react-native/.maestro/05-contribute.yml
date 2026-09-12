@@ -15,8 +15,7 @@ name: Validate and submit a contributed problem
 # Android hideKeyboard presses back, which leaves the Contribute tab if the
 # keyboard is already down.
 - scrollUntilVisible:
-    element:
-      id: contact-name-input
+    element: "Contact information"
     direction: UP
 - tapOn:
     id: contact-name-input
