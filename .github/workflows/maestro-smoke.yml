@@ -5,17 +5,28 @@ on:
     paths:
       - "react-native/**"
       - ".github/workflows/maestro-smoke.yml"
+  # Runs on main so the Gradle and AVD caches get written to the default branch.
+  # GitHub scopes caches by branch: PRs can read main's caches but never each
+  # other's, so without this every PR starts from a cold cache.
+  push:
+    branches: [main]
+    paths:
+      - "react-native/**"
+      - ".github/workflows/maestro-smoke.yml"
   workflow_dispatch:
 
 concurrency:
   group: maestro-smoke-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
+env:
+  API_LEVEL: 35
+
 jobs:
-  android:
-    name: Android
+  build:
+    name: Build APK
     if: >-
-      github.event_name == 'workflow_dispatch' ||
+      github.event_name != 'pull_request' ||
       github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -44,6 +55,13 @@ jobs:
           distribution: temurin
           java-version: 17
 
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          # The Gradle project lives in the prebuild output, which doesn't exist
+          # yet. This step only needs to manage the Gradle user home cache.
+          cache-read-only: ${{ github.event_name == 'pull_request' }}
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
@@ -57,13 +75,56 @@ jobs:
         env:
           EXPO_PUBLIC_MAPBOX_ACCESS_TOKEN: ${{ secrets.EXPO_PUBLIC_MAPBOX_ACCESS_TOKEN }}
 
+      # Prebuild regenerates android/ every run, so these can't be committed.
+      # Later keys win in a properties file, overriding Expo's defaults.
+      - name: Enable Gradle caching
+        run: |
+          cat >> android/gradle.properties <<'EOF'
+          org.gradle.caching=true
+          org.gradle.parallel=true
+          org.gradle.jvmargs=-Xmx4g -XX:MaxMetaspaceSize=1g
+          EOF
+
       - name: Build release APK
         run: >-
-          ./android/gradlew --no-daemon -p android assembleRelease
+          ./android/gradlew -p android assembleRelease
+          --build-cache
           -PreactNativeArchitectures=x86_64 -x lintVitalRelease
         env:
           NODE_ENV: production
           EXPO_PUBLIC_MAPBOX_ACCESS_TOKEN: ${{ secrets.EXPO_PUBLIC_MAPBOX_ACCESS_TOKEN }}
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-apk
+          path: react-native/android/app/build/outputs/apk/release/app-release.apk
+          retention-days: 1
+          compression-level: 0
+
+  test:
+    name: Smoke test
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    defaults:
+      run:
+        working-directory: react-native
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Download APK
+        uses: actions/download-artifact@v4
+        with:
+          name: app-release-apk
+          path: react-native/apk
 
       - name: Install Maestro
         run: |
@@ -78,18 +139,43 @@ jobs:
           sudo udevadm trigger --name-match=kvm
         working-directory: .
 
+      - name: Cache AVD snapshot
+        uses: actions/cache@v4
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-${{ env.API_LEVEL }}-pixel_6
+
+      # A cold AVD boots and saves a snapshot; the run below restores it instead
+      # of booting from scratch.
+      - name: Create AVD snapshot
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ env.API_LEVEL }}
+          arch: x86_64
+          profile: pixel_6
+          force-avd-creation: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: false
+          script: echo "Generated AVD snapshot."
+
       - name: Run smoke test
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 35
+          api-level: ${{ env.API_LEVEL }}
           arch: x86_64
           profile: pixel_6
+          force-avd-creation: false
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           working-directory: react-native
           script: |
             # Suppress ANR dialogs so a slow system app can't cover the app under test.
             adb shell settings put global hide_error_dialogs 1
-            adb install -r android/app/build/outputs/apk/release/app-release.apk
+            adb install -r apk/app-release.apk
             mkdir -p ~/.maestro/tests
             # The runner executes each line separately, so logcat capture has to share the maestro line.
             maestro test .maestro/01-launch-and-tabs.yml .maestro/02-search.yml .maestro/03-map-and-circuit.yml .maestro/04-grade-filter.yml || { adb logcat -d -b main,system,crash > ~/.maestro/tests/logcat.txt; exit 1; }

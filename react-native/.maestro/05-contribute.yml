@@ -21,6 +21,10 @@ name: Validate and submit a contributed problem
     id: contact-name-input
 - inputText: "Maestro Tester"
 - tapOn: "Contact information"
+- scrollUntilVisible:
+    element:
+      id: contact-email-input
+    direction: DOWN
 - tapOn:
     id: contact-email-input
 - inputText: "maestro@example.com"
