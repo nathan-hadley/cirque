@@ -35,7 +35,8 @@ Comment `/preview` on a same-repository PR. The `pr-preview` EAS workflow finger
 
 1. **Regenerate the bundled seed** so first-launch offline data is fresh:
 2. `pnpm typecheck && pnpm lint && pnpm test`
-3. Build via EAS as usual.
+3. Bump `version` in `app.config.ts`. App Store Connect rejects builds for a version it already approved.
+4. Merge, then tag the commit and push the tag (`git tag v1.7.0 && git push origin v1.7.0`). The `build-and-submit` EAS workflow builds and submits both platforms.
 
 ## Troubleshooting
 

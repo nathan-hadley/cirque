@@ -72,7 +72,7 @@ pnpm dev                                 # http://localhost:8787
 topo with `npx wrangler r2 object put cirque-images/topos/<slug>/full.webp --file <f>`
 (no `--remote`).
 
-Tests: `pnpm test` (vitest). Deploy: `pnpm deploy`.
+Tests: `pnpm test` (vitest). Deploy: `pnpm run deploy` (`pnpm deploy` is a pnpm builtin).
 
 ## Scripts
 
