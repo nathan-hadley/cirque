@@ -35,7 +35,7 @@ jobs:
     name: Publish PR update
     needs: [get_ios_build]
     after: [build_ios]
-    if: ${{ needs.get_ios_build.outputs.build_id || needs.build_ios.outputs.build_id }}
+    if: ${{ needs.get_ios_build.outputs.build_id || after.build_ios.status == 'success' }}
     type: update
     environment: development
     env:
@@ -44,22 +44,13 @@ jobs:
       platform: ios
       branch: pr-${{ github.event.pull_request.number }}
 
+  # EAS keeps one comment per job, so success and failure share this job to overwrite each other.
   comment:
-    name: Comment preview link
-    needs: [publish_update]
-    after: [build_ios]
-    type: github-comment
-    params:
-      payload: |
-        iOS preview of `${{ github.sha }}` is ready.
-
-        **[Open on iPhone](https://cirque-api.nathan-hadley.workers.dev/preview/${{ needs.publish_update.outputs.first_update_group_id }}?build=${{ needs.build_ios.outputs.build_id }})**
-
-  comment_failure:
-    name: Comment failure
+    name: Comment preview result
     after: [build_ios, publish_update]
-    if: ${{ failure() }}
     type: github-comment
     params:
-      message: iOS preview failed.
-      update_group_ids: []
+      payload: >-
+        ${{ after.publish_update.status == 'success'
+        ? 'iOS preview is ready.\n\n**[Open on iPhone](https://cirque-api.nathan-hadley.workers.dev/preview/' + needs.publish_update.outputs.first_update_group_id + '?build=' + (needs.build_ios.outputs.build_id || '') + ')**'
+        : 'iOS preview failed.' }}

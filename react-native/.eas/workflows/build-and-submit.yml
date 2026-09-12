@@ -2,7 +2,7 @@ name: Build and submit
 
 on:
   push:
-    branches: ['main']
+    tags: ["v*"]
 
 jobs:
   build_android:
