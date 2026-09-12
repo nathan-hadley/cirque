@@ -87,6 +87,8 @@ jobs:
           disable-animations: true
           working-directory: react-native
           script: |
+            # Suppress ANR dialogs so a slow system app can't cover the app under test.
+            adb shell settings put global hide_error_dialogs 1
             adb install -r android/app/build/outputs/apk/release/app-release.apk
             mkdir -p ~/.maestro/tests
             # The runner executes each line separately, so logcat capture has to share the maestro line.

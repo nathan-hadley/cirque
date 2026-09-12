@@ -1,11 +1,16 @@
 appId: com.nathanhadley.Cirque
 ---
-# After clearState the app sometimes never reaches the foreground and the
-# launcher stays on screen. Relaunch instead of failing the flow; a healthy
-# launch shows the map search bar within a few seconds.
+# The CI emulator's launcher sometimes ANRs right after boot, and its "isn't
+# responding" dialog covers the app. Close it before launching, and relaunch
+# if the search bar still doesn't show.
 - retry:
     maxRetries: 2
     commands:
+      - runFlow:
+          when:
+            visible: ".*isn't responding.*"
+          commands:
+            - tapOn: "Close app"
       - launchApp:
           clearState: true
       - extendedWaitUntil:
