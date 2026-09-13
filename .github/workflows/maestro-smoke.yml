@@ -15,6 +15,9 @@ on:
       - ".github/workflows/maestro-smoke.yml"
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 concurrency:
   group: maestro-smoke-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
@@ -88,7 +91,6 @@ jobs:
       - name: Build release APK
         run: >-
           ./android/gradlew -p android assembleRelease
-          --build-cache
           -PreactNativeArchitectures=x86_64 -x lintVitalRelease
         env:
           NODE_ENV: production
