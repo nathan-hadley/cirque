@@ -1,0 +1,56 @@
+name: PR preview
+
+on:
+  pull_request_comment:
+    if: ${{ startsWith(github.event.comment.body, '/preview') && github.event.comment.author_association == 'OWNER' }}
+
+jobs:
+  fingerprint:
+    name: Fingerprint
+    type: fingerprint
+    environment: development
+    env:
+      APP_VARIANT: dev
+
+  get_ios_build:
+    name: Find matching iOS dev build
+    needs: [fingerprint]
+    type: get-build
+    params:
+      platform: ios
+      profile: development
+      fingerprint_hash: ${{ needs.fingerprint.outputs.ios_fingerprint_hash }}
+      wait_for_in_progress: true
+
+  build_ios:
+    name: Build iOS dev client
+    needs: [get_ios_build]
+    if: ${{ !needs.get_ios_build.outputs.build_id }}
+    type: build
+    params:
+      platform: ios
+      profile: development
+
+  publish_update:
+    name: Publish PR update
+    needs: [get_ios_build]
+    after: [build_ios]
+    if: ${{ needs.get_ios_build.outputs.build_id || after.build_ios.status == 'success' }}
+    type: update
+    environment: development
+    env:
+      APP_VARIANT: dev
+    params:
+      platform: ios
+      branch: pr-${{ github.event.pull_request.number }}
+
+  # EAS keeps one comment per job, so success and failure share this job to overwrite each other.
+  comment:
+    name: Comment preview result
+    after: [build_ios, publish_update]
+    type: github-comment
+    params:
+      payload: >-
+        ${{ after.publish_update.status == 'success'
+        ? 'iOS preview is ready.\n\n**[Open on iPhone](https://cirque-api.nathan-hadley.workers.dev/preview/' + needs.publish_update.outputs.first_update_group_id + '?build=' + (needs.build_ios.outputs.build_id || '') + ')**'
+        : 'iOS preview failed.' }}

@@ -6,12 +6,16 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: IS_DEV ? "Cirque Dev" : "Cirque",
   slug: "Cirque",
-  version: "1.6.0",
+  version: "1.7.0",
   orientation: "portrait",
   icon: "./assets/images/icon.png",
-  scheme: "cirque",
+  scheme: IS_DEV ? ["cirque", "cirque-dev"] : "cirque",
   userInterfaceStyle: "automatic",
   newArchEnabled: true,
+  ...(IS_DEV && { runtimeVersion: { policy: "fingerprint" } }),
+  updates: IS_DEV
+    ? { url: "https://u.expo.dev/4c69e3f4-e42c-471b-8ee6-6c292a478d71" }
+    : { enabled: false },
   ios: {
     supportsTablet: true,
     bundleIdentifier: IS_DEV ? "com.nathanhadley.Cirque.dev" : "com.nathanhadley.Cirque",

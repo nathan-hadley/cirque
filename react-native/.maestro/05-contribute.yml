@@ -1,8 +1,7 @@
 appId: com.nathanhadley.Cirque
 name: Validate and submit a contributed problem
 ---
-- launchApp:
-    clearState: true
+- runFlow: subflows/launch.yml
 - tapOn: "Contribute"
 - scrollUntilVisible:
     element:
@@ -12,18 +11,24 @@ name: Validate and submit a contributed problem
     id: submit-problem
 - assertVisible: "Please fill out all required fields."
 
+# Dismiss the keyboard by tapping a section label instead of hideKeyboard. On
+# Android hideKeyboard presses back, which leaves the Contribute tab if the
+# keyboard is already down.
 - scrollUntilVisible:
-    element:
-      id: contact-name-input
+    element: "Contact information"
     direction: UP
 - tapOn:
     id: contact-name-input
 - inputText: "Maestro Tester"
-- hideKeyboard
+- tapOn: "Contact information"
+- scrollUntilVisible:
+    element:
+      id: contact-email-input
+    direction: DOWN
 - tapOn:
     id: contact-email-input
 - inputText: "maestro@example.com"
-- hideKeyboard
+- tapOn: "Contact information"
 - scrollUntilVisible:
     element:
       id: problem-name-input
@@ -31,7 +36,7 @@ name: Validate and submit a contributed problem
 - tapOn:
     id: problem-name-input
 - inputText: "Maestro Test Problem"
-- hideKeyboard
+- tapOn: "Problem details"
 - tapOn:
     id: open-grade-picker
 - assertVisible: "Select grade"
@@ -52,11 +57,11 @@ name: Validate and submit a contributed problem
 - tapOn:
     id: latitude-input
 - inputText: "47.596"
-- hideKeyboard
+- tapOn: "Coordinates"
 - tapOn:
     id: longitude-input
 - inputText: "-120.661"
-- hideKeyboard
+- tapOn: "Coordinates"
 - scrollUntilVisible:
     element:
       id: problem-description-input
@@ -64,7 +69,7 @@ name: Validate and submit a contributed problem
 - tapOn:
     id: problem-description-input
 - inputText: "Start on the low rail and climb straight to the top."
-- hideKeyboard
+- tapOn: "Description"
 - scrollUntilVisible:
     element:
       id: submit-problem

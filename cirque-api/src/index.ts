@@ -11,6 +11,7 @@ import {
 } from "./endpoints/admin";
 import { ADMIN_HTML } from "./admin/page";
 import { backupKeysToPrune, buildBackup } from "./backup.mjs";
+import { previewPage } from "./preview";
 import {
   accessMiddleware,
   authMiddleware,
@@ -28,6 +29,12 @@ const openapi = fromHono(app, {
 
 // Public images (no API key: loaded directly by <img>/expo-image)
 app.get("/images/*", getImage);
+
+// PR preview hand-off to the dev client (linked from EAS Workflows comments)
+app.get("/preview/:groupId", (c) => {
+  const html = previewPage(c.req.param("groupId"), c.req.query("build") || undefined);
+  return html ? c.html(html, 200, { "Cache-Control": "no-store" }) : c.notFound();
+});
 
 // Admin (Cloudflare Access; no API key)
 app.use("/admin", accessMiddleware);

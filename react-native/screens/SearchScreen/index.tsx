@@ -46,10 +46,20 @@ export function SearchOverlay({ isVisible, onClose }: SearchOverlayProps) {
     const { problem } = result;
 
     setProblem(problem);
-    setViewProblem(true);
 
     if (problem.coordinates) {
       flyToProblemCoordinates(problem.coordinates, 18);
+    }
+
+    // Android TrueSheet misses a keyboard hide that starts before present(),
+    // leaving the sheet laid out above the screen.
+    if (Platform.OS === "android" && Keyboard.isVisible()) {
+      const subscription = Keyboard.addListener("keyboardDidHide", () => {
+        subscription.remove();
+        setViewProblem(true);
+      });
+    } else {
+      setViewProblem(true);
     }
 
     // Close the search overlay

@@ -1,0 +1,18 @@
+appId: com.nathanhadley.Cirque
+---
+# The CI emulator's launcher sometimes ANRs right after boot, and its "isn't
+# responding" dialog covers the app. Close it before launching, and relaunch
+# if the search bar still doesn't show.
+- retry:
+    maxRetries: 2
+    commands:
+      - runFlow:
+          when:
+            visible: ".*isn't responding.*"
+          commands:
+            - tapOn: "Close app"
+      - launchApp:
+          clearState: true
+      - extendedWaitUntil:
+          visible: "Search problems..."
+          timeout: 30000
