@@ -1,11 +1,47 @@
 import { useState } from "react";
 import { Image } from "expo-image";
+import pLimit from "p-limit";
 import { API_ENDPOINTS, apiHeaders, FETCH_TIMEOUT_MS } from "@/constants/api";
 import { useNetworkStatus } from "@/hooks/useNetworkStatus";
 
 type ManifestEntry = { topoKey: string; fullUrl: string; thumbUrl: string; bytes: number };
 
 export type TopoDownloadResult = { ok: number; failed: number; total: number };
+
+/** Max concurrent `Image.prefetch` calls kept in flight during a download. */
+export const PREFETCH_CONCURRENCY = 10;
+
+/**
+ * Prefetch every url into expo-image's disk cache with a sliding-window
+ * concurrency limit, so up to PREFETCH_CONCURRENCY requests stay in flight
+ * continuously (vs. waiting for the slowest item in each fixed batch).
+ */
+export async function prefetchAll(
+  urls: string[],
+  onProgress?: (percent: number) => void
+): Promise<TopoDownloadResult> {
+  const limit = pLimit(PREFETCH_CONCURRENCY);
+  let ok = 0;
+  let failed = 0;
+  let settled = 0;
+
+  await Promise.all(
+    urls.map(url =>
+      limit(async () => {
+        const success = await Image.prefetch(url, { cachePolicy: "disk" }).catch(error => {
+          console.warn("Topo prefetch failed:", url, error);
+          return false;
+        });
+        if (success) ok++;
+        else failed++;
+        settled++;
+        onProgress?.(Math.round((settled / urls.length) * 100));
+      })
+    )
+  );
+
+  return { ok, failed, total: urls.length };
+}
 
 /**
  * "Download topo images" (ADR 0001): walk the manifest and prefetch every
@@ -40,25 +76,9 @@ export function useTopoDownload() {
       const urls = manifest.flatMap(e =>
         e.thumbUrl === e.fullUrl ? [e.fullUrl] : [e.fullUrl, e.thumbUrl]
       );
-      let ok = 0;
-      let failed = 0;
-      const CHUNK = 10;
-      for (let i = 0; i < urls.length; i += CHUNK) {
-        const chunk = urls.slice(i, i + CHUNK);
-        const results = await Promise.all(
-          chunk.map(url =>
-            Image.prefetch(url, { cachePolicy: "disk" }).catch(error => {
-              console.warn("Topo prefetch failed:", url, error);
-              return false;
-            })
-          )
-        );
-        ok += results.filter(Boolean).length;
-        failed += results.filter(r => !r).length;
-        setProgress(Math.round(((i + chunk.length) / urls.length) * 100));
-      }
+      const { ok, failed, total } = await prefetchAll(urls, setProgress);
       setDone(failed === 0 && ok > 0);
-      return { ok, failed, total: urls.length };
+      return { ok, failed, total };
     } finally {
       setDownloading(false);
     }
