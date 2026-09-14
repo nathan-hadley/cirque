@@ -2,7 +2,11 @@ import { CircleLayer, ShapeSource } from "@rnmapbox/maps";
 import { LAYER_IDS, SELECTED_PROBLEM_COLORS, SOURCE_IDS } from "@/constants/map";
 import { useProblemStore } from "@/stores/problemStore";
 
-export function SelectedProblemLayer() {
+export function SelectedProblemLayer({
+  strokeColor = SELECTED_PROBLEM_COLORS.stroke,
+}: {
+  strokeColor?: string;
+}) {
   const { problem, viewProblem } = useProblemStore();
 
   if (!problem || !viewProblem || !problem.coordinates) return null;
@@ -24,7 +28,7 @@ export function SelectedProblemLayer() {
         style={{
           circleRadius: ["interpolate", ["linear"], ["zoom"], 16, 3, 22, 20],
           circleColor: "transparent",
-          circleStrokeColor: SELECTED_PROBLEM_COLORS.stroke,
+          circleStrokeColor: strokeColor,
           circleStrokeWidth: ["interpolate", ["linear"], ["zoom"], 16, 2, 22, 3],
           circleStrokeOpacity: [
             "step",

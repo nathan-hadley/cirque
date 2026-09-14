@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 import { GlassContainer } from "expo-glass-effect";
+import { useGlobalSearchParams } from "expo-router";
 import Mapbox, { Camera, MapView as RNMapboxMapView, UserLocation } from "@rnmapbox/maps";
 import { Feature, GeoJsonProperties, Geometry } from "geojson";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -26,6 +27,14 @@ import {
   SubareasLayer,
 } from "./layers";
 import { ProblemSheet } from "./ProblemSheet";
+import {
+  PrototypeChrome,
+  PrototypeSelectedLayer,
+  PrototypeSwitcher,
+  toVariant,
+  useAutoOpenProblem,
+  usePrototypeMapStyle,
+} from "./prototype";
 
 Mapbox.setAccessToken(MAPBOX_ACCESS_TOKEN);
 
@@ -49,6 +58,11 @@ export function MapScreen() {
   const mapRef = useRef<RNMapboxMapView>(null);
   const cameraRef = useRef<Camera>(null);
   const insets = useSafeAreaInsets();
+
+  const params = useGlobalSearchParams<{ v?: string; p?: string }>();
+  const variant = __DEV__ ? toVariant(params.v) : "stock";
+  const styleURL = usePrototypeMapStyle(variant, STYLE_URI);
+  useAutoOpenProblem(__DEV__ ? params.p : undefined);
 
   // Set refs in the store when they're created
   useEffect(() => {
@@ -83,7 +97,7 @@ export function MapScreen() {
         ref={mapRef}
         testID="problem-map"
         accessibilityLabel="Problem map"
-        styleURL={STYLE_URI}
+        styleURL={styleURL}
         scaleBarEnabled={false}
         compassEnabled={false}
         gestureSettings={gestureOptions}
@@ -102,7 +116,7 @@ export function MapScreen() {
           visible={!!problem}
           circuitColor={problem?.color}
         />
-        <SelectedProblemLayer />
+        {variant === "stock" ? <SelectedProblemLayer /> : <PrototypeSelectedLayer />}
         <ProblemsLayer />
         <SubareasLayer />
         <SubareaLabelsLayer />
@@ -110,27 +124,50 @@ export function MapScreen() {
         <UserLocation showsUserHeadingIndicator={true} />
       </RNMapboxMapView>
 
-      <MapSearchBar onPress={() => setIsSearchVisible(true)} />
+      {variant === "stock" ? (
+        <>
+          <MapSearchBar onPress={() => setIsSearchVisible(true)} />
 
-      <View className="absolute right-4" style={{ bottom: insets.bottom + TAB_BAR_HEIGHT + 16 }}>
-        {isLiquidGlassAvailable() ? (
-          <GlassContainer spacing={12} style={{ gap: 12 }}>
-            <FilterButton onPress={() => setIsFilterVisible(true)} />
-            <LocateMeButton onPress={centerToUserLocation} />
-          </GlassContainer>
-        ) : (
-          <View style={{ gap: 12 }}>
-            <FilterButton onPress={() => setIsFilterVisible(true)} />
-            <LocateMeButton onPress={centerToUserLocation} />
+          <View
+            className="absolute right-4"
+            style={{ bottom: insets.bottom + TAB_BAR_HEIGHT + 16 }}
+          >
+            {isLiquidGlassAvailable() ? (
+              <GlassContainer spacing={12} style={{ gap: 12 }}>
+                <FilterButton onPress={() => setIsFilterVisible(true)} />
+                <LocateMeButton onPress={centerToUserLocation} />
+              </GlassContainer>
+            ) : (
+              <View style={{ gap: 12 }}>
+                <FilterButton onPress={() => setIsFilterVisible(true)} />
+                <LocateMeButton onPress={centerToUserLocation} />
+              </View>
+            )}
           </View>
-        )}
-      </View>
 
-      <ProblemSheet
-        problem={problem}
-        isOpen={viewProblem && problem !== null}
-        onClose={() => setViewProblem(false)}
-      />
+          <ProblemSheet
+            problem={problem}
+            isOpen={viewProblem && problem !== null}
+            onClose={() => setViewProblem(false)}
+          />
+        </>
+      ) : (
+        <PrototypeChrome
+          key={variant}
+          variant={variant}
+          problem={problem}
+          isOpen={viewProblem && problem !== null}
+          onClose={() => setViewProblem(false)}
+          onSearch={() => {
+            setViewProblem(false);
+            setIsSearchVisible(true);
+          }}
+          onFilter={() => setIsFilterVisible(true)}
+          onLocate={centerToUserLocation}
+        />
+      )}
+
+      {__DEV__ && <PrototypeSwitcher current={variant} problem={params.p} />}
 
       <SearchOverlay isVisible={isSearchVisible} onClose={() => setIsSearchVisible(false)} />
 
