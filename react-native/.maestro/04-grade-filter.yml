@@ -8,4 +8,5 @@ name: Reset and close the grade filter
 - tapOn: "Reset"
 - tapOn:
     id: close-grade-filter
-- assertVisible: "Search problems..."
+- assertVisible:
+    id: open-problem-search

@@ -14,5 +14,6 @@ appId: com.nathanhadley.Cirque
       - launchApp:
           clearState: true
       - extendedWaitUntil:
-          visible: "Search problems..."
+          visible:
+            id: open-problem-search
           timeout: 30000

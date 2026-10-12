@@ -10,4 +10,5 @@ name: Launch and tab navigation
 - assertVisible: "Share problems not in the app"
 - assertVisible: "Your name"
 - tapOn: "Map"
-- assertVisible: "Search problems..."
+- assertVisible:
+    id: open-problem-search
